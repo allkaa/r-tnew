@@ -4,10 +4,10 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,6 +35,10 @@
   },
   "devDependencies": {
     "eslint-plugin-react-hooks": "^4.0.8",
+<<<<<<< HEAD
+    "gh-pages": "^2.2.0"
+=======
     "gh-pages": "^2.0.1"
+>>>>>>> d25daa2a89230831b7abcdad4805946e4218ab9d
   }
 }
