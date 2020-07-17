@@ -32,13 +32,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint-plugin-react-hooks": "^4.0.8",
-<<<<<<< HEAD
-    "gh-pages": "^2.2.0"
-=======
-    "gh-pages": "^2.0.1"
->>>>>>> d25daa2a89230831b7abcdad4805946e4218ab9d
   }
 }
