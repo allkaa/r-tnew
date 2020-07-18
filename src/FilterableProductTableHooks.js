@@ -130,12 +130,12 @@ function FilterableProductTable(props) {
   //
   function handleFilterTextChange(filterText) {
     setfilterText(filterText);
-    console.log('filterText: ' + filterText);
+    //console.log('filterText: ' + filterText);
   }
   //
   function handleInStockChange(inStockOnly) {
     setinStockOnly(inStockOnly);
-    console.log('inStockOnly: ' + inStockOnly);
+    //console.log('inStockOnly: ' + inStockOnly);
   }
   // NB! Only one child can be returned!
   return (
