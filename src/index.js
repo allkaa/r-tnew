@@ -94,7 +94,8 @@ import './styleHWT.css' // <--------
 //import App from './CustomLink'
 //import App from './NoMatch404'
 //import App from './StateHookSample'
-import App from './FilterableProductTable'
+//import App from './FilterableProductTable'
+import App from './FilterableProductTableHooks'
 
 /*
 // A class component must include render(), and the return statement can only return ONE parent element:
