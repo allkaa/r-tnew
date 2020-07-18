@@ -1,3 +1,4 @@
+// Filterable Product Table using Hooks
 import React, { useState, useEffect } from 'react'; // React Hooks used.
 //import { Component } from 'react'; // React class component not used anymore.
 
@@ -122,9 +123,6 @@ function FilterableProductTable(props) {
   // React will remember the arrow function we passed (we’ll refer to it as our “effect”),
   // and call it later after performing the DOM updates.
   // React will apply every effect used by the component, in the order they were specified.
-  //
-  // First Effect Hook:
-  //
   useEffect(() => {
     // Update the document title using the browser API:
     document.title = `Using Hooks sample`;
