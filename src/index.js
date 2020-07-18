@@ -122,6 +122,13 @@ console.log(element);
 
 /*
 ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+*/
+
+/*
+ReactDOM.render(
   <App age={67} dattime={`${Date()}`} />,
   document.getElementById('root')
 );

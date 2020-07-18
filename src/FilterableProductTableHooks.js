@@ -1,4 +1,4 @@
-// Filterable Product Table using Hooks 6
+// Filterable Product Table using Hooks 7
 import React, { useState, useEffect } from 'react'; // React Hooks used.
 //import { Component } from 'react'; // React class component not used anymore.
 
