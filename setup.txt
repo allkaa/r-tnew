@@ -1,10 +1,30 @@
 Username for 'https://github.com': allkaa
 Password for 'https://allkaa@github.com': h...3!
 
+============================================================================================
 
 1. Remove spoiled remote if any connected:
 C:\react\react-tutorial>git remote remove origin
-2. Create new remote empty repository https://github.com/allkaa/react-tutorial
+2. Create new remote empty repository r-tnew on github.com as https://github.com/allkaa/r-tnew
+C:\react\react-tutorial>git remote add origin https://github.com/allkaa/r-tnew.git
+C:\react\react-tutorial>git push -u origin master
+Counting objects: 1951, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (838/838), done.
+Writing objects: 100% (1951/1951), 3.90 MiB | 1.08 MiB/s, done.
+Total 1951 (delta 1346), reused 1605 (delta 1109)
+remote: Resolving deltas: 100% (1346/1346), done.
+To https://github.com/allkaa/r-tnew.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+C:\react\react-tutorial>
+
+============================================================================================
+
+1. Remove spoiled remote if any connected:
+C:\react\react-tutorial>git remote remove origin
+2. Create new remote empty repository https://github.com/allkaa/r-t
 C:\react\react-tutorial>git remote add origin https://github.com/allkaa/r-t.git
 C:\react\react-tutorial>git push -u origin master
 Counting objects: 1903, done.
@@ -19,6 +39,7 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 
 C:\react\react-tutorial>
 
+============================================================================================
 
 // testing
 Debian upd 2
