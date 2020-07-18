@@ -112,7 +112,7 @@ function SearchBar(props) {
 // React function component.
 function FilterableProductTable(props) {
   // State Hook using:
-  // Declare a new state variable, which we'll call "filterText" using destructuring assignment syntax
+  // Declare a new state variable, "filterText" using destructuring assignment syntax
   // Two constants will be created filterText as string and setfilterText(args) as modifying function.
   const [filterText, setfilterText] = useState('');
   const [inStockOnly, setinStockOnly] = useState(false);
