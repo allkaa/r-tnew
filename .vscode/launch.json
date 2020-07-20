@@ -58,25 +58,25 @@
         "type": "chrome",
         "request": "launch",
         "name": "Launch Chrome ./build/index.html",
-        "file": "${workspaceFolder}/build/index.html",
+        "file": "${workspaceFolder}/build/index.html"
       },
       {
         "type": "chrome",
         "request": "launch",
         "name": "StyleSheetsDemo.html",
-        "file": "${workspaceFolder}/StyleSheetsDemo.html",
+        "file": "${workspaceFolder}/StyleSheetsDemo.html"
       },
       {
         "type": "chrome",
         "request": "launch",
         "name": "StyleSheetsDemoGood.html",
-        "file": "${workspaceFolder}/StyleSheetsDemoGood.html",
+        "file": "${workspaceFolder}/StyleSheetsDemoGood.html"
       },
       {
         "type": "chrome",
         "request": "launch",
         "name": "indexTest.html",
-        "file": "${workspaceFolder}/indexTest.html",
+        "file": "${workspaceFolder}/indexTest.html"
       }
   ]
 }
