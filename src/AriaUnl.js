@@ -44,7 +44,7 @@ function AriaUnl(props) {
 
   // NB! Only one child can be returned!
   return (
-    <div> 
+  <div> 
   {/*<!-- Here is our main header that is used accross all the pages of our website -->*/}
   <header>
     <img id="logoimg" src={logo} alt="logo"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
@@ -104,7 +104,6 @@ function AriaUnl(props) {
     </aside>
     </div>
 
-
   </main>
 
   {/*<!-- And here is our main footer that is used across all the pages of our website -->*/}
@@ -112,7 +111,7 @@ function AriaUnl(props) {
     <p>©Copyright 2050 by nobody. All rights reversed.</p>
   </footer>
 
-    </div>
+  </div>
   );
 }
 
