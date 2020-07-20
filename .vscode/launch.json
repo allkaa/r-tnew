@@ -24,7 +24,7 @@
         "name": "Launch --experimental-modules File",
         "program": "${file}",
         "cwd":"${workspaceFolder}",
-        "runtimeArgs": ["--experimental-modules"]
+        "runtimeArgs": ["--experimental-modules"],
     },
     {
         "type": "chrome",
@@ -32,7 +32,7 @@
         "name": "Chrome localhost:3000",
         "url": "http://localhost:3000",
         "webRoot": "${workspaceFolder}/src",
-        "sourceMapPathOverrides": {"webpack:///src/*": "${webRoot}/*"}
+        "sourceMapPathOverrides": {"webpack:///src/*": "${webRoot}/*"},
       },
       {
         "type": "chrome",
@@ -52,31 +52,31 @@
         "type": "chrome",
         "request": "launch",
         "name": "Launch Chrome ./index.html",
-        "file": "${workspaceFolder}/index.html"
+        "file": "${workspaceFolder}/index.html",
       },
       {
         "type": "chrome",
         "request": "launch",
         "name": "Launch Chrome ./build/index.html",
-        "file": "${workspaceFolder}/build/index.html"
+        "file": "${workspaceFolder}/build/index.html",
       },
       {
         "type": "chrome",
         "request": "launch",
         "name": "StyleSheetsDemo.html",
-        "file": "${workspaceFolder}/StyleSheetsDemo.html"
+        "file": "${workspaceFolder}/StyleSheetsDemo.html",
       },
       {
         "type": "chrome",
         "request": "launch",
         "name": "StyleSheetsDemoGood.html",
-        "file": "${workspaceFolder}/StyleSheetsDemoGood.html"
+        "file": "${workspaceFolder}/StyleSheetsDemoGood.html",
       },
       {
         "type": "chrome",
         "request": "launch",
         "name": "indexTest.html",
-        "file": "${workspaceFolder}/indexTest.html"
+        "file": "${workspaceFolder}/indexTest.html",
       }
   ]
 }
