@@ -43,7 +43,8 @@ import './StyleSheetsDemo4.css'
 //import './w3.css' // use external link in <head>
 //import './paceThemeMinimal.css'
 //import './styleRespImg.css' // <--------
-import './styleHWT.css' // <--------
+//import './styleHWT.css' // <--------
+import './styleARIA.css' // <--------
 
 // application js files will be loaded from src dir
 //import App from './AppInitial'
@@ -95,7 +96,8 @@ import './styleHWT.css' // <--------
 //import App from './NoMatch404'
 //import App from './StateHookSample'
 //import App from './FilterableProductTable'
-import App from './FilterableProductTableHooks'
+//import App from './FilterableProductTableHooks'
+import App from './AriaUnl'
 
 /*
 // A class component must include render(), and the return statement can only return ONE parent element:
@@ -120,12 +122,12 @@ const element = (
 console.log('index.js created element:');
 console.log(element);
 
-/*
+///*
 ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
-*/
+//*/
 
 /*
 ReactDOM.render(
@@ -134,7 +136,7 @@ ReactDOM.render(
 );
 */
 
-///*
+/*
 const PRODUCTS = [
   {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
   {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
@@ -148,7 +150,7 @@ ReactDOM.render(
   <App products={PRODUCTS} />,
   document.getElementById('root')
 );
-//*/
+*/
 
 /* Timing sample.
 function tick() {
