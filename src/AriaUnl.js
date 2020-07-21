@@ -1,6 +1,7 @@
-// AriaUnl_003
+// AriaUnl_004
 import React, { useState, useEffect } from 'react';
 import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
+import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // React function component.
 function AriaUnl(props) {
@@ -68,6 +69,14 @@ function AriaUnl(props) {
 
   {/*<!-- Here is our page's main content -->*/}
   <main>
+
+    {/*<!-- the aside content can also be nested within the main content -->*/}
+    <aside id="leftaside"> {/* role="complementary" is default for aside */}
+      <h2>Float img in aside</h2>
+      {/*<img id="logoimg" src="logo.png" alt="logo"/>*/}
+      <img id="logoimg2" src={logo2} alt="logo2"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. </p>
+    </aside>
 
     {/*<!-- It contains an article -->*/}
     <article>{/*  role="article" is default for article */}
