@@ -1,4 +1,4 @@
-// AriaUnl_005
+// AriaUnl_006
 import React, { useState, useEffect } from 'react';
 import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
@@ -49,7 +49,7 @@ function AriaUnl(props) {
   {/*<!-- Here is our main header that is used accross all the pages of our website -->*/}
   <header>
     <img id="logoimg" src={logo} alt="logo"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
-    <h1>Header text and logo</h1>
+    <h1>Ukraine National Lottery</h1>
     {/*<!-- Even is it's not mandatory, it's common practice to put the main navigation menu within the main header -->*/}
     <nav role="navigation">
       <ul>

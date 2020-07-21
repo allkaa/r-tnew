@@ -121,7 +121,7 @@ main {
 }
 
 article {
-  flex: 3; /* 4 proportion 4 to upper level main */
+  flex: 3; /* article proportion 3 to upper level main */
 }
 
 #leftaside {
