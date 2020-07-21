@@ -1,4 +1,4 @@
-// AriaUnl_004
+// AriaUnl_005
 import React, { useState, useEffect } from 'react';
 import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
@@ -92,16 +92,8 @@ function AriaUnl(props) {
       <p>Vivamus fermentum semper porta. Nunc diam velit, adipscing ut tristique vitae sagittis vel odio. Maecenas convallis ullamcorper ultricied. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, is fringille sem nunc vet mi.</p>
     </article>
     
-    <div className="asides">
     {/*<!-- the aside content can also be nested within the main content -->*/}
-    <aside role="note" id="aside1">
-      <h2>Float img in aside</h2>
-      <img id="asideimg" src="img_5terre.jpg" alt="logo"/> {/*  logo.png img_5terre.jpg */}
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. </p>
-    </aside>
-    
-    {/*<!-- the aside content can also be nested within the main content -->*/}
-    <aside id="aside2"> {/* role="complementary" is default for aside */}
+    <aside id="rightaside"> {/* role="complementary" is default for aside */}
       <h2>Related links</h2>
       <ul>
         <li><a href="#11">Oh I do like to be beside the seaside</a></li>
@@ -111,13 +103,12 @@ function AriaUnl(props) {
         <li><a href="#15">Oh well...</a></li>
       </ul>
     </aside>
-    </div>
 
   </main>
 
   {/*<!-- And here is our main footer that is used across all the pages of our website -->*/}
   <footer>
-    <p>©Copyright 2050 by nobody. All rights reversed.</p>
+    <p>©Copyright 2020 by UNL. All rights reversed.</p>
   </footer>
 
   </div>
