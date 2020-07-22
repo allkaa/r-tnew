@@ -1,3 +1,4 @@
+// AppHWT-form-MDN
 // Traditional very first custom class component - App
 // (capitalize custom components to differentiate them from regular HTML elements).
 import React, { Component } from 'react'
@@ -256,7 +257,7 @@ class App extends Component {
 <form action="/my-handling-form-page" method="post"> {/* action="#1" */}
   <button type="button" onClick={()=>nameChng()}>Set Name value</button>
   <div>
-    <label htmlFor="name">>Name: <abbr title="required">*</abbr> </label>
+    <label htmlFor="name">Name: <abbr title="required">*</abbr> </label>
     <input type="text" id="name" name="user_name" defaultValue="Alex"></input> {/*  value="default value" */}
   </div>
   <div>
