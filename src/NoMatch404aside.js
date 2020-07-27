@@ -1,4 +1,4 @@
-// NoMatch404aside 001
+// NoMatch404aside 002
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -24,10 +24,10 @@ import logo2 from './logo.png'; // Tell Webpack this JS file will use this image
 function NoMatchAside() {
   return (
     <div>
+      <img id="logoimg" src={logo} alt="logo"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
       <h1>Ukraine National Lottery</h1>
 
       <header>
-        <img id="logoimg" src={logo} alt="logo"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
         {/*<!-- Even is it's not mandatory, it's common practice to put the main navigation menu within the main header -->*/}
         <nav role="navigation">
         <Router>
@@ -46,6 +46,12 @@ function NoMatchAside() {
             <Link to="/nav-match3">Contact</Link>
           </li>
         </ul>
+        {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
+        {/*<!-- creates GET requst e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
+        <form role="search">
+          <input type="search" name="q" placeholder="Search query" aria-label="Search through site content"/>
+          <input type="submit" value="Go!"/>
+        </form>
 
         <Switch>
           <Route exact path="/">
@@ -61,7 +67,7 @@ function NoMatchAside() {
             <NavWillMatch />
           </Route>
           <Route path="*">
-            <NavNoMatch />
+            <NavHome /> {/*NavNoMatch */}
           </Route>
         </Switch>
         </div>
@@ -72,12 +78,13 @@ function NoMatchAside() {
       <main>
         {/*<!-- the aside content can also be nested within the main content -->*/}
         <aside id="leftaside"> {/* role="complementary" is default for aside */}
-          <h2>Float img in aside</h2>
+          <h4>Float image in aside</h4>
           {/*<img id="logoimg" src="logo.png" alt="logo"/>*/}
           <img id="logoimg2" src={logo2} alt="logo2"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. </p>
         </aside>
         <article>
+          <h4>Article title</h4>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. Maecenas congue ligula as quam viverra nec consectetur ant hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
         </article>
         <aside id="rightaside">
@@ -140,7 +147,7 @@ function NavWillMatch() {
   let dt = new Date();
   let reply = dt.toLocaleTimeString('uk'); // 'en-US'
   return <p className = "special">
-    Nav Matched! <code>{location.pathname}</code> {reply}
+    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
     </p>;
 }
 

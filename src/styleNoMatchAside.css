@@ -42,7 +42,11 @@ h2 {
 }
 
 h3 {
-  font-size: 2.2rem;
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.8rem;
 }
 
 p, li {
@@ -71,23 +75,24 @@ nav {
 nav > div {
   /*padding: 1%;*/
   /*height: 50px;*/
-  width: 90%;
+  /*width: 90%;*/
   background-color: #ff80ff;
-  display: flex; /* for childs - ul and search form */
+  /* display: flex; /* for childs - ul and search form */
 }
 
 nav > div > ul {
   padding: 0;
   list-style-type: none;
-  flex: 2; /* proportion 2 to upper level nav display: flex; */
-  display: flex; /* to childs - li elements */
+  /*flex: 2; /* proportion 2 to upper level nav > div display: flex; */
+  /*display: flex; /* to childs - li elements */
+  /*width: 100%;*/
 }
 
 nav > div >  ul > li {
   padding: 5%;
   display: inline;
   text-align: center;
-  flex: 1; /* proportion 1 (all equals) */
+  /*flex: 1; /* proportion 1 (all equals) */
 }
 
 nav > div> .special {
@@ -108,11 +113,11 @@ nav > div > ul> li > a {
 }
 
 nav > div > form {
-  flex: 1; /* proportion 1 to upper level nav display: flex; */
-  display: flex; /* to childs - input search and submit */
+  /*flex: 1; /* proportion 1 to upper level nav display: flex; */
+  /*display: flex; /* to childs - input search and submit */
   align-items: center;
   height: 100%;
-  padding: 0 2em;
+  padding: 1%;
 }
 
 input {
@@ -121,11 +126,12 @@ input {
 }
 
 input[type="search"] {
-  flex: 3; /* proportion 3 to upper level form */
+  /*flex: 3; /* proportion 3 to upper level form */
+  width: 30%;
 }
 
 input[type="submit"] {
-  flex: 1; /* proportion 1 to upper level form */
+  /*flex: 1; /* proportion 1 to upper level form */
   margin-left: 1rem;
   background: #333;
   border: 0;
@@ -140,11 +146,14 @@ main {
 
 article {
   flex: 3; /* article proportion 3 to upper level main */
+  margin-bottom: 10px;
 }
 
 #leftaside {
   flex: 1; /* aside proportion 1 to upper level main */
+  margin-left: 10px;
   margin-right: 10px;
+  margin-bottom: 10px;
   background-color: #ff80ff;
 }
 
@@ -177,6 +186,8 @@ article {
 #rightaside {
   flex: 1; /* aside proportion 1 to upper level main */
   margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   background-color: #ff80ff;
 }
 
