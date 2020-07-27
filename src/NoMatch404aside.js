@@ -1,4 +1,4 @@
-// NoMatch404aside
+// NoMatch404aside 001
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -18,6 +18,8 @@ import {
 // - A <Switch> renders the first child <Route> that matches
 // - A <Redirect> may be used to redirect old URLs to new ones
 // - A <Route path="*"> always matches
+import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
+import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 function NoMatchAside() {
   return (
@@ -25,6 +27,7 @@ function NoMatchAside() {
       <h1>Ukraine National Lottery</h1>
 
       <header>
+        <img id="logoimg" src={logo} alt="logo"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
         {/*<!-- Even is it's not mandatory, it's common practice to put the main navigation menu within the main header -->*/}
         <nav role="navigation">
         <Router>
@@ -34,10 +37,13 @@ function NoMatchAside() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/nav-match1">Match1</Link>
+            <Link to="/nav-match1">Our team</Link>
           </li>
           <li>
-            <Link to="/nav-match2">Match2</Link>
+            <Link to="/nav-match2">Projects</Link>
+          </li>
+          <li>
+            <Link to="/nav-match3">Contact</Link>
           </li>
         </ul>
 
@@ -51,6 +57,9 @@ function NoMatchAside() {
           <Route path="/nav-match2">
             <NavWillMatch />
           </Route>
+          <Route path="/nav-match3">
+            <NavWillMatch />
+          </Route>
           <Route path="*">
             <NavNoMatch />
           </Route>
@@ -61,6 +70,13 @@ function NoMatchAside() {
       </header>
 
       <main>
+        {/*<!-- the aside content can also be nested within the main content -->*/}
+        <aside id="leftaside"> {/* role="complementary" is default for aside */}
+          <h2>Float img in aside</h2>
+          {/*<img id="logoimg" src="logo.png" alt="logo"/>*/}
+          <img id="logoimg2" src={logo2} alt="logo2"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. </p>
+        </aside>
         <article>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. Maecenas congue ligula as quam viverra nec consectetur ant hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
         </article>

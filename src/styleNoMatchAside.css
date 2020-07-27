@@ -45,15 +45,6 @@ h3 {
   font-size: 2.2rem;
 }
 
-.special {
-  margin: 0;
-  padding: 5%;
-  background-color: white;
-  font-size: 1.6rem;
-  line-height: 1.5;  
-  border: thin solid black;
-}
-
 p, li {
   font-size: 1.6rem;
   line-height: 1.5;
@@ -73,25 +64,42 @@ article, aside, footer {
 nav {
   padding: 1%;
   /*height: 50px;*/
+  /* background-color: #ff80ff; */
+  /* display: flex; /* for childs - ul and search form */
+}
+
+nav > div {
+  /*padding: 1%;*/
+  /*height: 50px;*/
+  width: 90%;
   background-color: #ff80ff;
   display: flex; /* for childs - ul and search form */
 }
 
-nav ul {
+nav > div > ul {
   padding: 0;
   list-style-type: none;
   flex: 2; /* proportion 2 to upper level nav display: flex; */
   display: flex; /* to childs - li elements */
 }
 
-nav li {
+nav > div >  ul > li {
   padding: 5%;
   display: inline;
   text-align: center;
   flex: 1; /* proportion 1 (all equals) */
 }
 
-nav a {
+nav > div> .special {
+  margin: 0;
+  padding: 5%;
+  background-color: white;
+  font-size: 1.6rem;
+  line-height: 1.5;  
+  border: thin solid black;
+}
+
+nav > div > ul> li > a {
   display: inline-block;
   font-size: 2rem;
   text-transform: uppercase;
@@ -99,7 +107,7 @@ nav a {
   color: black;
 }
 
-nav form {
+nav > div > form {
   flex: 1; /* proportion 1 to upper level nav display: flex; */
   display: flex; /* to childs - input search and submit */
   align-items: center;
