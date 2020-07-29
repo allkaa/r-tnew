@@ -12,9 +12,10 @@ styles
 //let methodType = 'get'; // 'post' or 'get' for secure server.
 //let formNameIni = 'submitFormAK-Ini';
 //let formName = 'submitFormAK';
-let dirName = 'build'; // React build dir.
-//let dirName = 'arch';
-let formNameIni = 'index.html';
+//let dirName = 'build'; // React build dir as root dir.
+//let dirName = 'arch'; // root dir.
+let dirName = ''; // root dir.
+let formNameIni = 'indexForm.html';
 //let formName = 'submitFormAK';
 
 //const http = require('http');
@@ -46,7 +47,7 @@ const hostname = 'unl.test';
 const port = 8081; // for Linux must be set manually;
 
 dtVar = new Date();
-console.log('before https.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('Before https.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 ///*
 const options = {
@@ -91,20 +92,21 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   //const { method, url, headers } = req;
   //let aaa = new Object();
   // req.url if GET "/" for very initial and for next  e.g. "styles/style.css" or "/submitFormAK?fname=Alex&sname=Raven"
-  // if POST "/submitformAK"
+  // if POST then e.g. "/submitformAK"
   let objUrl = urlLegacy.parse(req.url, true, true); // non standard object.
   // Verify that it is very first page request or rendering page after GET or POST form submit processed.
   // After POST form submit will be processed rendering page will be as GET.
   // In req.headers Object property host: "unl.test:8081"
+  // <==================== Begin of GET method form submit case ====================================================>
   if ((req.method === "GET")) {
     // for req.method === "GET" objUrl.search is ? + query e.g. "?fname=Alex&sname=Raven" or Null
     // req.url = "/" or e.g. "styles/style.css" or "/submitFormAK?fname=Alex&sname=Raven"
     // if req.method === "POST" then ObjUrl.search will be "" always.
     /*
-    req.url = "/" or "/submitformAK?fname=al&sname=kaa"
+    req.url = "/" or e.g. "/submitformAK?fname=al&sname=kaa"
     ObjUrl {
-      href: = path: "/ or "/submitformAK?fname=al&sname=kaa"
-      pathname: "/" or "/submitformAK"
+      href: = path: "/ or e.g. "/submitformAK?fname=al&sname=kaa"
+      pathname: "/" or e.g. "/submitformAK"
       search: null or  "?fname=al&sname=kaa"
       query: Object {} or {fname: "al", sname: "kaa"}
     }
@@ -126,7 +128,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       else if (objUrl.pathname.endsWith('.htm') || objUrl.pathname.endsWith('.html')) {
         contType = 'text/html';
       }
-      if (contType === '') {  // default formNameIni = index.html.
+      if (contType === '') {  // default formNameIni e.g. indexForm.html.
         contType = 'text/html';
         fs.readFile('./' + dirName + '/' + formNameIni, (err, data) => {
           if (err) {
@@ -155,15 +157,15 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
           }
         });
       }
-    } // end of objUrl.search === null - no ? in GET request
-    // for req.method === "GET" objUrl.search is ? + query e.g. "?fname=Alex&sname=Raven" or Null
-    // req.url = "/submitFormAK?fname=Alex&sname=Raven"
-    else {
+    } // end of objUrl.search === null -> no ? in GET request.
+    else { // objUrl.search !== null, there is ? in GET request.
+      // for req.method === "GET" objUrl.search is ? + query e.g. "?fname=Alex&sname=Raven" or Null if no ? in GET request.
+      // req.url = "/formNameIni?fname=Alex&sname=Raven"
       /*
-      req.url = /submitformAK?fname=al&sname=kaa"
+      req.url = /formNameIni?fname=al&sname=kaa"
       ObjUrl {
-      href: = path: /submitformAK?fname=al&sname=kaa"
-      pathname: /submitformAK"
+      href: = path: /formNameIni?fname=al&sname=kaa"
+      pathname: /formNameIni"
       search: "?fname=al&sname=kaa"
       query: {fname: "al", sname: "kaa"}
       }
@@ -171,17 +173,17 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       // HACKER ATTACK OR FAULTY CLIENT.
       //req.connection.destroy();
       res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write(`Form request submitted by GET: ${req.url}`);
+      res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
       return res.end();
     }
-  } // <==================== end of GET method ================================================>
-  else { // <==================== POST method form submit case start ============================================>
-    // POST method, if req.method === "POST" then ObjUrl.search will be Null always.
+  } // <==================== End of GET method form submit case ====================================================>
+  else { // <==================== Begin of POST method form submit case ============================================>
+    // POST method. NB! If req.method === "POST" then ObjUrl.search will be Null always.
     //let objUrl = urlLegacy.parse(req.url, true, true); // non standard object is got earlier befor GET or POST analyze.
     /*
-    req.url = "/submitformAK"
+    req.url = "/formNameIni"
     ObjUrl {
-      href: = path: = pathname:  "/submitformAK"
+      href: = path: = pathname:  "/formNameIni"
       search: null
       query: Object {}
     }
@@ -198,7 +200,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       }
     });
     req.on('end', function () {
-      // e.g. body = 'fname=Alex\r\nsname=Raven\r\n' for /submitFormAK
+      // e.g. body = 'fname=Alex\r\nsname=Raven\r\n' for /formNameIni
       /*
       console.log(body);
       let strVar = '';
@@ -222,14 +224,14 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       // HACKER ATTACK OR FAULTY CLIENT.
       //req.connection.destroy();
       res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write(`Form request submitted by POST: ${req.url} with body: \r\n${body}`);
+      res.write(`Form request submitted by POST. Action URL is ${req.url} with search as body: \r\n${body}`);
       return res.end();
     }); // end req.on('end', function ()...
-  } // <==================================== End of POST mtthod form submit case.  =====================================>
+  } // <==================================== End of POST method form submit case ===================================>
 }) // end of server.on('request'...)
 
 dtVar = new Date();
-console.log('after https.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('After https.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 // Begin accepting connections on the specified port and hostname.
 // If hostname is omitted, server will accept connections on the unspecified IPv6 address (::) when IPv6 is available,
