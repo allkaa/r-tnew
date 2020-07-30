@@ -2,12 +2,19 @@
 //file:///home/akaarna/react-tutorial/build/index.html
 
 /*
-Dirs:
+Standard dirs should be:
 images
 pages
 scripts
 styles
 */
+
+/*
+React dirs development should be:
+public (index.html, *.jpg, *.png, *.ico)
+srs
+*/
+
 
 //let methodType = 'get'; // 'post' or 'get' for secure server.
 //let formNameIni = 'submitFormAK-Ini';
@@ -128,8 +135,10 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       else if (objUrl.pathname.endsWith('.htm') || objUrl.pathname.endsWith('.html')) {
         contType = 'text/html';
       }
+      console.log('contType: [' + contType + ']');
       if (contType === '') {  // default formNameIni e.g. indexForm.html.
         contType = 'text/html';
+        console.log('Empty contType read file: ./' + dirName + '/' + formNameIni);
         fs.readFile('./' + dirName + '/' + formNameIni, (err, data) => {
           if (err) {
             res.writeHead(200, { 'Content-Type': `${contType}` });
@@ -144,6 +153,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         });
       }
       else {
+        console.log('Non empty contType read file: ./' + dirName + objUrl.pathname);
         fs.readFile('./' + dirName + objUrl.pathname, (err, data) => { // './' + dirName  + "/path/name.type"
         if (err) {
           res.writeHead(200, { 'Content-Type': 'text/plain' });
