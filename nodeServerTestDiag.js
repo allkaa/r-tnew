@@ -10,19 +10,21 @@ styles
 */
 
 /*
-React dirs development should be:
-public (index.html, *.jpg, *.png, *.ico)
-srs
+Can be started as parent in build subdir:
+
+  >node ..\nodeServerTestDiag.js
+
 */
 
-
+let typeProj = 'build';
 //let methodType = 'get'; // 'post' or 'get' for secure server.
 //let formNameIni = 'submitFormAK-Ini';
 //let formName = 'submitFormAK';
 //let dirName = 'build'; // React build dir as root dir.
 //let dirName = 'arch'; // root dir.
 let dirName = ''; // root dir.
-let formNameIni = 'indexForm.html';
+let formNameIni = 'index.html';
+//let formNameIni = 'indexForm.html';
 //let formName = 'submitFormAK';
 
 //const http = require('http');
@@ -57,10 +59,20 @@ dtVar = new Date();
 console.log('Before https.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 ///*
-const options = {
-  pfx: fs.readFileSync('./unl.test.pfx'), // '../../unl_works.pfx'
-  passphrase: 'unl'
-};
+let optSsl;
+if (typeProj === 'build') {
+  optSsl = {
+    pfx: fs.readFileSync('../unl.test.pfx'), // '../../unl_works.pfx'
+    passphrase: 'unl'
+  };
+}
+else {
+  optSsl = {
+    pfx: fs.readFileSync('./unl.test.pfx'), // '../../unl_works.pfx'
+    passphrase: 'unl'
+  };
+}
+let options = optSsl;
 //*/
 
 //const server = http.createServer((req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse> ...}
@@ -125,6 +137,9 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       }
       else if (objUrl.pathname.endsWith('.js')) {
         contType = 'application/javascript';
+      }
+      else if (objUrl.pathname.endsWith('.map')) {
+        contType = 'application/map';
       }
       else if (objUrl.pathname.endsWith('.png')) {
         contType = 'image/png';

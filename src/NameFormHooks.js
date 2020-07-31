@@ -1,6 +1,9 @@
 // NB! Capitalize custom components name to differentiate them from regular HTML elements).
-import React, { Component } from 'react'
+import { Component } from 'react'
+import React, { useState, useEffect } from 'react'; // React Hooks used.
 
+
+//==================================================================================================================
 // Custom Controlled Component:
 class NameForm extends Component {
   constructor(props) {
