@@ -145,7 +145,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         contType = 'application/map';
       }
       else if (objUrl.pathname.endsWith('.ico')) {
-        contType = 'application/octet-stream';
+        contType = 'image/bmp';
       }
       else if (objUrl.pathname.endsWith('.png')) {
         contType = 'image/png';
