@@ -159,7 +159,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       else if (objUrl.pathname !== '/') {
         contType = 'application/octet-stream';
       }
-      console.log('contType: [' + contType + ']');
+      console.log('contType: [' + contType + '] <==============================');
       console.log('objUrl.pathname: ' + objUrl.pathname);
       //console.log('objUrl.path: ' + objUrl.path);
       if (contType === '') {  // default formNameIni e.g. indexForm.html.
