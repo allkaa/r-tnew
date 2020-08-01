@@ -16,13 +16,13 @@ Can be started as parent in build subdir:
 
 */
 
-let typeProj = 'build';
+let typeProj =  ''; // 'build';
+let dirName = 'build'; // React build dir as root dir.
+//let dirName = ''; // root dir.
 //let methodType = 'get'; // 'post' or 'get' for secure server.
 //let formNameIni = 'submitFormAK-Ini';
 //let formName = 'submitFormAK';
-//let dirName = 'build'; // React build dir as root dir.
 //let dirName = 'arch'; // root dir.
-let dirName = ''; // root dir.
 let formNameIni = 'index.html';
 //let formNameIni = 'indexForm.html';
 //let formName = 'submitFormAK';
@@ -168,7 +168,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         fs.readFile('./' + dirName + '/' + formNameIni, (err, data) => {
           if (err) {
             res.writeHead(200, { 'Content-Type': `${contType}` });
-            res.write(`${dirName}/${formNameIni} not found!`);
+            res.write(`Empty contType as ${dirName}/${formNameIni} not found!`);
             return res.end();
               } // throw err;
           else {
@@ -183,7 +183,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         fs.readFile('./' + dirName + objUrl.pathname, (err, data) => { // './' + dirName  + "/path/name.type"
         if (err) {
           res.writeHead(200, { 'Content-Type': 'text/plain' });
-          res.write(`${dirName + objUrl.pathname} not found!`);
+          res.write(`Non empty contType ${contType} as ${dirName + objUrl.pathname} not found!`);
           return res.end();
             } // throw err;
         else {

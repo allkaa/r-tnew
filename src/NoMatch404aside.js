@@ -22,6 +22,26 @@ import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use 
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 function NoMatchAside() {
+
+  function handleSubmit(event) {
+    console.log('========> Form handleSubmit <==========')
+    console.log('event: ' + event);
+    console.log(event);
+    console.log('event.target: ' + event.target);
+    console.log(event.target);
+    console.log('event.target.name: ' + event.target.name);
+    console.log(event.target.name);
+    console.log('event.target.type: ' + event.target.type)
+    console.log(event.target.type)
+    console.log('event.target.value: ' + event.target.value);
+    console.log(event.target.value);
+    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
+    /* e.g.
+    Form request submitted by POST. Action URL is /formAK with search as body: 
+    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    */
+  }
+
   return (
     <div>
       <img id="logoimg" src={logo} alt="logo"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
@@ -48,9 +68,9 @@ function NoMatchAside() {
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
-        <form role="search">
+        <form role="search" form onSubmit={handleSubmit}>
           <input type="search" name="q" placeholder="Search query" aria-label="Search through site content"/>
-          <input type="submit" value="Go!"/>
+          <input type="submit" value="Go!" formMethod="get" formAction="formAK"/>
         </form>
 
         <Switch>
