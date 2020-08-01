@@ -138,8 +138,14 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       else if (objUrl.pathname.endsWith('.js')) {
         contType = 'application/javascript';
       }
+      else if (objUrl.pathname.endsWith('.json')) {
+        contType = 'application/json';
+      }
       else if (objUrl.pathname.endsWith('.map')) {
         contType = 'application/map';
+      }
+      else if (objUrl.pathname.endsWith('.ico')) {
+        contType = 'application/octet-stream';
       }
       else if (objUrl.pathname.endsWith('.png')) {
         contType = 'image/png';
@@ -150,7 +156,12 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       else if (objUrl.pathname.endsWith('.htm') || objUrl.pathname.endsWith('.html')) {
         contType = 'text/html';
       }
+      else if (objUrl.pathname !== '/') {
+        contType = 'application/octet-stream';
+      }
       console.log('contType: [' + contType + ']');
+      console.log('objUrl.pathname: ' + objUrl.pathname);
+      //console.log('objUrl.path: ' + objUrl.path);
       if (contType === '') {  // default formNameIni e.g. indexForm.html.
         contType = 'text/html';
         console.log('Empty contType read file: ./' + dirName + '/' + formNameIni);
