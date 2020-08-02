@@ -9,6 +9,7 @@ import {
   useLocation,
   useHistory
 } from "react-router-dom";
+import { useState, useEffect } from 'react'; // React Hooks used.
 
 // You can use the last <Route> in a <Switch> as a kind of
 // "fallback" route, to catch 404 errors.
@@ -22,6 +23,33 @@ import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use 
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 function NoMatchAside() {
+  const [search, setStateSearch] = useState('');
+  const [found, setStateFound] = useState('');
+  const [searchDone, setStateSearchDone] = useState(false);
+
+  function handleChangeSearch(event) {
+    console.log('========> handleChangeName event <==========')
+    let strSearch = '';
+    console.log('event: ' + event);
+    console.log(event);
+    console.log('event.target: ' + event.target);
+    console.log(event.target);
+    console.log('event.target.name: ' + event.target.name);
+    console.log(event.target.name);
+    console.log('event.target.type: ' + event.target.type)
+    console.log(event.target.type)
+    console.log('event.target.value: ' + event.target.value);
+    console.log(event.target.value);
+    //setStateSearch(event.target.value.toUpperCase());
+    strSearch = event.target.value.toUpperCase();
+    setStateSearch(strSearch);
+    console.log('strSearch: ' + strSearch);
+    if (strSearch === '') {
+      setStateFound('');
+      console.log('Old found: ' + found);
+      setStateSearchDone(false);
+     }
+    }
 
   function handleSubmit(event) {
     console.log('========> Form handleSubmit <==========')
@@ -35,11 +63,22 @@ function NoMatchAside() {
     console.log(event.target.type)
     console.log('event.target.value: ' + event.target.value);
     console.log(event.target.value);
-    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
+    console.log(`search: ${search}`);
+    event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
     /* e.g.
     Form request submitted by POST. Action URL is /formAK with search as body: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
     */
+   if (search !== '') {
+    setStateFound('Modified ' + search);
+    console.log('old found: ' + found);
+    setStateSearchDone(true);
+   }
+   else {
+    setStateFound('');
+    console.log('old found: ' + found);
+    setStateSearchDone(false);
+   }
   }
 
   return (
@@ -67,11 +106,14 @@ function NoMatchAside() {
           </li>
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
-        {/*<!-- creates GET requst e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
-        <form role="search" form onSubmit={handleSubmit}>
-          <input type="search" name="q" placeholder="Search query" aria-label="Search through site content"/>
-          <input type="submit" value="Go!" formMethod="get" formAction="formAK"/>
+        {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
+        <form role="search" method="get" action="formAK" onSubmit={handleSubmit}> {/* action="formAK" form onSubmit={handleSubmit} */}
+          <input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="Search query 2" aria-label="Search through site content"></input>
+          {/*<input type="search" name="q" placeholder="Search query 7" aria-label="Search through site content"/>*/}
+          {/*<input type="submit" value="Go!" formMethod="get" formAction="formAK"/>*/}
+          <input type="submit" value="Go!"/>
         </form>
+        { searchDone && <p id="found">{found}</p>}
 
         <Switch>
           <Route exact path="/">
@@ -87,7 +129,7 @@ function NoMatchAside() {
             <NavWillMatch />
           </Route>
           <Route path="*">
-            <NavHome /> {/*NavNoMatch */}
+            <NavNoMatch /> {/*NavHome or NavNoMatch */}
           </Route>
         </Switch>
         </div>
