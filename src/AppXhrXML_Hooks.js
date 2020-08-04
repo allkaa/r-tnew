@@ -17,8 +17,10 @@ function App(props) {
     let txtErr 
     //let objThis = this
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', urlReq, true);
     //xhr.open('POST', 'http://10.8.194.3:42001/?testDebian', true);
+    xhr.open('GET', urlReq, true);
+    // NB! On server reply header must be set as "Access-Control-Allow-Origin: *"
+    console.log(xhr);
     // If specified, responseType must be empty string or "document"
     xhr.responseType = 'document';
     // Force the response to be parsed as XML
@@ -88,7 +90,6 @@ function App(props) {
       setStateData(txtErr);
     }
 
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhr.send(); // for GET case with empty body.
 
     // PUT case:
