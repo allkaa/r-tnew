@@ -26,6 +26,102 @@ function NoMatchAside() {
   const [search, setStateSearch] = useState('');
   const [found, setStateFound] = useState('');
   const [searchDone, setStateSearchDone] = useState(false);
+  const [dataXML, setStateDataXML] = useState(''); // data fetched thru XhrXML.
+
+  function XhrExecutor(props) {
+    console.log('XhrExecutor props:');
+    console.log(props);
+    let urlReq = props;
+    console.log('urlReq:');
+    console.log(urlReq);
+
+    let txtErr 
+    //let objThis = this
+    const xhr = new XMLHttpRequest();
+    //xhr.open('POST', 'http://10.8.194.3:42001/?testDebian', true);
+    xhr.open('GET', urlReq, true);
+    // NB! On server reply header must be set as "Access-Control-Allow-Origin: *"
+    console.log(xhr);
+    // If specified, responseType must be empty string or "document"
+    xhr.responseType = 'document';
+    // Force the response to be parsed as XML
+    xhr.overrideMimeType('text/xml');
+
+    ///* GET or PUT state case using onload event.
+    xhr.onload = () => {
+      console.log(xhr.getAllResponseHeaders());
+      let docXml
+      if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+        //console.log(xhr.response);
+        docXml = xhr.responseXML
+        //console.log(docXml);
+        let xmlS = new XMLSerializer();
+        let xmlString = xmlS.serializeToString(docXml);
+        console.log(xmlString)
+        let nodeValue = docXml.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
+        let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
+        setStateDataXML(`result = ${nodeValue}, sum = ${nodeValue2}`);
+      }
+      else {
+        txtErr = `Request onload error - status ${xhr.status}, readyState ${xhr.readyState}`;
+        console.log(txtErr);
+        setStateDataXML(txtErr);
+        }
+    }
+    //*/
+
+    /*
+    // GET or PUT case using onreadystatechange event;
+    xhr.onreadystatechange = () => { // Call a function when the state changes.
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        // Request finished. Do processing here.
+        console.log(xhr.getAllResponseHeaders());
+        let docXml
+        //console.log(xhr.response);
+        docXml = xhr.responseXML
+        //console.log(docXml);
+        let xmlS = new XMLSerializer();
+        let xmlString = xmlS.serializeToString(docXml);
+        console.log(xmlString)
+        let nodeValue = docXml.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
+        let nodeValue2 = docXml.getElementsByTagName("comment")[0].childNodes[0].nodeValue; // get <comment> tag text value.
+        this.setState({
+        //data: xmlString,
+        data: `result = ${nodeValue}, comment = ${nodeValue2}`
+        })
+      }
+      else {
+        txtErr = `Request onreadystate event - status ${xhr.status}, readyState ${xhr.readyState}`
+        console.log(txtErr)
+        this.setState({ data: txtErr,})
+      }
+    }
+    */
+
+    xhr.onerror = () => {
+      txtErr = `Request failed -> onerror event occured.`;
+      console.log(txtErr);
+      setStateDataXML(txtErr);
+  }
+    
+    xhr.ontimeout = () => {
+      txtErr = `Request failed -> ontimeout event occured`
+      console.log(txtErr)
+      //this.setState({ data: txtErr,})
+      setStateDataXML(txtErr);
+    }
+
+    xhr.send(); // for GET case with empty body.
+
+    // PUT case:
+    //Send the proper header information along with the request
+    //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //xhr.setRequestHeader("Content-Type", "text/plain");
+    //xhr.send("foo=bar&lorem=ipsum"); // send with body for POST.
+    // xhr.send(new Int8Array()); 
+    // xhr.send(document);
+
+  } // end of function XhrExecutor(props) 
 
   function handleChangeSearch(event) {
     console.log('========> handleChangeName event <==========')
@@ -69,14 +165,17 @@ function NoMatchAside() {
     Form request submitted by POST. Action URL is /formAK with search as body: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
     */
+   //const url = 'http://unl.woks:9994/'; // project WinTicsCheckNoSslTEST
+   const url = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST
    if (search !== '') {
-    setStateFound('Modified ' + search);
-    console.log('old found: ' + found);
+    XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
+    setStateFound(dataXML);
+    console.log('XML response info: ' + found);
     setStateSearchDone(true);
    }
    else {
     setStateFound('');
-    console.log('old found: ' + found);
+    console.log('Empty search info: ' + found);
     setStateSearchDone(false);
    }
   }
