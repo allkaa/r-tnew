@@ -28,6 +28,44 @@ function NoMatchAside() {
   const [searchDone, setStateSearchDone] = useState(false);
   const [dataXML, setStateDataXML] = useState(''); // data fetched thru XhrXML.
 
+  // Code is invoked after the component is mounted/inserted into the DOM tree.
+  // Effect Hook samples:
+  // It serves same as componentDidMount, componentDidUpdate, and componentWillUnmount combined in React classes.
+  // Similar to componentDidMount and componentDidUpdate.
+  // By using Effect Hook, we tell React that our component needs to do something after render.
+  // React will remember the arrow function we passed (we’ll refer to it as our “effect”),
+  // and call it later after performing the DOM updates.
+  // React will apply every effect used by the component, in the order they were specified.
+  //
+  // First Effect Hook:
+  //
+  //useEffect(() => {
+  //  if (count > 0) {
+  //    // Update the document title using the browser API:
+  //    document.title = `You clicked ${count} times at ${props.dattime}`;
+  //  }
+  //});
+  // next Effect Hook:
+  // If you want to run an effect and clean it up only once (on mount and unmount), you can pass an empty array ([])
+  // as a second argument. 
+  //useEffect(() => {window.alert(`count is ${count} at ${props.dattime}`)},[]);
+  //useEffect(() => {window.setInterval(FoundCheck, 1000, found)},[]);
+  // NB! Unfortunately FoundCheck see very initial const state every second.
+  /*
+  function FoundCheck(respfound) {
+    console.log('FondCheck called respfound: ' + respfound);
+    //console.log('search:');
+    //console.log(search);
+    //console.log('dataXML set as: ');
+    //console.log(dataXML);
+    //console.log('XML response info found: ');
+    //console.log(respfound);
+    if (respfound.length > 0) {
+      setStateSearchDone(true);
+    }
+  }
+  */
+
   function XhrExecutor(props) {
     console.log('XhrExecutor props:');
     console.log(props);
@@ -41,39 +79,47 @@ function NoMatchAside() {
     //xhr.open('POST', 'http://10.8.194.3:42001/?testDebian', true);
     xhr.open('GET', urlReq, true); // true if async.
     // NB! On server reply header must be set as "Access-Control-Allow-Origin: *"
-    console.log(xhr);
-    // If specified, responseType must be empty string or "document"
-    xhr.responseType = 'document';
+    //console.log(xhr);
+    // If specified, responseType must be empty string or "document" - can not be specified for synchroneuos xhr.open().
+    //xhr.responseType = 'document';
+    //xhr.responseType = '';
     // Force the response to be parsed as XML
     xhr.overrideMimeType('text/xml');
 
     ///* GET or PUT state case using onload event.
     xhr.onload = () => {
-      console.log(xhr.getAllResponseHeaders());
+      //console.log('xhr.getAllResponseHeaders():')
+      //console.log(xhr.getAllResponseHeaders());
       let docXml;
-      let resp;
+      let resp = '';
       if (xhr.readyState === xhr.DONE && xhr.status === 200) {
         //console.log(xhr.response);
         docXml = xhr.responseXML
         //console.log(docXml);
         let xmlS = new XMLSerializer();
         let xmlString = xmlS.serializeToString(docXml);
+        console.log('xmlString:')
         console.log(xmlString)
         let nodeValue = docXml.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
-        let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
-        resp = `result = ${nodeValue}, sum = ${nodeValue2}`;
+        //let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
+        //resp = `result = ${nodeValue}, sum = ${nodeValue2}`;
+        resp = `result = ${nodeValue}`;
       }
       else {
         txtErr = `Request onload error - status ${xhr.status}, readyState ${xhr.readyState}`;
         console.log(txtErr);
         setStateDataXML(txtErr);
+        return 1;
       }
+      setStateSearchDone(true);
+      console.log(resp);
       setStateDataXML(resp);
       console.log('dataXML set as: ');
-      console.log(resp);
+      console.log(dataXML);
       setStateFound(dataXML);
-      console.log('XML response info: ' + found);
-      setStateSearchDone(true);
+      console.log('XML response info found: ');
+      console.log(found);
+      return 0;
     }
     //*/
 
@@ -109,16 +155,19 @@ function NoMatchAside() {
       txtErr = `Request failed -> onerror event occured.`;
       console.log(txtErr);
       setStateDataXML(txtErr);
-  }
+      return 1;
+    }
     
     xhr.ontimeout = () => {
       txtErr = `Request failed -> ontimeout event occured`
       console.log(txtErr)
       //this.setState({ data: txtErr,})
       setStateDataXML(txtErr);
+      return 1;
     }
 
     xhr.send(); // for GET case with empty body.
+    return -1;
 
     // PUT case:
     //Send the proper header information along with the request
@@ -131,7 +180,7 @@ function NoMatchAside() {
   } // end of function XhrExecutor(props) 
 
   function handleChangeSearch(event) {
-    console.log('========> handleChangeName event <==========')
+    console.log('========> handleChangeSearch event <==========')
     let strSearch = '';
     console.log('event: ' + event);
     console.log(event);
@@ -173,11 +222,16 @@ function NoMatchAside() {
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
     */
    //const url = 'http://unl.woks:9994/'; // project WinTicsCheckNoSslTEST
-   const url = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST
+   //const url = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
+   //XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
+   const url = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
+   //XhrExecutor(url + '?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567');
    if (search !== '') {
-    XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
-    setStateFound(dataXML);
-    console.log('XML response info: ' + found);
+    let xhrRet = -2;
+    xhrRet = XhrExecutor(url + '?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567');
+    console.log('xhrRet = ' + xhrRet);
+    //setStateFound(dataXML);
+    console.log('handleSubmit XML response info found: ' + found);
     setStateSearchDone(true);
    }
    else {
@@ -219,7 +273,8 @@ function NoMatchAside() {
           {/*<input type="submit" value="Go!" formMethod="get" formAction="formAK"/>*/}
           <input type="submit" value="Go!"/>
         </form>
-        { searchDone && <p id="found">{found}</p>}
+        {/* searchDone && <p id="found" onChange={()=>setStateSearchDone(true)}>{found}</p> */}
+        <p id="found">{found}</p>
 
         <Switch>
           <Route exact path="/">
