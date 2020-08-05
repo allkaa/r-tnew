@@ -39,7 +39,7 @@ function NoMatchAside() {
     //let objThis = this
     const xhr = new XMLHttpRequest();
     //xhr.open('POST', 'http://10.8.194.3:42001/?testDebian', true);
-    xhr.open('GET', urlReq, true);
+    xhr.open('GET', urlReq, true); // true if async.
     // NB! On server reply header must be set as "Access-Control-Allow-Origin: *"
     console.log(xhr);
     // If specified, responseType must be empty string or "document"
@@ -50,7 +50,8 @@ function NoMatchAside() {
     ///* GET or PUT state case using onload event.
     xhr.onload = () => {
       console.log(xhr.getAllResponseHeaders());
-      let docXml
+      let docXml;
+      let resp;
       if (xhr.readyState === xhr.DONE && xhr.status === 200) {
         //console.log(xhr.response);
         docXml = xhr.responseXML
@@ -60,13 +61,19 @@ function NoMatchAside() {
         console.log(xmlString)
         let nodeValue = docXml.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
         let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
-        setStateDataXML(`result = ${nodeValue}, sum = ${nodeValue2}`);
+        resp = `result = ${nodeValue}, sum = ${nodeValue2}`;
       }
       else {
         txtErr = `Request onload error - status ${xhr.status}, readyState ${xhr.readyState}`;
         console.log(txtErr);
         setStateDataXML(txtErr);
-        }
+      }
+      setStateDataXML(resp);
+      console.log('dataXML set as: ');
+      console.log(resp);
+      setStateFound(dataXML);
+      console.log('XML response info: ' + found);
+      setStateSearchDone(true);
     }
     //*/
 
