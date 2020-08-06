@@ -4,56 +4,65 @@ console.log(document.domain);
 const logo = document.createElement('img')
 logo.src = 'logo.png'
 
-const h1 = document.createElement('h1');
-h1.textContent = 'XMLHttpRequest reply:';
+const h2 = document.createElement('h2');
+h2.textContent = 'XMLHttpRequest reply:';
 
 const container = document.createElement('div')
 container.setAttribute('class', 'container')
 
 app.appendChild(logo);
-app.appendChild(h1);
+app.appendChild(h2);
 app.appendChild(container);
 
 //return; // NB! return can not be used in browser DOM.
 
 //*
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://10.8.194.3:42001/?testDebian', true);
+// project UnlCashExTEST ver. 3.8
+xhr.open('GET', 'http://10.8.194.3:10064/?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567', true);
 
 // If specified, responseType must be empty string or "document"
-xhr.responseType = 'document';
+//xhr.responseType = 'document';
 
 // Force the response to be parsed as XML
 xhr.overrideMimeType('text/xml');
 
 xhr.onload = function () {
-  let docXml
-  const p = document.createElement('p')
+  let docXml;
+  const p1 = document.createElement('p');
+  const p2 = document.createElement('p');
   if (xhr.readyState === xhr.DONE && xhr.status === 200) {
     //console.log(xhr.response);
-    docXml = xhr.responseXML
+    docXml = xhr.responseXML;
     //console.log(docXml);
     let xmlS = new XMLSerializer();
     let xmlString = xmlS.serializeToString(docXml);
-    p.textContent = xmlString
-  }
+    p1.textContent = xmlString;
+    let nodeValue = docXml.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
+    p2.textContent = nodeValue;
+    //let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
+}
   else {
-    p.textContent = `Request onload error status ${xhr.status}`
+    p1.textContent = `Request onload error status ${xhr.status}`;
   }
   // Append the container element with p.
-  container.appendChild(p)
+  container.appendChild(p1);
+  const h3 = document.createElement('h3');
+  h3.textContent = 'result tag:';
+  container.appendChild(h3);
+  container.appendChild(p2);
 }
 
 xhr.onerror = () => {
-  const p = document.createElement('p')
-  p.textContent = `Request failed -> onerror event occured.`
-  container.appendChild(p)
+  const p = document.createElement('p');
+  p.textContent = `Request failed -> onerror event occured.`;
+  container.appendChild(p);
 }
 
 xhr.ontimeout = () => {
-  const p = document.createElement('p')
-  p.textContent = `Request failed -> ontimeout event occured`
-  container.appendChild(p)
+  const p = document.createElement('p');
+  p.textContent = `Request failed -> ontimeout event occured`;
+  container.appendChild(p);
 }
 
 xhr.send();
