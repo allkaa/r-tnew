@@ -1,49 +1,103 @@
+// scriptsFetchXML.js
 const app = document.getElementById('root')
 
 const logo = document.createElement('img')
 logo.src = 'logo.png'
+app.appendChild(logo)
 
-const h2 = document.createElement('h2');
-h2.textContent = 'Fetch XMLHttpRequest reply:';
+const hdrMain = document.createElement('h2');
+hdrMain.textContent = 'Fetch XMLHttpRequest Sample';
+app.appendChild(hdrMain);
+const hdrWarn = document.createElement('h3');
+hdrWarn.textContent = '';
+app.appendChild(hdrWarn);
 
 const container = document.createElement('div')
 container.setAttribute('class', 'container')
-
-app.appendChild(logo)
-app.appendChild(h2);
 app.appendChild(container)
 
+/*<button class="favorite" type="button">Search!</button>*/
+const btn1 = document.createElement('button');
+btn1.setAttribute('id', 'searchBtn1');
+btn1.setAttribute('type', 'button');
+btn1.textContent= 'Buy ticket';
+container.appendChild(btn1);
 
-/*
-<label for="name">Name (4 to 8 characters):</label>
-<input type="text" id="name" name="name" required
-       minlength="4" maxlength="8" size="10">
-<input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="Search query 2" aria-label="Search through site content"></input>
+const btn2 = document.createElement('button');
+btn2.setAttribute('id', 'searchBtn2');
+btn2.setAttribute('type', 'button');
+btn2.textContent= 'Check ticket by number';
+container.appendChild(btn2);
 
-*/
-//const lbl1 = document.createElement('label');
-//lbl1.setAttribute('for', 'search');
-//lbl1.textContent('Search label');
-//app.appendChild(lbl1);
 const inp1 = document.createElement('input');
-inp1.setAttribute('id', 'search');
+inp1.setAttribute('id', 'searchInp1');
 inp1.setAttribute('type', 'search');
 inp1.setAttribute('name', 'q');
-inp1.setAttribute('onchange', 'FetchExecutor');
+//inp1.setAttribute('onchange', 'FetchExecutor');
 inp1.setAttribute('value', '');
 inp1.setAttribute('placeholder', 'Search query');
 inp1.setAttribute('aria-label', 'Search through site content');
 container.appendChild(inp1);
 
+// Create headers and paratraphs.
+const hdr1 = document.createElement('h3');
+hdr1.textContent = '';
+container.appendChild(hdr1);
+const p1 = document.createElement('p');
+p1.textContent = ''; // clear text content.
+container.appendChild(p1);
+const hdr2 = document.createElement('h4');
+hdr2.textContent = '';
+container.appendChild(hdr2);
+const p2 = document.createElement('p');
+p2.textContent = '';
+container.appendChild(p2);
+
+let txn_id = 10000000;
+
+//inp1.addEventListener('change', FetchExecutor); // works ok thru ENTER.
+//btn1.addEventListener('click', FetchExecutor);
+//btn2.addEventListener('click', FetchExecutor);
+// Add a handler for the 'click' event by providing a callback function.
+btn1.addEventListener('click', function (event) {
+  console.log(event);
+  FetchExecutor(1);
+});
+btn2.addEventListener('click', function (event) {
+  console.log(event);
+  FetchExecutor(2);
+});
+
 //return; // NB! return can not be used in browser DOM.
 
-FetchExecutor();
+//FetchExecutor();
 
-function FetchExecutor(event) {
-  console.log('event: ')
-  console.log(event);
+function FetchExecutor(props) {
+  console.log('props='+props);
+  hdr1.textContent = '';
+  p1.textContent = ''; // clear text content.
+  hdr2.textContent = '';
+  p2.textContent = '';
+  console.log('inp1.value: ')
+  console.log(inp1.value);
+  // project UnlCashExTEST ver. 3.8
+  // http://10.8.194.3:10064/?agent=65&type=2&command=pay&date=20200808&txn_id=10000001&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0
+  // 004-12345678-1234567
+  //let reqString = 'http://10.8.194.3:10064/?agent=65&type=2&command=checkval&ticket_number=' + inp1.value ;
+  let reqString = '';
+  if (props === 1) {
+    txn_id = txn_id + 1;
+    reqString = 'http://10.8.194.3:10064/?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+  }
+  else if (props === 2) {
+    reqString = 'http://10.8.194.3:10064/?agent=65&type=2&command=checkval&ticket_number=' + inp1.value ;
+  }
+  else {
+    hdrWarn.textContent = 'NB! Internal error - wrong props: ' + props;
+    return;
+  }
+  console.log('reqString: ' +reqString);
   let crucialNetErr = true; // NB! Initially set crucial Net Error for request.
-  console.log('===============> fetch begin');
   //fetch('https://ghibliapi.herokuapp.com/films');
   //fetch('https://ghibliapi.herokuapp.com/films2');
   //fetch('http://10.8.194.3:13000/');
@@ -55,8 +109,9 @@ function FetchExecutor(event) {
   
   mode: The mode you want to use for the request are cors, no-cors, same-origin, or navigate. The default is cors.
   */
-  // project UnlCashExTEST ver. 3.8
-  fetch('http://10.8.194.3:10064/?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567')
+  console.log('===============> fetch begin');
+  hdrWarn.textContent = 'Wait for fetch processing...';
+  fetch(reqString)
   .then(response => {
     crucialNetErr = false
       console.log('===============> fetch response got response.ok as ' + response.ok)
@@ -73,64 +128,52 @@ function FetchExecutor(event) {
      //throw new Error('Network response was not ok.') // will be catche by final .catch().
     })
   .then(data => {
-      console.log('===============> render fetched text in data object')
-      console.log(data)
-      // Work with JSON data here
-      //const card = document.createElement('div')
-      //card.setAttribute('class', 'card')
-      //let docXml;
-      // Create <h4> and <p>
-      const hdr1 = document.createElement('h3')
-      hdr1.textContent = 'Text data reply received from server'
-      container.appendChild(hdr1);
-  
-      const p1 = document.createElement('p');
-      //p1.textContent = data; // set text content.
+    hdrWarn.textContent = '';
+    console.log('===============> render fetched text in data object')
+    console.log(data)
+    hdr1.textContent = 'Text data reply received from server'
+    // Create XML document from XML string using DOMParser().
+    let oParser = new DOMParser();
+    let oXmlDOM = oParser.parseFromString(data, "application/xml");
+    //console.log(oXmlDOM.documentElement.nodeName === "parsererror" ? "error while parsing" : 'XML document name: ' + oXmlDOM.documentElement.nodeName);
+    if (oXmlDOM.documentElement.nodeName === "parsererror") {
+      hdr2.textContent = 'NB! Wrong format of XML sting received:';
+      //container.appendChild(hdr2);
+      p1.textContent = data; // set text content.
       //container.appendChild(p1);
-  
-      // Create XML document from XML string using DOMParser().
-      let oParser = new DOMParser();
-      let oXmlDOM = oParser.parseFromString(data, "application/xml");
-      //console.log(oXmlDOM.documentElement.nodeName === "parsererror" ? "error while parsing" : 'XML document name: ' + oXmlDOM.documentElement.nodeName);
-      const hdr2 = document.createElement('h4');
-      if (oXmlDOM.documentElement.nodeName === "parsererror") {
-        hdr2.textContent = 'NB! Wrong format of XML sting received:';
-        container.appendChild(hdr2);
-        p1.textContent = data; // set text content.
-        container.appendChild(p1);
-      }
-      else {
-        let xmlS = new XMLSerializer();
-        let xmlString = xmlS.serializeToString(oXmlDOM);
-        p1.textContent = xmlString;
-        container.appendChild(p1);
-        hdr2.textContent = '<result> tag:';
-        container.appendChild(hdr2);
-        let nodeValue = oXmlDOM.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
-        const p2 = document.createElement('p');
-        p2.textContent = nodeValue;
-        //let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
-        container.appendChild(p2);
-      }
-  
+    }
+    else {
+      let xmlS = new XMLSerializer();
+      let xmlString = xmlS.serializeToString(oXmlDOM);
+      p1.textContent = xmlString;
+      //container.appendChild(p1);
+      hdr2.textContent = '<result> tag:';
+      //container.appendChild(hdr2);
+      let nodeValue = oXmlDOM.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
+      //const p2 = document.createElement('p');
+      p2.textContent = nodeValue;
+      //let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
+      //container.appendChild(p2);
+    }
   })
   .catch(err => { // catch network error and artificially thrown Error in very first then().
-      // Do something for crucial or non-crucial error e.g. 404 here
+    // Do something for crucial or non-crucial error e.g. 404 here
+    //const errorMessage = document.createElement('marquee') // obsolate.
+    hdrWarn.textContent = 'NB! Network Error occured.';
+    const errorMessage = document.createElement('p')
+    if (crucialNetErr) {
+      console.log('=======================> fetch Crucial error: ' + err.message)
+      errorMessage.textContent = 'Network crucial error - response NOT got: ' + err.message
+    }
+    else {
+      console.log('=======================> fetch Non-crucial error: ' + err.message)
       //const errorMessage = document.createElement('marquee') // obsolate.
-        const errorMessage = document.createElement('p')
-      if (crucialNetErr) {
-        console.log('=======================> fetch Crucial error: ' + err.message)
-        errorMessage.textContent = 'Network crucial error response NOT got: ' + err.message
-      }
-      else {
-        console.log('=======================> fetch Non-crucial error: ' + err.message)
-        //const errorMessage = document.createElement('marquee') // obsolate.
-        //let errMsg = "Gah, it's not working!"
-        //errorMessage.textContent = "Gah, it's not working!"
-        errorMessage.textContent = 'Network response: ' + err.message
-      }
+      //let errMsg = "Gah, it's not working!"
+      //errorMessage.textContent = "Gah, it's not working!"
+      errorMessage.textContent = 'Network response: ' + err.message
+    }
       app.appendChild(errorMessage)
-    })
+  })
   /* NB! The fetch() promise will reject with a TypeError only when a crucial network error is encountered or 
       CORS is misconfigured on the server side, although this usually means permission issues or similar.
   */
