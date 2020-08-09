@@ -35,8 +35,8 @@ inp1.setAttribute('type', 'search');
 inp1.setAttribute('name', 'q');
 //inp1.setAttribute('onchange', 'FetchExecutor');
 inp1.setAttribute('value', '');
-inp1.setAttribute('placeholder', 'Search query');
-inp1.setAttribute('aria-label', 'Search through site content');
+inp1.setAttribute('placeholder', '123-12345678-1234567');
+inp1.setAttribute('aria-label', 'Check ticket by number');
 container.appendChild(inp1);
 
 // Create headers and paratraphs.
@@ -52,6 +52,9 @@ container.appendChild(hdr2);
 const p2 = document.createElement('p');
 p2.textContent = '';
 container.appendChild(p2);
+const errorMessage = document.createElement('p');
+errorMessage.textContent = '';
+container.appendChild(errorMessage);
 
 let txn_id = 10000000;
 
@@ -110,6 +113,7 @@ function FetchExecutor(props) {
   mode: The mode you want to use for the request are cors, no-cors, same-origin, or navigate. The default is cors.
   */
   console.log('===============> fetch begin');
+  errorMessage.textContent = '';
   hdrWarn.textContent = 'Wait for fetch processing...';
   fetch(reqString)
   .then(response => {
@@ -160,7 +164,6 @@ function FetchExecutor(props) {
     // Do something for crucial or non-crucial error e.g. 404 here
     //const errorMessage = document.createElement('marquee') // obsolate.
     hdrWarn.textContent = 'NB! Network Error occured.';
-    const errorMessage = document.createElement('p')
     if (crucialNetErr) {
       console.log('=======================> fetch Crucial error: ' + err.message)
       errorMessage.textContent = 'Network crucial error - response NOT got: ' + err.message
@@ -172,7 +175,6 @@ function FetchExecutor(props) {
       //errorMessage.textContent = "Gah, it's not working!"
       errorMessage.textContent = 'Network response: ' + err.message
     }
-      app.appendChild(errorMessage)
   })
   /* NB! The fetch() promise will reject with a TypeError only when a crucial network error is encountered or 
       CORS is misconfigured on the server side, although this usually means permission issues or similar.
