@@ -25,15 +25,11 @@ import logo2 from './logo.png'; // Tell Webpack this JS file will use this image
 var txn_id = 10000000;
 
 function NoMatchAside() {
-  // NB! Use only state hooks for consts needed for rendering!!!
   const [search, setStateSearch] = useState('');
-  //const [searchStarts, setStateSearchStarts] = useState(false);
+  const [searchStarts, setStateSearchStarts] = useState(false);
   const [dataXML, setStateDataXML] = useState(''); // error messages if any.
   const [found, setStateFound] = useState('');
-  //const [searchDone, setStateSearchDone] = useState(false);
-  //let found = '';
-  //let dataXML = '';
-  //let searchDone = false;
+  const [searchDone, setStateSearchDone] = useState(false);
 
   // Code is invoked after the component is mounted/inserted into the DOM tree.
   // Effect Hook samples:
@@ -72,13 +68,13 @@ function NoMatchAside() {
     }
   }
   */
-  function GetData() {
+  useLayoutEffect(() => {
     //const url = 'http://unl.woks:9994/'; // project WinTicsCheckNoSslTEST
     //const url = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
     //XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
     const url = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
     //XhrExecutor(url + '?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567');
-    if ((search !== '')) { //  && (searchStarts)
+    if ((search !== '') && (searchStarts)) {
       let xhrRet = -2;
       xhrRet = FetchExecutor(2); // Asynchroneous.
       console.log('xhrRet = ' + xhrRet);
@@ -86,13 +82,11 @@ function NoMatchAside() {
       //console.log('handleSubmit Fetch XML response info found: ' + found);
       //setStateSearchDone(true);
     }
-    /*
     else {
       setStateFound('');
       console.log('Empty search and old found is: ' + found);
       setStateSearchDone(false);
     }
-    */
 
     function FetchExecutor(props) {
       console.log('FetchExecutor props:');
@@ -116,6 +110,9 @@ function NoMatchAside() {
       }
       console.log('reqString: ' +reqString);
       let crucialNetErr = true; // NB! Initially set crucial Net Error for request.
+      //fetch('https://ghibliapi.herokuapp.com/films');
+      //fetch('https://ghibliapi.herokuapp.com/films2');
+      //fetch('http://10.8.194.3:13000/');
       //fetch('http://10.8.194.3:42001/?testDebian');
       /* Fetch with init object containing any custom settings that you want to apply to the request:
       let myHeaders = new Headers();
@@ -146,7 +143,7 @@ function NoMatchAside() {
         //hdrWarn.textContent = '';
         console.log('===============> render fetched text in data object')
         console.log(data)
-        //let resp = '';
+        let resp = '';
         let txtErr;
         //hdr1.textContent = 'Text data reply received from server'
         // Create XML document from XML string using DOMParser().
@@ -158,10 +155,9 @@ function NoMatchAside() {
           //container.appendChild(hdr2);
           //p1.textContent = data; // set text content.
           //container.appendChild(p1);
-          txtErr = `Reply XML format error - ${data}`;
+          txtErr = `Request XML format error - ${data}`;
           console.log(txtErr);
           setStateDataXML(txtErr);
-          //dataXML = txtErr;
           return 1;
         }
         else {
@@ -178,18 +174,16 @@ function NoMatchAside() {
           //p2.textContent = nodeValue;
           //let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
           //container.appendChild(p2);
-          setStateFound(`result = ${nodeValue}`);
-          //found = `result = ${nodeValue}`;
+          resp = `result = ${nodeValue}`;
         }
-        //setStateSearchDone(true);
-        //searchDone = true;
-        console.log(found);
-        //setStateFound(resp);
+        setStateSearchDone(true);
+        console.log(resp);
+        setStateFound(resp);
         //setStateDataXML(resp);
         //console.log('dataXML set as: ');
         //console.log(dataXML);
         //setStateFound(dataXML);
-        console.log('Fetch XML response info set in OLD found: ');
+        console.log('Fetch XML response info set in found: ');
         console.log(found);
         return 0;
       })
@@ -204,92 +198,74 @@ function NoMatchAside() {
           txtErr = 'Network crucial error - response NOT got: ' + err.message;
           console.log(txtErr);
           setStateDataXML(txtErr);
-          //dataXML = txtErr;
         }
         else {
           console.log('=======================> fetch Non-crucial error: ' + err.message)
           txtErr = 'Network response: ' + err.message;
           console.log(txtErr);
           setStateDataXML(txtErr);
-          //dataXML = txtErr;
         }
       })
       /* NB! The fetch() promise will reject with a TypeError only when a crucial network error is encountered or 
           CORS is misconfigured on the server side, although this usually means permission issues or similar.
       */
         } // end of function FetchExecutor(props, search) 
-  } // end functio GetData().
-  //[search, searchStarts, found]
+  },[search, searchStarts, found]); // end of useEffect(() => {
   //[search, FetchExecutor, found] 
   
   function handleChangeSearch(event) {
     console.log('========> handleChangeSearch event <==========')
     let strSearch = '';
     let oldSearch = search;
-    //console.log('event:');
+    console.log('event: ' + event);
     console.log(event);
     console.log('event.target: ' + event.target);
     console.log(event.target);
     console.log('event.target.name: ' + event.target.name);
-    //console.log(event.target.name);
+    console.log(event.target.name);
     console.log('event.target.type: ' + event.target.type)
-    //console.log(event.target.type)
+    console.log(event.target.type)
     console.log('event.target.value: ' + event.target.value);
-    //console.log(event.target.value);
+    console.log(event.target.value);
     //setStateSearch(event.target.value.toUpperCase());
     strSearch = event.target.value.toUpperCase();
     if (strSearch !== oldSearch) {
       console.log('strSearch vs oldSearch: [' + strSearch + '] [' + oldSearch + ']')
       setStateFound('');
-      setStateDataXML('');
-      //setStateSearchDone(false);
-      //found = '';
-      //dataXML = '';
-      //searchDone = false;
+      setStateSearchDone(false);
     }
     setStateSearch(strSearch);
     console.log('strSearch: ' + strSearch);
     if (strSearch === '') {
       setStateFound('');
-      setStateDataXML('');
-      //setStateSearchDone(false);
-      //found = '';
-      //dataXML = '';
-      //searchDone = false;
+      console.log('Old found: ' + found);
+      setStateSearchDone(false);
      }
-     console.log('Old found: ' + found);
     }
 
   function handleSubmit(event) {
-    console.log('=====================================> Form handleSubmit <============================================')
-    //console.log('event:');
+    console.log('========> Form handleSubmit <==========')
+    console.log('event: ' + event);
     console.log(event);
     console.log('event.target: ' + event.target);
     console.log(event.target);
-    /* following are undefined or empty in form case:
-    //console.log('event.target.name: ' + event.target.name);
-    //console.log(event.target.name);
-    //console.log('event.target.type: ' + event.target.type)
-    //console.log(event.target.type)
-    //console.log('event.target.value: ' + event.target.value);
-    //console.log(event.target.value);
-    */
-    console.log(`search string: ${search}`);
+    console.log('event.target.name: ' + event.target.name);
+    console.log(event.target.name);
+    console.log('event.target.type: ' + event.target.type)
+    console.log(event.target.type)
+    console.log('event.target.value: ' + event.target.value);
+    console.log(event.target.value);
+    console.log(`search: ${search}`);
     event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
-    /* e.g.
-    Form request submitted by POST. Action URL is /formAK with search as body: 
-    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    */
-    GetData();
-    //console.log('searchDone after GetDate()' + searchDone);
-    console.log('found after GetDate()' + found);
-    /*
     if (search.length > 0) {
-      //setStateSearchStarts(true);
+      setStateSearchStarts(true);
     }
     else {
       setStateSearchStarts(false);
     }
+    /* e.g.
+    Form request submitted by POST. Action URL is /formAK with search as body: 
+    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
     */
   }
 
@@ -326,10 +302,8 @@ function NoMatchAside() {
           <input type="submit" value="Go!"/>
         </form>
         {/*<p id="found">{found}</p>*/}
-        {(found.length > 0) && <p id="found">{found}</p>}
-        {/* searchDone && <p id="found">{found}</p>*/}
-        <p id="dataXML">{dataXML}</p>
-        {/* dataXML && <p id="dataXML">{dataXML}</p>*/}
+        {searchDone && <p id="found">{found}</p>}
+        {dataXML && <p id="dataXML">{dataXML}</p>}
 
         <Switch>
           <Route exact path="/">
