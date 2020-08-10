@@ -1,4 +1,4 @@
-// NoMatch404aside 102
+// NoMatch404aside 101
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -23,7 +23,7 @@ import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use 
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" var works!!!
-let txn_id = 10000300;
+let txn_id = 10000000;
 
 function NoMatchAside() {
   // NB! Use only state hooks for consts needed for rendering tags!!!
@@ -76,7 +76,7 @@ function NoMatchAside() {
     }
   }
   */
-  function GetData(command) {
+  function GetData() {
     //const url = 'http://unl.woks:9994/'; // project WinTicsCheckNoSslTEST
     //const url = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
     //XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
@@ -84,23 +84,26 @@ function NoMatchAside() {
     //XhrExecutor(url + '?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567');
     console.log('txn_id=' + txn_id);
     let xhrRet = -2;
-    if (command === 'val') {
-      if ((search !== '')) { //  && (searchStarts)
-        xhrRet = FetchExecutor(2); // Asynchroneous.
-        //console.log('xhrRet = ' + xhrRet);
-      }
-      else {
-        return;
-      }
+    if ((search !== '')) { //  && (searchStarts)
+      xhrRet = FetchExecutor(2); // Asynchroneous.
+      console.log('xhrRet = ' + xhrRet);
+      //setStateFound(dataXML);
+      //console.log('handleSubmit Fetch XML response info found: ' + found);
+      //setStateSearchDone(true);
     }
-    else if (command === 'pay') {
-      xhrRet = FetchExecutor(1); // Asynchroneous.
-      //console.log('xhrRet = ' + xhrRet);
-      console.log('new txn_id=' + txn_id);
-      }
     else {
-      return;
-    } // end of val or pay case.
+      xhrRet = FetchExecutor(1); // Asynchroneous.
+      console.log('xhrRet = ' + xhrRet);
+    }
+    txn_id = txn_id + 1;
+    console.log('txn_id=' + txn_id);
+  /*
+    else {
+      setStateFound('');
+      console.log('Empty search and old found is: ' + found);
+      setStateSearchDone(false);
+    }
+    */
 
     function FetchExecutor(props) {
       console.log('FetchExecutor props:');
@@ -124,10 +127,12 @@ function NoMatchAside() {
       }
       console.log('reqString: ' +reqString);
       let crucialNetErr = true; // NB! Initially set crucial Net Error for request.
+      //fetch('http://10.8.194.3:42001/?testDebian');
       /* Fetch with init object containing any custom settings that you want to apply to the request:
       let myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/xml');
       fetch('http://10.8.194.3:42001/?testDebian', {method: 'GET', headers: myHeaders, mode: 'cors'}).then(function(response) {
+      
       mode: The mode you want to use for the request are cors, no-cors, same-origin, or navigate. The default is cors.
       */
       console.log('===============> fetch begin');
@@ -160,6 +165,10 @@ function NoMatchAside() {
         let oXmlDOM = oParser.parseFromString(data, "application/xml");
         //console.log(oXmlDOM.documentElement.nodeName === "parsererror" ? "error while parsing" : 'XML document name: ' + oXmlDOM.documentElement.nodeName);
         if (oXmlDOM.documentElement.nodeName === "parsererror") {
+          //hdr2.textContent = 'NB! Wrong format of XML sting received:';
+          //container.appendChild(hdr2);
+          //p1.textContent = data; // set text content.
+          //container.appendChild(p1);
           txtErr = `Reply XML format error - ${data}`;
           console.log(txtErr);
           setStateDataXML(txtErr);
@@ -171,23 +180,28 @@ function NoMatchAside() {
           let xmlString = xmlS.serializeToString(oXmlDOM);
           console.log('xmlString:')
           console.log(xmlString)
+          //p1.textContent = xmlString;
+          //container.appendChild(p1);
+          //hdr2.textContent = '<result> tag:';
+          //container.appendChild(hdr2);
           let nodeValue = oXmlDOM.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
-          let foundNew;
-          if (props === 1) {
-            foundNew = xmlString;
-            setStateFound(foundNew);
-            //console.log('Fetch XML new response info set in found:' +  foundNew);
-            //found = `result = ${nodeValue}`;
-          }
-          else if (props === 2) {
-            foundNew = `result = ${nodeValue}`
-            setStateFound(foundNew);
-            //console.log('Fetch XML new response info set in found:' +  foundNew);
-            //found = `result = ${nodeValue}`;
-          }
+          //const p2 = document.createElement('p');
+          //p2.textContent = nodeValue;
+          //let nodeValue2 = docXml.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get <sum> tag text value.
+          //container.appendChild(p2);
+          setStateFound(`result = ${nodeValue}`);
+          //found = `result = ${nodeValue}`;
         }
-        //console.log('Fetch XML previous response info still preserved in found: ');
-        //console.log(found);
+        //setStateSearchDone(true);
+        //searchDone = true;
+        console.log(found);
+        //setStateFound(resp);
+        //setStateDataXML(resp);
+        //console.log('dataXML set as: ');
+        //console.log(dataXML);
+        //setStateFound(dataXML);
+        console.log('Fetch XML response info set in OLD found: ');
+        console.log(found);
         return 0;
       })
       .catch(err => { // catch network error and artificially thrown Error in very first then().
@@ -214,7 +228,7 @@ function NoMatchAside() {
       /* NB! The fetch() promise will reject with a TypeError only when a crucial network error is encountered or 
           CORS is misconfigured on the server side, although this usually means permission issues or similar.
       */
-    } // end of function FetchExecutor(props, search) 
+        } // end of function FetchExecutor(props, search) 
   } // end functio GetData().
   //[search, searchStarts, found]
   //[search, FetchExecutor, found] 
@@ -277,43 +291,9 @@ function NoMatchAside() {
     Form request submitted by POST. Action URL is /formAK with search as body: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
     */
-    GetData('val');
+    GetData();
     //console.log('searchDone after GetDate()' + searchDone);
-    //console.log('found after GetDate(val)' + found);
-    /*
-    if (search.length > 0) {
-      //setStateSearchStarts(true);
-    }
-    else {
-      setStateSearchStarts(false);
-    }
-    */
-  }
-
-  function buyTicket(event) {
-    console.log('=====================================> buyTicket onClick <============================================')
-    //console.log('event:');
-    console.log(event);
-    console.log('event.target: ' + event.target);
-    console.log(event.target);
-    /* following are undefined or empty in form case:
-    //console.log('event.target.name: ' + event.target.name);
-    //console.log(event.target.name);
-    //console.log('event.target.type: ' + event.target.type)
-    //console.log(event.target.type)
-    //console.log('event.target.value: ' + event.target.value);
-    //console.log(event.target.value);
-    */
-    //console.log(`search string: ${search}`);
-    setStateSearch('');
-    event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
-    /* e.g.
-    Form request submitted by POST. Action URL is /formAK with search as body: 
-    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    */
-    GetData('pay');
-    //console.log('searchDone after GetDate()' + searchDone);
-    //console.log('found after GetDate(pay)' + found);
+    console.log('found after GetDate()' + found);
     /*
     if (search.length > 0) {
       //setStateSearchStarts(true);
@@ -361,7 +341,6 @@ function NoMatchAside() {
         {/* searchDone && <p id="found">{found}</p>*/}
         <p id="dataXML">{dataXML}</p>
         {/* dataXML && <p id="dataXML">{dataXML}</p>*/}
-        <button onClick={buyTicket} >Buy Ticket</button>
 
         <Switch>
           <Route exact path="/">
