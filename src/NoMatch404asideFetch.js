@@ -1,4 +1,4 @@
-// NoMatch404aside 002
+// NoMatch404aside 101
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -22,15 +22,19 @@ import { useState, useEffect, useLayoutEffect } from 'react'; // React Hooks use
 import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
-var txn_id = 10000000;
+// NB! "Global" var works!!!
+let txn_id = 10000000;
 
 function NoMatchAside() {
-  // NB! Use only state hooks for consts needed for rendering!!!
+  // NB! Use only state hooks for consts needed for rendering tags!!!
   const [search, setStateSearch] = useState('');
-  //const [searchStarts, setStateSearchStarts] = useState(false);
+  //const [searchStarts, setStateSearchStarts] = useState(false); // not needed!
   const [dataXML, setStateDataXML] = useState(''); // error messages if any.
   const [found, setStateFound] = useState('');
-  //const [searchDone, setStateSearchDone] = useState(false);
+  //const [searchDone, setStateSearchDone] = useState(false); // not needed!
+
+
+  // NB! vars values will no kept and on next render will be reset to initial:
   //let found = '';
   //let dataXML = '';
   //let searchDone = false;
@@ -78,15 +82,22 @@ function NoMatchAside() {
     //XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
     const url = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
     //XhrExecutor(url + '?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567');
+    console.log('txn_id=' + txn_id);
+    let xhrRet = -2;
     if ((search !== '')) { //  && (searchStarts)
-      let xhrRet = -2;
       xhrRet = FetchExecutor(2); // Asynchroneous.
       console.log('xhrRet = ' + xhrRet);
       //setStateFound(dataXML);
       //console.log('handleSubmit Fetch XML response info found: ' + found);
       //setStateSearchDone(true);
     }
-    /*
+    else {
+      xhrRet = FetchExecutor(1); // Asynchroneous.
+      console.log('xhrRet = ' + xhrRet);
+    }
+    txn_id = txn_id + 1;
+    console.log('txn_id=' + txn_id);
+  /*
     else {
       setStateFound('');
       console.log('Empty search and old found is: ' + found);
