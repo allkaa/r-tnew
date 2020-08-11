@@ -1,4 +1,4 @@
-// NoMatch404aside 102
+// NoMatch404asideFetch 103
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -22,8 +22,9 @@ import { useState, useEffect, useLayoutEffect } from 'react'; // React Hooks use
 import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
-// NB! "Global" var works!!!
-let txn_id = 10000300;
+// NB! "Global" vars work in Hooks!!!
+let txn_id = 10000030;
+let myInfoRef = React.createRef();
 
 function NoMatchAside() {
   // NB! Use only state hooks for consts needed for rendering tags!!!
@@ -32,7 +33,7 @@ function NoMatchAside() {
   const [dataXML, setStateDataXML] = useState(''); // error messages if any.
   const [found, setStateFound] = useState('');
   //const [searchDone, setStateSearchDone] = useState(false); // not needed!
-
+  //let myInfoRef = React.createRef();
 
   // NB! vars values will no kept and on next render will be reset to initial:
   //let found = '';
@@ -82,11 +83,12 @@ function NoMatchAside() {
     //XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
     const url = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
     //XhrExecutor(url + '?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567');
-    console.log('txn_id=' + txn_id);
-    let xhrRet = -2;
+    console.log('OLD txn_id=' + txn_id);
+    //let xhrRet = -2; // NB! return will always as xhrRet = undefined
     if (command === 'val') {
       if ((search !== '')) { //  && (searchStarts)
-        xhrRet = FetchExecutor(2); // Asynchroneous.
+        //xhrRet = FetchExecutor(2); // Asynchroneous, return will always as xhrRet = undefined
+        FetchExecutor(2); // Asynchroneous, retry will always as xhrRet = undefined
         //console.log('xhrRet = ' + xhrRet);
       }
       else {
@@ -94,9 +96,10 @@ function NoMatchAside() {
       }
     }
     else if (command === 'pay') {
-      xhrRet = FetchExecutor(1); // Asynchroneous.
+      //xhrRet = FetchExecutor(1); // Asynchroneous, return will always as xhrRet = undefined
+      FetchExecutor(1);
       //console.log('xhrRet = ' + xhrRet);
-      console.log('new txn_id=' + txn_id);
+      console.log('NEW txn_id=' + txn_id);
       }
     else {
       return;
@@ -131,10 +134,16 @@ function NoMatchAside() {
       mode: The mode you want to use for the request are cors, no-cors, same-origin, or navigate. The default is cors.
       */
       console.log('===============> fetch begin');
+      console.log('myInfoRef.current.textContent: ' + myInfoRef.current.textContent);
+      myInfoRef.current.textContent = 'Wait for fetch processing...';
+      console.log('myInfoRef.current.textContent: ' + myInfoRef.current.textContent);
       //errorMessage.textContent = '';
       //hdrWarn.textContent = 'Wait for fetch processing...';
       fetch(reqString)
       .then(response => {
+        console.log('myInfoRef: ' + myInfoRef);
+        console.log(myInfoRef.current);
+        myInfoRef.current.textContent = '';
         crucialNetErr = false
           console.log('===============> fetch response got response.ok as ' + response.ok)
           if(response.ok) {
@@ -169,8 +178,8 @@ function NoMatchAside() {
         else {
           let xmlS = new XMLSerializer();
           let xmlString = xmlS.serializeToString(oXmlDOM);
-          console.log('xmlString:')
-          console.log(xmlString)
+          //console.log('xmlString:')
+          //console.log(xmlString)
           let nodeValue = oXmlDOM.getElementsByTagName("result")[0].childNodes[0].nodeValue; // get <result> tag text value.
           let foundNew;
           if (props === 1) {
@@ -194,6 +203,7 @@ function NoMatchAside() {
         // Do something for crucial or non-crucial error e.g. 404 here
         //const errorMessage = document.createElement('marquee') // obsolate.
         //hdrWarn.textContent = 'NB! Network Error occured.';
+        //myInfoRef.current.textContent = '';
         let txtErr;
         if (crucialNetErr) {
           console.log('=======================> fetch Crucial error: ' + err.message)
@@ -254,7 +264,7 @@ function NoMatchAside() {
       //dataXML = '';
       //searchDone = false;
      }
-     console.log('Old found: ' + found);
+     //console.log('OLD FOUND INFO: ' + found);
     }
 
   function handleSubmit(event) {
@@ -362,6 +372,7 @@ function NoMatchAside() {
         <p id="dataXML">{dataXML}</p>
         {/* dataXML && <p id="dataXML">{dataXML}</p>*/}
         <button onClick={buyTicket} >Buy Ticket</button>
+        <p ref={myInfoRef}></p>
 
         <Switch>
           <Route exact path="/">
