@@ -131,7 +131,7 @@ console.log(element);
 
 ///*
 ReactDOM.render(
-  <App />,
+  <App txn_id={10000000}/>,
   document.getElementById('root')
 );
 //*/

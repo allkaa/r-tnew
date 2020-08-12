@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 103
+// NoMatch404asideFetch 104
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -23,10 +23,15 @@ import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use 
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
-let txn_id = 10000030;
+let txn_id = 0;
 let myInfoRef = React.createRef();
 
-function NoMatchAside() {
+function NoMatchAside(props) {
+  console.log('Main props:' + props);
+  console.log(props); // {txn_id: 10000000}
+  if (txn_id === 0) {
+    txn_id = props.txn_id;
+  }
   // NB! Use only state hooks for consts needed for rendering tags!!!
   const [search, setStateSearch] = useState('');
   //const [searchStarts, setStateSearchStarts] = useState(false); // not needed!
@@ -361,10 +366,10 @@ function NoMatchAside() {
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
         <form role="search" method="get" action="formAK" onSubmit={handleSubmit}> {/* action="formAK" form onSubmit={handleSubmit} */}
-          <input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="Search query 2" aria-label="Search through site content"></input>
+          <input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search through site content"></input>
           {/*<input type="search" name="q" placeholder="Search query 7" aria-label="Search through site content"/>*/}
           {/*<input type="submit" value="Go!" formMethod="get" formAction="formAK"/>*/}
-          <input type="submit" value="Go!"/>
+          <input type="submit" value="Ticket search"/>
         </form>
         {/*<p id="found">{found}</p>*/}
         {(found.length > 0) && <p id="found">{found}</p>}
