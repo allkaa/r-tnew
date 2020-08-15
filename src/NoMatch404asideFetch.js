@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 104
+// NoMatch404asideFetch 105
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -84,10 +84,10 @@ function NoMatchAside(props) {
   */
   function GetData(command) {
     //const url = 'http://unl.woks:9994/'; // project WinTicsCheckNoSslTEST
-    //const url = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
-    //XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
-    const url = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
+    const urlpay = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
     //XhrExecutor(url + '?agent=65&type=2&command=checkval&ticket_number=004-12345678-1234567');
+    const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
+    //XhrExecutor(url + '?agent=58&type=2&command=checkval&ticket_number=004-12345678-1234567');
     console.log('OLD txn_id=' + txn_id);
     //let xhrRet = -2; // NB! return will always as xhrRet = undefined
     if (command === 'val') {
@@ -121,10 +121,10 @@ function NoMatchAside(props) {
       let reqString = '';
       if (props === 1) {
         txn_id = txn_id + 1;
-        reqString = url + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+        reqString = urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
       }
       else if (props === 2) {
-        reqString = url + '?agent=65&type=2&command=checkval&ticket_number=' + search ;
+        reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=' + search ;
       }
       else {
         console.log('NB! Internal error - wrong props: ' + props);
@@ -194,7 +194,30 @@ function NoMatchAside(props) {
             //found = `result = ${nodeValue}`;
           }
           else if (props === 2) {
-            foundNew = `result = ${nodeValue}`
+            if (nodeValue === '0') {
+              nodeValue = oXmlDOM.getElementsByTagName("sum")[0].childNodes[0].nodeValue; // get e.g. <sum>20.00</sum> tag text value.
+              if (nodeValue === '-1.00') {
+                foundNew = `Большой выигрыш!!!.`
+              }
+              else if (nodeValue === '-2.00') {
+                foundNew = `Билет уже выплачен.`
+              }
+              else if (nodeValue === '-3.00') {
+                foundNew = `Билет выплачен с обменным билетом.`
+              }
+              else if (nodeValue === '-4.00') {
+                foundNew = `Билет аннулирован.`
+              }
+              else if (nodeValue === '0.00') {
+                foundNew = `Билет не выиграл.`
+              }
+              else {
+                foundNew = `Ваш виграш ${nodeValue} грн.`
+              }
+            }
+            else {
+              foundNew = `Ошибка поиска, (код ${nodeValue})`
+            }
             setStateFound(foundNew);
             //console.log('Fetch XML new response info set in found:' +  foundNew);
             //found = `result = ${nodeValue}`;
