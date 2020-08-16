@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 105
+// NoMatch404asideFetch 106
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -144,7 +144,8 @@ function NoMatchAside(props) {
       console.log('myInfoRef.current.textContent: ' + myInfoRef.current.textContent);
       //errorMessage.textContent = '';
       //hdrWarn.textContent = 'Wait for fetch processing...';
-      fetch(reqString)
+      // NB! mode no-cors does returns NetWork Error 0.
+      fetch(reqString, {method: 'GET', mode: 'cors'}) // fetch(reqString) or fetch(reqString, {method: 'GET', headers: myHeaders, mode: 'cors'})
       .then(response => {
         console.log('myInfoRef: ' + myInfoRef);
         console.log(myInfoRef.current);
@@ -413,7 +414,7 @@ function NoMatchAside(props) {
             <NavWillMatch />
           </Route>
           <Route path="/nav-match3">
-            <NavWillMatch />
+            <Contact /> {/* NavWillMatch */}
           </Route>
           <Route path="*">
             <NavNoMatch /> {/*NavHome or NavNoMatch */}
@@ -513,6 +514,29 @@ function NavNoMatch() {
       </p>
     </div>
   );
+}
+
+function Contact() {
+  //let location = useLocation();
+  //console.log('location:');
+  //console.log(location);
+  //let history = useHistory();
+  //console.log('history:');
+  //console.log(history.location.pathname);
+  //console.log(history);
+  //let dt = new Date();
+  //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  return <address className = "special"> {/* id = "contact" */}
+    Українська Національна Лотерея<br/>
+    Гаряча лінія<br/>
+    0 800 807 807 <br/> 
+    (безкоштовно)<br/>
+    Написати нам листа<br/>
+    <a href="mailto:web@unl.ua">web@unl.ua</a><br/>
+    Telegram-чат техпідтримки<br/>
+    <a href="https:web@unl.ua">web@unl.ua</a><br/>
+    @unl_ua_bot
+  </address>;
 }
 
 function AsideHome() {
