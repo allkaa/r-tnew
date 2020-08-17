@@ -124,7 +124,7 @@ function NoMatchAside(props) {
         reqString = urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
       }
       else if (props === 2) {
-        reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=' + search ;
+        reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=' + search;
       }
       else {
         console.log('NB! Internal error - wrong props: ' + props);
