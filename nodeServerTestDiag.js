@@ -27,9 +27,10 @@ let formNameIni = 'index.html';
 //let formNameIni = 'indexForm.html';
 //let formName = 'submitFormAK';
 
-const client = require('http');
+const http = require('http');
 const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
 let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234'; // + search;
+let rawData = '';
 
 const https = require('https');
 const urlLegacy = require('url'); // Legacy url module.
@@ -121,8 +122,8 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   // In req.headers Object property host: "unl.test:8081"
   // <==================== Begin of GET method form submit case ====================================================>
   if ((req.method === "GET")) {
-    // for req.method === "GET" objUrl.search is ? + query e.g. "?fname=Alex&sname=Raven" or Null
-    // req.url = "/" or e.g. "styles/style.css" or "/submitFormAK?fname=Alex&sname=Raven"
+    // for req.method === "GET" objUrl.search is ? + query e.g. "?q=123-12345678-1234567" or Null
+    // req.url = "/" or e.g. "styles/style.css" or "/formAK?q=123-12345678-1234567"
     // if req.method === "POST" then ObjUrl.search will be "" always.
     /*
     req.url = "/" or e.g. "/submitformAK?fname=al&sname=kaa"
@@ -198,10 +199,10 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       }
     } // end of objUrl.search === null -> no ? in GET request.
     else { // objUrl.search !== null, there is ? in GET request.
-      // for req.method === "GET" objUrl.search is ? + query e.g. "?fname=Alex&sname=Raven" or Null if no ? in GET request.
-      // req.url = "/formNameIni?fname=Alex&sname=Raven"
+      // for req.method === "GET" objUrl.search is ? + query e.g. "?q=123-12345678-1234567" or Null if no ? in GET request.
+      // req.url = "/formAK?q=123-12345678-1234567"
       /*
-      req.url = /formNameIni?fname=al&sname=kaa"
+      req.url = "/formAK?q=123-12345678-1234567"
       ObjUrl {
       href: = path: /formNameIni?fname=al&sname=kaa"
       pathname: /formNameIni"
@@ -211,8 +212,27 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       */
       // HACKER ATTACK OR FAULTY CLIENT.
       //req.connection.destroy();
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
+      if (req.url.indexOf('/formAK?') >= 0) {
+        /*
+        res.writeHead(200, { 'Content-Type': 'text/xml' });
+        //res.write('');
+        res.write('<?xml version="1.0" encoding="UTF-8"?>');
+        res.write('<response>');
+        res.write('<ticket>225-13818091-1101234</ticket>');
+        res.write('<game>2</game>');
+        res.write('<sum>10.00</sum>');
+        res.write(`<result>0</result>`);
+        res.write('</response>');
+        */
+        GetTicket('225-13818091-1101234');
+        console.log('rawData:')
+        console.log(rawData);
+        res.write(rawData);
+      } // end of if (req.url.indexOf('/formAK?') >= 0)
+      else {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
+      }
       return res.end();
     }
   } // <==================== End of GET method form submit case ====================================================>
@@ -282,3 +302,41 @@ server.listen(port, hostname, () => {
 
 dtVar = new Date();
 console.log('End Serer main PROGAM path after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+function GetTicket(ticnum) {
+  http.get(reqString, (res) => {
+    const { statusCode } = res;
+    const contentType = res.headers['content-type'];
+
+    let error;
+    if (statusCode !== 200) {
+      error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
+    }
+    else if (!/^text\/xml/.test(contentType)) {
+      error = new Error(`Invalid content-type.\n Expected text/xml but received ${contentType}`);
+    }
+    if (error) {
+      console.error(error.message);
+      // consume response data to free up memory
+      res.resume();
+      //return error.message;
+    }
+
+    res.setEncoding('utf8');
+    //let rawData = '';
+    res.on('data', (chunk) => { rawData += chunk; });
+    res.on('end', () => {
+      try {
+        //const parsedData = JSON.parse(rawData);
+        //console.log(parsedData);
+        console.log(rawData);
+      } catch (e) {
+        console.error(e.message);
+      }
+      //return rawData;
+    });
+  }).on('error', (e) => {
+    console.error(`Got error: ${e.message}`);
+    //return e.message;
+  });
+}

@@ -311,12 +311,12 @@ function NoMatchAside(props) {
     //console.log(event.target.value);
     */
     console.log(`search string: ${search}`);
-    event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
+    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
     /* e.g.
     Form request submitted by POST. Action URL is /formAK with search as body: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
     */
-    GetData('val');
+    //GetData('val');
     //console.log('searchDone after GetDate()' + searchDone);
     //console.log('found after GetDate(val)' + found);
     /*
