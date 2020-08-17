@@ -27,7 +27,10 @@ let formNameIni = 'index.html';
 //let formNameIni = 'indexForm.html';
 //let formName = 'submitFormAK';
 
-//const http = require('http');
+const client = require('http');
+const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
+let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234'; // + search;
+
 const https = require('https');
 const urlLegacy = require('url'); // Legacy url module.
 //const { URL } = require('url'); // ES6 url module
