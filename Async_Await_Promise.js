@@ -149,8 +149,10 @@ function getAmount(userId) {
 
 // Use ES2017 construction asyn/await.
 /*
-  The async keyword tells the JavaScript compiler to treat the function differently. The compiler pauses whenever it reaches the await keyword within that function.
-  It assumes that the expression after await will return a promise and waits until the promise is resolved or rejected before moving further.
+  The async keyword tells the JavaScript compiler to treat the function differently.
+  The compiler pauses whenever it reaches the await keyword within that function.
+  It assumes that the expression after await will return a promise and waits until the promise is resolved or rejected
+   before moving further.
 */
 async function getAmount2(userId) {
   dtVar = new Date();

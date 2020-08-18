@@ -303,7 +303,7 @@ server.listen(port, hostname, () => {
 dtVar = new Date();
 console.log('End Serer main PROGAM path after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
-function GetTicket(ticnum) {
+async function GetTicket(ticnum) {
   http.get(reqString, (res) => {
     const { statusCode } = res;
     const contentType = res.headers['content-type'];
