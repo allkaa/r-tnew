@@ -212,6 +212,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       */
       // HACKER ATTACK OR FAULTY CLIENT.
       //req.connection.destroy();
+      //req.url = "/formAK?q=123-12345678-1234567"
       if (req.url.indexOf('/formAK?') >= 0) {
         /*
         res.writeHead(200, { 'Content-Type': 'text/xml' });
@@ -224,16 +225,18 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         res.write(`<result>0</result>`);
         res.write('</response>');
         */
-        GetTicket('225-13818091-1101234');
-        console.log('rawData:')
+       rawData = '';
+        GetTicket('225-13818091-1101234', res);
+        console.log(`rawData in server.on('request', (req, res) ...) event :`)
         console.log(rawData);
-        res.write(rawData);
+        //res.write(rawData);
       } // end of if (req.url.indexOf('/formAK?') >= 0)
       else {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
+        return res.end();
       }
-      return res.end();
+      //return res.end();
     }
   } // <==================== End of GET method form submit case ====================================================>
   else { // <==================== Begin of POST method form submit case ============================================>
@@ -303,7 +306,7 @@ server.listen(port, hostname, () => {
 dtVar = new Date();
 console.log('End Serer main PROGAM path after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
-async function GetTicket(ticnum) {
+function GetTicket(ticnum, res2) {
   http.get(reqString, (res) => {
     const { statusCode } = res;
     const contentType = res.headers['content-type'];
@@ -329,10 +332,16 @@ async function GetTicket(ticnum) {
       try {
         //const parsedData = JSON.parse(rawData);
         //console.log(parsedData);
+        console.log(`rawData in client http.on('end', ...) event :`)
         console.log(rawData);
+        res2.writeHead(200, { 'Content-Type': 'text/xml' });
+        res2.write(rawData);
       } catch (e) {
         console.error(e.message);
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res2.write(e.message);
       }
+      res2.end();
       //return rawData;
     });
   }).on('error', (e) => {

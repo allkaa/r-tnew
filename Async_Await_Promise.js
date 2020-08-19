@@ -93,6 +93,111 @@ return;
 
 // Asyn/await ES2017
 
+const http = require('http');
+const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
+let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234'; // + search;
+let rawData = '';
+
+// returning new Promise with resolve or reject.
+function GetTicketEx(ticnum) {
+  dtVar = new Date();
+  console.log(`start GetTicketEx(${ticnum}) ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  return new Promise((resolve, reject) => {
+    dtVar = new Date();
+    console.log(`inside  GetTicketEx(${ticnum}) return new Promise with resolve XML or reject with error.message at ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    /*
+    setTimeout(() => {
+      if (userId === 1) resolve('john');
+      else if (userId === 2) resolve('mary');
+      else reject(`unknown userId ${userId}`)
+    }, 1000);
+    */
+    http.get(reqString, (res) => { 
+      const { statusCode } = res;
+      const contentType = res.headers['content-type'];
+
+      let error;
+      if (statusCode !== 200) {
+        error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
+      }
+      else if (!/^text\/xml/.test(contentType)) {
+        error = new Error(`Invalid content-type.\n Expected text/xml but received ${contentType}`);
+      }
+      if (error) {
+        console.error(error.message);
+        // consume response data to free up memory
+        res.resume();
+        //return error.message;
+        reject(error.message);
+      }
+
+      res.setEncoding('utf8');
+      //let rawData = '';
+      res.on('data', (chunk) => { rawData += chunk; });
+      res.on('end', () => {
+        try {
+          //const parsedData = JSON.parse(rawData);
+          //console.log(parsedData);
+          //console.log(rawData);
+          resolve(rawData);
+        } catch (e) {
+          console.error(e.message);
+          reject(error.message);
+        }
+        //return rawData;
+      });
+    }) // end of http.get(reqString, (res).
+    .on('error', (e) => {
+        console.error(`Got error: ${e.message}`);
+        //return e.message;
+        reject(`Got error: ${e.message}`);
+    }); // end of ..on('error', ...)
+  }); // end of return New Promose.
+} // end or function GetTicketEx(ticnum).
+
+// Use ES2017 construction asyn/await.
+/*
+  The async keyword tells the JavaScript compiler to treat the function differently.
+  The compiler pauses whenever it reaches the await keyword within that function.
+  It assumes that the expression after await will return a promise and waits until the promise is resolved or rejected
+   before moving further.
+*/
+async function GetTicket(ticnum) {
+  dtVar = new Date();
+  console.log(`start await GetTicketEx(${ticnum}) at ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  try {
+    rawData = await GetTicketEx(ticnum);
+    console.log('rawData in async:');
+    console.log(rawData);
+    return rawData;
+  }
+  catch (rejectMsgOrBlock) { // catch GetTicketEx(ticnum) reject if any.
+    console.log(rejectMsgOrBlock);
+  }
+}
+dtVar = new Date();
+console.log("start GetTicket(ticnum) callilng " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+//let test;
+let test = GetTicket(`123-12345678-1234567`);
+console.log('test in main:');
+console.log(test);
+console.log('rawData in main:');
+console.log(rawData);
+
+/*
+setTimeout(() => {
+  console.log('test after setTimeout:');
+  console.log(test);
+  console.log('rawData after setTimeout:');
+  console.log(rawData);
+  }, 5000);
+*/
+
+dtVar = new Date();
+console.log("End of MAIN script ==================================== at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+return 0;
+
+//=================================================================================================================================
 // returning new Promise with resolve or reject.
 function getUser(userId) {
   dtVar = new Date();
