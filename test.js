@@ -1,5 +1,12 @@
 'use strict';
 
+const parseString = require('xml2js').parseString;
+let xml = "<root>Hello xml2js!</root>"
+parseString(xml, function (err, result) {
+    console.log(result);
+});
+
+/*
 try {
   throw new Error('I crashed!');
 }
@@ -14,7 +21,7 @@ console.log('end of program');
 
 //const iframe = document.getElementById('glm')
 //iframe.setAttribute('src', 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d20333.535337350597!2d30.61040335!3d50.42821145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sua!4v1567495244815!5m2!1sen!2sua');
-
+*/
 
 /*
 class My_Event_Target_class extends EventTarget {
