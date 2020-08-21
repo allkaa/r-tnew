@@ -1,10 +1,53 @@
 'use strict';
 
 const parseString = require('xml2js').parseString;
-let xml = "<root>Hello xml2js!</root>"
+//let xml = '?xml version="1.0" encoding="UTF-8"?><response><ticket>225-13818091-1101234</ticket><game>2</game><sum>10.00</sum><result>0</result></response>';
+let xml = '<?xml version="1.0" encoding="UTF-8"?><response><ticket>225-13818091-1101234</ticket><game>2</game><sum>10.00</sum><result>0</result></response>';
+let reply;
+reply = '';
+let errmsg = '';
+//errmsg = "Non-whitespace before first tag.\nLine: 0\nColumn: 1\nChar: ?";
+/*
+reply = errmsg.replace('\n',' ');
+while (reply.indexOf('\n') !== -1) {
+  reply = reply.replace('\n',' ');
+}
+console.log(reply);
+*/
 parseString(xml, function (err, result) {
-    console.log(result);
+    if (err !== null) {
+      //console.log(err.message);
+      // "Non-whitespace before first tag.\nLine: 0\nColumn: 1\nChar: ?"
+      errmsg = err.message.replace('\n',' ');
+      while (errmsg.indexOf('\n') !== -1) {
+        errmsg = errmsg.replace('\n',' ');
+      }
+      //console.log(errmsg);
+    }
+    else {
+      //console.log(result);
+      reply = result;
+    }
 });
+
+let sum = '';
+if (reply !== '') {
+  //console.log('reply:');
+  //console.log(reply.response.result[0]);
+  if (reply.response.result[0] === '0') {
+    sum = reply.response.sum[0];
+    console.log('sum =' + sum);
+  }
+  else {
+    console.log('non win tic');
+  }
+}
+else {
+  console.log('errmsg:');
+  console.log(errmsg);
+}
+
+console.log('end of test');
 
 /*
 try {
