@@ -31,6 +31,7 @@ const http = require('http');
 const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
 let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234'; // + search;
 let rawData = '';
+const parseString = require('xml2js').parseString;
 
 const https = require('https');
 const urlLegacy = require('url'); // Legacy url module.
@@ -225,10 +226,22 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         res.write(`<result>0</result>`);
         res.write('</response>');
         */
+        /*
+        ElseIf (InStrRev(strBuf, "PPAY", -1, CompareMethod.Text) > 0) Then
+        ReqStruct.sum = -1
+        ElseIf (InStrRev(strBuf, "CASH", -1, CompareMethod.Text) > 0) Then
+        ReqStruct.sum = -2
+        ElseIf (InStrRev(strBuf, "CSHX", -1, CompareMethod.Text) > 0) Then
+        ReqStruct.sum = -3
+        ElseIf (InStrRev(strBuf, "VCAN", -1, CompareMethod.Text) > 0) Then
+        ReqStruct.sum = -4
+        ElseIf (InStrRev(strBuf, "VDEL", -1, CompareMethod.Text) > 0) Then
+        ReqStruct.sum = 0
+        */
        rawData = '';
         GetTicket('225-13818091-1101234', res);
-        console.log(`rawData in server.on('request', (req, res) ...) event :`)
-        console.log(rawData);
+        //console.log(`rawData in server.on('request', (req, res) ...) event :`)
+        //console.log(rawData); // will be empy ''.
         //res.write(rawData);
       } // end of if (req.url.indexOf('/formAK?') >= 0)
       else {
@@ -334,8 +347,65 @@ function GetTicket(ticnum, res2) {
         //console.log(parsedData);
         console.log(`rawData in client http.on('end', ...) event :`)
         console.log(rawData);
-        res2.writeHead(200, { 'Content-Type': 'text/xml' });
-        res2.write(rawData);
+        let reply;
+        reply = '';
+        let errmsg = '';
+        parseString(rawData, function (err, result) {
+            if (err !== null) {
+              //console.log(err.message);
+              // "Non-whitespace before first tag.\nLine: 0\nColumn: 1\nChar: ?"
+              errmsg = err.message.replace('\n',' ');
+              while (errmsg.indexOf('\n') !== -1) {
+                errmsg = errmsg.replace('\n',' ');
+              }
+              //console.log(errmsg);
+            }
+            else {
+              //console.log(result);
+              reply = result;
+            }
+        });
+        let sum = '';
+        let ticinfo = '';
+        if (reply !== '') {
+          //console.log('reply:');
+          //console.log(reply.response.result[0]);
+          if (reply.response.result[0] === '0') {
+            sum = reply.response.sum[0];
+            //console.log('sum =' + sum);
+            if (sum === '-1.00') {
+              ticinfo = `Большой выигрыш!!!.`
+            }
+            else if (sum === '-2.00') {
+              ticinfo = `Билет уже выплачен.`
+            }
+            else if (sum === '-3.00') {
+              ticinfo = `Билет выплачен с обменным билетом.`
+            }
+            else if (sum === '-4.00') {
+              ticinfo = `Билет аннулирован.`
+            }
+            else if (sum === '0.00') {
+              ticinfo = `Билет не выиграл.`
+            }
+            else {
+              ticinfo = `Ваш виграш ${sum} грн.`
+            }
+            console.log(ticinfo);
+          }
+          else {
+            ticinfo = 'Server reply: ' + reply.response.result[0];
+            console.log(ticinfo);
+          }
+        }
+        else {
+          ticinfo = 'XML wrong format:' + errmsg;
+        }
+        //res2.writeHead(200, { 'Content-Type': 'text/xml' });
+        //res2.write(rawData);
+        // Content-Type: text/xml; charset=UTF-8
+        res2.writeHead(200, { 'Content-Type': 'text/plain; charset=UTF-8' });
+        res2.write('Ticket info: ' + ticinfo);
       } catch (e) {
         console.error(e.message);
         res.writeHead(200, { 'Content-Type': 'text/plain' });

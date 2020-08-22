@@ -1,5 +1,7 @@
 'use strict';
 
+console.log('\n<================================ begin of test ==============================================>');
+
 const parseString = require('xml2js').parseString;
 //let xml = '?xml version="1.0" encoding="UTF-8"?><response><ticket>225-13818091-1101234</ticket><game>2</game><sum>10.00</sum><result>0</result></response>';
 let xml = '<?xml version="1.0" encoding="UTF-8"?><response><ticket>225-13818091-1101234</ticket><game>2</game><sum>10.00</sum><result>0</result></response>';
@@ -30,16 +32,60 @@ parseString(xml, function (err, result) {
     }
 });
 
+/*
+res.writeHead(200, { 'Content-Type': 'text/xml' });
+//res.write('');
+res.write('<?xml version="1.0" encoding="UTF-8"?>');
+res.write('<response>');
+res.write('<ticket>225-13818091-1101234</ticket>');
+res.write('<game>2</game>');
+res.write('<sum>10.00</sum>');
+res.write(`<result>0</result>`);
+res.write('</response>');
+*/
+/*
+ElseIf (InStrRev(strBuf, "PPAY", -1, CompareMethod.Text) > 0) Then
+ReqStruct.sum = -1
+ElseIf (InStrRev(strBuf, "CASH", -1, CompareMethod.Text) > 0) Then
+ReqStruct.sum = -2
+ElseIf (InStrRev(strBuf, "CSHX", -1, CompareMethod.Text) > 0) Then
+ReqStruct.sum = -3
+ElseIf (InStrRev(strBuf, "VCAN", -1, CompareMethod.Text) > 0) Then
+ReqStruct.sum = -4
+ElseIf (InStrRev(strBuf, "VDEL", -1, CompareMethod.Text) > 0) Then
+ReqStruct.sum = 0
+*/
+
 let sum = '';
+let ticinfo = '';
 if (reply !== '') {
   //console.log('reply:');
   //console.log(reply.response.result[0]);
   if (reply.response.result[0] === '0') {
     sum = reply.response.sum[0];
-    console.log('sum =' + sum);
+    //console.log('sum =' + sum);
+    if (sum === '-1.00') {
+      ticinfo = `Большой выигрыш!!!.`
+    }
+    else if (sum === '-2.00') {
+      ticinfo = `Билет уже выплачен.`
+    }
+    else if (sum === '-3.00') {
+      ticinfo = `Билет выплачен с обменным билетом.`
+    }
+    else if (sum === '-4.00') {
+      ticinfo = `Билет аннулирован.`
+    }
+    else if (sum === '0.00') {
+      ticinfo = `Билет не выиграл.`
+    }
+    else {
+      ticinfo = `Ваш виграш ${sum} грн.`
+    }
+    console.log(ticinfo);
   }
   else {
-    console.log('non win tic');
+    console.log('Server error reply: ' + reply.response.result[0]);
   }
 }
 else {
@@ -47,7 +93,7 @@ else {
   console.log(errmsg);
 }
 
-console.log('end of test');
+console.log('\n<================================ end of test ==============================================>');
 
 /*
 try {
