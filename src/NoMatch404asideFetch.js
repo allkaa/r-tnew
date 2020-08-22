@@ -311,6 +311,7 @@ function NoMatchAside(props) {
     //console.log(event.target.value);
     */
     console.log(`search string: ${search}`);
+    myInfoRef.current.textContent = 'Wait for fetch processing...';
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
     /* e.g.
     Form request submitted by POST. Action URL is /formAK with search as body: 
