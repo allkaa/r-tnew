@@ -642,7 +642,13 @@ function BuyTicket(ticreq, res2) {
           if (reply.response.result[0] === '0') {
             //sum = reply.response.sum[0];
             //console.log('sum =' + sum);
-            ticinfo = reply.response.ticket[0].number[0];
+            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].date[0] + '</li>';
+            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].time[0] + '</li>';
+            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].board1a[0] + '</li>'
+            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].sum[0] + '</li>';
+            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].number[0] + '</li>';
+            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].gguard[0] + '</li>';
+            ticinfo = ticinfo + + '<li>' + reply.response.txn_id[0] + '</li>';
             console.log(ticinfo);
           }
           else {
@@ -697,9 +703,9 @@ function BuyTicket(ticreq, res2) {
         res2.write('<body>');
         res2.write('<div id="ticinfo">');
         res2.write('<a id="ticback" href="/">Back</a>');
-        res2.write('<p id="ticket">');
+        res2.write('<ul id="ticket">');
         res2.write(ticinfo);
-        res2.write('</p>');
+        res2.write('</ul>');
         res2.write('</div>');
         res2.write('</body>');
         res2.write('</html>');
