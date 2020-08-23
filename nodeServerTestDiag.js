@@ -31,9 +31,13 @@ const http = require('http');
 const urlval = 'http://10.8.194.3:9993/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 //let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
 let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number='; // + search;
-let rawData = '';
-const parseString = require('xml2js').parseString;
+const urlpay = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
+let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+let txn_id = 10000000;
 
+let rawData = '';
+
+const parseString = require('xml2js').parseString;
 const https = require('https');
 const urlLegacy = require('url'); // Legacy url module.
 //const { URL } = require('url'); // ES6 url module
@@ -119,6 +123,8 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   // req.url if GET "/" for very initial and for next  e.g. "styles/style.css" or "/submitFormAK?fname=Alex&sname=Raven"
   // if POST then e.g. "/submitformAK"
   let objUrl = urlLegacy.parse(req.url, true, true); // non standard object.
+  //console.log(objUrl.pathname); // "/formAKpay"
+  //console.log(objUrl.search); // "?q=ticreq"
   // Verify that it is very first page request or rendering page after GET or POST form submit processed.
   // After POST form submit will be processed rendering page will be as GET.
   // In req.headers Object property host: "unl.test:8081"
@@ -214,8 +220,10 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       */
       // HACKER ATTACK OR FAULTY CLIENT.
       //req.connection.destroy();
-      //req.url = "/formAK?q=123-12345678-1234567"
-      if (req.url.indexOf('/formAK?') >= 0) {
+      //req.url = "/formAKval?q=123-12345678-1234567"
+      //console.log(objUrl.pathname); // "/formAKval"
+      //console.log(objUrl.search); // "?q=123-12345678-1234567"
+      if (req.url.indexOf('/formAKval?') >= 0) {
         /*
         res.writeHead(200, { 'Content-Type': 'text/xml' });
         //res.write('');
@@ -249,6 +257,16 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         //console.log(rawData); // will be empy ''.
         //res.write(rawData);
       } // end of if (req.url.indexOf('/formAK?') >= 0)
+      //req.url = "/formAKpay?q=ticreq"
+      //console.log(objUrl.pathname); // "/formAKpay"
+      //console.log(objUrl.search); // "?q=ticreq"
+      else if (req.url.indexOf('/formAKpay?') >= 0) {
+        let ticreq = '';
+        //objUrl.search is e.g. "?q=123-12345678-1234567"
+        ticreq = objUrl.search.slice(objUrl.search.indexOf('=') + 1);
+        rawData = '';
+        BuyTicket(ticreq, res);
+      }
       else {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
@@ -564,4 +582,229 @@ function ValTicket(ticnum, res2) {
     res2.end();
     //return e.message;
   });
-}
+} // end of function ValTicket(ticnum, res2)
+
+// <==================================== ValTicket =====================================>
+function BuyTicket(ticreq, res2) {
+  console.log(reqStringPay + ticreq);
+  reqStringPay = urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+  txn_id = txn_id + 1;
+  http.get(reqStringPay, (res) => { // reqStringPay + ticreq for manual non-auto.
+    const { statusCode } = res;
+    const contentType = res.headers['content-type'];
+
+    let error;
+    if (statusCode !== 200) {
+      error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
+    }
+    else if (!/^text\/xml/.test(contentType)) {
+      error = new Error(`Invalid content-type.\n Expected text/xml but received ${contentType}`);
+    }
+    if (error) {
+      console.error(error.message);
+      // consume response data to free up memory
+      res.resume();
+      //return error.message;
+    }
+
+    res.setEncoding('utf8');
+    //let rawData = '';
+    res.on('data', (chunk) => { rawData += chunk; });
+    res.on('end', () => {
+      try {
+        //const parsedData = JSON.parse(rawData);
+        //console.log(parsedData);
+        console.log(`rawData in client http.on('end', ...) event :`)
+        console.log(rawData);
+        let reply;
+        reply = '';
+        let errmsg = '';
+        parseString(rawData, function (err, result) {
+            if (err !== null) {
+              //console.log(err.message);
+              // "Non-whitespace before first tag.\nLine: 0\nColumn: 1\nChar: ?"
+              errmsg = err.message.replace('\n',' ');
+              while (errmsg.indexOf('\n') !== -1) {
+                errmsg = errmsg.replace('\n',' ');
+              }
+              //console.log(errmsg);
+            }
+            else {
+              //console.log(result);
+              reply = result;
+            }
+        });
+        let sum = '';
+        let ticinfo = '';
+        if (reply !== '') {
+          //console.log('reply:');
+          //console.log(reply.response.result[0]);
+          if (reply.response.result[0] === '0') {
+            //sum = reply.response.sum[0];
+            //console.log('sum =' + sum);
+            console.log(ticinfo);
+          }
+          else {
+            ticinfo = 'Server reply with result: ' + reply.response.result[0];
+            console.log(ticinfo);
+          }
+        }
+        else {
+          ticinfo = 'XML wrong format:' + errmsg;
+        }
+        //res2.writeHead(200, { 'Content-Type': 'text/xml' });
+        //res2.write(rawData);
+        // Content-Type: text/xml; charset=UTF-8
+        //res2.writeHead(200, { 'Content-Type': 'text/plain; charset=UTF-8' });
+        //res2.write('Ticket info: ' + ticinfo);
+        res2.writeHead(200, { 'Content-Type': 'text/html' });
+        res2.write('<!DOCTYPE html>');
+        res2.write('<html lang="en">');
+        res2.write('<head>');
+        res2.write('<meta charset="utf-8" />');
+        res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+        res2.write('<title>Ticket info</title>');
+        res2.write('<style>');
+        res2.write('#ticinfo {');
+        //res2.write('width: 70%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('background-color: #dfdbdb;');
+        res2.write('border: thick solid black;');
+        res2.write('outline: dashed red;');
+        res2.write('}');
+        res2.write('#ticback {');
+        res2.write('display: block;')
+        res2.write('width: 10%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('color: white;')
+        res2.write('background-color: blue;');
+        res2.write('border: thin solid black;');
+        res2.write('border-radius: 15%;')
+        res2.write('text-decoration:none;')
+        res2.write('}');
+        res2.write('#ticket {');
+        res2.write('display: block;')
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('background-color: white;');
+        res2.write('border: thin solid black;');
+        res2.write('}');
+        //res2.write('');
+        res2.write('</style>');
+        res2.write('</head>');
+        res2.write('<body>');
+        res2.write('<div id="ticinfo">');
+        res2.write('<a id="ticback" href="/">Back</a>');
+        res2.write('<p id="ticket">');
+        res2.write(ticinfo);
+        res2.write('</p>');
+        res2.write('</div>');
+        res2.write('</body>');
+        res2.write('</html>');
+        //res2.write('');
+      } catch (e) {
+        console.error(e.message);
+        res2.writeHead(200, { 'Content-Type': 'text/html' });
+        res2.write('<!DOCTYPE html>');
+        res2.write('<html lang="en">');
+        res2.write('<head>');
+        res2.write('<meta charset="utf-8" />');
+        res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+        res2.write('<title>Ticket info processing error</title>');
+        res2.write('<style>');
+        res2.write('#ticinfo {');
+        //res2.write('width: 70%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('background-color: #dfdbdb;');
+        res2.write('border: thick solid black;');
+        res2.write('outline: dashed red;');
+        res2.write('}');
+        res2.write('#ticback {');
+        res2.write('display: block;')
+        res2.write('width: 10%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('color: white;')
+        res2.write('background-color: blue;');
+        res2.write('border: thin solid black;');
+        res2.write('border-radius: 15%;')
+        res2.write('text-decoration:none;')
+        res2.write('}');
+        res2.write('#ticket {');
+        res2.write('display: block;')
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('background-color: white;');
+        res2.write('border: thin solid black;');
+        res2.write('}');
+        //res2.write('');
+        res2.write('</style>');
+        res2.write('</head>');
+        res2.write('<body>');
+        res2.write('<div id="ticinfo">');
+        res2.write('<a id="ticback" href="/">Back</a>');
+        res2.write('<h4>Ticket info processing error</h4>');
+        res2.write('<p id="ticket">');
+        res2.write(e.message);
+        res2.write('</p>');
+        res2.write('</div>');
+        res2.write('</body>');
+        res2.write('</html>');
+      }
+      res2.end();
+      //return rawData;
+    });
+  }).on('error', (e) => {
+    // e.message e.g. "connect ETIMEDOUT 10.8.194.3:9993"
+    console.error(`Got error: ${e.message}`);
+    res2.writeHead(200, { 'Content-Type': 'text/html' });
+    res2.write('<!DOCTYPE html>');
+    res2.write('<html lang="en">');
+    res2.write('<head>');
+    res2.write('<meta charset="utf-8" />');
+    res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+    res2.write('<title>Ticket info network error</title>');
+    res2.write('<style>');
+    res2.write('#ticinfo {');
+    //res2.write('width: 70%;');
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('background-color: #dfdbdb;');
+    res2.write('border: thick solid black;');
+    res2.write('outline: dashed red;');
+    res2.write('}');
+    res2.write('#ticback {');
+    res2.write('display: block;')
+    res2.write('width: 10%;');
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('padding: 1% 1% 1% 1%;');
+    res2.write('color: white;')
+    res2.write('background-color: blue;');
+    res2.write('border: thin solid black;');
+    res2.write('border-radius: 15%;')
+    res2.write('text-decoration:none;')
+    res2.write('}');
+    res2.write('#ticket {');
+    res2.write('display: block;')
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('padding: 1% 1% 1% 1%;');
+    res2.write('background-color: white;');
+    res2.write('border: thin solid black;');
+    res2.write('}');
+    //res2.write('');
+    res2.write('</style>');
+    res2.write('</head>');
+    res2.write('<body>');
+    res2.write('<div id="ticinfo">');
+    res2.write('<a id="ticback" href="/">Back</a>');
+    res2.write('<h4>Ticket info network error</h4>');
+    res2.write('<p id="ticket">');
+    res2.write(e.message);
+    res2.write('</p>');
+    res2.write('</div>');
+    res2.write('</body>');
+    res2.write('</html>');
+    res2.end();
+    //return e.message;
+  });
+} // end of function BuyTicket(ticnum, res2)
