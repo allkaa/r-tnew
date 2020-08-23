@@ -642,6 +642,7 @@ function BuyTicket(ticreq, res2) {
           if (reply.response.result[0] === '0') {
             //sum = reply.response.sum[0];
             //console.log('sum =' + sum);
+            ticinfo = reply.response.ticket[0].number[0];
             console.log(ticinfo);
           }
           else {
