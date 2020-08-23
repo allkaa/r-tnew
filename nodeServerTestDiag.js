@@ -252,7 +252,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         //objUrl.search is e.g. "?q=123-12345678-1234567"
         ticnum = objUrl.search.slice(objUrl.search.indexOf('=') + 1);
         rawData = '';
-        ValTicket(ticnum, res);
+        CheckValTicket(ticnum, res);
         //console.log(`rawData in server.on('request', (req, res) ...) event :`)
         //console.log(rawData); // will be empy ''.
         //res.write(rawData);
@@ -343,7 +343,7 @@ dtVar = new Date();
 console.log('End Serer main PROGAM path after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 // <==================================== ValTicket =====================================>
-function ValTicket(ticnum, res2) {
+function CheckValTicket(ticnum, res2) {
   // reqString e.g. "http://10.8.194.3:9994/?agent=58&type=2&command=checkval&ticket_number="
   console.log(reqString + ticnum);
   http.get(reqString + ticnum, (res) => {
@@ -612,6 +612,7 @@ function BuyTicket(ticreq, res2) {
     res.on('data', (chunk) => { rawData += chunk; });
     res.on('end', () => {
       try {
+        let dtVar = new Date();
         //const parsedData = JSON.parse(rawData);
         //console.log(parsedData);
         console.log(`rawData in client http.on('end', ...) event :`)
@@ -634,7 +635,7 @@ function BuyTicket(ticreq, res2) {
               reply = result;
             }
         });
-        let sum = '';
+        //let sum = '';
         let ticinfo = '';
         if (reply !== '') {
           //console.log('reply:');
@@ -642,13 +643,14 @@ function BuyTicket(ticreq, res2) {
           if (reply.response.result[0] === '0') {
             //sum = reply.response.sum[0];
             //console.log('sum =' + sum);
-            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].date[0] + '</li>';
-            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].time[0] + '</li>';
-            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].board1a[0] + '</li>'
-            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].sum[0] + '</li>';
-            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].number[0] + '</li>';
-            ticinfo = ticinfo + + '<li>' + reply.response.ticket[0].gguard[0] + '</li>';
-            ticinfo = ticinfo + + '<li>' + reply.response.txn_id[0] + '</li>';
+            ticinfo = ticinfo + '<li>Україньска Національна Лотерея</li>';
+            ticinfo = ticinfo + '<li>Дата: ' + reply.response.ticket[0].date[0] + '</li>';
+            ticinfo = ticinfo + '<li>Час: '  + reply.response.ticket[0].time[0] + '</li>';
+            ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board1a[0] + '</li>'
+            ticinfo = ticinfo + '<li>Сума: '  + reply.response.ticket[0].sum[0] + '</li>';
+            ticinfo = ticinfo + '<li>Номер білета: '  + reply.response.ticket[0].number[0] + '</li>';
+            ticinfo = ticinfo + '<li>Код: '  + reply.response.ticket[0].gguard[0] + '</li>';
+            ticinfo = ticinfo + '<li>txn_id: '  + reply.response.txn_id[0] + '</li>';
             console.log(ticinfo);
           }
           else {
@@ -682,7 +684,7 @@ function BuyTicket(ticreq, res2) {
         res2.write('#ticback {');
         res2.write('display: block;')
         res2.write('width: 10%;');
-        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('margin: 1% 3% 1% 3%;');
         res2.write('padding: 1% 1% 1% 1%;');
         res2.write('color: white;')
         res2.write('background-color: blue;');
@@ -690,9 +692,13 @@ function BuyTicket(ticreq, res2) {
         res2.write('border-radius: 15%;')
         res2.write('text-decoration:none;')
         res2.write('}');
+        res2.write('#tichdr {');
+        res2.write('margin: 1% 3% 1% 3%;');
+        //res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('}');
         res2.write('#ticket {');
         res2.write('display: block;')
-        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('margin: 1% 3% 1% 3%;');
         res2.write('padding: 1% 1% 1% 1%;');
         res2.write('background-color: white;');
         res2.write('border: thin solid black;');
@@ -703,6 +709,7 @@ function BuyTicket(ticreq, res2) {
         res2.write('<body>');
         res2.write('<div id="ticinfo">');
         res2.write('<a id="ticback" href="/">Back</a>');
+        res2.write('<h3 id="tichdr">Ваш билет зарегистрирован: ' + dtVar.toLocaleString() + '</h3>');
         res2.write('<ul id="ticket">');
         res2.write(ticinfo);
         res2.write('</ul>');
