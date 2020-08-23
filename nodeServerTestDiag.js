@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // is unnecessary inside of modules.
 //file:///home/akaarna/react-tutorial/build/index.html
 
 /*
@@ -28,8 +28,9 @@ let formNameIni = 'index.html';
 //let formName = 'submitFormAK';
 
 const http = require('http');
-const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new.
-let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234'; // + search;
+const urlval = 'http://10.8.194.3:9993/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
+//let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
+let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number='; // + search;
 let rawData = '';
 const parseString = require('xml2js').parseString;
 
@@ -238,8 +239,12 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         ElseIf (InStrRev(strBuf, "VDEL", -1, CompareMethod.Text) > 0) Then
         ReqStruct.sum = 0
         */
-       rawData = '';
-        GetTicket('225-13818091-1101234', res);
+        //ValTicket('225-13818091-1101234', res);
+        let ticnum = '';
+        //objUrl.search is e.g. "?q=123-12345678-1234567"
+        ticnum = objUrl.search.slice(objUrl.search.indexOf('=') + 1);
+        rawData = '';
+        ValTicket(ticnum, res);
         //console.log(`rawData in server.on('request', (req, res) ...) event :`)
         //console.log(rawData); // will be empy ''.
         //res.write(rawData);
@@ -319,8 +324,11 @@ server.listen(port, hostname, () => {
 dtVar = new Date();
 console.log('End Serer main PROGAM path after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
-function GetTicket(ticnum, res2) {
-  http.get(reqString, (res) => {
+// <==================================== ValTicket =====================================>
+function ValTicket(ticnum, res2) {
+  // reqString e.g. "http://10.8.194.3:9994/?agent=58&type=2&command=checkval&ticket_number="
+  console.log(reqString + ticnum);
+  http.get(reqString + ticnum, (res) => {
     const { statusCode } = res;
     const contentType = res.headers['content-type'];
 
@@ -394,7 +402,7 @@ function GetTicket(ticnum, res2) {
             console.log(ticinfo);
           }
           else {
-            ticinfo = 'Server reply: ' + reply.response.result[0];
+            ticinfo = 'Server reply with result: ' + reply.response.result[0];
             console.log(ticinfo);
           }
         }
@@ -454,14 +462,106 @@ function GetTicket(ticnum, res2) {
         //res2.write('');
       } catch (e) {
         console.error(e.message);
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res2.writeHead(200, { 'Content-Type': 'text/html' });
+        res2.write('<!DOCTYPE html>');
+        res2.write('<html lang="en">');
+        res2.write('<head>');
+        res2.write('<meta charset="utf-8" />');
+        res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+        res2.write('<title>Ticket info processing error</title>');
+        res2.write('<style>');
+        res2.write('#ticinfo {');
+        //res2.write('width: 70%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('background-color: #dfdbdb;');
+        res2.write('border: thick solid black;');
+        res2.write('outline: dashed red;');
+        res2.write('}');
+        res2.write('#ticback {');
+        res2.write('display: block;')
+        res2.write('width: 10%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('color: white;')
+        res2.write('background-color: blue;');
+        res2.write('border: thin solid black;');
+        res2.write('border-radius: 15%;')
+        res2.write('text-decoration:none;')
+        res2.write('}');
+        res2.write('#ticket {');
+        res2.write('display: block;')
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('background-color: white;');
+        res2.write('border: thin solid black;');
+        res2.write('}');
+        //res2.write('');
+        res2.write('</style>');
+        res2.write('</head>');
+        res2.write('<body>');
+        res2.write('<div id="ticinfo">');
+        res2.write('<a id="ticback" href="/">Back</a>');
+        res2.write('<h4>Ticket info processing error</h4>');
+        res2.write('<p id="ticket">');
         res2.write(e.message);
+        res2.write('</p>');
+        res2.write('</div>');
+        res2.write('</body>');
+        res2.write('</html>');
       }
       res2.end();
       //return rawData;
     });
   }).on('error', (e) => {
+    // e.message e.g. "connect ETIMEDOUT 10.8.194.3:9993"
     console.error(`Got error: ${e.message}`);
+    res2.writeHead(200, { 'Content-Type': 'text/html' });
+    res2.write('<!DOCTYPE html>');
+    res2.write('<html lang="en">');
+    res2.write('<head>');
+    res2.write('<meta charset="utf-8" />');
+    res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+    res2.write('<title>Ticket info network error</title>');
+    res2.write('<style>');
+    res2.write('#ticinfo {');
+    //res2.write('width: 70%;');
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('background-color: #dfdbdb;');
+    res2.write('border: thick solid black;');
+    res2.write('outline: dashed red;');
+    res2.write('}');
+    res2.write('#ticback {');
+    res2.write('display: block;')
+    res2.write('width: 10%;');
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('padding: 1% 1% 1% 1%;');
+    res2.write('color: white;')
+    res2.write('background-color: blue;');
+    res2.write('border: thin solid black;');
+    res2.write('border-radius: 15%;')
+    res2.write('text-decoration:none;')
+    res2.write('}');
+    res2.write('#ticket {');
+    res2.write('display: block;')
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('padding: 1% 1% 1% 1%;');
+    res2.write('background-color: white;');
+    res2.write('border: thin solid black;');
+    res2.write('}');
+    //res2.write('');
+    res2.write('</style>');
+    res2.write('</head>');
+    res2.write('<body>');
+    res2.write('<div id="ticinfo">');
+    res2.write('<a id="ticback" href="/">Back</a>');
+    res2.write('<h4>Ticket info network error</h4>');
+    res2.write('<p id="ticket">');
+    res2.write(e.message);
+    res2.write('</p>');
+    res2.write('</div>');
+    res2.write('</body>');
+    res2.write('</html>');
+    res2.end();
     //return e.message;
   });
 }
