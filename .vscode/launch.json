@@ -75,8 +75,8 @@
       {
         "type": "chrome",
         "request": "launch",
-        "name": "indexTest.html",
-        "file": "${workspaceFolder}/indexTest.html"
+        "name": "indexTestDiag.html",
+        "file": "${workspaceFolder}/indexTestDiag.html"
       }
   ]
 }

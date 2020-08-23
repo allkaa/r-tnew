@@ -415,16 +415,27 @@ function GetTicket(ticnum, res2) {
         res2.write('<title>Ticket info</title>');
         res2.write('<style>');
         res2.write('#ticinfo {');
-        res2.write('width: 70%;');
+        //res2.write('width: 70%;');
         res2.write('margin: 3% 3% 3% 3%;');
         res2.write('background-color: #dfdbdb;');
         res2.write('border: thick solid black;');
         res2.write('outline: dashed red;');
         res2.write('}');
         res2.write('#ticback {');
-        res2.write('width: 30%;');
-        //res2.write('margin: 3% 3% 3% 3%;');
-        res2.write('padding: 0% 1% 1% 1%;');
+        res2.write('display: block;')
+        res2.write('width: 10%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('color: white;')
+        res2.write('background-color: blue;');
+        res2.write('border: thin solid black;');
+        res2.write('border-radius: 15%;')
+        res2.write('text-decoration:none;')
+        res2.write('}');
+        res2.write('#ticket {');
+        res2.write('display: block;')
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
         res2.write('background-color: white;');
         res2.write('border: thin solid black;');
         res2.write('}');
@@ -434,7 +445,7 @@ function GetTicket(ticnum, res2) {
         res2.write('<body>');
         res2.write('<div id="ticinfo">');
         res2.write('<a id="ticback" href="/">Back</a>');
-        res2.write('<p>');
+        res2.write('<p id="ticket">');
         res2.write(ticinfo);
         res2.write('</p>');
         res2.write('</div>');
