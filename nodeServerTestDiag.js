@@ -28,7 +28,7 @@ let formNameIni = 'index.html';
 //let formName = 'submitFormAK';
 
 const http = require('http');
-const urlval = 'http://10.8.194.3:9993/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
+const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 //let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
 let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number='; // + search;
 const urlpay = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
@@ -268,8 +268,53 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         BuyTicket(ticreq, res);
       }
       else {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
+        //res.writeHead(200, { 'Content-Type': 'text/plain' });
+        //res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write('<!DOCTYPE html>');
+        res.write('<html lang="en">');
+        res.write('<head>');
+        res.write('<meta charset="utf-8" />');
+        res.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+        res.write('<title>Unknown Form request submitted by GET</title>');
+        res.write('<style>');
+        res.write('#ticinfo {');
+        //res.write('width: 70%;');
+        res.write('margin: 3% 3% 3% 3%;');
+        res.write('background-color: #dfdbdb;');
+        res.write('border: thick solid black;');
+        res.write('outline: dashed red;');
+        res.write('}');
+        res.write('#ticback {');
+        res.write('display: block;')
+        res.write('width: 10%;');
+        res.write('margin: 3% 3% 3% 3%;');
+        res.write('padding: 1% 1% 1% 1%;');
+        res.write('color: white;')
+        res.write('background-color: blue;');
+        res.write('border: thin solid black;');
+        res.write('border-radius: 15%;')
+        res.write('text-decoration:none;')
+        res.write('}');
+        res.write('#ticket {');
+        res.write('display: block;')
+        res.write('margin: 3% 3% 3% 3%;');
+        res.write('padding: 1% 1% 1% 1%;');
+        res.write('background-color: white;');
+        res.write('border: thin solid black;');
+        res.write('}');
+        res.write('</style>');
+        res.write('</head>');
+        res.write('<body>');
+        res.write('<div id="ticinfo">');
+        res.write('<a id="ticback" href="/">Back</a>');
+        res.write('<h4>Unknown Form request submitted by GET</h4>');
+        res.write(`GET action URL (form name with search included): ${req.url}`);
+        res.write('</p>');
+        res.write('</div>');
+        res.write('</body>');
+        res.write('</html>');
+        res.end();
         return res.end();
       }
       //return res.end();
@@ -321,8 +366,54 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       */
       // HACKER ATTACK OR FAULTY CLIENT.
       //req.connection.destroy();
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write(`Form request submitted by POST. Action URL is ${req.url} with search as body: \r\n${body}`);
+      //res.writeHead(200, { 'Content-Type': 'text/plain' });
+      //res.write(`Form request submitted by POST. Action URL is ${req.url} with search as body: \r\n${body}`);
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.write('<!DOCTYPE html>');
+      res.write('<html lang="en">');
+      res.write('<head>');
+      res.write('<meta charset="utf-8" />');
+      res.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+      res.write('<title>Form request submitted by POST</title>');
+      res.write('<style>');
+      res.write('#ticinfo {');
+      //res.write('width: 70%;');
+      res.write('margin: 3% 3% 3% 3%;');
+      res.write('background-color: #dfdbdb;');
+      res.write('border: thick solid black;');
+      res.write('outline: dashed red;');
+      res.write('}');
+      res.write('#ticback {');
+      res.write('display: block;')
+      res.write('width: 10%;');
+      res.write('margin: 3% 3% 3% 3%;');
+      res.write('padding: 1% 1% 1% 1%;');
+      res.write('color: white;')
+      res.write('background-color: blue;');
+      res.write('border: thin solid black;');
+      res.write('border-radius: 15%;')
+      res.write('text-decoration:none;')
+      res.write('}');
+      res.write('#ticket {');
+      res.write('display: block;')
+      res.write('margin: 3% 3% 3% 3%;');
+      res.write('padding: 1% 1% 1% 1%;');
+      res.write('background-color: white;');
+      res.write('border: thin solid black;');
+      res.write('}');
+      res.write('</style>');
+      res.write('</head>');
+      res.write('<body>');
+      res.write('<div id="ticinfo">');
+      res.write('<a id="ticback" href="/">Back</a>');
+      res.write('<h4>Form request submitted by POST</h4>');
+      res.write('<p id="ticket">');
+      res.write(`POST action (form name) as URL is ${req.url} with search as body: ${body}`);
+      res.write('</p>');
+      res.write('</div>');
+      res.write('</body>');
+      res.write('</html>');
+      res.end();
       return res.end();
     }); // end req.on('end', function ()...
   } // <==================================== End of POST method form submit case ===================================>
