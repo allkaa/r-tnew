@@ -27,6 +27,7 @@ let formNameIni = 'index.html';
 //let formNameIni = 'indexForm.html';
 //let formName = 'submitFormAK';
 
+// Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 const http = require('http');
 const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 //let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
