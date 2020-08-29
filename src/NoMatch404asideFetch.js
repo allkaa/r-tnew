@@ -424,7 +424,7 @@ function NoMatchAside(props) {
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
-        <form role="search" method="get" action="formAKval" onSubmit={handleSubmitVal}>
+        <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           <input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
           <input type="submit" value="Ticket search"/>
         </form>
