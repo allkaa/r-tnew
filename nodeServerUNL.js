@@ -12,22 +12,22 @@ styles
 /*
 Can be started as parent in build subdir:
 
-  >node ..\nodeServerTestDiag.js
+  >node ..\nodeServerUNL.js
 
 */
 
 let typeProj =  ''; // 'build';
-let dirName = 'build'; // React build dir as root dir.
-//let dirName = ''; // root dir.
+//let dirName = 'build'; // React build dir as root dir.
+let dirName = ''; // root dir.
 //let methodType = 'get'; // 'post' or 'get' for secure server.
 //let formNameIni = 'submitFormAK-Ini';
 //let formName = 'submitFormAK';
-//let dirName = 'arch'; // root dir.
+//let dirName = 'arch'; // root dir
 let formNameIni = 'index.html';
 //let formNameIni = 'indexForm.html';
-//let formName = 'submitFormAK';
 
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
+const addon = require('./addon');
 const http = require('http');
 const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 //let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
@@ -729,6 +729,7 @@ function BuyTicket(ticreq, res2) {
         });
         //let sum = '';
         let ticinfo = '';
+        let decrInfo = '';
         if (reply !== '') {
           //console.log('reply:');
           //console.log(reply.response.result[0]);
@@ -740,8 +741,11 @@ function BuyTicket(ticreq, res2) {
             ticinfo = ticinfo + '<li>Час: '  + reply.response.ticket[0].time[0] + '</li>';
             ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board1a[0] + '</li>'
             ticinfo = ticinfo + '<li>Сума: '  + reply.response.ticket[0].sum[0] + '</li>';
-            ticinfo = ticinfo + '<li>Номер білета: '  + reply.response.ticket[0].number[0] + '</li>';
-            ticinfo = ticinfo + '<li>Код: '  + reply.response.ticket[0].gguard[0] + '</li>';
+            decrInfo = decrEx(reply.response.ticket[0].gguard[0], reply.response.ticket[0].number[0]);
+            //console.log(decrInfo);
+            ticinfo = ticinfo + '<li>Білет: '  + decrInfo + '</li>'
+            //ticinfo = ticinfo + '<li>Номер білета: '  + reply.response.ticket[0].number[0] + '</li>';
+            //ticinfo = ticinfo + '<li>Код: '  + reply.response.ticket[0].gguard[0] + '</li>';
             ticinfo = ticinfo + '<li>txn_id: '  + reply.response.txn_id[0] + '</li>';
             console.log(ticinfo);
           }
@@ -914,3 +918,56 @@ function BuyTicket(ticreq, res2) {
     //return e.message;
   });
 } // end of function BuyTicket(ticnum, res2)
+
+function decrEx(strGGuardEnc, strTicEnc) {
+  var strOut;
+  var strGguardIn, strNumberIn; // var strJulian;
+  var strReturn, strGGuard, strTicNum, strCheckDigits;
+  var strArr; // intVar, i;
+  var strGGuardArr, strJulianArr, strTicNumArr, strCheckDigitsArr;
+
+  //console.log(`input: ${strGGuardEnc} ${strInEnc}`);
+
+  strOut="";
+  if (typeof(strGGuardEnc) != "string") return "ERROR2";
+  if (typeof(strTicEnc) != "string") return "ERROR3";
+
+  // e.g. strGGuardEnc="123456" and strTicEnc = "123-12345678-1234567"
+  strGguardIn = String(strGGuardEnc);
+  strNumberIn = String(strTicEnc);
+  if (strGguardIn.length != 6)  return "ERROR2";
+  if (strNumberIn.length != 20) return "ERROR3";
+
+  //intVar = Number(strGguardIn);
+  //console.log(intVar + " " + typeof(intVar));
+  if (! Number.isInteger(Number(strGguardIn))) return "ERROR2"; 
+  strArr = strNumberIn.split("-");
+  if (strArr.length != 3) return "ERROR3";
+  if (strArr[0].length != 3) return "ERROR3";
+  if (strArr[1].length != 8) return "ERROR3";
+  if (strArr[2].length != 7) return "ERROR3";
+  if (! Number.isInteger(Number(strArr[0]))) return "ERROR3"; 
+  if (! Number.isInteger(Number(strArr[1]))) return "ERROR3"; 
+  if (! Number.isInteger(Number(strArr[2]))) return "ERROR3"; 
+
+  //var strGGuardArr, strJulianArr, strTicNumArr, strChcekDigitsArr;
+  strGGuardArr = strGguardIn.split("");
+  strJulianArr = strArr[0].split("");
+  strTicNumArr = strArr[1].split("");
+  strCheckDigitsArr = strArr[2].split("");
+
+  strGGuard = addon.unld(strGGuardArr[0], strGGuardArr[1], strGGuardArr[2], strGGuardArr[3], strGGuardArr[4], strGGuardArr[5], "G", "G", strJulianArr[0], strJulianArr[1], strJulianArr[2]); // gGuard.
+  //console.log('Return string:', strGGuard + " typeof: " + typeof(strGGuard)); // gguard.
+  strTicNum = addon.unld(strTicNumArr[0], strTicNumArr[1], strTicNumArr[2], strTicNumArr[3], strTicNumArr[4], strTicNumArr[5], strTicNumArr[6], strTicNumArr[7], strJulianArr[0], strJulianArr[1], strJulianArr[2]); // external number.
+  //console.log('Return string:', strTicNum + " typeof: " + typeof(strTicNum)); // TicNum external number.
+  strCheckDigits = addon.unld(strCheckDigitsArr[0], strCheckDigitsArr[1], strCheckDigitsArr[2], strCheckDigitsArr[3], strCheckDigitsArr[4], strCheckDigitsArr[5], strCheckDigitsArr[6], "D", strJulianArr[0], strJulianArr[1], strJulianArr[2]); // check Digits.
+  //console.log('Return string:', strCheckDigits + " typeof: " + typeof(strCheckDigits)); // gguard, num, check.
+  strOut = strGGuard + " " + strArr[0] + "-" + strTicNum + "-" + strCheckDigits;
+  //console.log(`output: ${strOut}`);
+  //strArr = strIn.split("-");
+  //strOut = strArr[2] + "-" + strArr[1] + "-" + strArr[0];
+  
+  ExitFunction:
+  return strOut;
+
+} // end of function decrEx(strGGuardEnc, strInEnc).
