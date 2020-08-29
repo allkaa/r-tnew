@@ -223,7 +223,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       //req.url = "/formAKval?q=123-12345678-1234567"
       //console.log(objUrl.pathname); // "/formAKval"
       //console.log(objUrl.search); // "?q=123-12345678-1234567"
-      if (req.url.indexOf('/formAKval?') >= 0) {
+      if (req.url.indexOf('/formAKchk?') >= 0) {
         /*
         res.writeHead(200, { 'Content-Type': 'text/xml' });
         //res.write('');
