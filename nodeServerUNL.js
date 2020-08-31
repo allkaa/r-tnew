@@ -17,8 +17,8 @@ Can be started as parent in build subdir:
 */
 
 let typeProj =  ''; // 'build';
-//let dirName = 'build'; // React build dir as root dir.
-let dirName = ''; // root dir.
+let dirName = 'build'; // React build dir as root dir.
+//let dirName = ''; // root dir.
 //let methodType = 'get'; // 'post' or 'get' for secure server.
 //let formNameIni = 'submitFormAK-Ini';
 //let formName = 'submitFormAK';
