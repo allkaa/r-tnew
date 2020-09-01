@@ -392,7 +392,8 @@ function NoMatchAside(props) {
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           <input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
-          <input type="submit" value="Ticket search"/>
+          {/* <input type="submit" value="Ticket search"/> */}
+          <button type="submit">Ticket search</button>
         </form>
         {/*<p id="found">{found}</p>*/}
         {(found.length > 0) && <p id="found">{found}</p>}
@@ -559,7 +560,7 @@ function Purchase() {
 
   return <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitPay}>
   <input type="search" name="q"  value={'auto'} placeholder="123" aria-label="Buy ticket"></input>
-  <input type="submit" value="Buy Ticket"/>
+  <button type="submit">Buy ticket</button>
   </form>
 
 } // end of function Purchase()
