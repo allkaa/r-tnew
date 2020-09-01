@@ -330,40 +330,6 @@ function NoMatchAside(props) {
     */
   }
 
-  function handleSubmitPay(event) {
-    console.log('=====================================> Form handleSubmitVal <============================================')
-    //console.log('event:');
-    console.log(event);
-    console.log('event.target: ' + event.target);
-    console.log(event.target);
-    /* following are undefined or empty in form case:
-    //console.log('event.target.name: ' + event.target.name);
-    //console.log(event.target.name);
-    //console.log('event.target.type: ' + event.target.type)
-    //console.log(event.target.type)
-    //console.log('event.target.value: ' + event.target.value);
-    //console.log(event.target.value);
-    */
-    console.log(`search string: ${search}`);
-    myInfoRef.current.textContent = 'Wait for fetch processing...';
-    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
-    /* e.g.
-    Form request submitted by POST. Action URL is /formAK with search as body: 
-    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    */
-    //GetData('pay');
-    //console.log('searchDone after GetDate()' + searchDone);
-    //console.log('found after GetDate(val)' + found);
-    /*
-    if (search.length > 0) {
-      //setStateSearchStarts(true);
-    }
-    else {
-      setStateSearchStarts(false);
-    }
-    */
-  }
-
   function buyTicket(event) {
     console.log('=====================================> buyTicket onClick <============================================')
     //console.log('event:');
@@ -410,16 +376,16 @@ function NoMatchAside(props) {
         <div>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Домой</Link>
           </li>
           <li>
-            <Link to="/nav-match1">Our team</Link>
+            <Link to="/nav-match1">Результаты</Link>
           </li>
           <li>
-            <Link to="/nav-match2">Projects</Link>
+            <Link to="/nav-match2">Купить билет</Link>
           </li>
           <li>
-            <Link to="/nav-match3">Contact</Link>
+            <Link to="/nav-match3">О нас</Link>
           </li>
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
@@ -431,24 +397,20 @@ function NoMatchAside(props) {
         {/*<p id="found">{found}</p>*/}
         {(found.length > 0) && <p id="found">{found}</p>}
         {/* searchDone && <p id="found">{found}</p>*/}
-        <p id="dataXML">{dataXML}</p>
+        <p id="dataXML">{dataXML}</p> {/* net errors if any */}
         {/* dataXML && <p id="dataXML">{dataXML}</p>*/}
-        <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitPay}>
-          <input type="search" name="q"  value={'ticreq'} placeholder="123" aria-label="Buy ticket"></input>
-          <input type="submit" value="Buy Ticket"/>
-        </form>
         {/* <button onClick={buyTicket} >Buy Ticket</button> */}
-        <p ref={myInfoRef}></p>
+        <p ref={myInfoRef}></p> {/* wait for fetch msg */}
 
         <Switch>
           <Route exact path="/">
             <NavHome />
          </Route>
           <Route path="/nav-match1">
-            <NavWillMatch />
+            <Results />  {/* NavWillMatch */}
           </Route>
           <Route path="/nav-match2">
-            <NavWillMatch />
+            <Purchase /> {/* NavWillMatch */}
           </Route>
           <Route path="/nav-match3">
             <Contact /> {/* NavWillMatch */}
@@ -523,6 +485,7 @@ function NavHome() {
   return null;
 }
 
+/*
 function NavWillMatch() {
   let location = useLocation();
   console.log('location:');
@@ -537,6 +500,7 @@ function NavWillMatch() {
     Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
     </p>;
 }
+*/
 
 function NavNoMatch() {
   let location = useLocation();
@@ -554,15 +518,6 @@ function NavNoMatch() {
 }
 
 function Contact() {
-  //let location = useLocation();
-  //console.log('location:');
-  //console.log(location);
-  //let history = useHistory();
-  //console.log('history:');
-  //console.log(history.location.pathname);
-  //console.log(history);
-  //let dt = new Date();
-  //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
   return <address className = "special"> {/* id = "contact" */}
     Українська Національна Лотерея<br/>
     Гаряча лінія<br/>
@@ -575,6 +530,39 @@ function Contact() {
     @unl_ua_bot
   </address>;
 }
+
+function Results() {
+  let location = useLocation();
+  console.log('location:');
+  console.log(location);
+  let history = useHistory();
+  console.log('history:');
+  console.log(history.location.pathname);
+  console.log(history);
+  let dt = new Date();
+  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  return <p className = "special">
+    Results! <code>{location.pathname} and {location.search}</code> {reply}
+  </p>;
+}
+
+function Purchase() {
+  function handleSubmitPay(event) {
+    myInfoRef.current.textContent = 'Wait for fetch processing...';
+    /* e.g.
+    Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
+    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    */
+    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
+    //GetData('pay'); // if use Fetch directly from html page.
+  } // end of function handleSubmitPay(event)
+
+  return <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitPay}>
+  <input type="search" name="q"  value={'auto'} placeholder="123" aria-label="Buy ticket"></input>
+  <input type="submit" value="Buy Ticket"/>
+  </form>
+
+} // end of function Purchase()
 
 function AsideHome() {
   //let dt = new Date();
