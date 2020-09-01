@@ -1,4 +1,5 @@
 'use strict'; // is unnecessary inside of modules.
+// Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
 
 /*
@@ -26,8 +27,15 @@ let dirName = 'build'; // React build dir as root dir.
 let formNameIni = 'index.html';
 //let formNameIni = 'indexForm.html';
 
-// Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
-const addon = require('./addon');
+const fs = require('fs');
+let addon;
+if (fs.existsSync('/build/addon.node')) { // Debian addon.node.
+  addon = require('./build/addon');
+}
+else {
+  addon = require('./addon'); // Windows addnon.node
+}
+
 const http = require('http');
 const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 //let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
@@ -42,7 +50,6 @@ const parseString = require('xml2js').parseString;
 const https = require('https');
 const urlLegacy = require('url'); // Legacy url module.
 //const { URL } = require('url'); // ES6 url module
-const fs = require('fs');
 // The querystring module provides utilities for parsing and formatting URL query strings.
 //const qs = require('querystring'); // used as let objBody = qs.parse(body, "\r\n", "=");
 //const formidable = require('formidable');
