@@ -29,7 +29,25 @@ let formNameIni = 'index.html';
 
 const fs = require('fs');
 let addon;
-if (fs.existsSync('/build/addon.node')) { // Debian addon.node.
+let linux = false;
+try {
+  let dir = fs.opendirSync('./build');
+  let dirEnt;
+  while (true) {
+    dirEnt = dir.readSync();
+    if (dirEnt === null) break;
+    if (dirEnt.name === 'addon.node') { // asset-manifest.json for test, for real addon.node
+      linux = true;
+      break;
+    }
+  }
+  dir.closeSync();
+} catch (error) {
+  linux = false;
+}
+
+console.log('Debian linux type: ' + linux);
+if (linux) { // Debian linux addon.node.
   addon = require('./build/addon');
 }
 else {
