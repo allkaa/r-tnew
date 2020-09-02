@@ -382,10 +382,22 @@ function NoMatchAside(props) {
             <Link to="/nav-match1">Результаты</Link>
           </li>
           <li>
-            <Link to="/nav-match2">Купить билет</Link>
+            <Link to="/nav-match2">Купить билет Супер Лото авто</Link>
           </li>
           <li>
             <Link to="/nav-match3">О нас</Link>
+          </li>
+          <li>
+            <Link to="/nav-match4">Кено</Link>
+          </li>
+          <li>
+            <Link to="/nav-match5">Супер Лото</Link>
+          </li>
+          <li>
+            <Link to="/nav-match6">Максима</Link>
+          </li>
+          <li>
+            <Link to="/nav-match7">Тройка</Link>
           </li>
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
@@ -415,6 +427,18 @@ function NoMatchAside(props) {
           </Route>
           <Route path="/nav-match3">
             <Contact /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match4">
+            <Keno /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match5">
+            <SuperLoto /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match6">
+            <Maxima /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match7">
+            <Tryika /> {/* NavWillMatch */}
           </Route>
           <Route path="*">
             <NavNoMatch /> {/*NavHome or NavNoMatch */}
@@ -485,6 +509,7 @@ function NavHome() {
   //return <h3>Nav Home {reply}</h3>;
   return null;
 }
+
 
 /*
 function NavWillMatch() {
@@ -565,6 +590,67 @@ function Purchase() {
 
 } // end of function Purchase()
 
+function Keno() {
+  let location = useLocation();
+  console.log('location:');
+  console.log(location);
+  let history = useHistory();
+  console.log('history:');
+  console.log(history.location.pathname);
+  console.log(history);
+  let dt = new Date();
+  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  return <p className = "special">
+    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
+    </p>;
+}
+
+function SuperLoto() {
+  let location = useLocation();
+  console.log('location:');
+  console.log(location);
+  let history = useHistory();
+  console.log('history:');
+  console.log(history.location.pathname);
+  console.log(history);
+  let dt = new Date();
+  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  return <p className = "special">
+    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
+    </p>;
+}
+
+function Maxima() {
+  let location = useLocation();
+  console.log('location:');
+  console.log(location);
+  let history = useHistory();
+  console.log('history:');
+  console.log(history.location.pathname);
+  console.log(history);
+  let dt = new Date();
+  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  return <p className = "special">
+    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
+    </p>;
+}
+
+function Tryika() {
+  let location = useLocation();
+  console.log('location:');
+  console.log(location);
+  let history = useHistory();
+  console.log('history:');
+  console.log(history.location.pathname);
+  console.log(history);
+  let dt = new Date();
+  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  return <p className = "special">
+    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
+    </p>;
+}
+
+//==================================================================================================================
 function AsideHome() {
   //let dt = new Date();
   //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
