@@ -10,7 +10,7 @@
 <link href="styleCards.css" rel="stylesheet" />
 -->
 <style>
-      form {
+  form {
   /* Center the form on the page */
   margin: 0 auto;
   width: 90%;
@@ -51,6 +51,20 @@ textarea {
   border: 1px solid #999;
 }
 
+.numbs {
+  font: 1em sans-serif;
+  /* Uniform text field size */
+  width: 3%;
+  box-sizing: border-box;
+  border: 1px solid #999;
+}
+
+#game {
+  font: 1em sans-serif;
+  /* Uniform text field size */
+  width: 10%;
+}
+
 input:focus, 
 textarea:focus {
   /* Additional highlight for focused elements */
@@ -85,6 +99,14 @@ button {
     <h4></p>Form GET/POST testing with diagnostics</h4>
     <!-- creates GET requst e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->
     <form role="search" method="get" action="formAKpay">
+      <select id="game" name="game">
+        <option selected value="KN">Keno</option>
+        <option value="SL">Super Loto</option>
+        <option value="MX">Maxima</option>
+        <option value="TR">Tryika</option>
+        <option></option>
+      </select>
+      <input type="number" name="num1" class="numbs" min="1" max="10" step="1">
       <input type="search" name="q" placeholder="ticket info" aria-label="Buy ticket"/>
       <button type="submit">Buy ticket</button>
     </form>
