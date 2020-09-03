@@ -1,0 +1,25 @@
+          <li>
+            <Link to="/nav-match4">Максима</Link>
+          </li>
+          <li>
+            <Link to="/nav-match5">Тройка</Link>
+          </li>
+          <li>
+            <Link to="/nav-match6">О нас</Link>
+          </li>
+          <li>
+            <Link to="/nav-match7">Супер Лото авто</Link> < Problem!!!!
+          </li>
+
+          <Route path="/nav-match4">
+            <Maxima /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match5">
+            <Tryika /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match6">
+            <Contact /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match7">
+            <Purchase /> {/* NavWillMatch */}
+          </Route>

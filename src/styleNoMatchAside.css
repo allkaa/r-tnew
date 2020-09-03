@@ -1,21 +1,20 @@
 /* || General setup */
 
-html, body {
-  margin: 0;
-  padding: 0;
-}
 
 html {
+  margin: 0;
+  padding: 0;
   font-size: 10px;
   background-color: white;
 }
 
 body {
-  width: 70%;
-  margin: 3% 3% 3% 3%; /* top+right+bottom+left 0 auto; */
+  width: 98%;
+  margin: 1% 1% 1% 1%; /* top+right+bottom+left 0 auto; */
+  padding: 0;
   background-color: #dfdbdb; /* #a9a9a9  will be background-color for all doc if no set in html*/
-  border: thick solid black;
-  outline: dashed red;
+  border: thin solid black;
+  /* outline: dashed red; */
 }
 
 /* || typography */
@@ -146,6 +145,16 @@ button {
   background: #333;
   /* border: 0; */
   color: white;
+}
+
+.numbs {
+  /* font: 1em sans-serif; */
+  /* Uniform text field size */
+  width: 3%;
+  margin: 2px;
+  padding: 1px;
+  box-sizing: border-box;
+  border: 1px solid #999;
 }
 
 #found {

@@ -382,22 +382,19 @@ function NoMatchAside(props) {
             <Link to="/nav-match1">Результаты</Link>
           </li>
           <li>
-            <Link to="/nav-match2">Купить билет Супер Лото авто</Link>
+            <Link to="/nav-match2">Кено</Link>
           </li>
           <li>
-            <Link to="/nav-match3">О нас</Link>
+            <Link to="/nav-match3">Супер Лото</Link>
           </li>
           <li>
-            <Link to="/nav-match4">Кено</Link>
+            <Link to="/nav-match4">Максима</Link>
           </li>
           <li>
-            <Link to="/nav-match5">Супер Лото</Link>
+            <Link to="/nav-match5">Тройка</Link>
           </li>
           <li>
-            <Link to="/nav-match6">Максима</Link>
-          </li>
-          <li>
-            <Link to="/nav-match7">Тройка</Link>
+            <Link to="/nav-match6">О нас</Link>
           </li>
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
@@ -405,7 +402,7 @@ function NoMatchAside(props) {
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           <input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
           {/* <input type="submit" value="Ticket search"/> */}
-          <button type="submit">Ticket search</button>
+          <button type="submit">Проверить выигрыш по номеру билета</button>
         </form>
         {/*<p id="found">{found}</p>*/}
         {(found.length > 0) && <p id="found">{found}</p>}
@@ -418,27 +415,24 @@ function NoMatchAside(props) {
         <Switch>
           <Route exact path="/">
             <NavHome />
-         </Route>
+          </Route>
           <Route path="/nav-match1">
             <Results />  {/* NavWillMatch */}
           </Route>
           <Route path="/nav-match2">
-            <Purchase /> {/* NavWillMatch */}
-          </Route>
-          <Route path="/nav-match3">
-            <Contact /> {/* NavWillMatch */}
-          </Route>
-          <Route path="/nav-match4">
             <Keno /> {/* NavWillMatch */}
           </Route>
-          <Route path="/nav-match5">
+          <Route path="/nav-match3">
             <SuperLoto /> {/* NavWillMatch */}
           </Route>
-          <Route path="/nav-match6">
+          <Route path="/nav-match4">
             <Maxima /> {/* NavWillMatch */}
           </Route>
-          <Route path="/nav-match7">
+          <Route path="/nav-match5">
             <Tryika /> {/* NavWillMatch */}
+          </Route>
+          <Route path="/nav-match6">
+            <Contact /> {/* NavWillMatch */}
           </Route>
           <Route path="*">
             <NavNoMatch /> {/*NavHome or NavNoMatch */}
@@ -503,14 +497,6 @@ function NoMatchAside(props) {
 
 export default NoMatchAside;
 
-function NavHome() {
-  //let dt = new Date();
-  //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-  //return <h3>Nav Home {reply}</h3>;
-  return null;
-}
-
-
 /*
 function NavWillMatch() {
   let location = useLocation();
@@ -528,6 +514,13 @@ function NavWillMatch() {
 }
 */
 
+function NavHome() {
+  //let dt = new Date();
+  //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  //return <h3>Nav Home {reply}</h3>;
+  return null;
+}
+
 function NavNoMatch() {
   let location = useLocation();
   console.log('location:');
@@ -537,7 +530,7 @@ function NavNoMatch() {
   return (
     <div>
       <p className = "special">
-        Nav No match for <code>{location.pathname}</code> {reply}
+        Nav!!! - NO MATCH for <code>{location.pathname}</code> {reply}
       </p>
     </div>
   );
@@ -587,7 +580,6 @@ function Purchase() {
   <input type="search" name="q"  value={'auto'} placeholder="123" aria-label="Buy ticket"></input>
   <button type="submit">Buy ticket</button>
   </form>
-
 } // end of function Purchase()
 
 function Keno() {
@@ -606,18 +598,26 @@ function Keno() {
 }
 
 function SuperLoto() {
-  let location = useLocation();
-  console.log('location:');
-  console.log(location);
-  let history = useHistory();
-  console.log('history:');
-  console.log(history.location.pathname);
-  console.log(history);
-  let dt = new Date();
-  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-  return <p className = "special">
-    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
-    </p>;
+  function handleSubmitSuperLoto(event) {
+    myInfoRef.current.textContent = 'Wait for fetch processing...';
+    /* e.g.
+    Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
+    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    */
+    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
+    //GetData('pay'); // if use Fetch directly from html page.
+  } // end of function handleSubmitPay(event)
+
+  return <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
+  <input type="number" name="n1" className="numbs" min="1" max="52" step="1"></input>
+  <input type="number" name="n2" className="numbs" min="1" max="52" step="1"></input>
+  <input type="number" name="n3" className="numbs" min="1" max="52" step="1"></input>
+  <input type="number" name="n4" className="numbs" min="1" max="52" step="1"></input>
+  <input type="number" name="n5" className="numbs" min="1" max="52" step="1"></input>
+  <input type="number" name="n6" className="numbs" min="1" max="52" step="1"></input>
+  <input hidden="true" type="search" name="q"  value={'auto'} placeholder="123" aria-label="Buy ticket"></input>
+  <button type="submit">Купить билет</button>
+  </form>
 }
 
 function Maxima() {
