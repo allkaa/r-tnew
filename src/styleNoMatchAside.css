@@ -157,6 +157,12 @@ button {
   border: 1px solid #999;
 }
 
+.boardLabel {
+  display: inline;
+  margin-left: 1rem; /* top+right+bottom+left 0 auto; */
+  margin-right: 1rem; /* top+right+bottom+left 0 auto; */
+}
+
 #found {
   width: 30%;
   padding: 1%;

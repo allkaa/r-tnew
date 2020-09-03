@@ -523,7 +523,7 @@ function NavHome() {
 
 function NavNoMatch() {
   let location = useLocation();
-  console.log('location:');
+  console.log('NavNoMatch location:');
   console.log(location);
   let dt = new Date();
   let reply = dt.toLocaleTimeString('uk'); // 'en-US'
@@ -600,6 +600,9 @@ function Keno() {
 function SuperLoto() {
   function handleSubmitSuperLoto(event) {
     myInfoRef.current.textContent = 'Wait for fetch processing...';
+    console.log(event.search);
+    event.search = '?q=1';
+    console.log(event.search);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -608,16 +611,33 @@ function SuperLoto() {
     //GetData('pay'); // if use Fetch directly from html page.
   } // end of function handleSubmitPay(event)
 
-  return <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
-  <input type="number" name="n1" className="numbs" min="1" max="52" step="1"></input>
-  <input type="number" name="n2" className="numbs" min="1" max="52" step="1"></input>
-  <input type="number" name="n3" className="numbs" min="1" max="52" step="1"></input>
-  <input type="number" name="n4" className="numbs" min="1" max="52" step="1"></input>
-  <input type="number" name="n5" className="numbs" min="1" max="52" step="1"></input>
-  <input type="number" name="n6" className="numbs" min="1" max="52" step="1"></input>
-  <input hidden="true" type="search" name="q"  value={'auto'} placeholder="123" aria-label="Buy ticket"></input>
-  <button type="submit">Купить билет</button>
+  return (
+  <div>
+  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
+  <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
+    <div className = "boardSL">
+      <p className="boardLabel">Первая комбинация</p>
+      <input type="number" name="n11" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n12" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n13" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n14" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n15" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n6" className="numbs" min="1" max="52" step="1"></input>
+    </div>
+    <div className = "boardSL">
+      <p className="boardLabel">Вторая комбинация</p>
+      <input type="number" name="n21" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n22" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n23" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n24" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n25" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n26" className="numbs" min="1" max="52" step="1"></input>
+    </div>
+    <input hidden type="search" name="q"  defaultValue={''} placeholder="123" aria-label="Buy ticket"></input>
+    <button type="submit">Купить билет</button>
   </form>
+  </div>
+  )
 }
 
 function Maxima() {
