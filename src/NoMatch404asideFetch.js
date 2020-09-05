@@ -598,11 +598,36 @@ function Keno() {
 }
 
 function SuperLoto() {
+
+  function nChange(event) {
+    console.log(event.target.name);
+    let strN = event.target.value;
+    if (event.target.name === 'n11') {
+      setStateN1(strN);
+    }
+    else if (event.target.name === 'n12') {
+      setStateN2(strN);
+    }
+    else if (event.target.name === 'n13') {
+      setStateN3(strN);
+    }
+    else if (event.target.name === 'n14') {
+      setStateN4(strN);
+    }
+    else if (event.target.name === 'n15') {
+      setStateN5(strN);
+    }
+    else if (event.target.name === 'n16') {
+      setStateN6(strN);
+    }
+  }
+
   function handleSubmitSuperLoto(event) {
     myInfoRef.current.textContent = 'Wait for fetch processing...';
     console.log(event.search);
-    event.search = '?q=1';
-    console.log(event.search);
+    //event.search = '?q=1';
+    //console.log(event.search);
+    setStatePay('6_1_' + n1 + '_' + n2 + '_' + n3 + '_' + n4 + '_' + n5 + '_' + n6);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -611,29 +636,45 @@ function SuperLoto() {
     //GetData('pay'); // if use Fetch directly from html page.
   } // end of function handleSubmitPay(event)
 
+  // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
+  // &board1=01_11_15_24_33_52
+  const [pay, setStatePay] = useState('');
+  const [n1, setStateN1] = useState('');
+  const [n2, setStateN2] = useState('');
+  const [n3, setStateN3] = useState('');
+  const [n4, setStateN4] = useState('');
+  const [n5, setStateN5] = useState('');
+  const [n6, setStateN6] = useState('');
+  //const [n7, setStateN7] = useState('');
+  //const [n8, setStateN8] = useState('');
+  //const [n9, setStateN9] = useState('');
+  //const [n10, setStateN10] = useState('');
+  //const [n11, setStateN11] = useState('');
+  //const [n12, setStateN12] = useState('');
+
   return (
   <div>
   <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
-  <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
-    <div className = "boardSL">
+  <div className = "boardSL">
       <p className="boardLabel">Первая комбинация</p>
-      <input type="number" name="n11" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n12" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n13" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n14" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n15" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n6" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n12" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n13" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n14" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n15" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n16" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
     </div>
     <div className = "boardSL">
       <p className="boardLabel">Вторая комбинация</p>
-      <input type="number" name="n21" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n22" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n23" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n24" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n25" className="numbs" min="1" max="52" step="1"></input>
-      <input type="number" name="n26" className="numbs" min="1" max="52" step="1"></input>
+      <input type="number" name="n21" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n22" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n23" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n24" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n25" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
+      <input type="number" name="n26" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
     </div>
-    <input hidden type="search" name="q"  defaultValue={''} placeholder="123" aria-label="Buy ticket"></input>
+  <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
+    <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
     <button type="submit">Купить билет</button>
   </form>
   </div>
