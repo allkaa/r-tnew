@@ -602,32 +602,65 @@ function SuperLoto() {
   function nChange(event) {
     console.log(event.target.name);
     let strN = event.target.value;
-    if (event.target.name === 'n11') {
-      setStateN1(strN);
+    let strPfx;
+    let strCmb;
+    if (event.target.name.indexOf('n1') !== -1) {
+      strPfx = 'n1';
+      strCmb = c1;
+      }
+    else if (event.target.name.indexOf('n2') !== -1) {
+      strPfx = 'n2';
+      strCmb = c2;
     }
-    else if (event.target.name === 'n12') {
-      setStateN2(strN);
+    else if (event.target.name.indexOf('n3') !== -1) {
+      strPfx = 'n3';
+      strCmb = c3;
     }
-    else if (event.target.name === 'n13') {
-      setStateN3(strN);
+    else if (event.target.name.indexOf('n4') !== -1) {
+      strPfx = 'n4';
+      strCmb = c4;
     }
-    else if (event.target.name === 'n14') {
-      setStateN4(strN);
+    else if (event.target.name.indexOf('n5') !== -1) {
+      strPfx = 'n5';
+      strCmb = c5;
     }
-    else if (event.target.name === 'n15') {
-      setStateN5(strN);
+    else if (event.target.name.indexOf('n6') !== -1) {
+      strPfx = 'n6';
+      strCmb = c6;
+    } // end of combination selection.
+    if (event.target.name === strPfx + '1') {
+      strCmb[0] = strN;
+      setStateC1(strCmb);
     }
-    else if (event.target.name === 'n16') {
-      setStateN6(strN);
+    else if (event.target.name === strPfx + '2') {
+      strCmb[1] = strN;
+      setStateC2(strCmb);
     }
-  }
+    else if (event.target.name === strPfx + '3') {
+     strCmb[2] = strN;
+      setStateC3(strCmb);
+    }
+    else if (event.target.name === strPfx + '4') {
+      strCmb[3] = strN;
+      setStateC4(strCmb);
+    }
+    else if (event.target.name === strPfx + '5') {
+      strCmb[4] = strN;
+      setStateC5(strCmb);
+    }
+    else if (event.target.name === strPfx + '6') {
+      strCmb[5] = strN;
+      setStateC6(strCmb);
+    } // end of number in combination selection.
+}
 
   function handleSubmitSuperLoto(event) {
     myInfoRef.current.textContent = 'Wait for fetch processing...';
     console.log(event.search);
     //event.search = '?q=1';
     //console.log(event.search);
-    setStatePay('6_1_' + n1 + '_' + n2 + '_' + n3 + '_' + n4 + '_' + n5 + '_' + n6);
+    
+    setStatePay('6_1_' + c1[0] + '_' + c1[1] + '_' + c1[2] + '_' + c1[3] + '_' + c1[4] + '_' + c1[5]);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -639,18 +672,12 @@ function SuperLoto() {
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
   const [pay, setStatePay] = useState('');
-  const [n1, setStateN1] = useState('');
-  const [n2, setStateN2] = useState('');
-  const [n3, setStateN3] = useState('');
-  const [n4, setStateN4] = useState('');
-  const [n5, setStateN5] = useState('');
-  const [n6, setStateN6] = useState('');
-  //const [n7, setStateN7] = useState('');
-  //const [n8, setStateN8] = useState('');
-  //const [n9, setStateN9] = useState('');
-  //const [n10, setStateN10] = useState('');
-  //const [n11, setStateN11] = useState('');
-  //const [n12, setStateN12] = useState('');
+  const [c1, setStateC1] = useState(['','','','','','']);
+  const [c2, setStateC2] = useState(['','','','','','']);
+  const [c3, setStateC3] = useState(['','','','','','']);
+  const [c4, setStateC4] = useState(['','','','','','']);
+  const [c5, setStateC5] = useState(['','','','','','']);
+  const [c6, setStateC6] = useState(['','','','','','']);
 
   return (
   <div>
