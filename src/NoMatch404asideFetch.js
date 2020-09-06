@@ -600,8 +600,12 @@ function Keno() {
 function SuperLoto() {
 
   function nChange(event) {
-    console.log(event.target.name);
+    //console.log(event.target.name);
     let strN = event.target.value;
+    if (strN.length < 2) {
+      strN = '0' + strN;
+    }
+    console.log(strN);
     let strPfx;
     let strCmb;
     if (event.target.name.indexOf('n1') !== -1) {
@@ -629,28 +633,60 @@ function SuperLoto() {
       strCmb = c6;
     } // end of combination selection.
     if (event.target.name === strPfx + '1') {
+      //console.log(event.target.name, strPfx + '1');
       strCmb[0] = strN;
-      setStateC1(strCmb);
+      if (strPfx === 'n1') setStateC1(strCmb);
+      else if (strPfx === 'n2') setStateC2(strCmb);
+      else if (strPfx === 'n3') setStateC3(strCmb);
+      else if (strPfx === 'n4') setStateC4(strCmb);
+      else if (strPfx === 'n5') setStateC5(strCmb);
+      else if (strPfx === 'n6') setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '2') {
+      //console.log(event.target.name, strPfx + '2');
       strCmb[1] = strN;
-      setStateC2(strCmb);
+      if (strPfx === 'n1') setStateC1(strCmb);
+      else if (strPfx === 'n2') setStateC2(strCmb);
+      else if (strPfx === 'n3') setStateC3(strCmb);
+      else if (strPfx === 'n4') setStateC4(strCmb);
+      else if (strPfx === 'n5') setStateC5(strCmb);
+      else if (strPfx === 'n6') setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '3') {
      strCmb[2] = strN;
-      setStateC3(strCmb);
-    }
+     if (strPfx === 'n1') setStateC1(strCmb);
+     else if (strPfx === 'n2') setStateC2(strCmb);
+     else if (strPfx === 'n3') setStateC3(strCmb);
+     else if (strPfx === 'n4') setStateC4(strCmb);
+     else if (strPfx === 'n5') setStateC5(strCmb);
+     else if (strPfx === 'n6') setStateC6(strCmb);
+   }
     else if (event.target.name === strPfx + '4') {
       strCmb[3] = strN;
-      setStateC4(strCmb);
+      if (strPfx === 'n1') setStateC1(strCmb);
+      else if (strPfx === 'n2') setStateC2(strCmb);
+      else if (strPfx === 'n3') setStateC3(strCmb);
+      else if (strPfx === 'n4') setStateC4(strCmb);
+      else if (strPfx === 'n5') setStateC5(strCmb);
+      else if (strPfx === 'n6') setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '5') {
       strCmb[4] = strN;
-      setStateC5(strCmb);
+      if (strPfx === 'n1') setStateC1(strCmb);
+      else if (strPfx === 'n2') setStateC2(strCmb);
+      else if (strPfx === 'n3') setStateC3(strCmb);
+      else if (strPfx === 'n4') setStateC4(strCmb);
+      else if (strPfx === 'n5') setStateC5(strCmb);
+      else if (strPfx === 'n6') setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '6') {
       strCmb[5] = strN;
-      setStateC6(strCmb);
+      if (strPfx === 'n1') setStateC1(strCmb);
+      else if (strPfx === 'n2') setStateC2(strCmb);
+      else if (strPfx === 'n3') setStateC3(strCmb);
+      else if (strPfx === 'n4') setStateC4(strCmb);
+      else if (strPfx === 'n5') setStateC5(strCmb);
+      else if (strPfx === 'n6') setStateC6(strCmb);
     } // end of number in combination selection.
 }
 
@@ -659,8 +695,55 @@ function SuperLoto() {
     console.log(event.search);
     //event.search = '?q=1';
     //console.log(event.search);
-    
-    setStatePay('6_1_' + c1[0] + '_' + c1[1] + '_' + c1[2] + '_' + c1[3] + '_' + c1[4] + '_' + c1[5]);
+    //console.log(c1);
+    //console.log(c2);
+    //console.log(c3);
+    //console.log(c4);
+    //console.log(c5);
+    //console.log(c6);
+    let strCmb;
+    let strPay = ''; // '6_1'
+    //console.log(strPay);
+    for (let i = 1; i < 7; i++) {
+      if (i === 1) {
+        //console.log(c1);
+        strCmb = c1;
+        //console.log(strCmb);
+        strCmb.sort();
+        //console.log(strCmb);
+        if (strCmb[0] !== '00') strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+      }
+      else if (i === 2) {
+        //console.log(c2);
+        strCmb = c2;
+        //console.log(strCmb);
+        strCmb.sort();
+        //console.log(strCmb);
+        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+      }
+      else if (i === 3) {
+        strCmb = c3;
+        strCmb.sort();
+        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+      }
+      else if (i === 4) {
+        strCmb = c4;
+        strCmb.sort();
+        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+      }
+      else if (i === 5) {
+        strCmb = c5;
+        strCmb.sort();
+        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+      }
+      else if (i === 6) {
+        strCmb = c6;
+        strCmb.sort();
+        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+      }
+    }
+    console.log(strPay);
+    setStatePay('6_1' + strPay);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -672,12 +755,12 @@ function SuperLoto() {
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
   const [pay, setStatePay] = useState('');
-  const [c1, setStateC1] = useState(['','','','','','']);
-  const [c2, setStateC2] = useState(['','','','','','']);
-  const [c3, setStateC3] = useState(['','','','','','']);
-  const [c4, setStateC4] = useState(['','','','','','']);
-  const [c5, setStateC5] = useState(['','','','','','']);
-  const [c6, setStateC6] = useState(['','','','','','']);
+  const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
+  const [c2, setStateC2] = useState(['00','00','00','00','00','00']);
+  const [c3, setStateC3] = useState(['00','00','00','00','00','00']);
+  const [c4, setStateC4] = useState(['00','00','00','00','00','00']);
+  const [c5, setStateC5] = useState(['00','00','00','00','00','00']);
+  const [c6, setStateC6] = useState(['00','00','00','00','00','00']);
 
   return (
   <div>
