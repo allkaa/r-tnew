@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 106
+// NoMatch404asideFetch 207
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -601,11 +601,13 @@ function SuperLoto() {
 
   function nChange(event) {
     //console.log(event.target.name);
+    const MaxNum = '52';
     let strN = event.target.value;
     if (strN.length < 2) {
       strN = '0' + strN;
     }
     console.log(strN);
+    if (strN > MaxNum) event.preventDefault();
     let strPfx;
     let strCmb;
     if (event.target.name.indexOf('n1') !== -1) {
@@ -706,19 +708,13 @@ function SuperLoto() {
     //console.log(strPay);
     for (let i = 1; i < 7; i++) {
       if (i === 1) {
-        //console.log(c1);
         strCmb = c1;
-        //console.log(strCmb);
         strCmb.sort();
-        //console.log(strCmb);
         if (strCmb[0] !== '00') strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
       }
       else if (i === 2) {
-        //console.log(c2);
         strCmb = c2;
-        //console.log(strCmb);
         strCmb.sort();
-        //console.log(strCmb);
         if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
       }
       else if (i === 3) {
