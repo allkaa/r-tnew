@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 208
+// NoMatch404asideFetch 209
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -599,6 +599,24 @@ function Keno() {
 
 function SuperLoto() {
 
+  function onChangeDraws(event) {
+    console.log(event.target.name);
+    const MaxNum = '6';
+    let strN = event.target.value;
+    console.log(strN);
+    if (strN.length > 1) {
+      event.preventDefault();
+      alert("Ошибка! Номер больше " + MaxNum);
+      return;
+    }
+    if (strN > MaxNum) {
+      event.preventDefault();
+      alert("Ошибка! Номер больше " + MaxNum);
+      return;
+    }
+    setStateDraws(strN);
+  }
+
   function nChange(event) {
     //console.log(event.target.name);
     const MaxNum = '52';
@@ -609,7 +627,7 @@ function SuperLoto() {
     console.log(strN);
     if (strN > MaxNum) {
       event.preventDefault();
-      alert("Ошибка! Номер больше 52.")
+      alert("Ошибка! Номер больше " + MaxNum);
       return;
     }
     let strPfx;
@@ -747,7 +765,7 @@ function SuperLoto() {
     }
     //myInfoRef.current.textContent = 'Wait for fetch processing...';
     myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
-    setStatePay('6_1' + strPay);
+    setStatePay('6_' + draws + strPay);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -759,6 +777,7 @@ function SuperLoto() {
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
   const [pay, setStatePay] = useState('');
+  const [draws, setStateDraws] = useState(1);
   const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
   const [c2, setStateC2] = useState(['00','00','00','00','00','00']);
   const [c3, setStateC3] = useState(['00','00','00','00','00','00']);
@@ -769,6 +788,10 @@ function SuperLoto() {
   return (
   <div>
   <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
+  <div>
+    <p className="boardLabel">Количество последовательных розыгрышей</p>
+    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1" onChange={onChangeDraws}></input>
+  </div>
   <div className = "boardSL">
       <p className="boardLabel">1 комбинация</p>
       <input type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
