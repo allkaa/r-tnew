@@ -5,26 +5,78 @@
     <meta charset="utf-8">
     <title>Favorite fruit start</title>
     <style>
-      input:invalid {
+      .numbs:invalid {
         border: 2px dashed red;
       }
 
-      input:invalid:required {
+      .numbs:invalid:required {
         background-image: linear-gradient(to right, pink, lightgreen);
       }      
       
-      input:valid {
+      .numbs:valid {
         border: 2px solid black;
       }
     </style>
+    <script>
+      function myFunction() {
+        document.getElementById("o1").innerHTML = document.getElementById("n1").value * 15;
+      }
+      function myFunc2() {
+        //alert('myFunc2');
+        //const n2 = document.getElementById("n2");
+        if (document.getElementById("n2").checkValidity()) {
+          //alert('myFunc2 valid');
+          document.getElementById("n2").setCustomValidity("");
+        } else {
+          //alert('myFunc2 invalid');
+          document.getElementById("n2").setCustomValidity("Invalid value entered");
+        }
+        //n2.addEventListener("input", function (event) {
+        //});
+      }
+      function myFunc3() {
+        //alert('myFunc3');
+        //const n2 = document.getElementById("n2");
+        //if (document.getElementById("n2").checkValidity())
+        if (document.getElementById("n2").value >=1 && document.getElementById("n2").value <= 6) {
+          alert('myFunc3 valid [' + document.getElementById("n2").value + ']');
+          //document.getElementById("n2").setCustomValidity("");
+        } else {
+          alert('myFunc3 invalid [' + document.getElementById("n2").value + ']');
+          //document.getElementById("n2").setCustomValidity("Invalid value entered");
+          event.preventDefault();
+        }
+        //n2.addEventListener("input", function (event) {
+        //});
+      }
+    </script>
 </head>
 
 <body>
-    <form>
-      <label for="choose">Would you prefer a banana or a cherry?</label>
-      <input id="choose" name="i_like" required>
-      <button>Submit</button>
-    </form>
+  <div>
+    <label for="n2">How mutch2 would you like?</label>
+    <input type="number" class="numbs" id="n2" name="cmb2" value="1" min="1" max="6" required oninput="myFunc2()">
+    <label for="o1">Total price:</label>
+    <!--
+      <output id="o1" name="price" form="f1" for="n1">15</output>
+    -->
+    <output id="o1" name="price">15</output>
+  </div>
+  <div>
+  <!--
+    <form id="f1" oninput="price.value=parseInt(n1.value) * 15">
+  -->
+  <form id="f1" oninput="myFunction()" onsubmit="myFunc3()">
+    <div>
+      <label for="n1">How many would you like?</label>
+      <input type="number"  class="numbs" id="n1" name="cmb1" value="1" min="1" max="10">
+    </div>
+    <div>
+      <button type="submit" id="btn1">Submit</button>
+    </div>
+  </form>
+  <script>
+  </script>
 </body>
 
 </html>
