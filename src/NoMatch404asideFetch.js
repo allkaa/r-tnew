@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 209
+// NoMatch404asideFetch 210
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -601,17 +601,25 @@ function SuperLoto() {
 
   function onChangeDraws(event) {
     console.log(event.target.name);
-    const MaxNum = '6';
+    const MaxNum = 6;
+    const MinNum = 1;
     let strN = event.target.value;
     console.log(strN);
-    if (strN.length > 1) {
+    let nbrN = Number(strN);
+    console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
       event.preventDefault();
-      alert("Ошибка! Номер больше " + MaxNum);
+      //alert("Ошибка! Номер не задан корректно.");
       return;
     }
-    if (strN > MaxNum) {
+    if (nbrN < MinNum) {
       event.preventDefault();
-      alert("Ошибка! Номер больше " + MaxNum);
+      //alert("Ошибка! Номер меньше " + MinNum);
+      return;
+    }
+    if (nbrN > MaxNum) {
+      event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
       return;
     }
     setStateDraws(strN);
@@ -619,15 +627,28 @@ function SuperLoto() {
 
   function nChange(event) {
     //console.log(event.target.name);
-    const MaxNum = '52';
+    const MaxNum = 52;
+    const MinNum = 1;
     let strN = event.target.value;
     if (strN.length < 2) {
       strN = '0' + strN;
     }
     console.log(strN);
-    if (strN > MaxNum) {
+    let nbrN = Number(strN);
+    console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
       event.preventDefault();
-      alert("Ошибка! Номер больше " + MaxNum);
+      //alert("Ошибка! Номер не задан корректно.");
+      return;
+    }
+    if (nbrN < MinNum) {
+      event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      return;
+    }
+    if (nbrN > MaxNum) {
+      event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
       return;
     }
     let strPfx;
@@ -787,11 +808,15 @@ function SuperLoto() {
 
   return (
   <div>
-  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
+  <h3>Супер Лото</h3>
+  <h4>Задайте количество последовательных розыгрышей (от 1 до 6):</h4>
   <div>
-    <p className="boardLabel">Количество последовательных розыгрышей</p>
-    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1" onChange={onChangeDraws}></input>
+    <p className="boardLabel">Розыгрышей</p>
+    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
+    onChange={onChangeDraws} required></input>
+    <p className="boardLabel">Если количество не задано, устанавливается 1 розыгрыш</p>
   </div>
+  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
   <div className = "boardSL">
       <p className="boardLabel">1 комбинация</p>
       <input type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={nChange}></input>
