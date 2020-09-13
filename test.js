@@ -2,6 +2,54 @@
 
 console.log('\n<================================ begin of test ==============================================>');
 
+let numArr = [0,0,0,0,0,0];
+let strArr = ['','','','','',''];
+let strNum;
+let current, result;
+let max = 52;
+let i = 0, j;
+do {
+  current = Math.floor(Math.random() * (max));
+  result = current + 1
+  //console.log(current, result);
+  if (numArr.indexOf(result) === -1) {
+    for (j=0; j <= 5; j++) {
+      if (numArr[j] === 0) {
+        numArr[j] = result;
+        strNum = numArr[j].toString();
+        if (strNum.length < 2) strNum = '0' + strNum;
+        strArr[j] = strNum;
+        i = i + 1;
+        break;
+      }
+    }
+  }
+} while (i < 6);
+//console.log(numArr);
+console.log(strArr);
+
+return;
+
+/*
+for (var a=[],i=0;i<40;++i) a[i]=i;
+
+// http://stackoverflow.com/questions/962802#962890
+function shuffle(array) {
+  var tmp, current, top = array.length;
+  if(top) while(--top) {
+    current = Math.floor(Math.random() * (top + 1));
+    tmp = array[current];
+    array[current] = array[top];
+    array[top] = tmp;
+  }
+  return array;
+}
+
+a = shuffle(a);
+
+
+return;
+*/
 const parseString = require('xml2js').parseString;
 //let xml = '?xml version="1.0" encoding="UTF-8"?><response><ticket>225-13818091-1101234</ticket><game>2</game><sum>10.00</sum><result>0</result></response>';
 let xml = '<?xml version="1.0" encoding="UTF-8"?><response><ticket>225-13818091-1101234</ticket><game>2</game><sum>10.00</sum><result>0</result></response>';
