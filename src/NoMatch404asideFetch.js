@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 210
+// NoMatch404asideFetch 211
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -806,40 +806,68 @@ function SuperLoto() {
     //let strA = event.target.value;
     //console.log(strA);
     //console.log('typeof ' + typeof(strA));
-    if (event.target.name === 'a1') {
-      if (event.target.value === 'Y') {
-        let numArr = [0,0,0,0,0,0];
-        let strArr = ['','','','','',''];
-        let strNum;
-        let current, result;
-        let max = 52;
-        let i = 0, j;
-        do {
-          current = Math.floor(Math.random() * (max));
-          result = current + 1
-          //console.log(current, result);
-          if (numArr.indexOf(result) === -1) {
-            for (j=0; j <= 5; j++) {
-              if (numArr[j] === 0) {
-                numArr[j] = result;
-                strNum = numArr[j].toString();
-                if (strNum.length < 2) strNum = '0' + strNum;
-                strArr[j] = strNum;
-                i = i + 1;
-                break;
-              }
+    let strArr = ['','','','','',''];
+    let bnlAuto = false;
+    if (event.target.value === 'Y') {
+      let numArr = [0,0,0,0,0,0];
+      let strNum;
+      let current, result;
+      let max = 52;
+      let i = 0, j;
+      do {
+        current = Math.floor(Math.random() * (max));
+        result = current + 1
+        //console.log(current, result);
+        if (numArr.indexOf(result) === -1) {
+          for (j=0; j <= 5; j++) {
+            if (numArr[j] === 0) {
+              numArr[j] = result;
+              strNum = numArr[j].toString();
+              if (strNum.length < 2) strNum = '0' + strNum;
+              strArr[j] = strNum;
+              i = i + 1;
+              break;
             }
           }
-        } while (i < 6);
-        //console.log(numArr);
-        //console.log(strArr);
-        setStateC1(strArr);
-      }
-      else setStateC1(['00','00','00','00','00','00']);
+        }
+      } while (i < 6);
+      //console.log(numArr);
+      //console.log(strArr);
+      //setStateC1(strArr);
+      bnlAuto = true;
     }
-  }
+    else {
+      strArr=['00','00','00','00','00','00'];
+      bnlAuto = false;
+    }
+    if (event.target.name === 'a1') {
+      setStateC1(strArr);
+      setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 'a2') {
+      setStateC2(strArr);
+      setStateAuto2(bnlAuto);
+    }
+    else if (event.target.name === 'a3') {
+      setStateC3(strArr);
+      setStateAuto3(bnlAuto);
+    }
+    else if (event.target.name === 'a4') {
+      setStateC4(strArr);
+      setStateAuto4(bnlAuto);
+    }
+    else if (event.target.name === 'a5') {
+      setStateC5(strArr);
+      setStateAuto5(bnlAuto);
+    }
+    else if (event.target.name === 'a6') {
+      setStateC6(strArr);
+      setStateAuto6(bnlAuto);
+    }
+  } // end of function onChangeAuto(event)
 
-  function numStrValue(strNum) {
+  function numStrValue(strNum, auto) {
+    if (!auto) return;
     //console.log(strNum);
     let strRet;
     if (strNum === '00') strRet = '';
@@ -857,6 +885,12 @@ function SuperLoto() {
   const [c4, setStateC4] = useState(['00','00','00','00','00','00']);
   const [c5, setStateC5] = useState(['00','00','00','00','00','00']);
   const [c6, setStateC6] = useState(['00','00','00','00','00','00']);
+  const [a1, setStateAuto1] = useState(false);
+  const [a2, setStateAuto2] = useState(false);
+  const [a3, setStateAuto3] = useState(false);
+  const [a4, setStateAuto4] = useState(false);
+  const [a5, setStateAuto5] = useState(false);
+  const [a6, setStateAuto6] = useState(false);
 
   return (
   <div>
@@ -871,12 +905,12 @@ function SuperLoto() {
   <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
   <div className = "boardSL">
       <p className="boardLabel">1 комбинация</p>
-      <input type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[0])}></input>
-      <input type="number" name="n12" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[1])}></input>
-      <input type="number" name="n13" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[2])}></input>
-      <input type="number" name="n14" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[3])}></input>
-      <input type="number" name="n15" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[4])}></input>
-      <input type="number" name="n16" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[5])}></input>
+      <input type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[0], a1)}></input>
+      <input type="number" name="n12" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[1], a1)}></input>
+      <input type="number" name="n13" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[2], a1)}></input>
+      <input type="number" name="n14" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[3], a1)}></input>
+      <input type="number" name="n15" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[4], a1)}></input>
+      <input type="number" name="n16" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[5], a1)}></input>
       <p className="boardLabel">Авто</p>
       <select name="a1" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -885,48 +919,73 @@ function SuperLoto() {
     </div>
     <div className = "boardSL">
       <p className="boardLabel">2 комбинация</p>
-      <input type="number" name="n21" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n22" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n23" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n24" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n25" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n26" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input type="number" name="n21" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[0], a2)}></input>
+      <input type="number" name="n22" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[1], a2)}></input>
+      <input type="number" name="n23" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[2], a2)}></input>
+      <input type="number" name="n24" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[3], a2)}></input>
+      <input type="number" name="n25" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[4], a2)}></input>
+      <input type="number" name="n26" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[5], a2)}></input>
+      <p className="boardLabel">Авто</p>
+      <select name="a2" onChange={onChangeAuto}>
+        <option value='N'>Нет</option>
+        <option value='Y'>Да</option>
+      </select>
     </div>
     <div className = "boardSL">
       <p className="boardLabel">3 комбинация</p>
-      <input type="number" name="n31" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n32" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n33" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n34" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n35" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n36" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input type="number" name="n31" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[0], a3)}></input>
+      <input type="number" name="n32" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[1], a3)}></input>
+      <input type="number" name="n33" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[2], a3)}></input>
+      <input type="number" name="n34" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[3], a3)}></input>
+      <input type="number" name="n35" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[4], a3)}></input>
+      <input type="number" name="n36" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[5], a3)}></input>
+      <p className="boardLabel">Авто</p>
+      <select name="a3" onChange={onChangeAuto}>
+        <option value='N'>Нет</option>
+        <option value='Y'>Да</option>
+      </select>
     </div>
     <div className = "boardSL">
       <p className="boardLabel">4 комбинация</p>
-      <input type="number" name="n41" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n42" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n43" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n44" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n45" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n46" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input type="number" name="n41" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[0], a4)}></input>
+      <input type="number" name="n42" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[1], a4)}></input>
+      <input type="number" name="n43" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[2], a4)}></input>
+      <input type="number" name="n44" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[3], a4)}></input>
+      <input type="number" name="n45" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[4], a4)}></input>
+      <input type="number" name="n46" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[5], a4)}></input>
+      <p className="boardLabel">Авто</p>
+      <select name="a4" onChange={onChangeAuto}>
+        <option value='N'>Нет</option>
+        <option value='Y'>Да</option>
+      </select>
     </div>
     <div className = "boardSL">
       <p className="boardLabel">5 комбинация</p>
-      <input type="number" name="n51" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n52" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n53" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n54" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n55" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n56" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input type="number" name="n51" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[0], a5)}></input>
+      <input type="number" name="n52" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[1], a5)}></input>
+      <input type="number" name="n53" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[2], a5)}></input>
+      <input type="number" name="n54" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[3], a5)}></input>
+      <input type="number" name="n55" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[4], a5)}></input>
+      <input type="number" name="n56" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[5], a5)}></input>
+      <p className="boardLabel">Авто</p>
+      <select name="a5" onChange={onChangeAuto}>
+        <option value='N'>Нет</option>
+        <option value='Y'>Да</option>
+      </select>
     </div>
     <div className = "boardSL">
       <p className="boardLabel">6 комбинация</p>
-      <input type="number" name="n61" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n62" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n63" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n64" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n65" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input type="number" name="n66" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input type="number" name="n61" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[0], a6)}></input>
+      <input type="number" name="n62" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[1], a6)}></input>
+      <input type="number" name="n63" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[2], a6)}></input>
+      <input type="number" name="n64" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[3], a6)}></input>
+      <input type="number" name="n65" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[4], a6)}></input>
+      <input type="number" name="n66" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[5], a6)}></input>
+      <p className="boardLabel">Авто</p>
+      <select name="a6" onChange={onChangeAuto}>
+        <option value='N'>Нет</option>
+        <option value='Y'>Да</option>
+      </select>
     </div>
   <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
     <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
