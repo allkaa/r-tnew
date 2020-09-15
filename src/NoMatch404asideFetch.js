@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 211
+// NoMatch404asideFetch 212
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -659,7 +659,7 @@ function SuperLoto() {
     if (event.target.name.indexOf('n1') !== -1) {
       strPfx = 'n1';
       strCmb = c1;
-      }
+    }
     else if (event.target.name.indexOf('n2') !== -1) {
       strPfx = 'n2';
       strCmb = c2;
@@ -750,39 +750,201 @@ function SuperLoto() {
     let strPay = ''; // '6_1'
     console.log(draws);
     //console.log(strPay);
+    let blnDuplicate = false;
     for (let i = 1; i < 7; i++) {
       if (i === 1) {
         strCmb = c1;
-        strCmb.sort();
-        if (strCmb[0] !== '00') strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        console.log(strCmb);
+        let k, j;
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = false;
+          for (k=0; k<6; k++) {
+            for (j=0; j<6; j++) {
+              if (j !== k) {
+                if (strCmb[j] === strCmb[k]) {
+                  blnDuplicate = true;
+                  alert('Ошибка! Дублирование номера в первой комбинации');
+                  break;
+                }
+              }
+            }
+            if (blnDuplicate) break;
+          }
+          if (! blnDuplicate) {
+            if (a1) {
+              strPay = strPay + '_a';
+            }
+            else {
+              strPay = strPay + '_m';
+            }
+            strCmb.sort();
+            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          }
+          else break;
+        }
       }
       else if (i === 2) {
         strCmb = c2;
-        strCmb.sort();
-        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        console.log(strCmb);
+        let k, j;
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = false;
+          for (k=0; k<6; k++) {
+            for (j=0; j<6; j++) {
+              if (j !== k) {
+                if (strCmb[j] === strCmb[k]) {
+                  blnDuplicate = true;
+                  alert('Ошибка! Дублирование номера во второй комбинации');
+                  break;
+                }
+              }
+            }
+            if (blnDuplicate) break;
+          }
+          if (! blnDuplicate) {
+            if (a2) {
+              strPay = strPay + '_a';
+            }
+            else {
+              strPay = strPay + '_m';
+            }
+            strCmb.sort();
+            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          }
+          else break;
+        }
       }
       else if (i === 3) {
         strCmb = c3;
-        strCmb.sort();
-        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        console.log(strCmb);
+        let k, j;
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = false;
+          for (k=0; k<6; k++) {
+            for (j=0; j<6; j++) {
+              if (j !== k) {
+                if (strCmb[j] === strCmb[k]) {
+                  blnDuplicate = true;
+                  alert('Ошибка! Дублирование номера в третьей комбинации');
+                  break;
+                }
+              }
+            }
+            if (blnDuplicate) break;
+          }
+          if (! blnDuplicate) {
+            if (a3) {
+              strPay = strPay + '_a';
+            }
+            else {
+              strPay = strPay + '_m';
+            }
+            strCmb.sort();
+            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          }
+          else break;
+        }
       }
       else if (i === 4) {
         strCmb = c4;
-        strCmb.sort();
-        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        console.log(strCmb);
+        let k, j;
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = false;
+          for (k=0; k<6; k++) {
+            for (j=0; j<6; j++) {
+              if (j !== k) {
+                if (strCmb[j] === strCmb[k]) {
+                  blnDuplicate = true;
+                  alert('Ошибка! Дублирование номера в четвертой комбинации');
+                  break;
+                }
+              }
+            }
+            if (blnDuplicate) break;
+          }
+          if (! blnDuplicate) {
+            if (a4) {
+              strPay = strPay + '_a';
+            }
+            else {
+              strPay = strPay + '_m';
+            }
+            strCmb.sort();
+            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          }
+          else break;
+        }
       }
       else if (i === 5) {
         strCmb = c5;
-        strCmb.sort();
-        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        console.log(strCmb);
+        let k, j;
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = false;
+          for (k=0; k<6; k++) {
+            for (j=0; j<6; j++) {
+              if (j !== k) {
+                if (strCmb[j] === strCmb[k]) {
+                  blnDuplicate = true;
+                  alert('Ошибка! Дублирование номера в пятой комбинации');
+                  break;
+                }
+              }
+            }
+            if (blnDuplicate) break;
+          }
+          if (! blnDuplicate) {
+            if (a5) {
+              strPay = strPay + '_a';
+            }
+            else {
+              strPay = strPay + '_m';
+            }
+            strCmb.sort();
+            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          }
+          else break;
+        }
       }
       else if (i === 6) {
         strCmb = c6;
-        strCmb.sort();
-        if (strCmb[0] !== '00') strPay = strPay + '_'  + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        console.log(strCmb);
+        let k, j;
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = false;
+          for (k=0; k<6; k++) {
+            for (j=0; j<6; j++) {
+              if (j !== k) {
+                if (strCmb[j] === strCmb[k]) {
+                  blnDuplicate = true;
+                  alert('Ошибка! Дублирование номера в шестой комбинации');
+                  break;
+                }
+              }
+            }
+            if (blnDuplicate) break;
+          }
+          if (! blnDuplicate) {
+            if (a6) {
+              strPay = strPay + '_a';
+            }
+            else {
+              strPay = strPay + '_m';
+            }
+            strCmb.sort();
+            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          }
+          else break;
+        }
       }
     }
     //console.log(strPay);
+    if (blnDuplicate) {
+      //alert('Ошибка! Есть некорректные комбинации.');
+      event.preventDefault();
+      return;
+    }
     if (strPay === '') {
       alert('Ошибка! Нет корректных комбинаций.');
       event.preventDefault();
@@ -834,6 +996,7 @@ function SuperLoto() {
       //console.log(numArr);
       //console.log(strArr);
       //setStateC1(strArr);
+      strArr.sort();
       bnlAuto = true;
     }
     else {

@@ -2,6 +2,29 @@
 
 console.log('\n<================================ begin of test ==============================================>');
 
+let strCmb=['09','08','08','06','05','04'];
+let k, j, blnDuplicate;
+if (strCmb.indexOf('00') !== -1) console.log('Ошибка! Нет корректных комбинаций.');
+else {
+  blnDuplicate = false;
+  for (k=0; k<6; k++) {
+    for (j=0; j<6; j++) {
+      if (j !== k) {
+        if (strCmb[j] === strCmb[k]) {
+          console.log('Ошибка! Дублирование номера в комбинации ' + strCmb[k]);
+          blnDuplicate = true;
+          break;
+        }
+      }
+    }
+    if (blnDuplicate) break;
+  }
+}
+
+console.log('\n<================================ end of test ==============================================>');
+return;
+
+/*
 let numArr = [0,0,0,0,0,0];
 let strArr = ['','','','','',''];
 let strNum;
@@ -27,8 +50,7 @@ do {
 } while (i < 6);
 //console.log(numArr);
 console.log(strArr);
-
-return;
+*/
 
 /*
 for (var a=[],i=0;i<40;++i) a[i]=i;
