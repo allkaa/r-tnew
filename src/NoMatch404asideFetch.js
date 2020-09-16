@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 212
+// NoMatch404asideFetch 213
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1038,6 +1038,82 @@ function SuperLoto() {
     return strRet;
   }
 
+  function onChangeSystem(event) {
+    console.log(event.target.name);
+    const MaxNum = 12;
+    const MinNum = 7;
+    let strN = event.target.value;
+    console.log(strN);
+    let nbrN = Number(strN);
+    console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      setStateSystem('7');
+      return;
+    }
+    if (nbrN < MinNum) {
+      event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      setStateSystem('7');
+      return;
+    }
+    if (nbrN > MaxNum) {
+      event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      setStateSystem('7');
+      return;
+    }
+    setStateSystem(strN);
+  }
+
+  function onChangeAutoSystem(event) {
+    console.log(event);
+    console.log('typeof ' + typeof(event));
+    console.log(event.target.name);
+    let strA = event.target.value;
+    console.log(strA);
+    console.log('typeof ' + typeof(strA));
+    let strArr = ['','','','','','','','','','','',''];
+    let bnlAuto = false;
+    let numSys = Number(system);
+    console.log('numSys: ' + numSys);
+    if (event.target.value === 'Y') {
+      let numArr = [0,0,0,0,0,0,0,0,0,0,0,0];
+      let strNum;
+      let current, result;
+      let max = 52;
+      let i = 0, j;
+      do {
+        current = Math.floor(Math.random() * (max));
+        result = current + 1
+        //console.log(current, result);
+        if (numArr.indexOf(result) === -1) {
+          for (j=0; j < numSys; j++) {
+            if (numArr[j] === 0) {
+              numArr[j] = result;
+              strNum = numArr[j].toString();
+              if (strNum.length < 2) strNum = '0' + strNum;
+              strArr[j] = strNum;
+              i = i + 1;
+              break;
+            }
+          }
+        }
+      } while (i < numSys);
+      console.log(strArr);
+      strArr.sort();
+      bnlAuto = true;
+    }
+    else {
+      strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
+      bnlAuto = false;
+    }
+    console.log(strArr);
+    setStateCS(strArr);
+    setStateAutoS(bnlAuto);
+  } // end of function onChangeAutoSystem(event)
+
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
   const [pay, setStatePay] = useState('');
@@ -1054,6 +1130,9 @@ function SuperLoto() {
   const [a4, setStateAuto4] = useState(false);
   const [a5, setStateAuto5] = useState(false);
   const [a6, setStateAuto6] = useState(false);
+  const [system, setStateSystem] = useState(7);
+  const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
+  const [as, setStateAutoS] = useState(false);
 
   return (
   <div>
@@ -1079,8 +1158,8 @@ function SuperLoto() {
         <option value='N'>Нет</option>
         <option value='Y'>Да</option>
       </select>
-    </div>
-    <div className = "boardSL">
+  </div>
+  <div className = "boardSL">
       <p className="boardLabel">2 комбинация</p>
       <input type="number" name="n21" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[0], a2)}></input>
       <input type="number" name="n22" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[1], a2)}></input>
@@ -1093,8 +1172,8 @@ function SuperLoto() {
         <option value='N'>Нет</option>
         <option value='Y'>Да</option>
       </select>
-    </div>
-    <div className = "boardSL">
+  </div>
+  <div className = "boardSL">
       <p className="boardLabel">3 комбинация</p>
       <input type="number" name="n31" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[0], a3)}></input>
       <input type="number" name="n32" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[1], a3)}></input>
@@ -1107,8 +1186,8 @@ function SuperLoto() {
         <option value='N'>Нет</option>
         <option value='Y'>Да</option>
       </select>
-    </div>
-    <div className = "boardSL">
+  </div>
+  <div className = "boardSL">
       <p className="boardLabel">4 комбинация</p>
       <input type="number" name="n41" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[0], a4)}></input>
       <input type="number" name="n42" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[1], a4)}></input>
@@ -1121,8 +1200,8 @@ function SuperLoto() {
         <option value='N'>Нет</option>
         <option value='Y'>Да</option>
       </select>
-    </div>
-    <div className = "boardSL">
+  </div>
+  <div className = "boardSL">
       <p className="boardLabel">5 комбинация</p>
       <input type="number" name="n51" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[0], a5)}></input>
       <input type="number" name="n52" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[1], a5)}></input>
@@ -1135,8 +1214,8 @@ function SuperLoto() {
         <option value='N'>Нет</option>
         <option value='Y'>Да</option>
       </select>
-    </div>
-    <div className = "boardSL">
+  </div>
+  <div className = "boardSL">
       <p className="boardLabel">6 комбинация</p>
       <input type="number" name="n61" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[0], a6)}></input>
       <input type="number" name="n62" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[1], a6)}></input>
@@ -1149,7 +1228,33 @@ function SuperLoto() {
         <option value='N'>Нет</option>
         <option value='Y'>Да</option>
       </select>
-    </div>
+  </div>
+  <div>
+    <p className="boardLabel">Система</p>
+    <input type="number" name="system" defaultValue={system} className="numbs" min="7" max="12" step="1"
+    onChange={onChangeSystem} required></input>
+    <p className="boardLabel">Если не задано, устанавливается система 7</p>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">Системная комбинация</p>
+      <input type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[0], a6)}></input>
+      <input type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[1], a6)}></input>
+      <input type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[2], a6)}></input>
+      <input type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[3], a6)}></input>
+      <input type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[4], a6)}></input>
+      <input type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[5], a6)}></input>
+      <input type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[6], a6)}></input>
+      <input type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[7], a6)}></input>
+      <input type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[8], a6)}></input>
+      <input type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[9], a6)}></input>
+      <input type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[10], a6)}></input>
+      <input type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[11], a6)}></input>
+      <p className="boardLabel">Авто</p>
+      <select name="as" onChange={onChangeAutoSystem}>
+        <option value='N'>Нет</option>
+        <option value='Y'>Да</option>
+      </select>
+  </div>
   <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
     <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
     <button type="submit">Купить билет</button>
