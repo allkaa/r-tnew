@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 213
+// NoMatch404asideFetch 214
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1074,7 +1074,8 @@ function SuperLoto() {
     let strA = event.target.value;
     console.log(strA);
     console.log('typeof ' + typeof(strA));
-    let strArr = ['','','','','','','','','','','',''];
+    //let strArr = ['','','','','','','','','','','',''];
+    let strArr = [];
     let bnlAuto = false;
     let numSys = Number(system);
     console.log('numSys: ' + numSys);
@@ -1094,7 +1095,8 @@ function SuperLoto() {
               numArr[j] = result;
               strNum = numArr[j].toString();
               if (strNum.length < 2) strNum = '0' + strNum;
-              strArr[j] = strNum;
+              //strArr[j] = strNum;
+              strArr.push(strNum);
               i = i + 1;
               break;
             }
@@ -1106,13 +1108,32 @@ function SuperLoto() {
       bnlAuto = true;
     }
     else {
-      strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
+      let i = 0;
+      do {
+        strArr.push('00');
+        i = i + 1;
+      } while (i < numSys);
+      //strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
       bnlAuto = false;
     }
     console.log(strArr);
     setStateCS(strArr);
     setStateAutoS(bnlAuto);
   } // end of function onChangeAutoSystem(event)
+
+  function onChangeSystemFlag(event) {
+    console.log(event);
+    console.log('typeof ' + typeof(event));
+    console.log(event.target.name);
+    let bnlSys = false;
+    if (event.target.value === 'Y') {
+      bnlSys = true;
+    }
+    else {
+      bnlSys = false;
+    }
+    setStateSystemFlag(bnlSys);
+  } // end of function onChangeSystemFlag.
 
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
@@ -1130,6 +1151,7 @@ function SuperLoto() {
   const [a4, setStateAuto4] = useState(false);
   const [a5, setStateAuto5] = useState(false);
   const [a6, setStateAuto6] = useState(false);
+  const [system_flag, setStateSystemFlag] = useState(false);
   const [system, setStateSystem] = useState(7);
   const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
   const [as, setStateAutoS] = useState(false);
@@ -1230,6 +1252,11 @@ function SuperLoto() {
       </select>
   </div>
   <div>
+    <p className="boardLabel">Использовать системную игру</p>
+      <select name="as" onChange={onChangeSystemFlag}>
+        <option value='N'>Нет</option>
+        <option value='Y'>Да</option>
+      </select>
     <p className="boardLabel">Система</p>
     <input type="number" name="system" defaultValue={system} className="numbs" min="7" max="12" step="1"
     onChange={onChangeSystem} required></input>
@@ -1237,18 +1264,18 @@ function SuperLoto() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">Системная комбинация</p>
-      <input type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[0], a6)}></input>
-      <input type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[1], a6)}></input>
-      <input type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[2], a6)}></input>
-      <input type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[3], a6)}></input>
-      <input type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[4], a6)}></input>
-      <input type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[5], a6)}></input>
-      <input type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[6], a6)}></input>
-      <input type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[7], a6)}></input>
-      <input type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[8], a6)}></input>
-      <input type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[9], a6)}></input>
-      <input type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[10], a6)}></input>
-      <input type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[11], a6)}></input>
+      <input type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[0], as)}></input>
+      <input type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[1], as)}></input>
+      <input type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[2], as)}></input>
+      <input type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[3], as)}></input>
+      <input type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[4], as)}></input>
+      <input type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[5], as)}></input>
+      <input type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[6], as)}></input>
+      <input type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[7], as)}></input>
+      <input type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[8], as)}></input>
+      <input type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[9], as)}></input>
+      <input type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[10], as)}></input>
+      <input type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[11], as)}></input>
       <p className="boardLabel">Авто</p>
       <select name="as" onChange={onChangeAutoSystem}>
         <option value='N'>Нет</option>
