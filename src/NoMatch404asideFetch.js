@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 216
+// NoMatch404asideFetch 217
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -628,6 +628,110 @@ function SuperLoto() {
     setStateDraws(strN);
   }
 
+  function onChangeS(event) {
+    //console.log(event.target.name);
+    const MaxNum = 52;
+    const MinNum = 1;
+    let strN = event.target.value;
+    if (strN.length < 2) {
+      strN = '0' + strN;
+    }
+    console.log(strN);
+    let nbrN = Number(strN);
+    console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      return;
+    }
+    if (nbrN < MinNum) {
+      event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      return;
+    }
+    if (nbrN > MaxNum) {
+      event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      return;
+    }
+    let strPfx;
+    let strCmb;
+    strPfx = 'ns';
+    strCmb = cs;
+    if (event.target.name === strPfx + '1') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 0) strCmb[0] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '2') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 1) strCmb[1] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '3') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 2) strCmb[2] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '4') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 3) strCmb[3] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '5') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 4) strCmb[4] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '6') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 5) strCmb[5] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '7') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 6) strCmb[6] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '8') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 7) strCmb[7] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '9') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 8) strCmb[8] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '10') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 9) strCmb[9] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '11') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 10) strCmb[10] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '12') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 11) strCmb[11] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+  }
+
   function onChange(event) {
     //console.log(event.target.name);
     const MaxNum = 52;
@@ -746,199 +850,234 @@ function SuperLoto() {
     //console.log(c4);
     //console.log(c5);
     //console.log(c6);
+    console.log(cs);
     let strCmb;
-    let strPay = ''; // '6_1'
+    let strPay = ''; // e.g. will later start as '6_1'
+    let blnDuplicate = false;
     console.log(draws);
     //console.log(strPay);
-    let blnDuplicate = false;
-    for (let i = 1; i < 7; i++) {
-      if (i === 1) {
-        strCmb = c1;
-        console.log(strCmb);
-        let k, j;
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = false;
-          for (k=0; k<6; k++) {
-            for (j=0; j<6; j++) {
-              if (j !== k) {
-                if (strCmb[j] === strCmb[k]) {
-                  blnDuplicate = true;
-                  alert('Ошибка! Дублирование номера в первой комбинации');
-                  break;
-                }
+    if (system_flag) {
+      strCmb = cs;
+      let sys = Number(system);
+      console.log(strCmb);
+      let k, j;
+      if (strCmb.indexOf('00') === -1) {
+        blnDuplicate = false;
+        for (k=0; k<sys; k++) {
+          for (j=0; j<sys; j++) {
+            if (j !== k) {
+              if (strCmb[j] === strCmb[k]) {
+                blnDuplicate = true;
+                alert('Ошибка! Дублирование номера в системной комбинации');
+                break;
               }
             }
-            if (blnDuplicate) break;
           }
-          if (! blnDuplicate) {
-            if (a1) {
-              strPay = strPay + '_a';
-            }
-            else {
-              strPay = strPay + '_m';
-            }
-            strCmb.sort();
-            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          if (blnDuplicate) break;
+        }
+        if (! blnDuplicate) {
+          if (as) {
+            strPay = strPay + '_sa';
           }
-          else break;
+          else {
+            strPay = strPay + '_sm';
+          }
+          strCmb.sort();
+          //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          for (k=0; k<sys; k++) strPay = strPay + '_' + strCmb[k] ;
         }
       }
-      else if (i === 2) {
-        strCmb = c2;
-        console.log(strCmb);
-        let k, j;
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = false;
-          for (k=0; k<6; k++) {
-            for (j=0; j<6; j++) {
-              if (j !== k) {
-                if (strCmb[j] === strCmb[k]) {
-                  blnDuplicate = true;
-                  alert('Ошибка! Дублирование номера во второй комбинации');
-                  break;
+    } // end of if (system_flag) {
+    else {
+      for (let i = 1; i < 7; i++) {
+        if (i === 1) {
+          strCmb = c1;
+          console.log(strCmb);
+          let k, j;
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = false;
+            for (k=0; k<6; k++) {
+              for (j=0; j<6; j++) {
+                if (j !== k) {
+                  if (strCmb[j] === strCmb[k]) {
+                    blnDuplicate = true;
+                    alert('Ошибка! Дублирование номера в первой комбинации');
+                    break;
+                  }
                 }
               }
+              if (blnDuplicate) break;
             }
-            if (blnDuplicate) break;
+            if (! blnDuplicate) {
+              if (a1) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else break;
           }
-          if (! blnDuplicate) {
-            if (a2) {
-              strPay = strPay + '_a';
-            }
-            else {
-              strPay = strPay + '_m';
-            }
-            strCmb.sort();
-            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-          }
-          else break;
         }
-      }
-      else if (i === 3) {
-        strCmb = c3;
-        console.log(strCmb);
-        let k, j;
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = false;
-          for (k=0; k<6; k++) {
-            for (j=0; j<6; j++) {
-              if (j !== k) {
-                if (strCmb[j] === strCmb[k]) {
-                  blnDuplicate = true;
-                  alert('Ошибка! Дублирование номера в третьей комбинации');
-                  break;
+        else if (i === 2) {
+          strCmb = c2;
+          console.log(strCmb);
+          let k, j;
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = false;
+            for (k=0; k<6; k++) {
+              for (j=0; j<6; j++) {
+                if (j !== k) {
+                  if (strCmb[j] === strCmb[k]) {
+                    blnDuplicate = true;
+                    alert('Ошибка! Дублирование номера во второй комбинации');
+                    break;
+                  }
                 }
               }
+              if (blnDuplicate) break;
             }
-            if (blnDuplicate) break;
+            if (! blnDuplicate) {
+              if (a2) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else break;
           }
-          if (! blnDuplicate) {
-            if (a3) {
-              strPay = strPay + '_a';
-            }
-            else {
-              strPay = strPay + '_m';
-            }
-            strCmb.sort();
-            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-          }
-          else break;
         }
-      }
-      else if (i === 4) {
-        strCmb = c4;
-        console.log(strCmb);
-        let k, j;
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = false;
-          for (k=0; k<6; k++) {
-            for (j=0; j<6; j++) {
-              if (j !== k) {
-                if (strCmb[j] === strCmb[k]) {
-                  blnDuplicate = true;
-                  alert('Ошибка! Дублирование номера в четвертой комбинации');
-                  break;
+        else if (i === 3) {
+          strCmb = c3;
+          console.log(strCmb);
+          let k, j;
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = false;
+            for (k=0; k<6; k++) {
+              for (j=0; j<6; j++) {
+                if (j !== k) {
+                  if (strCmb[j] === strCmb[k]) {
+                    blnDuplicate = true;
+                    alert('Ошибка! Дублирование номера в третьей комбинации');
+                    break;
+                  }
                 }
               }
+              if (blnDuplicate) break;
             }
-            if (blnDuplicate) break;
+            if (! blnDuplicate) {
+              if (a3) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else break;
           }
-          if (! blnDuplicate) {
-            if (a4) {
-              strPay = strPay + '_a';
-            }
-            else {
-              strPay = strPay + '_m';
-            }
-            strCmb.sort();
-            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-          }
-          else break;
         }
-      }
-      else if (i === 5) {
-        strCmb = c5;
-        console.log(strCmb);
-        let k, j;
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = false;
-          for (k=0; k<6; k++) {
-            for (j=0; j<6; j++) {
-              if (j !== k) {
-                if (strCmb[j] === strCmb[k]) {
-                  blnDuplicate = true;
-                  alert('Ошибка! Дублирование номера в пятой комбинации');
-                  break;
+        else if (i === 4) {
+          strCmb = c4;
+          console.log(strCmb);
+          let k, j;
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = false;
+            for (k=0; k<6; k++) {
+              for (j=0; j<6; j++) {
+                if (j !== k) {
+                  if (strCmb[j] === strCmb[k]) {
+                    blnDuplicate = true;
+                    alert('Ошибка! Дублирование номера в четвертой комбинации');
+                    break;
+                  }
                 }
               }
+              if (blnDuplicate) break;
             }
-            if (blnDuplicate) break;
+            if (! blnDuplicate) {
+              if (a4) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else break;
           }
-          if (! blnDuplicate) {
-            if (a5) {
-              strPay = strPay + '_a';
-            }
-            else {
-              strPay = strPay + '_m';
-            }
-            strCmb.sort();
-            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-          }
-          else break;
         }
-      }
-      else if (i === 6) {
-        strCmb = c6;
-        console.log(strCmb);
-        let k, j;
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = false;
-          for (k=0; k<6; k++) {
-            for (j=0; j<6; j++) {
-              if (j !== k) {
-                if (strCmb[j] === strCmb[k]) {
-                  blnDuplicate = true;
-                  alert('Ошибка! Дублирование номера в шестой комбинации');
-                  break;
+        else if (i === 5) {
+          strCmb = c5;
+          console.log(strCmb);
+          let k, j;
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = false;
+            for (k=0; k<6; k++) {
+              for (j=0; j<6; j++) {
+                if (j !== k) {
+                  if (strCmb[j] === strCmb[k]) {
+                    blnDuplicate = true;
+                    alert('Ошибка! Дублирование номера в пятой комбинации');
+                    break;
+                  }
                 }
               }
+              if (blnDuplicate) break;
             }
-            if (blnDuplicate) break;
+            if (! blnDuplicate) {
+              if (a5) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else break;
           }
-          if (! blnDuplicate) {
-            if (a6) {
-              strPay = strPay + '_a';
+        }
+        else if (i === 6) {
+          strCmb = c6;
+          console.log(strCmb);
+          let k, j;
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = false;
+            for (k=0; k<6; k++) {
+              for (j=0; j<6; j++) {
+                if (j !== k) {
+                  if (strCmb[j] === strCmb[k]) {
+                    blnDuplicate = true;
+                    alert('Ошибка! Дублирование номера в шестой комбинации');
+                    break;
+                  }
+                }
+              }
+              if (blnDuplicate) break;
             }
-            else {
-              strPay = strPay + '_m';
+            if (! blnDuplicate) {
+              if (a6) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
             }
-            strCmb.sort();
-            strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            else break;
           }
-          else break;
         }
       }
-    }
+    } // end of NOT if (system_flag) {
     //console.log(strPay);
     if (blnDuplicate) {
       //alert('Ошибка! Есть некорректные комбинации.');
@@ -1040,6 +1179,7 @@ function SuperLoto() {
 
   function onChangeSystem(event) {
     console.log(event.target.name);
+    setStateCS([]);
     const MaxNum = 12;
     const MinNum = 7;
     let strN = event.target.value;
@@ -1269,18 +1409,18 @@ function SuperLoto() {
       <p className="boardLabel">Если не задано, устанавливается система 7</p>
       <div className = "boardSL">
         <p className="boardLabel">Системная комбинация</p>
-        <input type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[0], as)}></input>
-        <input type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[1], as)}></input>
-        <input type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[2], as)}></input>
-        <input type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[3], as)}></input>
-        <input type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[4], as)}></input>
-        <input type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[5], as)}></input>
-        <input type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[6], as)}></input>
-        {Number(system) >= 8 && <input type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[7], as)}></input>}
-        {Number(system) >= 9 && <input type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[8], as)}></input>}
-        {Number(system) >= 10 && <input type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[9], as)}></input>}
-        {Number(system) >= 11 && <input type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[10], as)}></input>}
-        {Number(system) >= 12 && <input type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(cs[11], as)}></input>}
+        <input type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[0], as)}></input>
+        <input type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[1], as)}></input>
+        <input type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[2], as)}></input>
+        <input type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[3], as)}></input>
+        <input type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[4], as)}></input>
+        <input type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[5], as)}></input>
+        <input type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[6], as)}></input>
+        {Number(system) >= 8 && <input type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[7], as)}></input>}
+        {Number(system) >= 9 && <input type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[8], as)}></input>}
+        {Number(system) >= 10 && <input type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[9], as)}></input>}
+        {Number(system) >= 11 && <input type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[10], as)}></input>}
+        {Number(system) >= 12 && <input type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[11], as)}></input>}
         <p className="boardLabel">Авто</p>
         <select name="as" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
