@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 215
+// NoMatch404asideFetch 216
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1154,7 +1154,8 @@ function SuperLoto() {
   const [a6, setStateAuto6] = useState(false);
   const [system_flag, setStateSystemFlag] = useState(false);
   const [system, setStateSystem] = useState(7);
-  const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
+  //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
+  const [cs, setStateCS] = useState([]);
   const [as, setStateAutoS] = useState(false);
 
   return (
@@ -1167,7 +1168,8 @@ function SuperLoto() {
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
   </div>
-  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
+  {!system_flag && <div>
+    <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
   <div className = "boardSL">
       <p className="boardLabel">1 комбинация</p>
       <input type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[0], a1)}></input>
@@ -1252,6 +1254,8 @@ function SuperLoto() {
         <option value='Y'>Да</option>
       </select>
   </div>
+  </div>
+  } {/* end of {!system_flag */}
   <div>
     <p className="boardLabel">Использовать системную игру</p>
       <select name="as" onChange={onChangeSystemFlag}>
@@ -1284,7 +1288,7 @@ function SuperLoto() {
         </select>
       </div>
     </div>
-    }
+    } {/* end of {system_flag */}
   </div>
   <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
     <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
