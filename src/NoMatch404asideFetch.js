@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 217
+// NoMatch404asideFetch 218
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1179,7 +1179,13 @@ function SuperLoto() {
 
   function onChangeSystem(event) {
     console.log(event.target.name);
+    console.log(event.target.value);
+    console.log(cs);
+    console.log(as);
     setStateCS([]);
+    setStateAutoS(false);
+    console.log(cs);
+    console.log(as);
     const MaxNum = 12;
     const MinNum = 7;
     let strN = event.target.value;
@@ -1206,6 +1212,9 @@ function SuperLoto() {
     }
     setStateSystem(strN);
     console.log(Number(strN));
+    let total = CalcSum();
+    console.log(total);
+    setStateSum(total);
   }
 
   function onChangeAutoSystem(event) {
@@ -1274,8 +1283,32 @@ function SuperLoto() {
       bnlSys = false;
     }
     setStateSystemFlag(bnlSys);
+    //console.log(c1,a1,cs,as);
+    setStateDraws(1);
+    setStateC1(['00','00','00','00','00','00']);
+    setStateC2(['00','00','00','00','00','00']);
+    setStateC3(['00','00','00','00','00','00']);
+    setStateC4(['00','00','00','00','00','00']);
+    setStateC5(['00','00','00','00','00','00']);
+    setStateC6(['00','00','00','00','00','00']);
+    setStateAuto1(false);
+    setStateAuto2(false);
+    setStateAuto3(false);
+    setStateAuto4(false);
+    setStateAuto5(false);
+    setStateAuto6(false);
+    setStateSystem(7);
+    setStateCS([]);
+    setStateAutoS(false);
+    setStateSum(0);
+  
   } // end of function onChangeSystemFlag.
 
+  function CalcSum() {
+    let tot = 0;
+    tot = 15 * draws * system;
+    return tot;
+  }
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
   const [pay, setStatePay] = useState('');
@@ -1297,7 +1330,8 @@ function SuperLoto() {
   //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
   const [cs, setStateCS] = useState([]);
   const [as, setStateAutoS] = useState(false);
-
+  const [sum, setStateSum] = useState(15);
+  
   return (
   <div>
   <h3>Супер Лото</h3>
@@ -1307,6 +1341,8 @@ function SuperLoto() {
     <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
+    <p className="boardLabel">Стоимость билета</p>
+    <output name="sum" className="numbs">{sum}</output>
   </div>
   {!system_flag && <div>
     <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
