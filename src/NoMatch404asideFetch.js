@@ -1,4 +1,4 @@
-// NoMatch404asideFetch 219
+// NoMatch404asideFetch 220
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -855,7 +855,25 @@ function SuperLoto() {
       else if (strPfx === 'n5') setStateC5(strCmb);
       else if (strPfx === 'n6') setStateC6(strCmb);
     } // end of number in combination selection.
-}
+  }
+
+  function Duplicate(strCmb, count) {
+    let blnDuplicate = false;
+    let k, j;
+    for (k=0; k<count; k++) {
+      for (j=0; j<count; j++) {
+        if (j !== k) {
+          if (strCmb[j] === strCmb[k]) {
+            blnDuplicate = true;
+            //alert('Ошибка! Дублирование номера в xxx комбинации');
+            break;
+          }
+        }
+      }
+      if (blnDuplicate) break;
+    }
+    return blnDuplicate;
+  }
 
   function handleSubmitSuperLoto(event) {
     //console.log(event.search); // event.search e.g. '?q=6_1...';
@@ -865,31 +883,19 @@ function SuperLoto() {
     //console.log(c4);
     //console.log(c5);
     //console.log(c6);
-    console.log(cs);
+    //console.log(cs);
     let strCmb;
     let strPay = ''; // e.g. will later start as '6_1'
     let blnDuplicate = false;
-    console.log(draws);
+    //console.log(draws);
     //console.log(strPay);
     if (system_flag) {
       strCmb = cs;
       let sys = Number(system);
-      console.log(strCmb);
-      let k, j;
+      //console.log(strCmb);
+      let k;
       if (strCmb.indexOf('00') === -1) {
-        blnDuplicate = false;
-        for (k=0; k<sys; k++) {
-          for (j=0; j<sys; j++) {
-            if (j !== k) {
-              if (strCmb[j] === strCmb[k]) {
-                blnDuplicate = true;
-                alert('Ошибка! Дублирование номера в системной комбинации');
-                break;
-              }
-            }
-          }
-          if (blnDuplicate) break;
-        }
+        blnDuplicate = Duplicate(strCmb, sys);
         if (! blnDuplicate) {
           if (as) {
             strPay = strPay + '_sa';
@@ -901,28 +907,16 @@ function SuperLoto() {
           //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
           for (k=0; k<sys; k++) strPay = strPay + '_' + strCmb[k] ;
         }
+        else alert('Ошибка! Дублирование номера в системной комбинации');
       }
     } // end of if (system_flag) {
     else {
       for (let i = 1; i < 7; i++) {
         if (i === 1) {
           strCmb = c1;
-          console.log(strCmb);
-          let k, j;
+          //console.log(strCmb);
           if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = false;
-            for (k=0; k<6; k++) {
-              for (j=0; j<6; j++) {
-                if (j !== k) {
-                  if (strCmb[j] === strCmb[k]) {
-                    blnDuplicate = true;
-                    alert('Ошибка! Дублирование номера в первой комбинации');
-                    break;
-                  }
-                }
-              }
-              if (blnDuplicate) break;
-            }
+            blnDuplicate = Duplicate(strCmb, 6);
             if (! blnDuplicate) {
               if (a1) {
                 strPay = strPay + '_a';
@@ -933,29 +927,19 @@ function SuperLoto() {
               strCmb.sort();
               strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
             }
-            else break;
+            else {
+              alert('Ошибка! Дублирование номера в первой комбинации');
+              break;
+            }
           }
         }
         else if (i === 2) {
           strCmb = c2;
-          console.log(strCmb);
-          let k, j;
+          //console.log(strCmb);
           if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = false;
-            for (k=0; k<6; k++) {
-              for (j=0; j<6; j++) {
-                if (j !== k) {
-                  if (strCmb[j] === strCmb[k]) {
-                    blnDuplicate = true;
-                    alert('Ошибка! Дублирование номера во второй комбинации');
-                    break;
-                  }
-                }
-              }
-              if (blnDuplicate) break;
-            }
+            blnDuplicate = Duplicate(strCmb, 6);
             if (! blnDuplicate) {
-              if (a2) {
+              if (a1) {
                 strPay = strPay + '_a';
               }
               else {
@@ -964,29 +948,19 @@ function SuperLoto() {
               strCmb.sort();
               strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
             }
-            else break;
+            else {
+              alert('Ошибка! Дублирование номера во второй комбинации');
+              break;
+            }
           }
         }
         else if (i === 3) {
           strCmb = c3;
-          console.log(strCmb);
-          let k, j;
+          //console.log(strCmb);
           if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = false;
-            for (k=0; k<6; k++) {
-              for (j=0; j<6; j++) {
-                if (j !== k) {
-                  if (strCmb[j] === strCmb[k]) {
-                    blnDuplicate = true;
-                    alert('Ошибка! Дублирование номера в третьей комбинации');
-                    break;
-                  }
-                }
-              }
-              if (blnDuplicate) break;
-            }
+            blnDuplicate = Duplicate(strCmb, 6);
             if (! blnDuplicate) {
-              if (a3) {
+              if (a1) {
                 strPay = strPay + '_a';
               }
               else {
@@ -995,29 +969,19 @@ function SuperLoto() {
               strCmb.sort();
               strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
             }
-            else break;
+            else {
+              alert('Ошибка! Дублирование номера в третьей комбинации');
+              break;
+            }
           }
         }
         else if (i === 4) {
           strCmb = c4;
-          console.log(strCmb);
-          let k, j;
+          //console.log(strCmb);
           if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = false;
-            for (k=0; k<6; k++) {
-              for (j=0; j<6; j++) {
-                if (j !== k) {
-                  if (strCmb[j] === strCmb[k]) {
-                    blnDuplicate = true;
-                    alert('Ошибка! Дублирование номера в четвертой комбинации');
-                    break;
-                  }
-                }
-              }
-              if (blnDuplicate) break;
-            }
+            blnDuplicate = Duplicate(strCmb, 6);
             if (! blnDuplicate) {
-              if (a4) {
+              if (a1) {
                 strPay = strPay + '_a';
               }
               else {
@@ -1026,29 +990,19 @@ function SuperLoto() {
               strCmb.sort();
               strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
             }
-            else break;
+            else {
+              alert('Ошибка! Дублирование номера в четвертой комбинации');
+              break;
+            }
           }
         }
         else if (i === 5) {
           strCmb = c5;
-          console.log(strCmb);
-          let k, j;
+          //console.log(strCmb);
           if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = false;
-            for (k=0; k<6; k++) {
-              for (j=0; j<6; j++) {
-                if (j !== k) {
-                  if (strCmb[j] === strCmb[k]) {
-                    blnDuplicate = true;
-                    alert('Ошибка! Дублирование номера в пятой комбинации');
-                    break;
-                  }
-                }
-              }
-              if (blnDuplicate) break;
-            }
+            blnDuplicate = Duplicate(strCmb, 6);
             if (! blnDuplicate) {
-              if (a5) {
+              if (a1) {
                 strPay = strPay + '_a';
               }
               else {
@@ -1057,29 +1011,19 @@ function SuperLoto() {
               strCmb.sort();
               strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
             }
-            else break;
+            else {
+              alert('Ошибка! Дублирование номера в пятой комбинации');
+              break;
+            }
           }
         }
         else if (i === 6) {
           strCmb = c6;
-          console.log(strCmb);
-          let k, j;
+          //console.log(strCmb);
           if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = false;
-            for (k=0; k<6; k++) {
-              for (j=0; j<6; j++) {
-                if (j !== k) {
-                  if (strCmb[j] === strCmb[k]) {
-                    blnDuplicate = true;
-                    alert('Ошибка! Дублирование номера в шестой комбинации');
-                    break;
-                  }
-                }
-              }
-              if (blnDuplicate) break;
-            }
+            blnDuplicate = Duplicate(strCmb, 6);
             if (! blnDuplicate) {
-              if (a6) {
+              if (a1) {
                 strPay = strPay + '_a';
               }
               else {
@@ -1088,10 +1032,13 @@ function SuperLoto() {
               strCmb.sort();
               strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
             }
-            else break;
+            else {
+              alert('Ошибка! Дублирование номера в шестой комбинации');
+              break;
+            }
           }
         }
-      }
+      } //end of (let i = 1; i < 7; i++).
     } // end of NOT if (system_flag) {
     //console.log(strPay);
     if (blnDuplicate) {
