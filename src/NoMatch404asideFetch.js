@@ -1,5 +1,15 @@
-// NoMatch404asideFetch 218
+// NoMatch404asideFetch 219
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  useLocation,
+  useHistory
+} from "react-router-dom";
+import { useState } from 'react'; // React Hooks used.
+/*
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +20,7 @@ import {
   useHistory
 } from "react-router-dom";
 import { useState, useEffect, useLayoutEffect } from 'react'; // React Hooks used.
+*/
 
 // You can use the last <Route> in a <Switch> as a kind of
 // "fallback" route, to catch 404 errors.
@@ -25,6 +36,10 @@ import logo2 from './logo.png'; // Tell Webpack this JS file will use this image
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;
 let myInfoRef = React.createRef();
+let drawnum = 1
+let sysnum = 0;
+let cmbnum = 0;
+let myInfoRef2 = React.createRef();
 
 function NoMatchAside(props) {
   console.log('Main props:' + props);
@@ -1212,9 +1227,12 @@ function SuperLoto() {
     }
     setStateSystem(strN);
     console.log(Number(strN));
-    let total = CalcSum();
-    console.log(total);
-    setStateSum(total);
+    sysnum = SysCmbSL(Number(strN));
+    cmbnum = 0;
+    //let total = CalcSumSL();
+    //console.log(total);
+    //setStateSum(total);
+    //myInfoRef2.current.textContent = 'Стоимость билета: ' + total.toString();
   }
 
   function onChangeAutoSystem(event) {
@@ -1300,15 +1318,23 @@ function SuperLoto() {
     setStateSystem(7);
     setStateCS([]);
     setStateAutoS(false);
-    setStateSum(0);
+    //setStateSum(0);
+    drawnum = 1;
+    sysnum = SysCmbSL(7);
+    cmbnum = 0;
   
   } // end of function onChangeSystemFlag.
 
-  function CalcSum() {
+  function CalcSumSL() {
     let tot = 0;
-    tot = 15 * draws * system;
+    tot = 15 * drawnum * sysnum * cmbnum;
     return tot;
   }
+
+  function SysCmbSL(sys) {
+    return sys;
+  }
+  
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
   const [pay, setStatePay] = useState('');
@@ -1330,7 +1356,7 @@ function SuperLoto() {
   //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
   const [cs, setStateCS] = useState([]);
   const [as, setStateAutoS] = useState(false);
-  const [sum, setStateSum] = useState(15);
+  //const [sum, setStateSum] = useState(15);
   
   return (
   <div>
@@ -1341,8 +1367,8 @@ function SuperLoto() {
     <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
-    <p className="boardLabel">Стоимость билета</p>
-    <output name="sum" className="numbs">{sum}</output>
+    {/* <p className="boardLabel">Стоимость билета</p> */}
+    <p name="sum" className="boardLabel" ref={myInfoRef2}>Стоимость билета: {CalcSumSL()}</p>
   </div>
   {!system_flag && <div>
     <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
