@@ -36,10 +36,11 @@ import logo2 from './logo.png'; // Tell Webpack this JS file will use this image
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;
 let myInfoRef = React.createRef();
-let drawnum = 1
+let drawnum = 0;
 let sysnum = 0;
 let cmbnum = 0;
-let myInfoRef2 = React.createRef();
+let stake = 0;
+//let myInfoRef2 = React.createRef();
 
 function NoMatchAside(props) {
   console.log('Main props:' + props);
@@ -1274,7 +1275,12 @@ function SuperLoto() {
 
   function CalcSumSL() {
     let tot = 0;
-    tot = 15 * drawnum * sysnum * cmbnum;
+    if (system_flag) {
+      tot = 15 * drawnum * sysnum * cmbnum * stake;
+    }
+    else {
+      tot = 15 * drawnum * cmbnum * stake;
+    }
     return tot;
   }
 
@@ -1284,6 +1290,12 @@ function SuperLoto() {
   
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
+
+  drawnum = 1;
+  sysnum = 0;
+  cmbnum = 0;
+  stake = 1;
+
   const [pay, setStatePay] = useState('');
   const [draws, setStateDraws] = useState(1);
   const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
@@ -1315,7 +1327,7 @@ function SuperLoto() {
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
     {/* <p className="boardLabel">Стоимость билета</p> */}
-    <p name="sum" className="boardLabel" ref={myInfoRef2}>Стоимость билета: {CalcSumSL()}</p>
+    <p name="sum" className="boardLabel">Стоимость билета: {CalcSumSL()}</p>
   </div>
   {!system_flag && <div>
     <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>

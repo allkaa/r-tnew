@@ -1,0 +1,1 @@
+tot = 15 * drawnum * sysnum * cmbnum * stake;
