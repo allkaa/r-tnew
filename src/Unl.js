@@ -1,4 +1,4 @@
-// Unl.js 0002
+// Unl.js 0003
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -83,6 +83,20 @@ let myInfoRef63 = React.createRef();
 let myInfoRef64 = React.createRef();
 let myInfoRef65 = React.createRef();
 let myInfoRef66 = React.createRef();
+
+let myInfoRefs1 = React.createRef();
+let myInfoRefs2 = React.createRef();
+let myInfoRefs3 = React.createRef();
+let myInfoRefs4 = React.createRef();
+let myInfoRefs5 = React.createRef();
+let myInfoRefs6 = React.createRef();
+let myInfoRefs7 = React.createRef();
+let myInfoRefs8 = React.createRef();
+let myInfoRefs9 = React.createRef();
+let myInfoRefs10 = React.createRef();
+let myInfoRefs11 = React.createRef();
+let myInfoRefs12 = React.createRef();
+
 
 function NoMatchAside(props) {
   console.log('Main props:' + props);
@@ -1164,9 +1178,22 @@ function SuperLoto() {
     }
     console.log(strArr);
     let strCmb = cs;
-    for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+    for (i=0; i<=numSys; i++) strCmb[i] = strArr[i];
     setStateCS(strCmb);
     setStateAutoS(bnlAuto);
+    myInfoRefs1.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+    myInfoRefs2.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+    myInfoRefs3.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+    myInfoRefs4.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+    myInfoRefs5.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+    myInfoRefs6.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    myInfoRefs7.current.value = strCmb[6] === '00' ? '' : strCmb[6];
+    if (numSys > 7) myInfoRefs8.current.value = strCmb[7] === '00' ? '' : strCmb[7];
+    if (numSys > 8) myInfoRefs9.current.value = strCmb[8] === '00' ? '' : strCmb[8];
+    if (numSys > 9) myInfoRefs10.current.value = strCmb[9] === '00' ? '' : strCmb[9];
+    if (numSys > 10) myInfoRefs11.current.value = strCmb[10] === '00' ? '' : strCmb[10];
+    if (numSys > 11) myInfoRefs12.current.value = strCmb[11] === '00' ? '' : strCmb[11];
+
     myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeAutoSystem(event).
 
@@ -1623,18 +1650,18 @@ function SuperLoto() {
       <p className="boardLabel">Если не задано, устанавливается система 7</p>
       <div className = "boardSL">
         <p className="boardLabel">Системная комбинация</p>
-        <input type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[0], as)}></input>
-        <input type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[1], as)}></input>
-        <input type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[2], as)}></input>
-        <input type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[3], as)}></input>
-        <input type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[4], as)}></input>
-        <input type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[5], as)}></input>
-        <input type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[6], as)}></input>
-        {Number(system) >= 8 && <input type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[7], as)}></input>}
-        {Number(system) >= 9 && <input type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[8], as)}></input>}
-        {Number(system) >= 10 && <input type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[9], as)}></input>}
-        {Number(system) >= 11 && <input type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[10], as)}></input>}
-        {Number(system) >= 12 && <input type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS} value={numStrValue(cs[11], as)}></input>}
+        <input ref={myInfoRefs1} type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs2} type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs3} type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs4} type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs5} type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs6} type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs7} type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        {Number(system) >= 8 && <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 9 && <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 10 && <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 11 && <input ref={myInfoRefs11} type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 12 && <input ref={myInfoRefs12} type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
         <p className="boardLabel">Авто</p>
         <select name="as" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
