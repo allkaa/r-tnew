@@ -1,4 +1,4 @@
-// Unl.js 0001
+// Unl.js 0002
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -35,13 +35,54 @@ import logo2 from './logo.png'; // Tell Webpack this JS file will use this image
 
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;
-let myInfoRef = React.createRef();
-let myInfoRef2 = React.createRef();
+let myInfoRef = React.createRef(); // waiting for ....
+let myInfoRef2 = React.createRef(); // ticket price:
 let drawnum = 1;
 let sysnum = 0;
 let cmbnum = 0;
 let stake = 1;
-//let myInfoRef2 = React.createRef();
+
+let myInfoRef11 = React.createRef();
+let myInfoRef12 = React.createRef();
+let myInfoRef13 = React.createRef();
+let myInfoRef14 = React.createRef();
+let myInfoRef15 = React.createRef();
+let myInfoRef16 = React.createRef();
+
+let myInfoRef21 = React.createRef();
+let myInfoRef22 = React.createRef();
+let myInfoRef23 = React.createRef();
+let myInfoRef24 = React.createRef();
+let myInfoRef25 = React.createRef();
+let myInfoRef26 = React.createRef();
+
+let myInfoRef31 = React.createRef();
+let myInfoRef32 = React.createRef();
+let myInfoRef33 = React.createRef();
+let myInfoRef34 = React.createRef();
+let myInfoRef35 = React.createRef();
+let myInfoRef36 = React.createRef();
+
+let myInfoRef41 = React.createRef();
+let myInfoRef42 = React.createRef();
+let myInfoRef43 = React.createRef();
+let myInfoRef44 = React.createRef();
+let myInfoRef45 = React.createRef();
+let myInfoRef46 = React.createRef();
+
+let myInfoRef51 = React.createRef();
+let myInfoRef52 = React.createRef();
+let myInfoRef53 = React.createRef();
+let myInfoRef54 = React.createRef();
+let myInfoRef55 = React.createRef();
+let myInfoRef56 = React.createRef();
+
+let myInfoRef61 = React.createRef();
+let myInfoRef62 = React.createRef();
+let myInfoRef63 = React.createRef();
+let myInfoRef64 = React.createRef();
+let myInfoRef65 = React.createRef();
+let myInfoRef66 = React.createRef();
 
 function NoMatchAside(props) {
   console.log('Main props:' + props);
@@ -649,115 +690,87 @@ function SuperLoto() {
     setStateDraws(strN);
     drawnum = Number(strN);
     myInfoRef2.current.textContent = CalcSumSL();
-  }
+  } // end of function onChangeDraws(event).
 
-  function onChangeS(event) {
-    //console.log(event.target.name);
-    const MaxNum = 52;
-    const MinNum = 1;
-    let strN = event.target.value;
-    if (strN.length < 2) {
-      strN = '0' + strN;
+  function onChangeSystemFlag(event) {
+    console.log(event);
+    console.log('typeof ' + typeof(event));
+    console.log(event.target.name);
+    let bnlSys = false;
+    if (event.target.value === 'Y') {
+      bnlSys = true;
     }
+    else {
+      bnlSys = false;
+    }
+    setStateSystemFlag(bnlSys);
+    //console.log(c1,a1,cs,as);
+    setStateDraws(1);
+    setStateC1(['00','00','00','00','00','00']);
+    setStateC2(['00','00','00','00','00','00']);
+    setStateC3(['00','00','00','00','00','00']);
+    setStateC4(['00','00','00','00','00','00']);
+    setStateC5(['00','00','00','00','00','00']);
+    setStateC6(['00','00','00','00','00','00']);
+    setStateAuto1(false);
+    setStateAuto2(false);
+    setStateAuto3(false);
+    setStateAuto4(false);
+    setStateAuto5(false);
+    setStateAuto6(false);
+    setStateSystem(7);
+    setStateCS([]);
+    setStateAutoS(false);
+    //setStateSum(0);
+    drawnum = 1;
+    sysnum = SysCmbSL(7);
+    cmbnum = 0;
+    myInfoRef2.current.textContent = CalcSumSL();
+  } // end of function onChangeSystemFlag(event).
+
+  function onChangeSystem(event) {
+    sysnum = SysCmbSL(Number(system));
+    //console.log(event.target.name);
+    //console.log(event.target.value);
+    //console.log(cs);
+    //console.log(as);
+    setStateCS([]);
+    setStateAutoS(false);
+    //console.log(cs);
+    //console.log(as);
+    const MaxNum = 12;
+    const MinNum = 7;
+    let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
     if (Number.isNaN(nbrN)) {
-      //event.preventDefault();
+      event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
-      //return;
-      strN = '00';
+      setStateSystem('7');
+      return;
     }
     if (nbrN < MinNum) {
-      //event.preventDefault();
+      event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
-      //return;
-      strN = '00';
+      setStateSystem('7');
+      return;
     }
     if (nbrN > MaxNum) {
-      //event.preventDefault();
+      event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
-      //return;
-      strN = '00';
+      setStateSystem('7');
+      return;
     }
-    let strPfx;
-    let strCmb;
-    strPfx = 'ns';
-    strCmb = cs;
-    if (event.target.name === strPfx + '1') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 0) strCmb[0] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '2') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 1) strCmb[1] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '3') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 2) strCmb[2] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '4') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 3) strCmb[3] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '5') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 4) strCmb[4] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '6') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 5) strCmb[5] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '7') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 6) strCmb[6] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '8') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 7) strCmb[7] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '9') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 8) strCmb[8] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '10') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 9) strCmb[9] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '11') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 10) strCmb[10] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-    }
-    if (event.target.name === strPfx + '12') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 11) strCmb[11] = strN;
-      else strCmb.push(strN);
-      setStateCS(strCmb);
-      myInfoRef2.current.textContent = CalcSumSL();
-    }
-  }
+    setStateSystem(strN);
+    //console.log(Number(strN));
+    sysnum = SysCmbSL(Number(strN));
+    cmbnum = 0;
+    //let total = CalcSumSL();
+    //console.log(total);
+    //setStateSum(total);
+    myInfoRef2.current.textContent = CalcSumSL();
+  } // end of function onChangeSystem(event).
 
   function onChange(event) {
     //console.log(event.target.name);
@@ -871,7 +884,115 @@ function SuperLoto() {
       else if (strPfx === 'n6') setStateC6(strCmb);
     } // end of number in combination selection.
     myInfoRef2.current.textContent = CalcSumSL();
-  }
+  } // function onChange(event).
+
+  function onChangeS(event) {
+    //console.log(event.target.name);
+    const MaxNum = 52;
+    const MinNum = 1;
+    let strN = event.target.value;
+    if (strN.length < 2) {
+      strN = '0' + strN;
+    }
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      //return;
+      strN = '00';
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      //return;
+      strN = '00';
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      //return;
+      strN = '00';
+    }
+    let strPfx;
+    let strCmb;
+    strPfx = 'ns';
+    strCmb = cs;
+    if (event.target.name === strPfx + '1') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 0) strCmb[0] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '2') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 1) strCmb[1] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '3') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 2) strCmb[2] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '4') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 3) strCmb[3] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '5') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 4) strCmb[4] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '6') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 5) strCmb[5] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '7') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 6) strCmb[6] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '8') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 7) strCmb[7] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '9') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 8) strCmb[8] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '10') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 9) strCmb[9] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '11') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 10) strCmb[10] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+    }
+    if (event.target.name === strPfx + '12') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 11) strCmb[11] = strN;
+      else strCmb.push(strN);
+      setStateCS(strCmb);
+      myInfoRef2.current.textContent = CalcSumSL();
+    }
+  } // end of function onChangeS(event).
 
   function onChangeAuto(event) {
     //console.log(event);
@@ -880,14 +1001,15 @@ function SuperLoto() {
     //let strA = event.target.value;
     //console.log(strA);
     //console.log('typeof ' + typeof(strA));
-    let strArr = ['00','00','00','00','00','00'];
+    let strCmb;
+    let strArr = ['','','','','',''];
     let bnlAuto = false;
+    let i = 0, j;
     if (event.target.value === 'Y') {
       let numArr = [0,0,0,0,0,0];
       let strNum;
       let current, result;
       let max = 52;
-      let i = 0, j;
       do {
         current = Math.floor(Math.random() * (max));
         result = current + 1
@@ -907,7 +1029,6 @@ function SuperLoto() {
       } while (i < 6);
       //console.log(numArr);
       //console.log(strArr);
-      //setStateC1(strArr);
       strArr.sort();
       bnlAuto = true;
     }
@@ -915,32 +1036,139 @@ function SuperLoto() {
       strArr=['00','00','00','00','00','00'];
       bnlAuto = false;
     }
+    console.log('strArr auto:');
+    console.log(strArr);
     if (event.target.name === 'a1') {
-      setStateC1(strArr);
+      strCmb = c1;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      setStateC1(strCmb);
       setStateAuto1(bnlAuto);
+      myInfoRef11.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef12.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef13.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef14.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef15.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef16.current.value = strCmb[5] === '00' ? '' : strCmb[5];
     }
     else if (event.target.name === 'a2') {
-      setStateC2(strArr);
+      strCmb = c2;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      setStateC2(strCmb);
       setStateAuto2(bnlAuto);
+      myInfoRef21.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef22.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef23.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef24.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef25.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef26.current.value = strCmb[5] === '00' ? '' : strCmb[5];
     }
     else if (event.target.name === 'a3') {
-      setStateC3(strArr);
+      strCmb = c3;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      setStateC3(strCmb);
       setStateAuto3(bnlAuto);
+      myInfoRef31.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef32.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef33.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef34.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef35.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef36.current.value = strCmb[5] === '00' ? '' : strCmb[5];
     }
     else if (event.target.name === 'a4') {
-      setStateC4(strArr);
+      strCmb = c4;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      setStateC4(strCmb);
       setStateAuto4(bnlAuto);
+      myInfoRef41.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef42.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef43.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef44.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef45.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef46.current.value = strCmb[5] === '00' ? '' : strCmb[5];
     }
     else if (event.target.name === 'a5') {
-      setStateC5(strArr);
+      strCmb = c5;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      setStateC5(strCmb);
       setStateAuto5(bnlAuto);
+      myInfoRef51.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef52.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef53.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef54.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef55.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef56.current.value = strCmb[5] === '00' ? '' : strCmb[5];
     }
     else if (event.target.name === 'a6') {
-      setStateC6(strArr);
+      strCmb = c6;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      setStateC6(strCmb);
       setStateAuto6(bnlAuto);
+      myInfoRef61.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef62.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef63.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef64.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef65.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef66.current.value = strCmb[5] === '00' ? '' : strCmb[5];
     }
     myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeAuto(event)
+
+  function onChangeAutoSystem(event) {
+    console.log(event);
+    console.log('typeof ' + typeof(event));
+    console.log(event.target.name);
+    let strA = event.target.value;
+    console.log(strA);
+    console.log('typeof ' + typeof(strA));
+    //let strArr = ['','','','','','','','','','','',''];
+    let strArr = [];
+    let bnlAuto = false;
+    let numSys = Number(system);
+    console.log('numSys: ' + numSys);
+    let i = 0, j;
+    if (event.target.value === 'Y') {
+      let numArr = [0,0,0,0,0,0,0,0,0,0,0,0];
+      let strNum;
+      let current, result;
+      let max = 52;
+      do {
+        current = Math.floor(Math.random() * (max));
+        result = current + 1
+        //console.log(current, result);
+        if (numArr.indexOf(result) === -1) {
+          for (j=0; j < numSys; j++) {
+            if (numArr[j] === 0) {
+              numArr[j] = result;
+              strNum = numArr[j].toString();
+              if (strNum.length < 2) strNum = '0' + strNum;
+              //strArr[j] = strNum;
+              strArr.push(strNum);
+              i = i + 1;
+              break;
+            }
+          }
+        }
+      } while (i < numSys);
+      console.log(strArr);
+      strArr.sort();
+      bnlAuto = true;
+    }
+    else {
+      let i = 0;
+      do {
+        strArr.push('00');
+        i = i + 1;
+      } while (i < numSys);
+      //strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
+      bnlAuto = false;
+    }
+    console.log(strArr);
+    let strCmb = cs;
+    for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+    setStateCS(strCmb);
+    setStateAutoS(bnlAuto);
+    myInfoRef2.current.textContent = CalcSumSL();
+  } // end of function onChangeAutoSystem(event).
 
   function Duplicate(strCmb, count) {
     let blnDuplicate = false;
@@ -1145,156 +1373,27 @@ function SuperLoto() {
     */
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
     //GetData('pay'); // if use Fetch directly from html page.
-  } // end of function handleSubmitPay(event)
+  
+  } // end of function handleSubmitPay(event).
 
   function numStrValue(strNum, auto) {
-    if (!auto) return;
+    return; 
+    /*
+    if (!auto) return; 
+    //if (!auto && strNum !== '00') return strNum; 
     //console.log(strNum);
     let strRet;
     if (strNum === '00') strRet = '';
     else strRet = strNum;
     return strRet;
+    */
   }
-
-  function onChangeSystem(event) {
-    sysnum = SysCmbSL(Number(system));
-    //console.log(event.target.name);
-    //console.log(event.target.value);
-    //console.log(cs);
-    //console.log(as);
-    setStateCS([]);
-    setStateAutoS(false);
-    //console.log(cs);
-    //console.log(as);
-    const MaxNum = 12;
-    const MinNum = 7;
-    let strN = event.target.value;
-    //console.log(strN);
-    let nbrN = Number(strN);
-    //console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
-      event.preventDefault();
-      //alert("Ошибка! Номер не задан корректно.");
-      setStateSystem('7');
-      return;
-    }
-    if (nbrN < MinNum) {
-      event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      setStateSystem('7');
-      return;
-    }
-    if (nbrN > MaxNum) {
-      event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
-      setStateSystem('7');
-      return;
-    }
-    setStateSystem(strN);
-    //console.log(Number(strN));
-    sysnum = SysCmbSL(Number(strN));
-    cmbnum = 0;
-    //let total = CalcSumSL();
-    //console.log(total);
-    //setStateSum(total);
-    myInfoRef2.current.textContent = CalcSumSL();
-  }
-
-  function onChangeAutoSystem(event) {
-    console.log(event);
-    console.log('typeof ' + typeof(event));
-    console.log(event.target.name);
-    let strA = event.target.value;
-    console.log(strA);
-    console.log('typeof ' + typeof(strA));
-    //let strArr = ['','','','','','','','','','','',''];
-    let strArr = [];
-    let bnlAuto = false;
-    let numSys = Number(system);
-    console.log('numSys: ' + numSys);
-    if (event.target.value === 'Y') {
-      let numArr = [0,0,0,0,0,0,0,0,0,0,0,0];
-      let strNum;
-      let current, result;
-      let max = 52;
-      let i = 0, j;
-      do {
-        current = Math.floor(Math.random() * (max));
-        result = current + 1
-        //console.log(current, result);
-        if (numArr.indexOf(result) === -1) {
-          for (j=0; j < numSys; j++) {
-            if (numArr[j] === 0) {
-              numArr[j] = result;
-              strNum = numArr[j].toString();
-              if (strNum.length < 2) strNum = '0' + strNum;
-              //strArr[j] = strNum;
-              strArr.push(strNum);
-              i = i + 1;
-              break;
-            }
-          }
-        }
-      } while (i < numSys);
-      console.log(strArr);
-      strArr.sort();
-      bnlAuto = true;
-    }
-    else {
-      let i = 0;
-      do {
-        strArr.push('00');
-        i = i + 1;
-      } while (i < numSys);
-      //strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
-      bnlAuto = false;
-    }
-    console.log(strArr);
-    setStateCS(strArr);
-    setStateAutoS(bnlAuto);
-    myInfoRef2.current.textContent = CalcSumSL();
-  } // end of function onChangeAutoSystem(event)
-
-  function onChangeSystemFlag(event) {
-    console.log(event);
-    console.log('typeof ' + typeof(event));
-    console.log(event.target.name);
-    let bnlSys = false;
-    if (event.target.value === 'Y') {
-      bnlSys = true;
-    }
-    else {
-      bnlSys = false;
-    }
-    setStateSystemFlag(bnlSys);
-    //console.log(c1,a1,cs,as);
-    setStateDraws(1);
-    setStateC1(['00','00','00','00','00','00']);
-    setStateC2(['00','00','00','00','00','00']);
-    setStateC3(['00','00','00','00','00','00']);
-    setStateC4(['00','00','00','00','00','00']);
-    setStateC5(['00','00','00','00','00','00']);
-    setStateC6(['00','00','00','00','00','00']);
-    setStateAuto1(false);
-    setStateAuto2(false);
-    setStateAuto3(false);
-    setStateAuto4(false);
-    setStateAuto5(false);
-    setStateAuto6(false);
-    setStateSystem(7);
-    setStateCS([]);
-    setStateAutoS(false);
-    //setStateSum(0);
-    drawnum = 1;
-    sysnum = SysCmbSL(7);
-    cmbnum = 0;
-    myInfoRef2.current.textContent = CalcSumSL();
-  } // end of function onChangeSystemFlag.
 
   function CalcSumSL() {
     let strCmb;
     let blnDuplicate = false;
     cmbnum = 0;
+    console.log('CalcSumSL cmbs:');
     if (system_flag) {
       strCmb = cs;
       console.log(strCmb);
@@ -1381,7 +1480,7 @@ function SuperLoto() {
     ret = 'Стоимость билета: ' + tot.toString();
     myInfoRef2.current.textContent = ret;
     return ret;
-  } // end of function CalcSumSL.
+  } // end of function CalcSumSL().
 
   function SysCmbSL(sys) {
     return sys;
@@ -1410,7 +1509,7 @@ function SuperLoto() {
   const [cs, setStateCS] = useState([]);
   const [as, setStateAutoS] = useState(false);
   //const [sum, setStateSum] = useState(15);
-  
+
   return (
   <div>
   <h3>Супер Лото</h3>
@@ -1427,12 +1526,12 @@ function SuperLoto() {
     <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
   <div className = "boardSL">
       <p className="boardLabel">1 комбинация</p>
-      <input type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[0], a1)}></input>
-      <input type="number" name="n12" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[1], a1)}></input>
-      <input type="number" name="n13" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[2], a1)}></input>
-      <input type="number" name="n14" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[3], a1)}></input>
-      <input type="number" name="n15" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[4], a1)}></input>
-      <input type="number" name="n16" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c1[5], a1)}></input>
+      <input ref={myInfoRef11} type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef12} type="number" name="n12" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef13} type="number" name="n13" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef14} type="number" name="n14" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef15} type="number" name="n15" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef16} type="number" name="n16" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a1" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -1441,12 +1540,12 @@ function SuperLoto() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">2 комбинация</p>
-      <input type="number" name="n21" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[0], a2)}></input>
-      <input type="number" name="n22" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[1], a2)}></input>
-      <input type="number" name="n23" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[2], a2)}></input>
-      <input type="number" name="n24" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[3], a2)}></input>
-      <input type="number" name="n25" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[4], a2)}></input>
-      <input type="number" name="n26" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c2[5], a2)}></input>
+      <input ref={myInfoRef21} type="number" name="n21" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef22} type="number" name="n22" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef23} type="number" name="n23" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef24} type="number" name="n24" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef25} type="number" name="n25" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef26} type="number" name="n26" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a2" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -1455,12 +1554,12 @@ function SuperLoto() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">3 комбинация</p>
-      <input type="number" name="n31" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[0], a3)}></input>
-      <input type="number" name="n32" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[1], a3)}></input>
-      <input type="number" name="n33" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[2], a3)}></input>
-      <input type="number" name="n34" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[3], a3)}></input>
-      <input type="number" name="n35" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[4], a3)}></input>
-      <input type="number" name="n36" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c3[5], a3)}></input>
+      <input ref={myInfoRef31} type="number" name="n31" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef32} type="number" name="n32" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef33} type="number" name="n33" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef34} type="number" name="n34" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef35} type="number" name="n35" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef36} type="number" name="n36" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a3" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -1469,12 +1568,12 @@ function SuperLoto() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">4 комбинация</p>
-      <input type="number" name="n41" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[0], a4)}></input>
-      <input type="number" name="n42" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[1], a4)}></input>
-      <input type="number" name="n43" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[2], a4)}></input>
-      <input type="number" name="n44" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[3], a4)}></input>
-      <input type="number" name="n45" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[4], a4)}></input>
-      <input type="number" name="n46" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c4[5], a4)}></input>
+      <input ref={myInfoRef41} type="number" name="n41" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef42} type="number" name="n42" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef43} type="number" name="n43" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef44} type="number" name="n44" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef45} type="number" name="n45" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef46} type="number" name="n46" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a4" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -1483,12 +1582,12 @@ function SuperLoto() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">5 комбинация</p>
-      <input type="number" name="n51" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[0], a5)}></input>
-      <input type="number" name="n52" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[1], a5)}></input>
-      <input type="number" name="n53" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[2], a5)}></input>
-      <input type="number" name="n54" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[3], a5)}></input>
-      <input type="number" name="n55" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[4], a5)}></input>
-      <input type="number" name="n56" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c5[5], a5)}></input>
+      <input ref={myInfoRef51} type="number" name="n51" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef52} type="number" name="n52" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef53} type="number" name="n53" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef54} type="number" name="n54" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef55} type="number" name="n55" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef56} type="number" name="n56" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a5" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -1497,12 +1596,12 @@ function SuperLoto() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">6 комбинация</p>
-      <input type="number" name="n61" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[0], a6)}></input>
-      <input type="number" name="n62" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[1], a6)}></input>
-      <input type="number" name="n63" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[2], a6)}></input>
-      <input type="number" name="n64" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[3], a6)}></input>
-      <input type="number" name="n65" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[4], a6)}></input>
-      <input type="number" name="n66" className="numbs" min="1" max="52" step="1" onChange={onChange} value={numStrValue(c6[5], a6)}></input>
+      <input ref={myInfoRef61} type="number" name="n61" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef62} type="number" name="n62" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef63} type="number" name="n63" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef64} type="number" name="n64" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef65} type="number" name="n65" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef66} type="number" name="n66" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a6" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -1545,7 +1644,7 @@ function SuperLoto() {
     </div>
     } {/* end of {system_flag */}
   </div>
-  <button type="button" onClick={CalcSumSL}>Рассчитать стоимость билета.</button>
+  {/* <button type="button" onClick={CalcSumSL}>Рассчитать стоимость билета.</button> */}
   <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
     <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
     <button type="submit">Купить билет</button>
