@@ -1,4 +1,4 @@
-// Unl.js 0003
+// Unl.js 0004
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -96,7 +96,7 @@ let myInfoRefs9 = React.createRef();
 let myInfoRefs10 = React.createRef();
 let myInfoRefs11 = React.createRef();
 let myInfoRefs12 = React.createRef();
-
+let myInfoRefsa = React.createRef();
 
 function NoMatchAside(props) {
   console.log('Main props:' + props);
@@ -707,9 +707,9 @@ function SuperLoto() {
   } // end of function onChangeDraws(event).
 
   function onChangeSystemFlag(event) {
-    console.log(event);
-    console.log('typeof ' + typeof(event));
-    console.log(event.target.name);
+    //console.log(event);
+    //console.log('typeof ' + typeof(event));
+    //console.log(event.target.name);
     let bnlSys = false;
     if (event.target.value === 'Y') {
       bnlSys = true;
@@ -739,19 +739,38 @@ function SuperLoto() {
     drawnum = 1;
     sysnum = SysCmbSL(7);
     cmbnum = 0;
-    myInfoRef2.current.textContent = CalcSumSL();
+    //myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeSystemFlag(event).
 
   function onChangeSystem(event) {
-    sysnum = SysCmbSL(Number(system));
+    //setStateSystem('7');
+    //sysnum = SysCmbSL(7);
+    cmbnum = 0;
     //console.log(event.target.name);
     //console.log(event.target.value);
-    //console.log(cs);
-    //console.log(as);
-    setStateCS([]);
+    console.log('onChangeSystem begin:')
+    console.log(cs);
+    console.log(as);
+    let strCmb = cs;
+    strCmb = [];
+    setStateCS(strCmb);
     setStateAutoS(false);
-    //console.log(cs);
-    //console.log(as);
+    myInfoRefsa.current.value = 'N'; // .textContent = 'N';
+    myInfoRefs1.current.value = '';
+    myInfoRefs2.current.value = '';
+    myInfoRefs3.current.value = '';
+    myInfoRefs4.current.value = '';
+    myInfoRefs5.current.value = '';
+    myInfoRefs6.current.value = '';
+    myInfoRefs7.current.value = '';
+    if (sysnum >= 8) myInfoRefs8.current.value = '';
+    if (sysnum >= 9) myInfoRefs9.current.value = '';
+    if (sysnum >= 10) myInfoRefs10.current.value = '';
+    if (sysnum >= 11) myInfoRefs11.current.value = '';
+    if (sysnum >= 12) myInfoRefs12.current.value = '';
+    console.log('onChangeSystem intermedia:')
+    console.log(cs);
+    console.log(as);
     const MaxNum = 12;
     const MinNum = 7;
     let strN = event.target.value;
@@ -759,30 +778,29 @@ function SuperLoto() {
     let nbrN = Number(strN);
     //console.log(nbrN);
     if (Number.isNaN(nbrN)) {
-      event.preventDefault();
+      //event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
-      setStateSystem('7');
+      //setStateSystem('7');
       return;
     }
     if (nbrN < MinNum) {
-      event.preventDefault();
+      //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
-      setStateSystem('7');
+      //setStateSystem('7');
       return;
     }
     if (nbrN > MaxNum) {
-      event.preventDefault();
+      //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
-      setStateSystem('7');
+      //setStateSystem('7');
       return;
     }
     setStateSystem(strN);
     //console.log(Number(strN));
     sysnum = SysCmbSL(Number(strN));
-    cmbnum = 0;
-    //let total = CalcSumSL();
-    //console.log(total);
-    //setStateSum(total);
+    console.log('onChangeSystem end:')
+    console.log(cs);
+    console.log(as);
     myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeSystem(event).
 
@@ -933,80 +951,73 @@ function SuperLoto() {
     let strCmb;
     strPfx = 'ns';
     strCmb = cs;
+    console.log('onChangeS strCmb begin:');
+    console.log(strCmb);
     if (event.target.name === strPfx + '1') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 0) strCmb[0] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '2') {
+    else if (event.target.name === strPfx + '2') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 1) strCmb[1] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '3') {
+    else if (event.target.name === strPfx + '3') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 2) strCmb[2] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '4') {
+    else if (event.target.name === strPfx + '4') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 3) strCmb[3] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '5') {
+    else if (event.target.name === strPfx + '5') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 4) strCmb[4] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '6') {
+    else if (event.target.name === strPfx + '6') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 5) strCmb[5] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '7') {
+    else if (event.target.name === strPfx + '7') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 6) strCmb[6] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '8') {
+    else if (event.target.name === strPfx + '8') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 7) strCmb[7] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '9') {
+    else if (event.target.name === strPfx + '9') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 8) strCmb[8] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '10') {
+    else if (event.target.name === strPfx + '10') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 9) strCmb[9] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '11') {
+    else if (event.target.name === strPfx + '11') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 10) strCmb[10] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
     }
-    if (event.target.name === strPfx + '12') {
+    else if (event.target.name === strPfx + '12') {
       //console.log(event.target.name, strPfx + '1');
       if (strCmb.length > 11) strCmb[11] = strN;
       else strCmb.push(strN);
-      setStateCS(strCmb);
-      myInfoRef2.current.textContent = CalcSumSL();
     }
-  } // end of function onChangeS(event).
+    console.log('onChangeS strCmb end:');
+    console.log(strCmb);
+    setStateCS(strCmb);
+    myInfoRef2.current.textContent = CalcSumSL();
+} // end of function onChangeS(event).
 
   function onChangeAuto(event) {
     //console.log(event);
@@ -1128,12 +1139,12 @@ function SuperLoto() {
   } // end of function onChangeAuto(event)
 
   function onChangeAutoSystem(event) {
-    console.log(event);
-    console.log('typeof ' + typeof(event));
-    console.log(event.target.name);
-    let strA = event.target.value;
-    console.log(strA);
-    console.log('typeof ' + typeof(strA));
+    //console.log(event);
+    //console.log('typeof ' + typeof(event));
+    //console.log(event.target.name);
+    //let strA = event.target.value;
+    //console.log(strA);
+    //console.log('typeof ' + typeof(strA));
     //let strArr = ['','','','','','','','','','','',''];
     let strArr = [];
     let bnlAuto = false;
@@ -1178,7 +1189,7 @@ function SuperLoto() {
     }
     console.log(strArr);
     let strCmb = cs;
-    for (i=0; i<=numSys; i++) strCmb[i] = strArr[i];
+    for (i=0; i<numSys; i++) strCmb[i] = strArr[i];
     setStateCS(strCmb);
     setStateAutoS(bnlAuto);
     myInfoRefs1.current.value = strCmb[0] === '00' ? '' : strCmb[0];
@@ -1403,9 +1414,10 @@ function SuperLoto() {
   
   } // end of function handleSubmitPay(event).
 
+  /*
   function numStrValue(strNum, auto) {
     return; 
-    /*
+    //
     if (!auto) return; 
     //if (!auto && strNum !== '00') return strNum; 
     //console.log(strNum);
@@ -1413,26 +1425,31 @@ function SuperLoto() {
     if (strNum === '00') strRet = '';
     else strRet = strNum;
     return strRet;
-    */
+    //
   }
+  */
 
   function CalcSumSL() {
     let strCmb;
     let blnDuplicate = false;
     cmbnum = 0;
-    console.log('CalcSumSL cmbs:');
     if (system_flag) {
+      console.log('CalcSumSL system cmbs:');
+      let sys = sysnum; // Number(system);
+      console.log('system = ' + sys);
       strCmb = cs;
       console.log(strCmb);
-      let sys = Number(system);
-      if (strCmb.indexOf('00') === -1) {
-        blnDuplicate = Duplicate(strCmb, sys);
-        if (! blnDuplicate) {
-          cmbnum = 1;
+      if (strCmb.length === sys) {
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, sys);
+          if (! blnDuplicate) {
+            cmbnum = 1;
+          }
         }
       }
     } // end of if (system_flag) {
     else {
+      console.log('CalcSumSL cmbs:');
       for (let i = 1; i < 7; i++) {
         if (i === 1) {
           strCmb = c1;
@@ -1663,7 +1680,7 @@ function SuperLoto() {
         {Number(system) >= 11 && <input ref={myInfoRefs11} type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
         {Number(system) >= 12 && <input ref={myInfoRefs12} type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
         <p className="boardLabel">Авто</p>
-        <select name="as" onChange={onChangeAutoSystem}>
+        <select ref={myInfoRefsa}  name="as" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
           <option value='Y'>Да</option>
         </select>
