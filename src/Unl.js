@@ -1,4 +1,4 @@
-// Unl.js non-state 0003
+// Unl.js non-state 0004
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -52,7 +52,7 @@ let myInfoRef2 = React.createRef(); // ticket price:
   const [a4, setStateAuto4] = useState(false);
   const [a5, setStateAuto5] = useState(false);
   const [a6, setStateAuto6] = useState(false);
-  const [system_flag, setStateSystemFlag] = useState(false);
+  const [system_flag, setStateSystemFlag] = useState(false); <==== must be used.
   const [system, setStateSystem] = useState(7);
   //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
   const [cs, setStateCS] = useState([]);
@@ -73,7 +73,7 @@ let a4 = false;
 let a5 = false;
 let a6 = false;
 
-let system_flag = (false);
+//let system_flag = false;  <=== const [system_flag, setStateSystemFlag] = useState(false); <==== must be used.
 let system = 7;
 let cs = [];
 let as = false;
@@ -758,8 +758,8 @@ function SuperLoto() {
     else {
       bnlSys = false;
     }
-    system_flag = bnlSys; // setStateSystemFlag(bnlSys);
-    //console.log(c1,a1,cs,as);
+    //system_flag = bnlSys; // setStateSystemFlag(bnlSys);
+    setStateSystemFlag(bnlSys);
     draws = '1'; // setStateDraws(1);
     c1 = ['00','00','00','00','00','00'];
     c2 = ['00','00','00','00','00','00'];
@@ -1595,6 +1595,7 @@ function SuperLoto() {
   const [as, setStateAutoS] = useState(false);
   //const [sum, setStateSum] = useState(15);
   */
+ const [system_flag, setStateSystemFlag] = useState(false); // use to switch rendering system/nonsystem.
 
   return (
   <div>
@@ -1609,7 +1610,7 @@ function SuperLoto() {
     <p name="sum" className="boardLabel" ref={myInfoRef2}></p>
   </div>
   {!system_flag && <div>
-    <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
+  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
   <div className = "boardSL">
       <p className="boardLabel">1 комбинация</p>
       <input ref={myInfoRef11} type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
