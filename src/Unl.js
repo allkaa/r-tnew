@@ -1,4 +1,4 @@
-// Unl.js non-state 0002
+// Unl.js non-state 0003
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1474,13 +1474,12 @@ function SuperLoto() {
     cmbnum = 0;
     if (system_flag) {
       console.log('CalcSumSL system cmbs:');
-      let sys = sysnum; // Number(system);
-      console.log('system = ' + sys);
+      console.log('system = ' + system);
       strCmb = cs;
       console.log(strCmb);
-      if (strCmb.length === sys) {
+      if (strCmb.length === system) {
         if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, sys);
+          blnDuplicate = Duplicate(strCmb, system);
           if (! blnDuplicate) {
             cmbnum = 1;
           }
