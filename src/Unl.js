@@ -1,4 +1,4 @@
-// Unl.js non-state 0001
+// Unl.js non-state 0002
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -37,15 +37,51 @@ import logo2 from './logo.png'; // Tell Webpack this JS file will use this image
 let txn_id = 0;
 let myInfoRef = React.createRef(); // waiting for ....
 let myInfoRef2 = React.createRef(); // ticket price:
-let drawnum = 1;
-let sysnum = 0;
-let cmbnum = 0;
-//let stake = 1;
+
+  /*
+  const [draws, setStateDraws] = useState(1);
+  const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
+  const [c2, setStateC2] = useState(['00','00','00','00','00','00']);
+  const [c3, setStateC3] = useState(['00','00','00','00','00','00']);
+  const [c4, setStateC4] = useState(['00','00','00','00','00','00']);
+  const [c5, setStateC5] = useState(['00','00','00','00','00','00']);
+  const [c6, setStateC6] = useState(['00','00','00','00','00','00']);
+  const [a1, setStateAuto1] = useState(false);
+  const [a2, setStateAuto2] = useState(false);
+  const [a3, setStateAuto3] = useState(false);
+  const [a4, setStateAuto4] = useState(false);
+  const [a5, setStateAuto5] = useState(false);
+  const [a6, setStateAuto6] = useState(false);
+  const [system_flag, setStateSystemFlag] = useState(false);
+  const [system, setStateSystem] = useState(7);
+  //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
+  const [cs, setStateCS] = useState([]);
+  const [as, setStateAutoS] = useState(false);
+  */
+
+let draws = '1';
+let c1 = ['00','00','00','00','00','00'];
+let c2 = ['00','00','00','00','00','00'];
+let c3 = ['00','00','00','00','00','00'];
+let c4 = ['00','00','00','00','00','00'];
+let c5 = ['00','00','00','00','00','00'];
+let c6 = ['00','00','00','00','00','00'];
+let a1 = false;
+let a2 = false;
+let a3 = false;
+let a4 = false;
+let a5 = false;
+let a6 = false;
 
 let system_flag = (false);
 let system = 7;
 let cs = [];
 let as = false;
+
+let drawnum = 1;
+let sysnum = 0;
+let cmbnum = 0;
+//let stake = 1;
 
 let myInfoRef11 = React.createRef();
 let myInfoRef12 = React.createRef();
@@ -688,7 +724,7 @@ function SuperLoto() {
     if (Number.isNaN(nbrN)) {
       //event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
-      setStateDraws('1');
+      draws = '1'; // setStateDraws('1');
       drawnum = 1;
       return;
     }
@@ -696,17 +732,17 @@ function SuperLoto() {
       //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
       drawnum = 1;
-      setStateDraws('1');
+      draws = '1'; // setStateDraws('1');
       return;
     }
     if (nbrN > MaxNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
       drawnum = 1;
-      setStateDraws('1');
+      draws = '1'; // setStateDraws('1');
       return;
     }
-    setStateDraws(strN);
+    draws = strN; // setStateDraws(strN);
     drawnum = Number(strN);
     myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeDraws(event).
@@ -724,23 +760,22 @@ function SuperLoto() {
     }
     system_flag = bnlSys; // setStateSystemFlag(bnlSys);
     //console.log(c1,a1,cs,as);
-    setStateDraws(1);
-    setStateC1(['00','00','00','00','00','00']);
-    setStateC2(['00','00','00','00','00','00']);
-    setStateC3(['00','00','00','00','00','00']);
-    setStateC4(['00','00','00','00','00','00']);
-    setStateC5(['00','00','00','00','00','00']);
-    setStateC6(['00','00','00','00','00','00']);
-    setStateAuto1(false);
-    setStateAuto2(false);
-    setStateAuto3(false);
-    setStateAuto4(false);
-    setStateAuto5(false);
-    setStateAuto6(false);
+    draws = '1'; // setStateDraws(1);
+    c1 = ['00','00','00','00','00','00'];
+    c2 = ['00','00','00','00','00','00'];
+    c3 = ['00','00','00','00','00','00'];
+    c4 = ['00','00','00','00','00','00'];
+    c5 = ['00','00','00','00','00','00'];
+    c6 = ['00','00','00','00','00','00'];
+    a1 = false;
+    a2 = false;
+    a3 = false;
+    a4 = false;
+    a5 = false;
+    a6 = false;
     system = 7; //setStateSystem(7);
     cs = [];    //setStateCS([]);
     as = false; //setStateAutoS(false);
-    //setStateSum(0);
     drawnum = 1;
     sysnum = SysCmbSL(7);
     cmbnum = 0;
@@ -869,58 +904,58 @@ function SuperLoto() {
     if (event.target.name === strPfx + '1') {
       //console.log(event.target.name, strPfx + '1');
       strCmb[0] = strN;
-      if (strPfx === 'n1') setStateC1(strCmb);
-      else if (strPfx === 'n2') setStateC2(strCmb);
-      else if (strPfx === 'n3') setStateC3(strCmb);
-      else if (strPfx === 'n4') setStateC4(strCmb);
-      else if (strPfx === 'n5') setStateC5(strCmb);
-      else if (strPfx === 'n6') setStateC6(strCmb);
+      if (strPfx === 'n1') c1 = strCmb; // setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '2') {
       //console.log(event.target.name, strPfx + '2');
       strCmb[1] = strN;
-      if (strPfx === 'n1') setStateC1(strCmb);
-      else if (strPfx === 'n2') setStateC2(strCmb);
-      else if (strPfx === 'n3') setStateC3(strCmb);
-      else if (strPfx === 'n4') setStateC4(strCmb);
-      else if (strPfx === 'n5') setStateC5(strCmb);
-      else if (strPfx === 'n6') setStateC6(strCmb);
+      if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '3') {
      strCmb[2] = strN;
-     if (strPfx === 'n1') setStateC1(strCmb);
-     else if (strPfx === 'n2') setStateC2(strCmb);
-     else if (strPfx === 'n3') setStateC3(strCmb);
-     else if (strPfx === 'n4') setStateC4(strCmb);
-     else if (strPfx === 'n5') setStateC5(strCmb);
-     else if (strPfx === 'n6') setStateC6(strCmb);
+     if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
+     else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
+     else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
+     else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
+     else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+     else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
    }
     else if (event.target.name === strPfx + '4') {
       strCmb[3] = strN;
-      if (strPfx === 'n1') setStateC1(strCmb);
-      else if (strPfx === 'n2') setStateC2(strCmb);
-      else if (strPfx === 'n3') setStateC3(strCmb);
-      else if (strPfx === 'n4') setStateC4(strCmb);
-      else if (strPfx === 'n5') setStateC5(strCmb);
-      else if (strPfx === 'n6') setStateC6(strCmb);
+      if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '5') {
       strCmb[4] = strN;
-      if (strPfx === 'n1') setStateC1(strCmb);
-      else if (strPfx === 'n2') setStateC2(strCmb);
-      else if (strPfx === 'n3') setStateC3(strCmb);
-      else if (strPfx === 'n4') setStateC4(strCmb);
-      else if (strPfx === 'n5') setStateC5(strCmb);
-      else if (strPfx === 'n6') setStateC6(strCmb);
+      if (strPfx === 'n1') c1 = strCmb; //   setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '6') {
       strCmb[5] = strN;
-      if (strPfx === 'n1') setStateC1(strCmb);
-      else if (strPfx === 'n2') setStateC2(strCmb);
-      else if (strPfx === 'n3') setStateC3(strCmb);
-      else if (strPfx === 'n4') setStateC4(strCmb);
-      else if (strPfx === 'n5') setStateC5(strCmb);
-      else if (strPfx === 'n6') setStateC6(strCmb);
+      if (strPfx === 'n1') c1 = strCmb; //   setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
     } // end of number in combination selection.
     myInfoRef2.current.textContent = CalcSumSL();
   } // function onChange(event).
@@ -1073,8 +1108,8 @@ function SuperLoto() {
     if (event.target.name === 'a1') {
       strCmb = c1;
       for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      setStateC1(strCmb);
-      setStateAuto1(bnlAuto);
+      c1 = strCmb; //  setStateC1(strCmb);
+      a1 = bnlAuto; //  setStateAuto1(bnlAuto);
       myInfoRef11.current.value = strCmb[0] === '00' ? '' : strCmb[0];
       myInfoRef12.current.value = strCmb[1] === '00' ? '' : strCmb[1];
       myInfoRef13.current.value = strCmb[2] === '00' ? '' : strCmb[2];
@@ -1085,8 +1120,8 @@ function SuperLoto() {
     else if (event.target.name === 'a2') {
       strCmb = c2;
       for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      setStateC2(strCmb);
-      setStateAuto2(bnlAuto);
+      c2 = strCmb; //  setStateC2(strCmb);
+      a2 = bnlAuto; // setStateAuto2(bnlAuto);
       myInfoRef21.current.value = strCmb[0] === '00' ? '' : strCmb[0];
       myInfoRef22.current.value = strCmb[1] === '00' ? '' : strCmb[1];
       myInfoRef23.current.value = strCmb[2] === '00' ? '' : strCmb[2];
@@ -1097,8 +1132,8 @@ function SuperLoto() {
     else if (event.target.name === 'a3') {
       strCmb = c3;
       for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      setStateC3(strCmb);
-      setStateAuto3(bnlAuto);
+      c3 = strCmb; //  setStateC3(strCmb);
+      a3 = bnlAuto; // setStateAuto3(bnlAuto);
       myInfoRef31.current.value = strCmb[0] === '00' ? '' : strCmb[0];
       myInfoRef32.current.value = strCmb[1] === '00' ? '' : strCmb[1];
       myInfoRef33.current.value = strCmb[2] === '00' ? '' : strCmb[2];
@@ -1109,8 +1144,8 @@ function SuperLoto() {
     else if (event.target.name === 'a4') {
       strCmb = c4;
       for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      setStateC4(strCmb);
-      setStateAuto4(bnlAuto);
+      c4 = strCmb; //  setStateC4(strCmb);
+      a4 = bnlAuto; // setStateAuto4(bnlAuto);
       myInfoRef41.current.value = strCmb[0] === '00' ? '' : strCmb[0];
       myInfoRef42.current.value = strCmb[1] === '00' ? '' : strCmb[1];
       myInfoRef43.current.value = strCmb[2] === '00' ? '' : strCmb[2];
@@ -1121,8 +1156,8 @@ function SuperLoto() {
     else if (event.target.name === 'a5') {
       strCmb = c5;
       for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      setStateC5(strCmb);
-      setStateAuto5(bnlAuto);
+      c5 = strCmb; //  setStateC5(strCmb);
+      a5 = bnlAuto; // setStateAuto5(bnlAuto);
       myInfoRef51.current.value = strCmb[0] === '00' ? '' : strCmb[0];
       myInfoRef52.current.value = strCmb[1] === '00' ? '' : strCmb[1];
       myInfoRef53.current.value = strCmb[2] === '00' ? '' : strCmb[2];
@@ -1133,8 +1168,8 @@ function SuperLoto() {
     else if (event.target.name === 'a6') {
       strCmb = c6;
       for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      setStateC6(strCmb);
-      setStateAuto6(bnlAuto);
+      c6 = strCmb; //  setStateC6(strCmb);
+      a6 = bnlAuto; // setStateAuto6(bnlAuto);
       myInfoRef61.current.value = strCmb[0] === '00' ? '' : strCmb[0];
       myInfoRef62.current.value = strCmb[1] === '00' ? '' : strCmb[1];
       myInfoRef63.current.value = strCmb[2] === '00' ? '' : strCmb[2];
@@ -1538,6 +1573,7 @@ function SuperLoto() {
   // &board1=01_11_15_24_33_52
 
   const [pay, setStatePay] = useState('');
+  /*
   const [draws, setStateDraws] = useState(1);
   const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
   const [c2, setStateC2] = useState(['00','00','00','00','00','00']);
@@ -1551,6 +1587,7 @@ function SuperLoto() {
   const [a4, setStateAuto4] = useState(false);
   const [a5, setStateAuto5] = useState(false);
   const [a6, setStateAuto6] = useState(false);
+  */
   /*
   const [system_flag, setStateSystemFlag] = useState(false);
   const [system, setStateSystem] = useState(7);
