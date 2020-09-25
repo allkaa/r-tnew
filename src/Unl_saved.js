@@ -1,4 +1,4 @@
-// Unl.js non-state 0001
+// Unl.js 0004
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -40,12 +40,7 @@ let myInfoRef2 = React.createRef(); // ticket price:
 let drawnum = 1;
 let sysnum = 0;
 let cmbnum = 0;
-//let stake = 1;
-
-let system_flag = (false);
-let system = 7;
-let cs = [];
-let as = false;
+let stake = 1;
 
 let myInfoRef11 = React.createRef();
 let myInfoRef12 = React.createRef();
@@ -722,7 +717,7 @@ function SuperLoto() {
     else {
       bnlSys = false;
     }
-    system_flag = bnlSys; // setStateSystemFlag(bnlSys);
+    setStateSystemFlag(bnlSys);
     //console.log(c1,a1,cs,as);
     setStateDraws(1);
     setStateC1(['00','00','00','00','00','00']);
@@ -737,9 +732,9 @@ function SuperLoto() {
     setStateAuto4(false);
     setStateAuto5(false);
     setStateAuto6(false);
-    system = 7; //setStateSystem(7);
-    cs = [];    //setStateCS([]);
-    as = false; //setStateAutoS(false);
+    setStateSystem(7);
+    setStateCS([]);
+    setStateAutoS(false);
     //setStateSum(0);
     drawnum = 1;
     sysnum = SysCmbSL(7);
@@ -754,7 +749,26 @@ function SuperLoto() {
     //console.log(event.target.name);
     //console.log(event.target.value);
     console.log('onChangeSystem begin:')
-    console.log(system);
+    console.log(cs);
+    console.log(as);
+    let strCmb = cs;
+    strCmb = [];
+    setStateCS(strCmb);
+    setStateAutoS(false);
+    myInfoRefsa.current.value = 'N'; // .textContent = 'N';
+    myInfoRefs1.current.value = '';
+    myInfoRefs2.current.value = '';
+    myInfoRefs3.current.value = '';
+    myInfoRefs4.current.value = '';
+    myInfoRefs5.current.value = '';
+    myInfoRefs6.current.value = '';
+    myInfoRefs7.current.value = '';
+    if (sysnum >= 8) myInfoRefs8.current.value = '';
+    if (sysnum >= 9) myInfoRefs9.current.value = '';
+    if (sysnum >= 10) myInfoRefs10.current.value = '';
+    if (sysnum >= 11) myInfoRefs11.current.value = '';
+    if (sysnum >= 12) myInfoRefs12.current.value = '';
+    console.log('onChangeSystem intermedia:')
     console.log(cs);
     console.log(as);
     const MaxNum = 12;
@@ -781,33 +795,12 @@ function SuperLoto() {
       //setStateSystem('7');
       return;
     }
-    system = Number(strN); //setStateSystem(strN);
+    setStateSystem(strN);
     //console.log(Number(strN));
     sysnum = SysCmbSL(Number(strN));
-    cs = [];
-    as = false;  // setStateAutoS(false);
     console.log('onChangeSystem end:')
-    console.log(system);
     console.log(cs);
     console.log(as);
-    myInfoRefsa.current.value = 'N'; // .textContent = 'N';
-    myInfoRefs1.current.value = '';
-    myInfoRefs2.current.value = '';
-    myInfoRefs3.current.value = '';
-    myInfoRefs4.current.value = '';
-    myInfoRefs5.current.value = '';
-    myInfoRefs6.current.value = '';
-    myInfoRefs7.current.value = '';
-    if (system >= 8) myInfoRefs8.current.value = '';
-    if (system >= 9) myInfoRefs9.current.value = '';
-    if (system >= 10) myInfoRefs10.current.value = '';
-    if (system >= 11) myInfoRefs11.current.value = '';
-    if (system >= 12) myInfoRefs12.current.value = '';
-    system >= 8 ? myInfoRefs8.current.hidden = false : myInfoRefs8.current.hidden = true;
-    system >= 9 ? myInfoRefs9.current.hidden = false : myInfoRefs9.current.hidden = true;
-    system >= 10 ? myInfoRefs10.current.hidden = false : myInfoRefs10.current.hidden = true;
-    system >= 11 ? myInfoRefs11.current.hidden = false : myInfoRefs11.current.hidden = true;
-    system >= 12 ? myInfoRefs12.current.hidden = false : myInfoRefs12.current.hidden = true;
     myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeSystem(event).
 
@@ -1022,7 +1015,7 @@ function SuperLoto() {
     }
     console.log('onChangeS strCmb end:');
     console.log(strCmb);
-    cs = strCmb; //setStateCS(strCmb);
+    setStateCS(strCmb);
     myInfoRef2.current.textContent = CalcSumSL();
 } // end of function onChangeS(event).
 
@@ -1155,7 +1148,8 @@ function SuperLoto() {
     //let strArr = ['','','','','','','','','','','',''];
     let strArr = [];
     let bnlAuto = false;
-    console.log('numSys: ' + system);
+    let numSys = Number(system);
+    console.log('numSys: ' + numSys);
     let i = 0, j;
     if (event.target.value === 'Y') {
       let numArr = [0,0,0,0,0,0,0,0,0,0,0,0];
@@ -1167,7 +1161,7 @@ function SuperLoto() {
         result = current + 1
         //console.log(current, result);
         if (numArr.indexOf(result) === -1) {
-          for (j=0; j < system; j++) {
+          for (j=0; j < numSys; j++) {
             if (numArr[j] === 0) {
               numArr[j] = result;
               strNum = numArr[j].toString();
@@ -1179,35 +1173,37 @@ function SuperLoto() {
             }
           }
         }
-      } while (i < system);
+      } while (i < numSys);
       console.log(strArr);
       strArr.sort();
       bnlAuto = true;
     }
     else {
-      //strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
       let i = 0;
       do {
         strArr.push('00');
         i = i + 1;
-      } while (i < system);
+      } while (i < numSys);
+      //strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
       bnlAuto = false;
     }
     console.log(strArr);
-    for (i=0; i<system; i++) cs[i] = strArr[i];
-    as = bnlAuto; //setStateAutoS(bnlAuto);
-    myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
-    myInfoRefs2.current.value = cs[1] === '00' ? '' : cs[1];
-    myInfoRefs3.current.value = cs[2] === '00' ? '' : cs[2];
-    myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
-    myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
-    myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
-    myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
-    if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
-    if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
-    if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
-    if (system >= 11) myInfoRefs11.current.value = cs[10] === '00' ? '' : cs[10];
-    if (system >= 12) myInfoRefs12.current.value = cs[11] === '00' ? '' : cs[11];
+    let strCmb = cs;
+    for (i=0; i<numSys; i++) strCmb[i] = strArr[i];
+    setStateCS(strCmb);
+    setStateAutoS(bnlAuto);
+    myInfoRefs1.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+    myInfoRefs2.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+    myInfoRefs3.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+    myInfoRefs4.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+    myInfoRefs5.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+    myInfoRefs6.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    myInfoRefs7.current.value = strCmb[6] === '00' ? '' : strCmb[6];
+    if (numSys > 7) myInfoRefs8.current.value = strCmb[7] === '00' ? '' : strCmb[7];
+    if (numSys > 8) myInfoRefs9.current.value = strCmb[8] === '00' ? '' : strCmb[8];
+    if (numSys > 9) myInfoRefs10.current.value = strCmb[9] === '00' ? '' : strCmb[9];
+    if (numSys > 10) myInfoRefs11.current.value = strCmb[10] === '00' ? '' : strCmb[10];
+    if (numSys > 11) myInfoRefs12.current.value = strCmb[11] === '00' ? '' : strCmb[11];
 
     myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeAutoSystem(event).
@@ -1551,14 +1547,12 @@ function SuperLoto() {
   const [a4, setStateAuto4] = useState(false);
   const [a5, setStateAuto5] = useState(false);
   const [a6, setStateAuto6] = useState(false);
-  /*
   const [system_flag, setStateSystemFlag] = useState(false);
   const [system, setStateSystem] = useState(7);
   //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
   const [cs, setStateCS] = useState([]);
   const [as, setStateAutoS] = useState(false);
   //const [sum, setStateSum] = useState(15);
-  */
 
   return (
   <div>
@@ -1680,21 +1674,11 @@ function SuperLoto() {
         <input ref={myInfoRefs5} type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
         <input ref={myInfoRefs6} type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
         <input ref={myInfoRefs7} type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        {system >= 8
-          ? <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs8} hidden type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
-        {system >= 9
-          ? <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs9} hidden type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
-        {system >= 10
-          ? <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs10} hidden type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
-        {system >= 11
-          ? <input ref={myInfoRefs11} type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs11} hidden type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
-        {system >= 12
-          ? <input ref={myInfoRefs12} type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs12} hidden type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 8 && <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 9 && <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 10 && <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 11 && <input ref={myInfoRefs11} type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {Number(system) >= 12 && <input ref={myInfoRefs12} type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
         <p className="boardLabel">Авто</p>
         <select ref={myInfoRefsa}  name="as" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
