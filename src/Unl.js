@@ -1,4 +1,4 @@
-// Unl.js maxima mix-state 0002
+// Unl.js maxima mix-state 0003
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -2766,35 +2766,35 @@ function Maxima() {
       </select>
     {system_flag && <div>
       <p className="boardLabel">Система</p>
-      <input type="number" name="system" defaultValue={system} className="numbs" min="7" max="12" step="1"
+      <input type="number" name="system" defaultValue={system} className="numbs" min="6" max="12" step="1"
       onChange={onChangeSystem} required></input>
       <p className="boardLabel">Если не задано, устанавливается система 6</p>
       <div className = "boardSL">
         <p className="boardLabel">Системная комбинация</p>
-        <input ref={myInfoRefs1} type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        <input ref={myInfoRefs2} type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        <input ref={myInfoRefs3} type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        <input ref={myInfoRefs4} type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        <input ref={myInfoRefs5} type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        <input ref={myInfoRefs6} type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs1} type="number" name="ns1" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs2} type="number" name="ns2" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs3} type="number" name="ns3" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs4} type="number" name="ns4" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs5} type="number" name="ns5" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs6} type="number" name="ns6" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
         {system >= 7
-          ? <input ref={myInfoRefs7} type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs7} hidden type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs7} type="number" name="ns7" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs7} hidden type="number" name="ns7" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>}
         {system >= 8
-          ? <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs8} hidden type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs8} hidden type="number" name="ns8" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>}
         {system >= 9
-          ? <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs9} hidden type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs9} hidden type="number" name="ns9" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>}
         {system >= 10
-          ? <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs10} hidden type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs10} hidden type="number" name="ns10" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>}
         {system >= 11
-          ? <input ref={myInfoRefs11} type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs11} hidden type="number" name="ns11" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs11} type="number" name="ns11" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs11} hidden type="number" name="ns11" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>}
         {system >= 12
-          ? <input ref={myInfoRefs12} type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs12} hidden type="number" name="ns12" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs12} type="number" name="ns12" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs12} hidden type="number" name="ns12" className="numbs" min="1" max="45" step="1" onChange={onChangeS}></input>}
         <p className="boardLabel">Авто</p>
         <select ref={myInfoRefsa}  name="as" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
