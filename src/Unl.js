@@ -1,4 +1,4 @@
-// Unl.js maxima mix-state 0003
+// Unl.js maxima mix-state 0004
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -60,12 +60,12 @@ let myInfoRef2 = React.createRef(); // ticket price:
   */
 
 let draws = '1';
-let c1 = ['00','00','00','00','00','00'];
-let c2 = ['00','00','00','00','00','00'];
-let c3 = ['00','00','00','00','00','00'];
-let c4 = ['00','00','00','00','00','00'];
-let c5 = ['00','00','00','00','00','00'];
-let c6 = ['00','00','00','00','00','00'];
+let c1 = [];
+let c2 = [];
+let c3 = [];
+let c4 = [];
+let c5 = [];
+let c6 = [];
 let a1 = false;
 let a2 = false;
 let a3 = false;
@@ -75,7 +75,7 @@ let a6 = false;
 
 //let system_flag = false;  <=== const [system_flag, setStateSystemFlag] = useState(false); <==== must be used  for rendering.
 let sysflg = false;
-let system = 7;
+let system = 0;
 let cs = [];
 let as = false;
 
@@ -1617,6 +1617,7 @@ function SuperLoto() {
   a4 = false;
   a5 = false;
   a6 = false;
+  system = 7;
 
   return (
   <div>
@@ -2245,7 +2246,7 @@ function Maxima() {
       let numArr = [0,0,0,0,0,0,0,0,0,0,0,0];
       let strNum;
       let current, result;
-      let max = 52;
+      let max = 45;
       do {
         current = Math.floor(Math.random() * (max));
         result = current + 1
@@ -2286,7 +2287,7 @@ function Maxima() {
     myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
     myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
     myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
-    myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
+    if (system >= 7) myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
     if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
     if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
     if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
@@ -2663,6 +2664,7 @@ function Maxima() {
   a4 = false;
   a5 = false;
   a6 = false;
+  system = 6;
 
   return (
   <div>
