@@ -1,4 +1,4 @@
-// Unl.js maxima mix-state 0001
+// Unl.js maxima mix-state 0002
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1604,7 +1604,19 @@ function SuperLoto() {
   const [as, setStateAutoS] = useState(false);
   //const [sum, setStateSum] = useState(15);
   */
- const [system_flag, setStateSystemFlag] = useState(false); // use to switch rendering system/nonsystem.
+  const [system_flag, setStateSystemFlag] = useState(false); // use to switch rendering system/nonsystem.
+  c1 = ['00','00','00','00','00','00'];
+  c2 = ['00','00','00','00','00','00'];
+  c3 = ['00','00','00','00','00','00'];
+  c4 = ['00','00','00','00','00','00'];
+  c5 = ['00','00','00','00','00','00'];
+  c6 = ['00','00','00','00','00','00'];
+  a1 = false;
+  a2 = false;
+  a3 = false;
+  a4 = false;
+  a5 = false;
+  a6 = false;
 
   return (
   <div>
@@ -2510,7 +2522,7 @@ function Maxima() {
     let blnDuplicate = false;
     cmbnum = 0;
     if (sysflg) { // if (system_flag)
-      console.log('CalcSumSL system cmbs:');
+      console.log('CalcSumMx system cmbs:');
       console.log('system = ' + system);
       strCmb = cs;
       console.log(strCmb);
@@ -2524,7 +2536,7 @@ function Maxima() {
       }
     } // end of if (system_flag) {
     else {
-      console.log('CalcSumSL cmbs:');
+      console.log('CalcSumMx cmbs:');
       for (let i = 1; i < 6; i++) {
         if (i === 1) {
           strCmb = c1;
@@ -2638,7 +2650,19 @@ function Maxima() {
   const [as, setStateAutoS] = useState(false);
   //const [sum, setStateSum] = useState(15);
   */
- const [system_flag, setStateSystemFlag] = useState(false); // use to switch rendering system/nonsystem.
+  const [system_flag, setStateSystemFlag] = useState(false); // use to switch rendering system/nonsystem.
+  c1 = ['00','00','00','00','00'];
+  c2 = ['00','00','00','00','00'];
+  c3 = ['00','00','00','00','00'];
+  c4 = ['00','00','00','00','00'];
+  c5 = ['00','00','00','00','00'];
+  c6 = ['00','00','00','00','00'];
+  a1 = false;
+  a2 = false;
+  a3 = false;
+  a4 = false;
+  a5 = false;
+  a6 = false;
 
   return (
   <div>
