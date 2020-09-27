@@ -1,4 +1,4 @@
-// Unl.js maxima mix-state 0004
+// Unl.js maxima mix-state 0005
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -78,11 +78,13 @@ let sysflg = false;
 let system = 0;
 let cs = [];
 let as = false;
+let ck = [];
+let ak = false;
 
 let drawnum = 1;
 let sysnum = 0;
 let cmbnum = 0;
-//let stake = 1;
+let stake = 1;
 
 let myInfoRef11 = React.createRef();
 let myInfoRef12 = React.createRef();
@@ -139,6 +141,18 @@ let myInfoRefs10 = React.createRef();
 let myInfoRefs11 = React.createRef();
 let myInfoRefs12 = React.createRef();
 let myInfoRefsa = React.createRef();
+
+let myInfoRefk1 = React.createRef();
+let myInfoRefk2 = React.createRef();
+let myInfoRefk3 = React.createRef();
+let myInfoRefk4 = React.createRef();
+let myInfoRefk5 = React.createRef();
+let myInfoRefk6 = React.createRef();
+let myInfoRefk7 = React.createRef();
+let myInfoRefk8 = React.createRef();
+let myInfoRefk9 = React.createRef();
+let myInfoRefk10 = React.createRef();
+let myInfoRefka = React.createRef();
 
 function NoMatchAside(props) {
   console.log('Main props:' + props);
@@ -697,18 +711,952 @@ function Purchase() {
 } // end of function Purchase()
 
 function Keno() {
-  let location = useLocation();
-  console.log('location:');
-  console.log(location);
-  let history = useHistory();
-  console.log('history:');
-  console.log(history.location.pathname);
-  console.log(history);
-  let dt = new Date();
-  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-  return <p className = "special">
-    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
-    </p>;
+
+  function onChangeDraws(event) {
+    //console.log(event.target.name);
+    const MaxNum = 14;
+    const MinNum = 1;
+    drawnum = Number(draws);
+    let strN = event.target.value;
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      draws = '1'; // setStateDraws('1');
+      drawnum = 1;
+      return;
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      drawnum = 1;
+      draws = '1'; // setStateDraws('1');
+      return;
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      drawnum = 1;
+      draws = '1'; // setStateDraws('1');
+      return;
+    }
+    draws = strN; // setStateDraws(strN);
+    drawnum = Number(strN);
+    myInfoRef2.current.textContent = CalcSumSL();
+  } // end of function onChangeDraws(event).
+
+  function onChangeSystem(event) { // Count of Keno numbers used.
+    //setStateSystem('7');
+    //sysnum = SysCmbSL(7);
+    cmbnum = 0;
+    //console.log(event.target.name);
+    //console.log(event.target.value);
+    console.log('onChangeSystem Keno begin:')
+    console.log(system);
+    console.log(cs);
+    console.log(as);
+    const MaxNum = 10;
+    const MinNum = 2;
+    let strN = event.target.value;
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      //setStateSystem('7');
+      return;
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      //setStateSystem('7');
+      return;
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      //setStateSystem('7');
+      return;
+    }
+    system = Number(strN); //setStateSystem(strN);
+    //console.log(Number(strN));
+    sysnum = strN; // SysCmbSL(Number(strN));
+    cs = [];
+    as = false;  // setStateAutoS(false);
+    console.log('onChangeSystem Keno end:')
+    console.log(system);
+    console.log(cs);
+    console.log(as);
+    myInfoRefsa.current.value = 'N'; // .textContent = 'N';
+    myInfoRefs1.current.value = '';
+    myInfoRefs2.current.value = '';
+    if (system >= 3) myInfoRefs3.current.value = '';
+    if (system >= 4) myInfoRefs4.current.value = '';
+    if (system >= 5) myInfoRefs5.current.value = '';
+    if (system >= 6) myInfoRefs6.current.value = '';
+    if (system >= 7) myInfoRefs7.current.value = '';
+    if (system >= 8) myInfoRefs8.current.value = '';
+    if (system >= 9) myInfoRefs9.current.value = '';
+    if (system >= 10) myInfoRefs10.current.value = '';
+    if (system >= 11) myInfoRefs11.current.value = '';
+    if (system >= 12) myInfoRefs12.current.value = '';
+    system >= 3 ? myInfoRefs3.current.hidden = false : myInfoRefs8.current.hidden = true;
+    system >= 4 ? myInfoRefs4.current.hidden = false : myInfoRefs8.current.hidden = true;
+    system >= 5 ? myInfoRefs5.current.hidden = false : myInfoRefs8.current.hidden = true;
+    system >= 6 ? myInfoRefs6.current.hidden = false : myInfoRefs8.current.hidden = true;
+    system >= 7 ? myInfoRefs7.current.hidden = false : myInfoRefs8.current.hidden = true;
+    system >= 8 ? myInfoRefs8.current.hidden = false : myInfoRefs8.current.hidden = true;
+    system >= 9 ? myInfoRefs9.current.hidden = false : myInfoRefs9.current.hidden = true;
+    system >= 10 ? myInfoRefs10.current.hidden = false : myInfoRefs10.current.hidden = true;
+    system >= 11 ? myInfoRefs11.current.hidden = false : myInfoRefs11.current.hidden = true;
+    system >= 12 ? myInfoRefs12.current.hidden = false : myInfoRefs12.current.hidden = true;
+    myInfoRef2.current.textContent = CalcSumKN();
+  } // end of function onChangeSystem(event).
+
+  function onChange(event) {
+    //console.log(event.target.name);
+    const MaxNum = 52;
+    const MinNum = 1;
+    let strN = event.target.value;
+    if (strN.length < 2) {
+      strN = '0' + strN;
+    }
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      //return;
+      strN = '00';
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      //return;
+      strN = '00';
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      //return;
+      strN = '00';
+    }
+    let strPfx;
+    let strCmb;
+    if (event.target.name.indexOf('n1') !== -1) {
+      strPfx = 'n1';
+      strCmb = c1;
+    }
+    else if (event.target.name.indexOf('n2') !== -1) {
+      strPfx = 'n2';
+      strCmb = c2;
+    }
+    else if (event.target.name.indexOf('n3') !== -1) {
+      strPfx = 'n3';
+      strCmb = c3;
+    }
+    else if (event.target.name.indexOf('n4') !== -1) {
+      strPfx = 'n4';
+      strCmb = c4;
+    }
+    else if (event.target.name.indexOf('n5') !== -1) {
+      strPfx = 'n5';
+      strCmb = c5;
+    }
+    else if (event.target.name.indexOf('n6') !== -1) {
+      strPfx = 'n6';
+      strCmb = c6;
+    } // end of combination selection.
+    if (event.target.name === strPfx + '1') {
+      //console.log(event.target.name, strPfx + '1');
+      strCmb[0] = strN;
+      if (strPfx === 'n1') c1 = strCmb; // setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
+    }
+    else if (event.target.name === strPfx + '2') {
+      //console.log(event.target.name, strPfx + '2');
+      strCmb[1] = strN;
+      if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
+    }
+    else if (event.target.name === strPfx + '3') {
+     strCmb[2] = strN;
+     if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
+     else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
+     else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
+     else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
+     else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+     else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
+   }
+    else if (event.target.name === strPfx + '4') {
+      strCmb[3] = strN;
+      if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
+    }
+    else if (event.target.name === strPfx + '5') {
+      strCmb[4] = strN;
+      if (strPfx === 'n1') c1 = strCmb; //   setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
+    }
+    else if (event.target.name === strPfx + '6') {
+      strCmb[5] = strN;
+      if (strPfx === 'n1') c1 = strCmb; //   setStateC1(strCmb);
+      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
+      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
+      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
+      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
+    } // end of number in combination selection.
+    myInfoRef2.current.textContent = CalcSumSL();
+  } // function onChange(event).
+
+  function onChangeS(event) {
+    //console.log(event.target.name);
+    const MaxNum = 52;
+    const MinNum = 1;
+    let strN = event.target.value;
+    if (strN.length < 2) {
+      strN = '0' + strN;
+    }
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      //return;
+      strN = '00';
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      //return;
+      strN = '00';
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      //return;
+      strN = '00';
+    }
+    let strPfx;
+    let strCmb;
+    strPfx = 'ns';
+    strCmb = cs;
+    console.log('onChangeS strCmb begin:');
+    console.log(strCmb);
+    if (event.target.name === strPfx + '1') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 0) strCmb[0] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '2') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 1) strCmb[1] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '3') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 2) strCmb[2] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '4') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 3) strCmb[3] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '5') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 4) strCmb[4] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '6') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 5) strCmb[5] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '7') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 6) strCmb[6] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '8') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 7) strCmb[7] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '9') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 8) strCmb[8] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '10') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 9) strCmb[9] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '11') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 10) strCmb[10] = strN;
+      else strCmb.push(strN);
+    }
+    else if (event.target.name === strPfx + '12') {
+      //console.log(event.target.name, strPfx + '1');
+      if (strCmb.length > 11) strCmb[11] = strN;
+      else strCmb.push(strN);
+    }
+    console.log('onChangeS strCmb end:');
+    console.log(strCmb);
+    cs = strCmb; //setStateCS(strCmb);
+    myInfoRef2.current.textContent = CalcSumSL();
+} // end of function onChangeS(event).
+
+  function onChangeAuto(event) {
+    //console.log(event);
+    //console.log('typeof ' + typeof(event));
+    //console.log(event.target.name);
+    //let strA = event.target.value;
+    //console.log(strA);
+    //console.log('typeof ' + typeof(strA));
+    let strCmb;
+    let strArr = ['','','','','',''];
+    let bnlAuto = false;
+    let i = 0, j;
+    if (event.target.value === 'Y') {
+      let numArr = [0,0,0,0,0,0];
+      let strNum;
+      let current, result;
+      let max = 52;
+      do {
+        current = Math.floor(Math.random() * (max));
+        result = current + 1
+        //console.log(current, result);
+        if (numArr.indexOf(result) === -1) {
+          for (j=0; j <= 5; j++) {
+            if (numArr[j] === 0) {
+              numArr[j] = result;
+              strNum = numArr[j].toString();
+              if (strNum.length < 2) strNum = '0' + strNum;
+              strArr[j] = strNum;
+              i = i + 1;
+              break;
+            }
+          }
+        }
+      } while (i < 6);
+      //console.log(numArr);
+      //console.log(strArr);
+      strArr.sort();
+      bnlAuto = true;
+    }
+    else {
+      strArr=['00','00','00','00','00','00'];
+      bnlAuto = false;
+    }
+    console.log('strArr auto:');
+    console.log(strArr);
+    if (event.target.name === 'a1') {
+      strCmb = c1;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      c1 = strCmb; //  setStateC1(strCmb);
+      a1 = bnlAuto; //  setStateAuto1(bnlAuto);
+      myInfoRef11.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef12.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef13.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef14.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef15.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef16.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    }
+    else if (event.target.name === 'a2') {
+      strCmb = c2;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      c2 = strCmb; //  setStateC2(strCmb);
+      a2 = bnlAuto; // setStateAuto2(bnlAuto);
+      myInfoRef21.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef22.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef23.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef24.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef25.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef26.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    }
+    else if (event.target.name === 'a3') {
+      strCmb = c3;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      c3 = strCmb; //  setStateC3(strCmb);
+      a3 = bnlAuto; // setStateAuto3(bnlAuto);
+      myInfoRef31.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef32.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef33.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef34.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef35.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef36.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    }
+    else if (event.target.name === 'a4') {
+      strCmb = c4;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      c4 = strCmb; //  setStateC4(strCmb);
+      a4 = bnlAuto; // setStateAuto4(bnlAuto);
+      myInfoRef41.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef42.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef43.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef44.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef45.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef46.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    }
+    else if (event.target.name === 'a5') {
+      strCmb = c5;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      c5 = strCmb; //  setStateC5(strCmb);
+      a5 = bnlAuto; // setStateAuto5(bnlAuto);
+      myInfoRef51.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef52.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef53.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef54.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef55.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef56.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    }
+    else if (event.target.name === 'a6') {
+      strCmb = c6;
+      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
+      c6 = strCmb; //  setStateC6(strCmb);
+      a6 = bnlAuto; // setStateAuto6(bnlAuto);
+      myInfoRef61.current.value = strCmb[0] === '00' ? '' : strCmb[0];
+      myInfoRef62.current.value = strCmb[1] === '00' ? '' : strCmb[1];
+      myInfoRef63.current.value = strCmb[2] === '00' ? '' : strCmb[2];
+      myInfoRef64.current.value = strCmb[3] === '00' ? '' : strCmb[3];
+      myInfoRef65.current.value = strCmb[4] === '00' ? '' : strCmb[4];
+      myInfoRef66.current.value = strCmb[5] === '00' ? '' : strCmb[5];
+    }
+    myInfoRef2.current.textContent = CalcSumSL();
+  } // end of function onChangeAuto(event)
+
+  function onChangeAutoSystem(event) {
+    //console.log(event);
+    //console.log('typeof ' + typeof(event));
+    //console.log(event.target.name);
+    //let strA = event.target.value;
+    //console.log(strA);
+    //console.log('typeof ' + typeof(strA));
+    //let strArr = ['','','','','','','','','','','',''];
+    let strArr = [];
+    let bnlAuto = false;
+    console.log('numSys: ' + system);
+    let i = 0, j;
+    if (event.target.value === 'Y') {
+      let numArr = [0,0,0,0,0,0,0,0,0,0,0,0];
+      let strNum;
+      let current, result;
+      let max = 52;
+      do {
+        current = Math.floor(Math.random() * (max));
+        result = current + 1
+        //console.log(current, result);
+        if (numArr.indexOf(result) === -1) {
+          for (j=0; j < system; j++) {
+            if (numArr[j] === 0) {
+              numArr[j] = result;
+              strNum = numArr[j].toString();
+              if (strNum.length < 2) strNum = '0' + strNum;
+              //strArr[j] = strNum;
+              strArr.push(strNum);
+              i = i + 1;
+              break;
+            }
+          }
+        }
+      } while (i < system);
+      console.log(strArr);
+      strArr.sort();
+      bnlAuto = true;
+    }
+    else {
+      //strArr=['00','00','00','00','00','00','00','00','00','00','00','00'];
+      let i = 0;
+      do {
+        strArr.push('00');
+        i = i + 1;
+      } while (i < system);
+      bnlAuto = false;
+    }
+    console.log(strArr);
+    for (i=0; i<system; i++) cs[i] = strArr[i];
+    as = bnlAuto; //setStateAutoS(bnlAuto);
+    myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
+    myInfoRefs2.current.value = cs[1] === '00' ? '' : cs[1];
+    myInfoRefs3.current.value = cs[2] === '00' ? '' : cs[2];
+    myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
+    myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
+    myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
+    myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
+    if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
+    if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
+    if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
+    if (system >= 11) myInfoRefs11.current.value = cs[10] === '00' ? '' : cs[10];
+    if (system >= 12) myInfoRefs12.current.value = cs[11] === '00' ? '' : cs[11];
+
+    myInfoRef2.current.textContent = CalcSumSL();
+  } // end of function onChangeAutoSystem(event).
+
+  function Duplicate(strCmb, count) {
+    let blnDuplicate = false;
+    let k, j;
+    for (k=0; k<count; k++) {
+      for (j=0; j<count; j++) {
+        if (j !== k) {
+          if (strCmb[j] === strCmb[k]) {
+            blnDuplicate = true;
+            //alert('Ошибка! Дублирование номера в xxx комбинации');
+            break;
+          }
+        }
+      }
+      if (blnDuplicate) break;
+    }
+    return blnDuplicate;
+  }
+
+  function handleSubmitSuperLoto(event) {
+    //console.log(event.search); // event.search e.g. '?q=6_1...';
+    //console.log(c1);
+    //console.log(c2);
+    //console.log(c3);
+    //console.log(c4);
+    //console.log(c5);
+    //console.log(c6);
+    //console.log(cs);
+    let strCmb;
+    let strPay = ''; // e.g. will later start as '6_1'
+    let blnDuplicate = false;
+    //console.log(draws);
+    //console.log(strPay);
+    if (system_flag) {
+      strCmb = cs;
+      let sys = Number(system);
+      //console.log(strCmb);
+      let k;
+      if (strCmb.indexOf('00') === -1) {
+        blnDuplicate = Duplicate(strCmb, sys);
+        if (! blnDuplicate) {
+          if (as) {
+            strPay = strPay + '_sa';
+          }
+          else {
+            strPay = strPay + '_sm';
+          }
+          strCmb.sort();
+          //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+          for (k=0; k<sys; k++) strPay = strPay + '_' + strCmb[k] ;
+        }
+        else alert('Ошибка! Дублирование номера в системной комбинации');
+      }
+    } // end of if (system_flag) {
+    else {
+      for (let i = 1; i < 7; i++) {
+        if (i === 1) {
+          strCmb = c1;
+          //console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              if (a1) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else {
+              alert('Ошибка! Дублирование номера в первой комбинации');
+              break;
+            }
+          }
+        }
+        else if (i === 2) {
+          strCmb = c2;
+          //console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              if (a2) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else {
+              alert('Ошибка! Дублирование номера во второй комбинации');
+              break;
+            }
+          }
+        }
+        else if (i === 3) {
+          strCmb = c3;
+          //console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              if (a3) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else {
+              alert('Ошибка! Дублирование номера в третьей комбинации');
+              break;
+            }
+          }
+        }
+        else if (i === 4) {
+          strCmb = c4;
+          //console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              if (a4) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else {
+              alert('Ошибка! Дублирование номера в четвертой комбинации');
+              break;
+            }
+          }
+        }
+        else if (i === 5) {
+          strCmb = c5;
+          //console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              if (a5) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else {
+              alert('Ошибка! Дублирование номера в пятой комбинации');
+              break;
+            }
+          }
+        }
+        else if (i === 6) {
+          strCmb = c6;
+          //console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              if (a6) {
+                strPay = strPay + '_a';
+              }
+              else {
+                strPay = strPay + '_m';
+              }
+              strCmb.sort();
+              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+            }
+            else {
+              alert('Ошибка! Дублирование номера в шестой комбинации');
+              break;
+            }
+          }
+        }
+      } //end of (let i = 1; i < 7; i++).
+    } // end of NOT if (system_flag) {
+    //console.log(strPay);
+    if (blnDuplicate) {
+      //alert('Ошибка! Есть некорректные комбинации.');
+      event.preventDefault();
+      return;
+    }
+    if (strPay === '') {
+      alert('Ошибка! Нет корректных комбинаций.');
+      event.preventDefault();
+      return;
+    }
+    //myInfoRef.current.textContent = 'Wait for fetch processing...';
+    myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
+    setStatePay('6_' + draws + strPay);
+    /* e.g.
+    Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
+    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    */
+    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
+    //GetData('pay'); // if use Fetch directly from html page.
+  
+  } // end of function handleSubmitPay(event).
+
+  /*
+  function numStrValue(strNum, auto) {
+    return; 
+    //
+    if (!auto) return; 
+    //if (!auto && strNum !== '00') return strNum; 
+    //console.log(strNum);
+    let strRet;
+    if (strNum === '00') strRet = '';
+    else strRet = strNum;
+    return strRet;
+    //
+  }
+  */
+
+  function CalcSumKN() {
+    let strCmb;
+    let blnDuplicate = false;
+    cmbnum = 0;
+    if (sysflg) { // if (system_flag)
+      console.log('CalcSumSL system cmbs:');
+      console.log('system = ' + system);
+      strCmb = cs;
+      console.log(strCmb);
+      if (strCmb.length === system) {
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, system);
+          if (! blnDuplicate) {
+            cmbnum = 1;
+          }
+        }
+      }
+    } // end of if (system_flag) {
+    else {
+      console.log('CalcSumSL cmbs:');
+      for (let i = 1; i < 7; i++) {
+        if (i === 1) {
+          strCmb = c1;
+          console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              cmbnum = cmbnum + 1;
+            }
+          }
+        }
+        else if (i === 2) {
+          strCmb = c2;
+          console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              cmbnum = cmbnum + 1;
+            }
+          }
+        }
+        else if (i === 3) {
+          strCmb = c3;
+          console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              cmbnum = cmbnum + 1;
+            }
+          }
+        }
+        else if (i === 4) {
+          strCmb = c4;
+          console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              cmbnum = cmbnum + 1;
+            }
+          }
+        }
+        else if (i === 5) {
+          strCmb = c5;
+          console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              cmbnum = cmbnum + 1;
+            }
+          }
+        }
+        else if (i === 6) {
+          strCmb = c6;
+          console.log(strCmb);
+          if (strCmb.indexOf('00') === -1) {
+            blnDuplicate = Duplicate(strCmb, 6);
+            if (! blnDuplicate) {
+              cmbnum = cmbnum + 1;
+            }
+          }
+        }
+      } // end of for (let i = 1; i < 7; i++).
+    } // end of NOT if (system_flag).
+    let tot = 0, ret = '';
+    console.log(drawnum, stake, cmbnum);
+    tot = 10 * drawnum * stake * cmbnum;
+    ret = 'Стоимость билета: ' + tot.toString();
+    myInfoRef2.current.textContent = ret;
+    return ret;
+  } // end of function CalcSumSL().
+
+  // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
+  // &board1=01_11_15_24_33_52
+
+  const [pay, setStatePay] = useState('');
+  /*
+  const [draws, setStateDraws] = useState(1);
+  const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
+  const [c2, setStateC2] = useState(['00','00','00','00','00','00']);
+  const [c3, setStateC3] = useState(['00','00','00','00','00','00']);
+  const [c4, setStateC4] = useState(['00','00','00','00','00','00']);
+  const [c5, setStateC5] = useState(['00','00','00','00','00','00']);
+  const [c6, setStateC6] = useState(['00','00','00','00','00','00']);
+  const [a1, setStateAuto1] = useState(false);
+  const [a2, setStateAuto2] = useState(false);
+  const [a3, setStateAuto3] = useState(false);
+  const [a4, setStateAuto4] = useState(false);
+  const [a5, setStateAuto5] = useState(false);
+  const [a6, setStateAuto6] = useState(false);
+  */
+  /*
+  const [system_flag, setStateSystemFlag] = useState(false);
+  const [system, setStateSystem] = useState(7);
+  //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
+  const [cs, setStateCS] = useState([]);
+  const [as, setStateAutoS] = useState(false);
+  //const [sum, setStateSum] = useState(15);
+  */
+  //const [system_flag, setStateSystemFlag] = useState(false); // use to switch rendering system/nonsystem.
+  cs = [];
+  ck = [];
+  as = false;
+  ak = false;
+  system = 10;
+
+  return (
+  <div>
+  <h3>Кено Лото</h3>
+  <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
+  <div>
+    <p className="boardLabel">Розыгрышей</p>
+    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
+    onChange={onChangeDraws} required></input>
+    <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
+    {/* <p className="boardLabel">Стоимость билета</p> */}
+    <p name="sum" className="boardLabel" ref={myInfoRef2}></p>
+  </div>
+  <div>
+    <div>
+      <p className="boardLabel">Количество номеров в комбинации от 2 до 10</p>
+      <input type="number" name="system" defaultValue={system} className="numbs" min="2" max="10" step="1"
+      onChange={onChangeSystem} required></input>
+      <div className = "boardSL">
+        <p className="boardLabel">Системная комбинация</p>
+        <input ref={myInfoRefs1} type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs2} type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        {system >= 3
+          ? <input ref={myInfoRefs3} type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs3} hidden type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 4
+          ? <input ref={myInfoRefs4} type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs4} hidden type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 5
+          ? <input ref={myInfoRefs5} type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs5} hidden type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 6
+          ? <input ref={myInfoRefs6} type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs6} hidden type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 7
+          ? <input ref={myInfoRefs7} type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs7} hidden type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 8
+          ? <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs8} hidden type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 9
+          ? <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs9} hidden type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 10
+          ? <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs10} hidden type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        <p className="boardLabel">Авто</p>
+        <select ref={myInfoRefsa}  name="as" onChange={onChangeAutoSystem}>
+          <option value='N'>Нет</option>
+          <option value='Y'>Да</option>
+        </select>
+      </div>
+      <div className = "boardSL">
+        <p className="boardLabel">Системная комбинация</p>
+        <input ref={myInfoRefk1} type="number" name="nk1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefk2} type="number" name="nk2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        {system >= 3
+          ? <input ref={myInfoRefk3} type="number" name="nk3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk3} hidden type="number" name="nk3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 4
+          ? <input ref={myInfoRefk4} type="number" name="nk4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk4} hidden type="number" name="nk4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 5
+          ? <input ref={myInfoRefk5} type="number" name="nk5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk5} hidden type="number" name="nk5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 6
+          ? <input ref={myInfoRefk6} type="number" name="nk6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk6} hidden type="number" name="nk6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 7
+          ? <input ref={myInfoRefk7} type="number" name="nk7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk7} hidden type="number" name="nk7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 8
+          ? <input ref={myInfoRefk8} type="number" name="nk8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk8} hidden type="number" name="nk8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 9
+          ? <input ref={myInfoRefk9} type="number" name="nk9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk9} hidden type="number" name="nk9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        {system >= 10
+          ? <input ref={myInfoRefk10} type="number" name="nk10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk10} hidden type="number" name="nk10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+        <p className="boardLabel">Авто</p>
+        <select ref={myInfoRefsa}  name="as" onChange={onChangeAutoSystem}>
+          <option value='N'>Нет</option>
+          <option value='Y'>Да</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  {/* <button type="button" onClick={CalcSumSL}>Рассчитать стоимость билета.</button> */}
+  <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
+    <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
+    <button type="submit">Купить билет</button>
+  </form>
+  </div>
+  )
 }
 
 function SuperLoto() {
