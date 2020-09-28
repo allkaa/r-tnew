@@ -1,4 +1,4 @@
-// Unl.js keno mix-state 0006
+// Unl.js keno mix-state 0007
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -59,7 +59,6 @@ let myInfoRef2 = React.createRef(); // ticket price:
   const [as, setStateAutoS] = useState(false);
   */
 
-let draws = '1';
 let c1 = [];
 let c2 = [];
 let c3 = [];
@@ -80,11 +79,12 @@ let as = false;
 let ck = [];
 let ak = false;
 
+let draws = '1';
 let drawnum = 1;
 let sysnum = 0;
 let cmbnum = 0;
-let stake = '1';
-let stakenum = 1;
+let stake = '0';
+let stakenum = 0;
 
 let myInfoRef11 = React.createRef();
 let myInfoRef12 = React.createRef();
@@ -797,6 +797,8 @@ function Keno() {
     console.log(system);
     console.log(cs);
     console.log(as);
+    console.log(ck);
+    console.log(ak);
     const MaxNum = 10;
     const MinNum = 2;
     let strN = event.target.value;
@@ -823,13 +825,17 @@ function Keno() {
     }
     system = Number(strN); //setStateSystem(strN);
     //console.log(Number(strN));
-    sysnum = strN; // SysCmbSL(Number(strN));
+    sysnum = nbrN; // SysCmbSL(Number(strN));
     cs = [];
     as = false;  // setStateAutoS(false);
+    ck = [];
+    ak = false;  // setStateAutoS(false);
     console.log('onChangeSystem Keno end:')
     console.log(system);
     console.log(cs);
     console.log(as);
+    console.log(ck);
+    console.log(ak);
     myInfoRefsa.current.value = 'N'; // .textContent = 'N';
     myInfoRefs1.current.value = '';
     myInfoRefs2.current.value = '';
@@ -851,8 +857,25 @@ function Keno() {
     system >= 8 ? myInfoRefs8.current.hidden = false : myInfoRefs8.current.hidden = true;
     system >= 9 ? myInfoRefs9.current.hidden = false : myInfoRefs9.current.hidden = true;
     system >= 10 ? myInfoRefs10.current.hidden = false : myInfoRefs10.current.hidden = true;
-    system >= 11 ? myInfoRefs11.current.hidden = false : myInfoRefs11.current.hidden = true;
-    system >= 12 ? myInfoRefs12.current.hidden = false : myInfoRefs12.current.hidden = true;
+    myInfoRefka.current.value = 'N'; // .textContent = 'N';
+    myInfoRefk1.current.value = '';
+    myInfoRefk2.current.value = '';
+    if (system >= 3) myInfoRefk3.current.value = '';
+    if (system >= 4) myInfoRefk4.current.value = '';
+    if (system >= 5) myInfoRefk5.current.value = '';
+    if (system >= 6) myInfoRefk6.current.value = '';
+    if (system >= 7) myInfoRefk7.current.value = '';
+    if (system >= 8) myInfoRefk8.current.value = '';
+    if (system >= 9) myInfoRefk9.current.value = '';
+    if (system >= 10) myInfoRefk10.current.value = '';
+    system >= 3 ? myInfoRefk3.current.hidden = false : myInfoRefk8.current.hidden = true;
+    system >= 4 ? myInfoRefk4.current.hidden = false : myInfoRefk8.current.hidden = true;
+    system >= 5 ? myInfoRefk5.current.hidden = false : myInfoRefk8.current.hidden = true;
+    system >= 6 ? myInfoRefk6.current.hidden = false : myInfoRefk8.current.hidden = true;
+    system >= 7 ? myInfoRefk7.current.hidden = false : myInfoRefk8.current.hidden = true;
+    system >= 8 ? myInfoRefk8.current.hidden = false : myInfoRefk8.current.hidden = true;
+    system >= 9 ? myInfoRefk9.current.hidden = false : myInfoRefk9.current.hidden = true;
+    system >= 10 ? myInfoRefk10.current.hidden = false : myInfoRefk10.current.hidden = true;
     myInfoRef2.current.textContent = CalcSumKN();
   } // end of function onChangeSystem(event).
 
@@ -1009,7 +1032,7 @@ function Keno() {
       bnlAuto = false;
     }
     console.log(strArr);
-    if (event.target.name.indexOf('ns') !== -1) {
+    if (event.target.name.indexOf('as') !== -1) {
       for (i=0; i<system; i++) cs[i] = strArr[i];
       as = bnlAuto; //setStateAutoS(bnlAuto);
       myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
@@ -1076,7 +1099,7 @@ function Keno() {
     //console.log(strCmb);
     let k;
     strCmb = cs;
-    if (strCmb.indexOf('00') === -1) {
+    if (strCmb.length > 0 && strCmb.indexOf('00') === -1) {
       blnDuplicate = Duplicate(strCmb, sys);
       if (! blnDuplicate) {
         if (as) {
@@ -1092,14 +1115,14 @@ function Keno() {
       else alert('Ошибка! Дублирование номера в первой комбинации');
     }
     strCmb = ck;
-    if (strCmb.indexOf('00') === -1) {
+    if (strCmb.length > 0 && strCmb.indexOf('00') === -1) {
       blnDuplicate = Duplicate(strCmb, sys);
       if (! blnDuplicate) {
         if (ak) {
-          strPay = strPay + '_sa';
+          strPay = strPay + '_a';
         }
         else {
-          strPay = strPay + '_sm';
+          strPay = strPay + '_m';
         }
         strCmb.sort();
         //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
@@ -1120,7 +1143,7 @@ function Keno() {
     }
     //myInfoRef.current.textContent = 'Wait for fetch processing...';
     myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
-    setStatePay('6_' + draws + strPay);
+    setStatePay('2_' + draws + '_' + stake + strPay);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -1213,6 +1236,8 @@ function Keno() {
   as = false;
   ak = false;
   system = 10;
+  stake = 1;
+  stakenum = 1;
 
   return (
   <div>
@@ -1236,33 +1261,33 @@ function Keno() {
       <input type="number" name="system" defaultValue={system} className="numbs" min="2" max="10" step="1"
       onChange={onChangeSystem} required></input>
       <div className = "boardSL">
-        <p className="boardLabel">Первая комбинация</p>
-        <input ref={myInfoRefs1} type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        <input ref={myInfoRefs2} type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <p className="boardLabel">1 комбинация</p>
+        <input ref={myInfoRefs1} type="number" name="ns1" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefs2} type="number" name="ns2" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
         {system >= 3
-          ? <input ref={myInfoRefs3} type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs3} hidden type="number" name="ns3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs3} type="number" name="ns3" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs3} hidden type="number" name="ns3" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 4
-          ? <input ref={myInfoRefs4} type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs4} hidden type="number" name="ns4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs4} type="number" name="ns4" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs4} hidden type="number" name="ns4" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 5
-          ? <input ref={myInfoRefs5} type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs5} hidden type="number" name="ns5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs5} type="number" name="ns5" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs5} hidden type="number" name="ns5" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 6
-          ? <input ref={myInfoRefs6} type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs6} hidden type="number" name="ns6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs6} type="number" name="ns6" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs6} hidden type="number" name="ns6" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 7
-          ? <input ref={myInfoRefs7} type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs7} hidden type="number" name="ns7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs7} type="number" name="ns7" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs7} hidden type="number" name="ns7" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 8
-          ? <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs8} hidden type="number" name="ns8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs8} type="number" name="ns8" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs8} hidden type="number" name="ns8" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 9
-          ? <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs9} hidden type="number" name="ns9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs9} type="number" name="ns9" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs9} hidden type="number" name="ns9" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 10
-          ? <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefs10} hidden type="number" name="ns10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefs10} type="number" name="ns10" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefs10} hidden type="number" name="ns10" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         <p className="boardLabel">Авто</p>
         <select ref={myInfoRefsa}  name="as" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
@@ -1270,33 +1295,33 @@ function Keno() {
         </select>
       </div>
       <div className = "boardSL">
-        <p className="boardLabel">Вторая комбинация</p>
-        <input ref={myInfoRefk1} type="number" name="nk1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-        <input ref={myInfoRefk2} type="number" name="nk2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
+        <p className="boardLabel">2 комбинация</p>
+        <input ref={myInfoRefk1} type="number" name="nk1" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+        <input ref={myInfoRefk2} type="number" name="nk2" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
         {system >= 3
-          ? <input ref={myInfoRefk3} type="number" name="nk3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk3} hidden type="number" name="nk3" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk3} type="number" name="nk3" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk3} hidden type="number" name="nk3" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 4
-          ? <input ref={myInfoRefk4} type="number" name="nk4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk4} hidden type="number" name="nk4" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk4} type="number" name="nk4" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk4} hidden type="number" name="nk4" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 5
-          ? <input ref={myInfoRefk5} type="number" name="nk5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk5} hidden type="number" name="nk5" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk5} type="number" name="nk5" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk5} hidden type="number" name="nk5" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 6
-          ? <input ref={myInfoRefk6} type="number" name="nk6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk6} hidden type="number" name="nk6" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk6} type="number" name="nk6" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk6} hidden type="number" name="nk6" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 7
-          ? <input ref={myInfoRefk7} type="number" name="nk7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk7} hidden type="number" name="nk7" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk7} type="number" name="nk7" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk7} hidden type="number" name="nk7" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 8
-          ? <input ref={myInfoRefk8} type="number" name="nk8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk8} hidden type="number" name="nk8" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk8} type="number" name="nk8" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk8} hidden type="number" name="nk8" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 9
-          ? <input ref={myInfoRefk9} type="number" name="nk9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk9} hidden type="number" name="nk9" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk9} type="number" name="nk9" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk9} hidden type="number" name="nk9" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         {system >= 10
-          ? <input ref={myInfoRefk10} type="number" name="nk10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
-          : <input ref={myInfoRefk10} hidden type="number" name="nk10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
+          ? <input ref={myInfoRefk10} type="number" name="nk10" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>
+          : <input ref={myInfoRefk10} hidden type="number" name="nk10" className="numbs" min="1" max="80" step="1" onChange={onChangeS}></input>}
         <p className="boardLabel">Авто</p>
         <select ref={myInfoRefka}  name="ak" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
@@ -2050,7 +2075,7 @@ function SuperLoto() {
     }
     //myInfoRef.current.textContent = 'Wait for fetch processing...';
     myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
-    setStatePay('6_' + draws + strPay);
+    setStatePay('6_' + draws + '_' + stake + strPay);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -3096,7 +3121,7 @@ function Maxima() {
     }
     //myInfoRef.current.textContent = 'Wait for fetch processing...';
     myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
-    setStatePay('5_' + draws + strPay);
+    setStatePay('5_' + draws + '_' + stake + strPay);
     /* e.g.
     Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
     user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
@@ -3282,14 +3307,14 @@ function Maxima() {
     <p name="sum" className="boardLabel" ref={myInfoRef2}></p>
   </div>
   {!system_flag && <div>
-  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
+  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 45):</h4>
   <div className = "boardSL">
       <p className="boardLabel">1 комбинация</p>
-      <input ref={myInfoRef11} type="number" name="n11" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef12} type="number" name="n12" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef13} type="number" name="n13" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef14} type="number" name="n14" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef15} type="number" name="n15" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef11} type="number" name="n11" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef12} type="number" name="n12" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef13} type="number" name="n13" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef14} type="number" name="n14" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef15} type="number" name="n15" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a1" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -3298,11 +3323,11 @@ function Maxima() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">2 комбинация</p>
-      <input ref={myInfoRef21} type="number" name="n21" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef22} type="number" name="n22" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef23} type="number" name="n23" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef24} type="number" name="n24" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef25} type="number" name="n25" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef21} type="number" name="n21" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef22} type="number" name="n22" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef23} type="number" name="n23" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef24} type="number" name="n24" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef25} type="number" name="n25" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a2" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -3311,11 +3336,11 @@ function Maxima() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">3 комбинация</p>
-      <input ref={myInfoRef31} type="number" name="n31" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef32} type="number" name="n32" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef33} type="number" name="n33" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef34} type="number" name="n34" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef35} type="number" name="n35" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef31} type="number" name="n31" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef32} type="number" name="n32" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef33} type="number" name="n33" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef34} type="number" name="n34" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef35} type="number" name="n35" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a3" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -3324,11 +3349,11 @@ function Maxima() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">4 комбинация</p>
-      <input ref={myInfoRef41} type="number" name="n41" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef42} type="number" name="n42" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef43} type="number" name="n43" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef44} type="number" name="n44" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef45} type="number" name="n45" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef41} type="number" name="n41" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef42} type="number" name="n42" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef43} type="number" name="n43" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef44} type="number" name="n44" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef45} type="number" name="n45" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a4" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -3337,11 +3362,11 @@ function Maxima() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">5 комбинация</p>
-      <input ref={myInfoRef51} type="number" name="n51" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef52} type="number" name="n52" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef53} type="number" name="n53" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef54} type="number" name="n54" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef55} type="number" name="n55" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef51} type="number" name="n51" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef52} type="number" name="n52" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef53} type="number" name="n53" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef54} type="number" name="n54" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef55} type="number" name="n55" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a5" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
@@ -3350,11 +3375,11 @@ function Maxima() {
   </div>
   <div className = "boardSL">
       <p className="boardLabel">6 комбинация</p>
-      <input ref={myInfoRef61} type="number" name="n61" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef62} type="number" name="n62" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef63} type="number" name="n63" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef64} type="number" name="n64" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
-      <input ref={myInfoRef65} type="number" name="n65" className="numbs" min="1" max="52" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef61} type="number" name="n61" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef62} type="number" name="n62" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef63} type="number" name="n63" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef64} type="number" name="n64" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef65} type="number" name="n65" className="numbs" min="1" max="45" step="1" onChange={onChange}></input>
       <p className="boardLabel">Авто</p>
       <select name="a6" onChange={onChangeAuto}>
         <option value='N'>Нет</option>
