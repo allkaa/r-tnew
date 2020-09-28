@@ -1,4 +1,4 @@
-// Unl.js maxima mix-state 0005
+// Unl.js keno mix-state 0006
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -73,8 +73,7 @@ let a4 = false;
 let a5 = false;
 let a6 = false;
 
-//let system_flag = false;  <=== const [system_flag, setStateSystemFlag] = useState(false); <==== must be used  for rendering.
-let sysflg = false;
+let sysflg = false; // const [system_flag, setStateSystemFlag] = useState(false); <==== must be used  for rendering.
 let system = 0;
 let cs = [];
 let as = false;
@@ -84,7 +83,8 @@ let ak = false;
 let drawnum = 1;
 let sysnum = 0;
 let cmbnum = 0;
-let stake = 1;
+let stake = '1';
+let stakenum = 1;
 
 let myInfoRef11 = React.createRef();
 let myInfoRef12 = React.createRef();
@@ -742,9 +742,49 @@ function Keno() {
       draws = '1'; // setStateDraws('1');
       return;
     }
+    if (nbrN > 7 && nbrN !== 14) {
+      drawnum = 1;
+      draws = '1'; // setStateDraws('1');
+      return;
+    }
     draws = strN; // setStateDraws(strN);
     drawnum = Number(strN);
-    myInfoRef2.current.textContent = CalcSumSL();
+    myInfoRef2.current.textContent = CalcSumKN();
+  } // end of function onChangeDraws(event).
+
+  function onChangeStake(event) {
+    //console.log(event.target.name);
+    const MaxNum = 10;
+    const MinNum = 1;
+    stakenum = Number(stake);
+    let strN = event.target.value;
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      stake = '1'; // setStateStake('1');
+      stakenum = 1;
+      return;
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      stake = '1'; // setStateStake('1');
+      stakenum = 1;
+      return;
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      stake = '1'; // setStateStake('1');
+      stakenum = 1;
+      return;
+    }
+    stake = strN; // setStateStake(strN);
+    stakenum = Number(strN);
+    myInfoRef2.current.textContent = CalcSumKN();
   } // end of function onChangeDraws(event).
 
   function onChangeSystem(event) { // Count of Keno numbers used.
@@ -816,123 +856,9 @@ function Keno() {
     myInfoRef2.current.textContent = CalcSumKN();
   } // end of function onChangeSystem(event).
 
-  function onChange(event) {
-    //console.log(event.target.name);
-    const MaxNum = 52;
-    const MinNum = 1;
-    let strN = event.target.value;
-    if (strN.length < 2) {
-      strN = '0' + strN;
-    }
-    //console.log(strN);
-    let nbrN = Number(strN);
-    //console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер не задан корректно.");
-      //return;
-      strN = '00';
-    }
-    if (nbrN < MinNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      //return;
-      strN = '00';
-    }
-    if (nbrN > MaxNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
-      //return;
-      strN = '00';
-    }
-    let strPfx;
-    let strCmb;
-    if (event.target.name.indexOf('n1') !== -1) {
-      strPfx = 'n1';
-      strCmb = c1;
-    }
-    else if (event.target.name.indexOf('n2') !== -1) {
-      strPfx = 'n2';
-      strCmb = c2;
-    }
-    else if (event.target.name.indexOf('n3') !== -1) {
-      strPfx = 'n3';
-      strCmb = c3;
-    }
-    else if (event.target.name.indexOf('n4') !== -1) {
-      strPfx = 'n4';
-      strCmb = c4;
-    }
-    else if (event.target.name.indexOf('n5') !== -1) {
-      strPfx = 'n5';
-      strCmb = c5;
-    }
-    else if (event.target.name.indexOf('n6') !== -1) {
-      strPfx = 'n6';
-      strCmb = c6;
-    } // end of combination selection.
-    if (event.target.name === strPfx + '1') {
-      //console.log(event.target.name, strPfx + '1');
-      strCmb[0] = strN;
-      if (strPfx === 'n1') c1 = strCmb; // setStateC1(strCmb);
-      else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
-      else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
-      else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
-      else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
-      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
-    }
-    else if (event.target.name === strPfx + '2') {
-      //console.log(event.target.name, strPfx + '2');
-      strCmb[1] = strN;
-      if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
-      else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
-      else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
-      else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
-      else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
-      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
-    }
-    else if (event.target.name === strPfx + '3') {
-     strCmb[2] = strN;
-     if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
-     else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
-     else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
-     else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
-     else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
-     else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
-   }
-    else if (event.target.name === strPfx + '4') {
-      strCmb[3] = strN;
-      if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
-      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
-      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
-      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
-      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
-      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
-    }
-    else if (event.target.name === strPfx + '5') {
-      strCmb[4] = strN;
-      if (strPfx === 'n1') c1 = strCmb; //   setStateC1(strCmb);
-      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
-      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
-      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
-      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
-      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
-    }
-    else if (event.target.name === strPfx + '6') {
-      strCmb[5] = strN;
-      if (strPfx === 'n1') c1 = strCmb; //   setStateC1(strCmb);
-      else if (strPfx === 'n2') c2 = strCmb; //   setStateC2(strCmb);
-      else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
-      else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
-      else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
-      else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
-    } // end of number in combination selection.
-    myInfoRef2.current.textContent = CalcSumSL();
-  } // function onChange(event).
-
   function onChangeS(event) {
     //console.log(event.target.name);
-    const MaxNum = 52;
+    const MaxNum = 80;
     const MinNum = 1;
     let strN = event.target.value;
     if (strN.length < 2) {
@@ -961,8 +887,16 @@ function Keno() {
     }
     let strPfx;
     let strCmb;
-    strPfx = 'ns';
-    strCmb = cs;
+    //strPfx = 'ns';
+    //strCmb = cs;
+    if (event.target.name.indexOf('ns') !== -1) {
+      strPfx = 'ns';
+      strCmb = cs;
+    }
+    else if (event.target.name.indexOf('nk') !== -1) {
+      strPfx = 'nk';
+      strCmb = ck;
+    }
     console.log('onChangeS strCmb begin:');
     console.log(strCmb);
     if (event.target.name === strPfx + '1') {
@@ -1015,140 +949,16 @@ function Keno() {
       if (strCmb.length > 9) strCmb[9] = strN;
       else strCmb.push(strN);
     }
-    else if (event.target.name === strPfx + '11') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 10) strCmb[10] = strN;
-      else strCmb.push(strN);
-    }
-    else if (event.target.name === strPfx + '12') {
-      //console.log(event.target.name, strPfx + '1');
-      if (strCmb.length > 11) strCmb[11] = strN;
-      else strCmb.push(strN);
-    }
     console.log('onChangeS strCmb end:');
     console.log(strCmb);
-    cs = strCmb; //setStateCS(strCmb);
-    myInfoRef2.current.textContent = CalcSumSL();
-} // end of function onChangeS(event).
-
-  function onChangeAuto(event) {
-    //console.log(event);
-    //console.log('typeof ' + typeof(event));
-    //console.log(event.target.name);
-    //let strA = event.target.value;
-    //console.log(strA);
-    //console.log('typeof ' + typeof(strA));
-    let strCmb;
-    let strArr = ['','','','','',''];
-    let bnlAuto = false;
-    let i = 0, j;
-    if (event.target.value === 'Y') {
-      let numArr = [0,0,0,0,0,0];
-      let strNum;
-      let current, result;
-      let max = 52;
-      do {
-        current = Math.floor(Math.random() * (max));
-        result = current + 1
-        //console.log(current, result);
-        if (numArr.indexOf(result) === -1) {
-          for (j=0; j <= 5; j++) {
-            if (numArr[j] === 0) {
-              numArr[j] = result;
-              strNum = numArr[j].toString();
-              if (strNum.length < 2) strNum = '0' + strNum;
-              strArr[j] = strNum;
-              i = i + 1;
-              break;
-            }
-          }
-        }
-      } while (i < 6);
-      //console.log(numArr);
-      //console.log(strArr);
-      strArr.sort();
-      bnlAuto = true;
+    if (strPfx === 'ns') {
+      cs = strCmb; //setStateCS(strCmb);
     }
     else {
-      strArr=['00','00','00','00','00','00'];
-      bnlAuto = false;
+      ck = strCmb; //setStateCS(strCmb);
     }
-    console.log('strArr auto:');
-    console.log(strArr);
-    if (event.target.name === 'a1') {
-      strCmb = c1;
-      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      c1 = strCmb; //  setStateC1(strCmb);
-      a1 = bnlAuto; //  setStateAuto1(bnlAuto);
-      myInfoRef11.current.value = strCmb[0] === '00' ? '' : strCmb[0];
-      myInfoRef12.current.value = strCmb[1] === '00' ? '' : strCmb[1];
-      myInfoRef13.current.value = strCmb[2] === '00' ? '' : strCmb[2];
-      myInfoRef14.current.value = strCmb[3] === '00' ? '' : strCmb[3];
-      myInfoRef15.current.value = strCmb[4] === '00' ? '' : strCmb[4];
-      myInfoRef16.current.value = strCmb[5] === '00' ? '' : strCmb[5];
-    }
-    else if (event.target.name === 'a2') {
-      strCmb = c2;
-      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      c2 = strCmb; //  setStateC2(strCmb);
-      a2 = bnlAuto; // setStateAuto2(bnlAuto);
-      myInfoRef21.current.value = strCmb[0] === '00' ? '' : strCmb[0];
-      myInfoRef22.current.value = strCmb[1] === '00' ? '' : strCmb[1];
-      myInfoRef23.current.value = strCmb[2] === '00' ? '' : strCmb[2];
-      myInfoRef24.current.value = strCmb[3] === '00' ? '' : strCmb[3];
-      myInfoRef25.current.value = strCmb[4] === '00' ? '' : strCmb[4];
-      myInfoRef26.current.value = strCmb[5] === '00' ? '' : strCmb[5];
-    }
-    else if (event.target.name === 'a3') {
-      strCmb = c3;
-      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      c3 = strCmb; //  setStateC3(strCmb);
-      a3 = bnlAuto; // setStateAuto3(bnlAuto);
-      myInfoRef31.current.value = strCmb[0] === '00' ? '' : strCmb[0];
-      myInfoRef32.current.value = strCmb[1] === '00' ? '' : strCmb[1];
-      myInfoRef33.current.value = strCmb[2] === '00' ? '' : strCmb[2];
-      myInfoRef34.current.value = strCmb[3] === '00' ? '' : strCmb[3];
-      myInfoRef35.current.value = strCmb[4] === '00' ? '' : strCmb[4];
-      myInfoRef36.current.value = strCmb[5] === '00' ? '' : strCmb[5];
-    }
-    else if (event.target.name === 'a4') {
-      strCmb = c4;
-      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      c4 = strCmb; //  setStateC4(strCmb);
-      a4 = bnlAuto; // setStateAuto4(bnlAuto);
-      myInfoRef41.current.value = strCmb[0] === '00' ? '' : strCmb[0];
-      myInfoRef42.current.value = strCmb[1] === '00' ? '' : strCmb[1];
-      myInfoRef43.current.value = strCmb[2] === '00' ? '' : strCmb[2];
-      myInfoRef44.current.value = strCmb[3] === '00' ? '' : strCmb[3];
-      myInfoRef45.current.value = strCmb[4] === '00' ? '' : strCmb[4];
-      myInfoRef46.current.value = strCmb[5] === '00' ? '' : strCmb[5];
-    }
-    else if (event.target.name === 'a5') {
-      strCmb = c5;
-      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      c5 = strCmb; //  setStateC5(strCmb);
-      a5 = bnlAuto; // setStateAuto5(bnlAuto);
-      myInfoRef51.current.value = strCmb[0] === '00' ? '' : strCmb[0];
-      myInfoRef52.current.value = strCmb[1] === '00' ? '' : strCmb[1];
-      myInfoRef53.current.value = strCmb[2] === '00' ? '' : strCmb[2];
-      myInfoRef54.current.value = strCmb[3] === '00' ? '' : strCmb[3];
-      myInfoRef55.current.value = strCmb[4] === '00' ? '' : strCmb[4];
-      myInfoRef56.current.value = strCmb[5] === '00' ? '' : strCmb[5];
-    }
-    else if (event.target.name === 'a6') {
-      strCmb = c6;
-      for (i=0; i<=5; i++) strCmb[i] = strArr[i];
-      c6 = strCmb; //  setStateC6(strCmb);
-      a6 = bnlAuto; // setStateAuto6(bnlAuto);
-      myInfoRef61.current.value = strCmb[0] === '00' ? '' : strCmb[0];
-      myInfoRef62.current.value = strCmb[1] === '00' ? '' : strCmb[1];
-      myInfoRef63.current.value = strCmb[2] === '00' ? '' : strCmb[2];
-      myInfoRef64.current.value = strCmb[3] === '00' ? '' : strCmb[3];
-      myInfoRef65.current.value = strCmb[4] === '00' ? '' : strCmb[4];
-      myInfoRef66.current.value = strCmb[5] === '00' ? '' : strCmb[5];
-    }
-    myInfoRef2.current.textContent = CalcSumSL();
-  } // end of function onChangeAuto(event)
+    myInfoRef2.current.textContent = CalcSumKN();
+} // end of function onChangeS(event).
 
   function onChangeAutoSystem(event) {
     //console.log(event);
@@ -1157,16 +967,16 @@ function Keno() {
     //let strA = event.target.value;
     //console.log(strA);
     //console.log('typeof ' + typeof(strA));
-    //let strArr = ['','','','','','','','','','','',''];
+    //let strArr = ['','','','','','','','','',''];
     let strArr = [];
     let bnlAuto = false;
     console.log('numSys: ' + system);
     let i = 0, j;
     if (event.target.value === 'Y') {
-      let numArr = [0,0,0,0,0,0,0,0,0,0,0,0];
+      let numArr = [0,0,0,0,0,0,0,0,0,0];
       let strNum;
       let current, result;
-      let max = 52;
+      let max = 80;
       do {
         current = Math.floor(Math.random() * (max));
         result = current + 1
@@ -1199,22 +1009,35 @@ function Keno() {
       bnlAuto = false;
     }
     console.log(strArr);
-    for (i=0; i<system; i++) cs[i] = strArr[i];
-    as = bnlAuto; //setStateAutoS(bnlAuto);
-    myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
-    myInfoRefs2.current.value = cs[1] === '00' ? '' : cs[1];
-    myInfoRefs3.current.value = cs[2] === '00' ? '' : cs[2];
-    myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
-    myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
-    myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
-    myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
-    if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
-    if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
-    if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
-    if (system >= 11) myInfoRefs11.current.value = cs[10] === '00' ? '' : cs[10];
-    if (system >= 12) myInfoRefs12.current.value = cs[11] === '00' ? '' : cs[11];
-
-    myInfoRef2.current.textContent = CalcSumSL();
+    if (event.target.name.indexOf('ns') !== -1) {
+      for (i=0; i<system; i++) cs[i] = strArr[i];
+      as = bnlAuto; //setStateAutoS(bnlAuto);
+      myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
+      myInfoRefs2.current.value = cs[1] === '00' ? '' : cs[1];
+      if (system >= 3)myInfoRefs3.current.value = cs[2] === '00' ? '' : cs[2];
+      if (system >= 4)myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
+      if (system >= 5)myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
+      if (system >= 6)myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
+      if (system >= 7)myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
+      if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
+      if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
+      if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
+    }
+    else {
+      for (i=0; i<system; i++) ck[i] = strArr[i];
+      ak = bnlAuto; //setStateAutoS(bnlAuto);
+      myInfoRefk1.current.value = ck[0] === '00' ? '' : ck[0];
+      myInfoRefk2.current.value = ck[1] === '00' ? '' : ck[1];
+      if (system >= 3)myInfoRefk3.current.value = ck[2] === '00' ? '' : ck[2];
+      if (system >= 4)myInfoRefk4.current.value = ck[3] === '00' ? '' : ck[3];
+      if (system >= 5)myInfoRefk5.current.value = ck[4] === '00' ? '' : ck[4];
+      if (system >= 6)myInfoRefk6.current.value = ck[5] === '00' ? '' : ck[5];
+      if (system >= 7)myInfoRefk7.current.value = ck[6] === '00' ? '' : ck[6];
+      if (system >= 8) myInfoRefk8.current.value = ck[7] === '00' ? '' : ck[7];
+      if (system >= 9) myInfoRefk9.current.value = ck[8] === '00' ? '' : ck[8];
+      if (system >= 10) myInfoRefk10.current.value = ck[9] === '00' ? '' : ck[9];
+    }
+    myInfoRef2.current.textContent = CalcSumKN();
   } // end of function onChangeAutoSystem(event).
 
   function Duplicate(strCmb, count) {
@@ -1235,7 +1058,7 @@ function Keno() {
     return blnDuplicate;
   }
 
-  function handleSubmitSuperLoto(event) {
+  function handleSubmitKeno(event) {
     //console.log(event.search); // event.search e.g. '?q=6_1...';
     //console.log(c1);
     //console.log(c2);
@@ -1249,158 +1072,42 @@ function Keno() {
     let blnDuplicate = false;
     //console.log(draws);
     //console.log(strPay);
-    if (system_flag) {
-      strCmb = cs;
-      let sys = Number(system);
-      //console.log(strCmb);
-      let k;
-      if (strCmb.indexOf('00') === -1) {
-        blnDuplicate = Duplicate(strCmb, sys);
-        if (! blnDuplicate) {
-          if (as) {
-            strPay = strPay + '_sa';
-          }
-          else {
-            strPay = strPay + '_sm';
-          }
-          strCmb.sort();
-          //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-          for (k=0; k<sys; k++) strPay = strPay + '_' + strCmb[k] ;
+    let sys = Number(system);
+    //console.log(strCmb);
+    let k;
+    strCmb = cs;
+    if (strCmb.indexOf('00') === -1) {
+      blnDuplicate = Duplicate(strCmb, sys);
+      if (! blnDuplicate) {
+        if (as) {
+          strPay = strPay + '_sa';
         }
-        else alert('Ошибка! Дублирование номера в системной комбинации');
+        else {
+          strPay = strPay + '_sm';
+        }
+        strCmb.sort();
+        //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        for (k=0; k<sys; k++) strPay = strPay + '_' + strCmb[k] ;
       }
-    } // end of if (system_flag) {
-    else {
-      for (let i = 1; i < 7; i++) {
-        if (i === 1) {
-          strCmb = c1;
-          //console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              if (a1) {
-                strPay = strPay + '_a';
-              }
-              else {
-                strPay = strPay + '_m';
-              }
-              strCmb.sort();
-              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-            }
-            else {
-              alert('Ошибка! Дублирование номера в первой комбинации');
-              break;
-            }
-          }
+      else alert('Ошибка! Дублирование номера в первой комбинации');
+    }
+    strCmb = ck;
+    if (strCmb.indexOf('00') === -1) {
+      blnDuplicate = Duplicate(strCmb, sys);
+      if (! blnDuplicate) {
+        if (ak) {
+          strPay = strPay + '_sa';
         }
-        else if (i === 2) {
-          strCmb = c2;
-          //console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              if (a2) {
-                strPay = strPay + '_a';
-              }
-              else {
-                strPay = strPay + '_m';
-              }
-              strCmb.sort();
-              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-            }
-            else {
-              alert('Ошибка! Дублирование номера во второй комбинации');
-              break;
-            }
-          }
+        else {
+          strPay = strPay + '_sm';
         }
-        else if (i === 3) {
-          strCmb = c3;
-          //console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              if (a3) {
-                strPay = strPay + '_a';
-              }
-              else {
-                strPay = strPay + '_m';
-              }
-              strCmb.sort();
-              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-            }
-            else {
-              alert('Ошибка! Дублирование номера в третьей комбинации');
-              break;
-            }
-          }
-        }
-        else if (i === 4) {
-          strCmb = c4;
-          //console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              if (a4) {
-                strPay = strPay + '_a';
-              }
-              else {
-                strPay = strPay + '_m';
-              }
-              strCmb.sort();
-              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-            }
-            else {
-              alert('Ошибка! Дублирование номера в четвертой комбинации');
-              break;
-            }
-          }
-        }
-        else if (i === 5) {
-          strCmb = c5;
-          //console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              if (a5) {
-                strPay = strPay + '_a';
-              }
-              else {
-                strPay = strPay + '_m';
-              }
-              strCmb.sort();
-              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-            }
-            else {
-              alert('Ошибка! Дублирование номера в пятой комбинации');
-              break;
-            }
-          }
-        }
-        else if (i === 6) {
-          strCmb = c6;
-          //console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              if (a6) {
-                strPay = strPay + '_a';
-              }
-              else {
-                strPay = strPay + '_m';
-              }
-              strCmb.sort();
-              strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
-            }
-            else {
-              alert('Ошибка! Дублирование номера в шестой комбинации');
-              break;
-            }
-          }
-        }
-      } //end of (let i = 1; i < 7; i++).
-    } // end of NOT if (system_flag) {
-    //console.log(strPay);
+        strCmb.sort();
+        //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
+        for (k=0; k<sys; k++) strPay = strPay + '_' + strCmb[k] ;
+      }
+      else alert('Ошибка! Дублирование номера во второй комбинации');
+    }
+  //console.log(strPay);
     if (blnDuplicate) {
       //alert('Ошибка! Есть некорректные комбинации.');
       event.preventDefault();
@@ -1442,88 +1149,31 @@ function Keno() {
     let strCmb;
     let blnDuplicate = false;
     cmbnum = 0;
-    if (sysflg) { // if (system_flag)
-      console.log('CalcSumSL system cmbs:');
-      console.log('system = ' + system);
-      strCmb = cs;
-      console.log(strCmb);
-      if (strCmb.length === system) {
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, system);
-          if (! blnDuplicate) {
-            cmbnum = 1;
-          }
+    console.log('CalcSumSL system cmbs:');
+    console.log('system = ' + system);
+    strCmb = cs;
+    console.log(strCmb);
+    if (strCmb.length === system) {
+      if (strCmb.indexOf('00') === -1) {
+        blnDuplicate = Duplicate(strCmb, system);
+        if (! blnDuplicate) {
+          cmbnum = cmbnum +  1;
         }
       }
-    } // end of if (system_flag) {
-    else {
-      console.log('CalcSumSL cmbs:');
-      for (let i = 1; i < 7; i++) {
-        if (i === 1) {
-          strCmb = c1;
-          console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              cmbnum = cmbnum + 1;
-            }
-          }
+    }
+    strCmb = ck;
+    console.log(strCmb);
+    if (strCmb.length === system) {
+      if (strCmb.indexOf('00') === -1) {
+        blnDuplicate = Duplicate(strCmb, system);
+        if (! blnDuplicate) {
+          cmbnum = cmbnum +  1;
         }
-        else if (i === 2) {
-          strCmb = c2;
-          console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              cmbnum = cmbnum + 1;
-            }
-          }
-        }
-        else if (i === 3) {
-          strCmb = c3;
-          console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              cmbnum = cmbnum + 1;
-            }
-          }
-        }
-        else if (i === 4) {
-          strCmb = c4;
-          console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              cmbnum = cmbnum + 1;
-            }
-          }
-        }
-        else if (i === 5) {
-          strCmb = c5;
-          console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              cmbnum = cmbnum + 1;
-            }
-          }
-        }
-        else if (i === 6) {
-          strCmb = c6;
-          console.log(strCmb);
-          if (strCmb.indexOf('00') === -1) {
-            blnDuplicate = Duplicate(strCmb, 6);
-            if (! blnDuplicate) {
-              cmbnum = cmbnum + 1;
-            }
-          }
-        }
-      } // end of for (let i = 1; i < 7; i++).
-    } // end of NOT if (system_flag).
+      }
+    }
     let tot = 0, ret = '';
-    console.log(drawnum, stake, cmbnum);
-    tot = 10 * drawnum * stake * cmbnum;
+    console.log(drawnum, stakenum, cmbnum);
+    tot = 10 * drawnum * stakenum * cmbnum;
     ret = 'Стоимость билета: ' + tot.toString();
     myInfoRef2.current.textContent = ret;
     return ret;
@@ -1557,6 +1207,7 @@ function Keno() {
   //const [sum, setStateSum] = useState(15);
   */
   //const [system_flag, setStateSystemFlag] = useState(false); // use to switch rendering system/nonsystem.
+  //const [stake, setStateStake] = useState(1);
   cs = [];
   ck = [];
   as = false;
@@ -1572,6 +1223,10 @@ function Keno() {
     <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
+    <p className="boardLabel">Ставка</p>
+    <input type="number" name="stake" defaultValue={stake} className="numbs" min="1" max="10" step="1"
+    onChange={onChangeStake} required></input>
+    <p className="boardLabel">Если не задано, устанавливается ставка 1</p>
     {/* <p className="boardLabel">Стоимость билета</p> */}
     <p name="sum" className="boardLabel" ref={myInfoRef2}></p>
   </div>
@@ -1581,7 +1236,7 @@ function Keno() {
       <input type="number" name="system" defaultValue={system} className="numbs" min="2" max="10" step="1"
       onChange={onChangeSystem} required></input>
       <div className = "boardSL">
-        <p className="boardLabel">Системная комбинация</p>
+        <p className="boardLabel">Первая комбинация</p>
         <input ref={myInfoRefs1} type="number" name="ns1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
         <input ref={myInfoRefs2} type="number" name="ns2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
         {system >= 3
@@ -1615,7 +1270,7 @@ function Keno() {
         </select>
       </div>
       <div className = "boardSL">
-        <p className="boardLabel">Системная комбинация</p>
+        <p className="boardLabel">Вторая комбинация</p>
         <input ref={myInfoRefk1} type="number" name="nk1" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
         <input ref={myInfoRefk2} type="number" name="nk2" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
         {system >= 3
@@ -1643,7 +1298,7 @@ function Keno() {
           ? <input ref={myInfoRefk10} type="number" name="nk10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>
           : <input ref={myInfoRefk10} hidden type="number" name="nk10" className="numbs" min="1" max="52" step="1" onChange={onChangeS}></input>}
         <p className="boardLabel">Авто</p>
-        <select ref={myInfoRefsa}  name="as" onChange={onChangeAutoSystem}>
+        <select ref={myInfoRefka}  name="ak" onChange={onChangeAutoSystem}>
           <option value='N'>Нет</option>
           <option value='Y'>Да</option>
         </select>
@@ -1651,7 +1306,7 @@ function Keno() {
     </div>
   </div>
   {/* <button type="button" onClick={CalcSumSL}>Рассчитать стоимость билета.</button> */}
-  <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitSuperLoto}>
+  <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitKeno}>
     <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
     <button type="submit">Купить билет</button>
   </form>
@@ -2504,12 +2159,12 @@ function SuperLoto() {
       } // end of for (let i = 1; i < 7; i++).
     } // end of NOT if (system_flag).
     let tot = 0, ret = '';
-    console.log(drawnum, sysnum, cmbnum); //, stake);
+    console.log(drawnum, sysnum, cmbnum);
     if (system_flag) {
-      tot = 15 * drawnum * sysnum * cmbnum; // * stake;
+      tot = 15 * drawnum * sysnum * cmbnum;
     }
     else {
-      tot = 15 * drawnum * cmbnum; // * stake;
+      tot = 15 * drawnum * cmbnum;
     }
     ret = 'Стоимость билета: ' + tot.toString();
     myInfoRef2.current.textContent = ret;
@@ -3550,12 +3205,12 @@ function Maxima() {
       } // end of for (let i = 1; i < 7; i++).
     } // end of NOT if (system_flag).
     let tot = 0, ret = '';
-    console.log(drawnum, sysnum, cmbnum); //, stake);
+    console.log(drawnum, sysnum, cmbnum);
     if (system_flag) {
-      tot = 10 * drawnum * sysnum * cmbnum; // * stake;
+      tot = 10 * drawnum * sysnum * cmbnum;
     }
     else {
-      tot = 10 * drawnum * cmbnum; // * stake;
+      tot = 10 * drawnum * cmbnum;
     }
     ret = 'Стоимость билета: ' + tot.toString();
     myInfoRef2.current.textContent = ret;
