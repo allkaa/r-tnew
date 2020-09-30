@@ -1,4 +1,4 @@
-// Unl.js keno mix-state 0008
+// Unl.js keno mix-state 0009
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1508,9 +1508,6 @@ function SuperLoto() {
     const MaxNum = 52;
     const MinNum = 1;
     let strN = event.target.value;
-    if (strN.length < 2) {
-      strN = '0' + strN;
-    }
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
@@ -1520,17 +1517,23 @@ function SuperLoto() {
       //return;
       strN = '00';
     }
-    if (nbrN < MinNum) {
+    else if (nbrN < MinNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
       //return;
       strN = '00';
     }
-    if (nbrN > MaxNum) {
+    else if (nbrN > MaxNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
       //return;
       strN = '00';
+    }
+    else {
+      strN = nbrN.toString();
+    }
+    if (strN.length < 2) {
+      strN = '0' + strN;
     }
     let strPfx;
     let strCmb;
@@ -1614,6 +1617,45 @@ function SuperLoto() {
       else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
       else if (strPfx === 'n6') c6 = strCmb; //   setStateC6(strCmb);
     } // end of number in combination selection.
+    //console.log(strN);
+    //console.log(event.target.name); // e.g. "n11"
+    //console.log(strPfx);
+    if (event.target.name === 'n11') myInfoRef11.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n12') myInfoRef12.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n13') myInfoRef13.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n14') myInfoRef14.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n15') myInfoRef15.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n16') myInfoRef16.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n21') myInfoRef21.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n22') myInfoRef22.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n23') myInfoRef23.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n24') myInfoRef24.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n25') myInfoRef25.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n26') myInfoRef26.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n31') myInfoRef31.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n32') myInfoRef32.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n33') myInfoRef33.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n34') myInfoRef34.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n35') myInfoRef35.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n36') myInfoRef36.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n41') myInfoRef41.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n42') myInfoRef42.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n43') myInfoRef43.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n44') myInfoRef44.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n45') myInfoRef45.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n46') myInfoRef46.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n51') myInfoRef51.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n52') myInfoRef52.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n53') myInfoRef53.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n54') myInfoRef54.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n55') myInfoRef55.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n56') myInfoRef56.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n61') myInfoRef61.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n62') myInfoRef62.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n63') myInfoRef63.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n64') myInfoRef64.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n65') myInfoRef65.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n66') myInfoRef66.current.value = strN === '00' ? '' : strN;
     myInfoRef2.current.textContent = CalcSumSL();
   } // function onChange(event).
 
@@ -2585,9 +2627,6 @@ function Maxima() {
     const MaxNum = 45;
     const MinNum = 1;
     let strN = event.target.value;
-    if (strN.length < 2) {
-      strN = '0' + strN;
-    }
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
@@ -2597,17 +2636,23 @@ function Maxima() {
       //return;
       strN = '00';
     }
-    if (nbrN < MinNum) {
+    else if (nbrN < MinNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
       //return;
       strN = '00';
     }
-    if (nbrN > MaxNum) {
+    else if (nbrN > MaxNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
       //return;
       strN = '00';
+    }
+    else {
+      strN = nbrN.toString();
+    }
+    if (strN.length < 2) {
+      strN = '0' + strN;
     }
     let strPfx;
     let strCmb;
@@ -2681,7 +2726,46 @@ function Maxima() {
       else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
       else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
     } // end of number in combination selection.
-    myInfoRef2.current.textContent = CalcSumMX();
+      //console.log(strN);
+    //console.log(event.target.name); // e.g. "n11"
+    //console.log(strPfx);
+    if (event.target.name === 'n11') myInfoRef11.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n12') myInfoRef12.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n13') myInfoRef13.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n14') myInfoRef14.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n15') myInfoRef15.current.value = strN === '00' ? '' : strN;
+    //else if (event.target.name === 'n16') myInfoRef16.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n21') myInfoRef21.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n22') myInfoRef22.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n23') myInfoRef23.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n24') myInfoRef24.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n25') myInfoRef25.current.value = strN === '00' ? '' : strN;
+    //else if (event.target.name === 'n26') myInfoRef26.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n31') myInfoRef31.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n32') myInfoRef32.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n33') myInfoRef33.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n34') myInfoRef34.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n35') myInfoRef35.current.value = strN === '00' ? '' : strN;
+    //else if (event.target.name === 'n36') myInfoRef36.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n41') myInfoRef41.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n42') myInfoRef42.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n43') myInfoRef43.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n44') myInfoRef44.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n45') myInfoRef45.current.value = strN === '00' ? '' : strN;
+    //else if (event.target.name === 'n46') myInfoRef46.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n51') myInfoRef51.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n52') myInfoRef52.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n53') myInfoRef53.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n54') myInfoRef54.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n55') myInfoRef55.current.value = strN === '00' ? '' : strN;
+    //else if (event.target.name === 'n56') myInfoRef56.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n61') myInfoRef61.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n62') myInfoRef62.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n63') myInfoRef63.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n64') myInfoRef64.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n65') myInfoRef65.current.value = strN === '00' ? '' : strN;
+    //else if (event.target.name === 'n66') myInfoRef66.current.value = strN === '00' ? '' : strN;
+  myInfoRef2.current.textContent = CalcSumMX();
   } // function onChange(event).
 
   function onChangeS(event) {
