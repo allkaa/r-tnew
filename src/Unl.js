@@ -1,4 +1,4 @@
-// Unl.js keno mix-state 0007
+// Unl.js keno mix-state 0008
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -884,9 +884,6 @@ function Keno() {
     const MaxNum = 80;
     const MinNum = 1;
     let strN = event.target.value;
-    if (strN.length < 2) {
-      strN = '0' + strN;
-    }
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
@@ -896,17 +893,23 @@ function Keno() {
       //return;
       strN = '00';
     }
-    if (nbrN < MinNum) {
+    else if (nbrN < MinNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
       //return;
       strN = '00';
     }
-    if (nbrN > MaxNum) {
+    else if (nbrN > MaxNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
       //return;
       strN = '00';
+    }
+    else {
+      strN = nbrN.toString();
+    }
+    if (strN.length < 2) {
+      strN = '0' + strN;
     }
     let strPfx;
     let strCmb;
@@ -980,8 +983,30 @@ function Keno() {
     else {
       ck = strCmb; //setStateCS(strCmb);
     }
+    console.log(cs);
+    console.log(ck);
+    myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
+    myInfoRefs2.current.value = cs[1] === '00' ? '' : cs[1];
+    if (system >= 3)myInfoRefs3.current.value = cs[2] === '00' ? '' : cs[2];
+    if (system >= 4)myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
+    if (system >= 5)myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
+    if (system >= 6)myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
+    if (system >= 7)myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
+    if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
+    if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
+    if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
+    myInfoRefk1.current.value = ck[0] === '00' ? '' : ck[0];
+    myInfoRefk2.current.value = ck[1] === '00' ? '' : ck[1];
+    if (system >= 3)myInfoRefk3.current.value = ck[2] === '00' ? '' : ck[2];
+    if (system >= 4)myInfoRefk4.current.value = ck[3] === '00' ? '' : ck[3];
+    if (system >= 5)myInfoRefk5.current.value = ck[4] === '00' ? '' : ck[4];
+    if (system >= 6)myInfoRefk6.current.value = ck[5] === '00' ? '' : ck[5];
+    if (system >= 7)myInfoRefk7.current.value = ck[6] === '00' ? '' : ck[6];
+    if (system >= 8) myInfoRefk8.current.value = ck[7] === '00' ? '' : ck[7];
+    if (system >= 9) myInfoRefk9.current.value = ck[8] === '00' ? '' : ck[8];
+    if (system >= 10) myInfoRefk10.current.value = ck[9] === '00' ? '' : ck[9];
     myInfoRef2.current.textContent = CalcSumKN();
-} // end of function onChangeS(event).
+  } // end of function onChangeS(event).
 
   function onChangeAutoSystem(event) {
     //console.log(event);
@@ -1099,7 +1124,7 @@ function Keno() {
     //console.log(strCmb);
     let k;
     strCmb = cs;
-    if (strCmb.length > 0 && strCmb.indexOf('00') === -1) {
+    if (strCmb.length === system && strCmb.indexOf('00') === -1) {
       blnDuplicate = Duplicate(strCmb, sys);
       if (! blnDuplicate) {
         if (as) {
@@ -1115,7 +1140,7 @@ function Keno() {
       else alert('Ошибка! Дублирование номера в первой комбинации');
     }
     strCmb = ck;
-    if (strCmb.length > 0 && strCmb.indexOf('00') === -1) {
+    if (strCmb.length === system && strCmb.indexOf('00') === -1) {
       blnDuplicate = Duplicate(strCmb, sys);
       if (! blnDuplicate) {
         if (ak) {
@@ -1597,9 +1622,6 @@ function SuperLoto() {
     const MaxNum = 52;
     const MinNum = 1;
     let strN = event.target.value;
-    if (strN.length < 2) {
-      strN = '0' + strN;
-    }
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
@@ -1609,17 +1631,23 @@ function SuperLoto() {
       //return;
       strN = '00';
     }
-    if (nbrN < MinNum) {
+    else if (nbrN < MinNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
       //return;
       strN = '00';
     }
-    if (nbrN > MaxNum) {
+    else if (nbrN > MaxNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
       //return;
       strN = '00';
+    }
+    else {
+      strN = nbrN.toString();
+    }
+    if (strN.length < 2) {
+      strN = '0' + strN;
     }
     let strPfx;
     let strCmb;
@@ -1690,8 +1718,20 @@ function SuperLoto() {
     console.log('onChangeS strCmb end:');
     console.log(strCmb);
     cs = strCmb; //setStateCS(strCmb);
+    myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
+    myInfoRefs2.current.value = cs[1] === '00' ? '' : cs[1];
+    myInfoRefs3.current.value = cs[2] === '00' ? '' : cs[2];
+    myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
+    myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
+    myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
+    myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
+    if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
+    if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
+    if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
+    if (system >= 11) myInfoRefs11.current.value = cs[10] === '00' ? '' : cs[10];
+    if (system >= 12) myInfoRefs12.current.value = cs[11] === '00' ? '' : cs[11];
     myInfoRef2.current.textContent = CalcSumSL();
-} // end of function onChangeS(event).
+  } // end of function onChangeS(event).
 
   function onChangeAuto(event) {
     //console.log(event);
@@ -1916,7 +1956,7 @@ function SuperLoto() {
       let sys = Number(system);
       //console.log(strCmb);
       let k;
-      if (strCmb.indexOf('00') === -1) {
+      if (strCmb.length === system && strCmb.indexOf('00') === -1) {
         blnDuplicate = Duplicate(strCmb, sys);
         if (! blnDuplicate) {
           if (as) {
@@ -2649,9 +2689,6 @@ function Maxima() {
     const MaxNum = 45;
     const MinNum = 1;
     let strN = event.target.value;
-    if (strN.length < 2) {
-      strN = '0' + strN;
-    }
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
@@ -2661,17 +2698,23 @@ function Maxima() {
       //return;
       strN = '00';
     }
-    if (nbrN < MinNum) {
+    else if (nbrN < MinNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
       //return;
       strN = '00';
     }
-    if (nbrN > MaxNum) {
+    else if (nbrN > MaxNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
       //return;
       strN = '00';
+    }
+    else {
+      strN = nbrN.toString();
+    }
+    if (strN.length < 2) {
+      strN = '0' + strN;
     }
     let strPfx;
     let strCmb;
@@ -2742,8 +2785,20 @@ function Maxima() {
     console.log('onChangeS strCmb end:');
     console.log(strCmb);
     cs = strCmb; //setStateCS(strCmb);
+    myInfoRefs1.current.value = cs[0] === '00' ? '' : cs[0];
+    myInfoRefs2.current.value = cs[1] === '00' ? '' : cs[1];
+    myInfoRefs3.current.value = cs[2] === '00' ? '' : cs[2];
+    myInfoRefs4.current.value = cs[3] === '00' ? '' : cs[3];
+    myInfoRefs5.current.value = cs[4] === '00' ? '' : cs[4];
+    myInfoRefs6.current.value = cs[5] === '00' ? '' : cs[5];
+    if (system >= 7) myInfoRefs7.current.value = cs[6] === '00' ? '' : cs[6];
+    if (system >= 8) myInfoRefs8.current.value = cs[7] === '00' ? '' : cs[7];
+    if (system >= 9) myInfoRefs9.current.value = cs[8] === '00' ? '' : cs[8];
+    if (system >= 10) myInfoRefs10.current.value = cs[9] === '00' ? '' : cs[9];
+    if (system >= 11) myInfoRefs11.current.value = cs[10] === '00' ? '' : cs[10];
+    if (system >= 12) myInfoRefs12.current.value = cs[11] === '00' ? '' : cs[11];
     myInfoRef2.current.textContent = CalcSumMX();
-} // end of function onChangeS(event).
+  } // end of function onChangeS(event).
 
   function onChangeAuto(event) {
     //console.log(event);
@@ -2962,7 +3017,7 @@ function Maxima() {
       let sys = Number(system);
       //console.log(strCmb);
       let k;
-      if (strCmb.indexOf('00') === -1) {
+      if (strCmb.length === system && strCmb.indexOf('00') === -1) {
         blnDuplicate = Duplicate(strCmb, sys);
         if (! blnDuplicate) {
           if (as) {
