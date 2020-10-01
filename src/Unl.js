@@ -1,4 +1,4 @@
-// Unl.js keno mix-state 0009
+// Unl.js keno mix-state 0010
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -2675,6 +2675,10 @@ function Maxima() {
     else if (event.target.name.indexOf('n5') !== -1) {
       strPfx = 'n5';
       strCmb = c5;
+    }
+    else if (event.target.name.indexOf('n6') !== -1) {
+      strPfx = 'n6';
+      strCmb = c6;
     } // end of combination selection.
     if (event.target.name === strPfx + '1') {
       //console.log(event.target.name, strPfx + '1');
@@ -2684,6 +2688,7 @@ function Maxima() {
       else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
       else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
       else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '2') {
       //console.log(event.target.name, strPfx + '2');
@@ -2693,6 +2698,7 @@ function Maxima() {
       else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
       else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
       else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '3') {
      strCmb[2] = strN;
@@ -2701,7 +2707,8 @@ function Maxima() {
      else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
      else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
      else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
-   }
+     else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
+    }
     else if (event.target.name === strPfx + '4') {
       strCmb[3] = strN;
       if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
@@ -2709,6 +2716,7 @@ function Maxima() {
       else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
       else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
       else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '5') {
       strCmb[4] = strN;
@@ -2717,6 +2725,7 @@ function Maxima() {
       else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
       else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
       else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
     }
     else if (event.target.name === strPfx + '6') {
       strCmb[5] = strN;
@@ -2725,6 +2734,7 @@ function Maxima() {
       else if (strPfx === 'n3') c3 = strCmb; //   setStateC3(strCmb);
       else if (strPfx === 'n4') c4 = strCmb; //   setStateC4(strCmb);
       else if (strPfx === 'n5') c5 = strCmb; //   setStateC5(strCmb);
+      else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
     } // end of number in combination selection.
       //console.log(strN);
     //console.log(event.target.name); // e.g. "n11"
@@ -2765,7 +2775,7 @@ function Maxima() {
     else if (event.target.name === 'n64') myInfoRef64.current.value = strN === '00' ? '' : strN;
     else if (event.target.name === 'n65') myInfoRef65.current.value = strN === '00' ? '' : strN;
     //else if (event.target.name === 'n66') myInfoRef66.current.value = strN === '00' ? '' : strN;
-  myInfoRef2.current.textContent = CalcSumMX();
+    myInfoRef2.current.textContent = CalcSumMX();
   } // function onChange(event).
 
   function onChangeS(event) {
@@ -3118,7 +3128,7 @@ function Maxima() {
       }
     } // end of if (system_flag) {
     else {
-      for (let i = 1; i < 6; i++) {
+      for (let i = 1; i < 7; i++) {
         if (i === 1) {
           strCmb = c1;
           //console.log(strCmb);
@@ -3305,7 +3315,7 @@ function Maxima() {
     } // end of if (system_flag) {
     else {
       console.log('CalcSumMx cmbs:');
-      for (let i = 1; i < 6; i++) {
+      for (let i = 1; i < 7; i++) {
         if (i === 1) {
           strCmb = c1;
           console.log(strCmb);
