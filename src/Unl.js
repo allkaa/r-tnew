@@ -1,4 +1,4 @@
-// Unl.js keno mix-state 0010
+// Unl.js tr + keno mix-state 001
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -65,12 +65,28 @@ let c3 = [];
 let c4 = [];
 let c5 = [];
 let c6 = [];
+let c7 = [];
+let c8 = [];
+let c9 = [];
+let c10 = [];
 let a1 = false;
 let a2 = false;
 let a3 = false;
 let a4 = false;
 let a5 = false;
 let a6 = false;
+
+// Точний, Довільний, Точний+Довільний, Система
+let t1 = '';
+let t2 ='';
+let t3 = '';
+let t4 = '';
+let t5 = '';
+let t6 = '';
+let t7 = '';
+let t8 = '';
+let t9 = '';
+let t10 = '';
 
 let sysflg = false; // const [system_flag, setStateSystemFlag] = useState(false); <==== must be used  for rendering.
 let system = 0;
@@ -3593,18 +3609,653 @@ function Maxima() {
 } // end of function Maxima.
 
 function Tryika() {
-  let location = useLocation();
-  console.log('location:');
-  console.log(location);
-  let history = useHistory();
-  console.log('history:');
-  console.log(history.location.pathname);
-  console.log(history);
-  let dt = new Date();
-  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-  return <p className = "special">
-    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
-    </p>;
+
+  function onChangeDraws(event) {
+    //console.log(event.target.name);
+    const MaxNum = 6;
+    const MinNum = 1;
+    drawnum = Number(draws);
+    let strN = event.target.value;
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      draws = '1'; // setStateDraws('1');
+      drawnum = 1;
+      return;
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      drawnum = 1;
+      draws = '1'; // setStateDraws('1');
+      return;
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      drawnum = 1;
+      draws = '1'; // setStateDraws('1');
+      return;
+    }
+    draws = strN; // setStateDraws(strN);
+    drawnum = Number(strN);
+    myInfoRef2.current.textContent = CalcSumTr();
+  } // end of function onChangeDraws(event).
+
+  function onChangeStake(event) {
+    //console.log(event.target.name);
+    const MaxNum = 10;
+    const MinNum = 1;
+    stakenum = Number(stake);
+    let strN = event.target.value;
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      stake = '1'; // setStateStake('1');
+      stakenum = 1;
+      return;
+    }
+    if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      stake = '1'; // setStateStake('1');
+      stakenum = 1;
+      return;
+    }
+    if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      stake = '1'; // setStateStake('1');
+      stakenum = 1;
+      return;
+    }
+    stake = strN; // setStateStake(strN);
+    stakenum = Number(strN);
+    myInfoRef2.current.textContent = CalcSumTr();
+  } // end of function onChangeDraws(event).
+
+  function onChange(event) {
+    //console.log(event.target.name);
+    const MaxNum = 9;
+    const MinNum = 0;
+    let strN = event.target.value;
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log(nbrN);
+    if (Number.isNaN(nbrN)) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер не задан корректно.");
+      //return;
+      strN = '0';
+    }
+    else if (nbrN < MinNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер меньше " + MinNum);
+      //return;
+      strN = '0';
+    }
+    else if (nbrN > MaxNum) {
+      //event.preventDefault();
+      //alert("Ошибка! Номер больше " + MaxNum);
+      //return;
+      strN = '0';
+    }
+    else {
+      strN = nbrN.toString();
+    }
+    let strPfx;
+    let strCmb;
+    if (event.target.name.indexOf('n1') !== -1) {
+      strPfx = 'n1';
+      strCmb = c1;
+    }
+    else if (event.target.name.indexOf('n2') !== -1) {
+      strPfx = 'n2';
+      strCmb = c2;
+    }
+    else if (event.target.name.indexOf('n3') !== -1) {
+      strPfx = 'n3';
+      strCmb = c3;
+    }
+    else if (event.target.name.indexOf('n4') !== -1) {
+      strPfx = 'n4';
+      strCmb = c4;
+    }
+    else if (event.target.name.indexOf('n5') !== -1) {
+      strPfx = 'n5';
+      strCmb = c5;
+    }
+    else if (event.target.name.indexOf('n6') !== -1) {
+      strPfx = 'n6';
+      strCmb = c6;
+    }
+    else if (event.target.name.indexOf('n7') !== -1) {
+      strPfx = 'n7';
+      strCmb = c7;
+    }
+    else if (event.target.name.indexOf('n8') !== -1) {
+      strPfx = 'n8';
+      strCmb = c8;
+    }
+    else if (event.target.name.indexOf('n9') !== -1) {
+      strPfx = 'n9';
+      strCmb = c9;
+    }
+    else if (event.target.name.indexOf('nA') !== -1) {
+      strPfx = 'nA';
+      strCmb = c10;
+    } // end of combination selection.
+    if (event.target.name === strPfx + '1') {
+      //console.log(event.target.name, strPfx + '1');
+      strCmb[0] = strN;
+    }
+    else if (event.target.name === strPfx + '2') {
+      //console.log(event.target.name, strPfx + '2');
+      strCmb[1] = strN;
+    }
+    else if (event.target.name === strPfx + '3') {
+     strCmb[2] = strN;
+    } // end of number in combination selection.
+    if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
+    else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
+    else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
+    else if (strPfx === 'n4') c4 = strCmb; //  setStateC4(strCmb);
+    else if (strPfx === 'n5') c5 = strCmb; //  setStateC5(strCmb);
+    else if (strPfx === 'n6') c6 = strCmb; //  setStateC6(strCmb);
+    else if (strPfx === 'n7') c7 = strCmb; //  setStateC6(strCmb);
+    else if (strPfx === 'n8') c8 = strCmb; //  setStateC6(strCmb);
+    else if (strPfx === 'n9') c9 = strCmb; //  setStateC6(strCmb);
+    else if (strPfx === 'nA') c10 = strCmb; //  setStateC6(strCmb);
+   //console.log(strN);
+    //console.log(event.target.name); // e.g. "n11"
+    //console.log(strPfx);
+    if (event.target.name === 'n11') myInfoRef11.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n12') myInfoRef12.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n13') myInfoRef13.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n21') myInfoRef14.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n22') myInfoRef15.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n23') myInfoRef16.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n31') myInfoRef21.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n32') myInfoRef22.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n33') myInfoRef23.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n41') myInfoRef24.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n42') myInfoRef25.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n43') myInfoRef26.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n51') myInfoRef31.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n52') myInfoRef32.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n53') myInfoRef33.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n61') myInfoRef34.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n62') myInfoRef35.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n63') myInfoRef36.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n71') myInfoRef41.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n72') myInfoRef42.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n73') myInfoRef43.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n81') myInfoRef44.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n82') myInfoRef45.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n83') myInfoRef46.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n91') myInfoRef51.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n92') myInfoRef52.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'n93') myInfoRef53.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'nA1') myInfoRef54.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'nA2') myInfoRef55.current.value = strN === '00' ? '' : strN;
+    else if (event.target.name === 'nA3') myInfoRef56.current.value = strN === '00' ? '' : strN;
+    myInfoRef2.current.textContent = CalcSumTr();
+  } // function onChange(event).
+
+  function onChangeType(event) {
+    //console.log(event);
+    //console.log('typeof ' + typeof(event));
+    //console.log(event.target.name);
+    //let strA = event.target.value;
+    //console.log(strA);
+    //console.log('typeof ' + typeof(strA));
+    let strType = '';
+    if (event.target.value === 'Довільний') {
+      strType = 'B'; // Box
+    }
+    else if (event.target.value === 'Точний + Довільний') {
+      strType = 'A'; // All.
+    }
+    else if (event.target.value === 'Система') {
+      strType = 'Y'; // sYstem.
+    }
+    else {
+      strType = 'S' // Точний (Straight).
+    }
+    if (event.target.name === 't1') {
+      t1 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t2 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t3 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t4 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t5 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t6 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t7 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t8 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t9 = strType; //  setStateAuto1(bnlAuto);
+    }
+    else if (event.target.name === 't1') {
+      t10 = strType; //  setStateAuto1(bnlAuto);
+    }
+    myInfoRef2.current.textContent = CalcSumTr();
+  } // end of function onChangeType(event)
+
+  function handleSubmitTriyka(event) {
+    //console.log(event.search); // event.search e.g. '?q=6_1...';
+    //console.log(c1);
+    //console.log(c2);
+    //console.log(c3);
+    //console.log(c4);
+    //console.log(c5);
+    //console.log(c6);
+    //console.log(cs);
+    let strCmb;
+    let strPay = ''; // e.g. will later start as '6_1'
+    //console.log(draws);
+    //console.log(strPay);
+    for (let i = 1; i < 11; i++) {
+      if (i === 1) {
+        strCmb = c1;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t1;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 2) {
+        strCmb = c2;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t2;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 3) {
+        strCmb = c3;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t3;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 4) {
+        strCmb = c4;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t4;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 5) {
+        strCmb = c5;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t5;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 6) {
+        strCmb = c6;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t6;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 7) {
+        strCmb = c7;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t7;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 8) {
+        strCmb = c8;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t8;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 9) {
+        strCmb = c9;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t9;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+      if (i === 10) {
+        strCmb = c10;
+        //console.log(strCmb);
+        strPay = strPay + '_' + t10;
+        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+      }
+    } //end of (let i = 1; i < 7; i++).
+    //myInfoRef.current.textContent = 'Wait for fetch processing...';
+    myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
+    setStatePay('4_' + draws + '_' + stake + strPay);
+    /* e.g.
+    Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
+    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    */
+    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
+    //GetData('pay'); // if use Fetch directly from html page.
+  
+  } // end of function handleSubmitPay(event).
+
+  /*
+  function numStrValue(strNum, auto) {
+    return; 
+    //
+    if (!auto) return; 
+    //if (!auto && strNum !== '00') return strNum; 
+    //console.log(strNum);
+    let strRet;
+    if (strNum === '00') strRet = '';
+    else strRet = strNum;
+    return strRet;
+    //
+  }
+  */
+
+  function CalcSumTr() {
+    let strCmb;
+    let blnDuplicate = false;
+    cmbnum = 0;
+    console.log('CalcSumTr cmbs:');
+    for (let i = 1; i < 11; i++) {
+      if (i === 1) {
+        strCmb = c1;
+        console.log(strCmb);
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, 6);
+          if (! blnDuplicate) {
+            cmbnum = cmbnum + 1;
+          }
+        }
+      }
+      else if (i === 2) {
+        strCmb = c2;
+        console.log(strCmb);
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, 6);
+          if (! blnDuplicate) {
+            cmbnum = cmbnum + 1;
+          }
+        }
+      }
+      else if (i === 3) {
+        strCmb = c3;
+        console.log(strCmb);
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, 6);
+          if (! blnDuplicate) {
+            cmbnum = cmbnum + 1;
+          }
+        }
+      }
+      else if (i === 4) {
+        strCmb = c4;
+        console.log(strCmb);
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, 6);
+          if (! blnDuplicate) {
+            cmbnum = cmbnum + 1;
+          }
+        }
+      }
+      else if (i === 5) {
+        strCmb = c5;
+        console.log(strCmb);
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, 6);
+          if (! blnDuplicate) {
+            cmbnum = cmbnum + 1;
+          }
+        }
+      }
+      else if (i === 6) {
+        strCmb = c6;
+        console.log(strCmb);
+        if (strCmb.indexOf('00') === -1) {
+          blnDuplicate = Duplicate(strCmb, 6);
+          if (! blnDuplicate) {
+            cmbnum = cmbnum + 1;
+          }
+        }
+      }
+    } // end of for (let i = 1; i < 7; i++).
+  let tot = 0, ret = '';
+    console.log(drawnum, sysnum, cmbnum);
+    if (system_flag) {
+      tot = 15 * drawnum * sysnum * cmbnum;
+    }
+    else {
+      tot = 15 * drawnum * cmbnum;
+    }
+    ret = 'Стоимость билета: ' + tot.toString();
+    myInfoRef2.current.textContent = ret;
+    return ret;
+  } // end of function CalcSumSL().
+
+  // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
+  // &board1=01_11_15_24_33_52
+
+  const [pay, setStatePay] = useState('');
+  /*
+  const [draws, setStateDraws] = useState(1);
+  const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
+  const [c2, setStateC2] = useState(['00','00','00','00','00','00']);
+  const [c3, setStateC3] = useState(['00','00','00','00','00','00']);
+  const [c4, setStateC4] = useState(['00','00','00','00','00','00']);
+  const [c5, setStateC5] = useState(['00','00','00','00','00','00']);
+  const [c6, setStateC6] = useState(['00','00','00','00','00','00']);
+  const [a1, setStateAuto1] = useState(false);
+  const [a2, setStateAuto2] = useState(false);
+  const [a3, setStateAuto3] = useState(false);
+  const [a4, setStateAuto4] = useState(false);
+  const [a5, setStateAuto5] = useState(false);
+  const [a6, setStateAuto6] = useState(false);
+  */
+  /*
+  const [system_flag, setStateSystemFlag] = useState(false);
+  const [system, setStateSystem] = useState(7);
+  //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
+  const [cs, setStateCS] = useState([]);
+  const [as, setStateAutoS] = useState(false);
+  //const [sum, setStateSum] = useState(15);
+  */
+  c1 = ['00','00','00'];
+  c2 = ['00','00','00'];
+  c3 = ['00','00','00'];
+  c4 = ['00','00','00'];
+  c5 = ['00','00','00'];
+  c6 = ['00','00','00'];
+  c7 = ['00','00','00'];
+  c8 = ['00','00','00'];
+  c9 = ['00','00','00'];
+  c10 = ['00','00','00'];
+  /*
+  Type multiplier is:
+  1 for S (straight board), Точний
+  1 for B (box board), Довільний
+  2 for A (both straight and box board), Точний + Довільний
+  3 for Y Система (system) if there are two same digits in three digits number (e.g. 112),
+  6 for Y Система (system) if all digits in three digits number are unique (e.g. 123).
+  */
+
+  t1 = 'Точний';
+  t2 = 'Точний';
+  t3 = 'Точний';
+  t4 = 'Точний';
+  t5 = 'Точний';
+  t6 = 'Точний';
+  t7 = 'Точний';
+  t8 = 'Точний';
+  t9 = 'Точний';
+  t10 = 'Точний';
+
+  return (
+  <div>
+  <h3>Лото Трійка</h3>
+  <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
+  <div>
+    <p className="boardLabel">Розыгрышей</p>
+    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
+    onChange={onChangeDraws} required></input>
+    <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
+    <p className="boardLabel">Ставка</p>
+    <input type="number" name="stake" defaultValue={stake} className="numbs" min="1" max="10" step="1"
+    onChange={onChangeStake} required></input>
+    <p className="boardLabel">Если не задано, устанавливается ставка 1</p>
+    {/* <p className="boardLabel">Стоимость билета</p> */}
+    <p name="sum" className="boardLabel" ref={myInfoRef2}></p>
+  </div>
+
+
+  <h4>Задайте от 1 до 10 комбинаций номеров (от 000 до 999):</h4>
+  <div className = "boardSL">
+      <p className="boardLabel">1 комбинация</p>
+      <input ref={myInfoRef11} type="number" name="n11" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef12} type="number" name="n12" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef13} type="number" name="n13" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t1" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">2 комбинация</p>
+      <input ref={myInfoRef14} type="number" name="n21" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef15} type="number" name="n22" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef16} type="number" name="n23" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t2" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">3 комбинация</p>
+      <input ref={myInfoRef21} type="number" name="n31" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef22} type="number" name="n32" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef23} type="number" name="n33" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t3" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">4 комбинация</p>
+      <input ref={myInfoRef24} type="number" name="n41" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef25} type="number" name="n42" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef26} type="number" name="n43" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t4" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">5 комбинация</p>
+      <input ref={myInfoRef31} type="number" name="n51" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef32} type="number" name="n52" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef33} type="number" name="n53" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t5" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">6 комбинация</p>
+      <input ref={myInfoRef34} type="number" name="n61" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef35} type="number" name="n62" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef36} type="number" name="n63" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t6" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">7 комбинация</p>
+      <input ref={myInfoRef41} type="number" name="n71" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef42} type="number" name="n72" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef43} type="number" name="n73" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t7" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">8 комбинация</p>
+      <input ref={myInfoRef44} type="number" name="n81" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef45} type="number" name="n82" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef46} type="number" name="n83" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t8" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">9 комбинация</p>
+      <input ref={myInfoRef51} type="number" name="n91" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef52} type="number" name="n92" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef53} type="number" name="n93" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t9" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  <div className = "boardSL">
+      <p className="boardLabel">10 комбинация</p>
+      <input ref={myInfoRef54} type="number" name="nA1" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef55} type="number" name="nA2" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <input ref={myInfoRef56} type="number" name="nA3" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
+      <p className="boardLabel">Тип ставки</p>
+      <select name="t10" onChange={onChangeType}>
+        <option value='S'>Точний</option>
+        <option value='B'>Довільний</option>
+        <option value='A'>Точний + Довільний</option>
+        <option value='Y'>Система</option>
+      </select>
+  </div>
+  {/* <button type="button" onClick={CalcSumSL}>Рассчитать стоимость билета.</button> */}
+  <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitTriyka}>
+    <input hidden type="search" name="q"  defaultValue={pay} placeholder="123" aria-label="Buy ticket"></input>
+    <button type="submit">Купить билет</button>
+  </form>
+  </div>
+  )
 }
 
 //==================================================================================================================
