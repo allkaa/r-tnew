@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 002
+// Unl.js tr + keno mix-state 003
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -3711,46 +3711,58 @@ function Tryika() {
     }
     let strPfx;
     let strCmb;
+    let type;
     if (event.target.name.indexOf('n1') !== -1) {
       strPfx = 'n1';
       strCmb = c1;
+      type = t1;
     }
     else if (event.target.name.indexOf('n2') !== -1) {
       strPfx = 'n2';
       strCmb = c2;
+      type = t2;
     }
     else if (event.target.name.indexOf('n3') !== -1) {
       strPfx = 'n3';
       strCmb = c3;
+      type = t3;
     }
     else if (event.target.name.indexOf('n4') !== -1) {
       strPfx = 'n4';
       strCmb = c4;
+      type = t4;
     }
     else if (event.target.name.indexOf('n5') !== -1) {
       strPfx = 'n5';
       strCmb = c5;
+      type = t5;
     }
     else if (event.target.name.indexOf('n6') !== -1) {
       strPfx = 'n6';
       strCmb = c6;
+      type = t6;
     }
     else if (event.target.name.indexOf('n7') !== -1) {
       strPfx = 'n7';
       strCmb = c7;
+      type = t7;
     }
     else if (event.target.name.indexOf('n8') !== -1) {
       strPfx = 'n8';
       strCmb = c8;
+      type = t8;
     }
     else if (event.target.name.indexOf('n9') !== -1) {
       strPfx = 'n9';
       strCmb = c9;
+      type = t9;
     }
     else if (event.target.name.indexOf('nA') !== -1) {
       strPfx = 'nA';
       strCmb = c10;
+      type = t10;
     } // end of combination selection.
+
     if (event.target.name === strPfx + '1') {
       //console.log(event.target.name, strPfx + '1');
       strCmb[0] = strN;
@@ -3761,7 +3773,23 @@ function Tryika() {
     }
     else if (event.target.name === strPfx + '3') {
      strCmb[2] = strN;
-    } // end of number in combination selection.
+    }
+
+    if (strCmb.indexOf('10') === -1) {
+      if (cmbPriceCalc(strCmb,type) === 0) {
+        strN = '10';
+        if (event.target.name === strPfx + '1') {
+          strCmb[0] = strN;
+        }
+        else if (event.target.name === strPfx + '2') {
+          strCmb[1] = strN;
+        }
+        else if (event.target.name === strPfx + '3') {
+         strCmb[2] = strN;
+        }
+      }
+    }
+
     if (strPfx === 'n1') c1 = strCmb; //  setStateC1(strCmb);
     else if (strPfx === 'n2') c2 = strCmb; //  setStateC2(strCmb);
     else if (strPfx === 'n3') c3 = strCmb; //  setStateC3(strCmb);
@@ -3816,6 +3844,7 @@ function Tryika() {
     //console.log(strA);
     //console.log('typeof ' + typeof(strA));
     let strType = '';
+    let strCmb;
     if (event.target.value === 'Довільний') {
       strType = 'B'; // Box
     }
@@ -3829,34 +3858,124 @@ function Tryika() {
       strType = 'S' // Точний (Straight).
     }
     if (event.target.name === 't1') {
-      t1 = strType; //  setStateAuto1(bnlAuto);
+      strCmb = c1;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t1 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t2 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't2') {
+      strCmb = c2;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t2 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t3 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't3') {
+      strCmb = c3;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t3 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t4 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't4') {
+      strCmb = c4;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t4 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t5 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't5') {
+      strCmb = c5;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t5 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t6 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't6') {
+      strCmb = c6;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t6 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t7 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't7') {
+      strCmb = c7;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t7 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t8 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't8') {
+      strCmb = c8;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t8 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t9 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't9') {
+      strCmb = c9;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t9 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
-    else if (event.target.name === 't1') {
-      t10 = strType; //  setStateAuto1(bnlAuto);
+    else if (event.target.name === 't10') {
+      strCmb = c10;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb,strType) !== 0) {
+          t10 = strType; //  setStateAuto1(bnlAuto);
+        }
+        else {
+          event.target.value = 'Точний';
+          strType = 'S' // Точний (Straight).
+        }
+      }
     }
     myInfoRef2.current.textContent = CalcSumTr();
   } // end of function onChangeType(event)
@@ -3991,101 +4110,91 @@ function Tryika() {
   function CalcSumTr() {
     let strCmb;
     let cmbprice = 0;
-    let nums = 0;
     console.log('CalcSumTr cmbs:');
     for (let i = 1; i < 11; i++) {
       if (i === 1) {
         strCmb = c1;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-          nums = uniqnums(strCmb);
-          if (t1 === 'S') {
-            cmbprice = cmbprice + 3;
-          }
-          else if (t1 === 'B') {
-            cmbprice = cmbprice + 3;
-          }
-          else if (t1 === 'A') {
-            cmbprice = cmbprice + 6;
-          }
-          else if (t1 === 'Y') {
-            if (nums === 2) cmbprice = cmbprice + 9;
-            else cmbprice = cmbprice + 18;
-          }
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t1);
       }
       else if (i === 2) {
         strCmb = c2;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-          cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t2);
       }
       else if (i === 3) {
         strCmb = c3;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-          cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t3);
       }
       else if (i === 4) {
         strCmb = c4;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-          cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t4);
       }
       else if (i === 5) {
         strCmb = c5;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-          cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t5);
       }
       else if (i === 6) {
         strCmb = c6;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-            cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t6);
       }
       else if (i === 7) {
         strCmb = c7;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-            cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t7);
       }
       else if (i === 8) {
         strCmb = c8;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-            cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t8);
       }
       else if (i === 9) {
         strCmb = c9;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-            cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t9);
       }
       else if (i === 10) {
         strCmb = c10;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
-            cmbprice = cmbprice + 1;
-        }
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t10);
       }
     } // end of for (let i = 1; i < 7; i++).
     let tot = 0, ret = '';
     console.log(drawnum, stakenum, cmbprice);
-    tot = 3 * drawnum * stakenum * cmbprice;
+    tot = drawnum * stakenum * cmbprice;
     ret = 'Стоимость билета: ' + tot.toString();
     myInfoRef2.current.textContent = ret;
     return ret;
   } // end of function CalcSumSL().
 
+  function cmbPriceCalc(cmb, typ) {
+    let nums = 0;
+    let cmbprice = 0;
+    nums = uniqnums(cmb);
+    console.log('nums=' + nums);
+    if (typ === 'S') {
+      cmbprice = cmbprice + 3;
+    }
+    else if (typ === 'B') {
+      if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 3;
+      else cmbprice = 0
+    }
+    else if (typ === 'A') {
+      if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 6;
+      else cmbprice = 0
+    }
+    else if (typ === 'Y') {
+      if (nums === 2) cmbprice = cmbprice + 9;
+      else if (nums === 3) cmbprice = cmbprice + 18;
+      else cmbprice = 0
+    }
+    return cmbprice;
+  }
+  
   function uniqnums(cmb) {
     let nums = 1;
     if (cmb[0] !== cmb[1]) nums = nums + 1;
@@ -4093,7 +4202,7 @@ function Tryika() {
     if ((nums > 1) && (cmb[1] === cmb[2])) nums = nums - 1;
     return nums;
   }
-
+  
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
 
