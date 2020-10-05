@@ -2,6 +2,7 @@
 
 console.log('\n<================================ begin of test ==============================================>');
 
+/*
 let strCmb=['09','08','08','06','05','04'];
 let k, j, blnDuplicate;
 if (strCmb.indexOf('00') !== -1) console.log('Ошибка! Нет корректных комбинаций.');
@@ -20,9 +21,57 @@ else {
     if (blnDuplicate) break;
   }
 }
+*/
+
+let c, t1;
+console.log('Y')
+t1 = 'Y';
+c = ['1','2','10']
+console.log(cmbPriceCalc(c, t1));
+c = ['1','1','2']
+console.log(cmbPriceCalc(c, t1));
+c = ['1','2','2', 'S']
+console.log(cmbPriceCalc(c, t1));
+c = ['1','2','1']
+console.log(cmbPriceCalc(c, t1));
+c = ['1','1','1']
+console.log(cmbPriceCalc(c, t1));
+
 
 console.log('\n<================================ end of test ==============================================>');
 return;
+
+function cmbPriceCalc(cmb, typ) {
+  let nums = 0;
+  let cmbprice = 0;
+  nums = uniqnums(cmb);
+  console.log('nums=' + nums);
+  if (typ === 'S') {
+    cmbprice = cmbprice + 3;
+  }
+  else if (typ === 'B') {
+    if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 3;
+    else cmbprice = 0
+  }
+  else if (typ === 'A') {
+    if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 6;
+    else cmbprice = 0
+  }
+  else if (typ === 'Y') {
+    if (nums === 2) cmbprice = cmbprice + 9;
+    else if (nums === 3) cmbprice = cmbprice + 18;
+    else cmbprice = 0
+  }
+  return cmbprice;
+}
+
+function uniqnums(cmb) {
+  let nums = 1;
+  if (cmb[0] !== cmb[1]) nums = nums + 1;
+  if (cmb[0] !== cmb[2]) nums = nums + 1;
+  if ((nums > 1) && (cmb[1] === cmb[2])) nums = nums - 1;
+  return nums;
+}
 
 /*
 let numArr = [0,0,0,0,0,0];

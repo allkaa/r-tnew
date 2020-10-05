@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 001
+// Unl.js tr + keno mix-state 002
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -3692,19 +3692,19 @@ function Tryika() {
       //event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
       //return;
-      strN = '0';
+      strN = '10';
     }
     else if (nbrN < MinNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер меньше " + MinNum);
       //return;
-      strN = '0';
+      strN = '10';
     }
     else if (nbrN > MaxNum) {
       //event.preventDefault();
       //alert("Ошибка! Номер больше " + MaxNum);
       //return;
-      strN = '0';
+      strN = '10';
     }
     else {
       strN = nbrN.toString();
@@ -3775,36 +3775,36 @@ function Tryika() {
    //console.log(strN);
     //console.log(event.target.name); // e.g. "n11"
     //console.log(strPfx);
-    if (event.target.name === 'n11') myInfoRef11.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n12') myInfoRef12.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n13') myInfoRef13.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n21') myInfoRef14.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n22') myInfoRef15.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n23') myInfoRef16.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n31') myInfoRef21.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n32') myInfoRef22.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n33') myInfoRef23.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n41') myInfoRef24.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n42') myInfoRef25.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n43') myInfoRef26.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n51') myInfoRef31.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n52') myInfoRef32.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n53') myInfoRef33.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n61') myInfoRef34.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n62') myInfoRef35.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n63') myInfoRef36.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n71') myInfoRef41.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n72') myInfoRef42.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n73') myInfoRef43.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n81') myInfoRef44.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n82') myInfoRef45.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n83') myInfoRef46.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n91') myInfoRef51.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n92') myInfoRef52.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'n93') myInfoRef53.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'nA1') myInfoRef54.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'nA2') myInfoRef55.current.value = strN === '00' ? '' : strN;
-    else if (event.target.name === 'nA3') myInfoRef56.current.value = strN === '00' ? '' : strN;
+    if (event.target.name === 'n11') myInfoRef11.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n12') myInfoRef12.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n13') myInfoRef13.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n21') myInfoRef14.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n22') myInfoRef15.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n23') myInfoRef16.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n31') myInfoRef21.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n32') myInfoRef22.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n33') myInfoRef23.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n41') myInfoRef24.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n42') myInfoRef25.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n43') myInfoRef26.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n51') myInfoRef31.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n52') myInfoRef32.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n53') myInfoRef33.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n61') myInfoRef34.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n62') myInfoRef35.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n63') myInfoRef36.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n71') myInfoRef41.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n72') myInfoRef42.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n73') myInfoRef43.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n81') myInfoRef44.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n82') myInfoRef45.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n83') myInfoRef46.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n91') myInfoRef51.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n92') myInfoRef52.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'n93') myInfoRef53.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'nA1') myInfoRef54.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'nA2') myInfoRef55.current.value = strN === '10' ? '' : strN;
+    else if (event.target.name === 'nA3') myInfoRef56.current.value = strN === '10' ? '' : strN;
     myInfoRef2.current.textContent = CalcSumTr();
   } // function onChange(event).
 
@@ -3878,64 +3878,89 @@ function Tryika() {
       if (i === 1) {
         strCmb = c1;
         //console.log(strCmb);
-        strPay = strPay + '_' + t1;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t1;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 2) {
         strCmb = c2;
         //console.log(strCmb);
-        strPay = strPay + '_' + t2;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t2;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 3) {
         strCmb = c3;
         //console.log(strCmb);
-        strPay = strPay + '_' + t3;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t3;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 4) {
         strCmb = c4;
         //console.log(strCmb);
-        strPay = strPay + '_' + t4;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t4;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 5) {
         strCmb = c5;
         //console.log(strCmb);
-        strPay = strPay + '_' + t5;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t5;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 6) {
         strCmb = c6;
         //console.log(strCmb);
-        strPay = strPay + '_' + t6;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t6;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 7) {
         strCmb = c7;
         //console.log(strCmb);
-        strPay = strPay + '_' + t7;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t7;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 8) {
         strCmb = c8;
         //console.log(strCmb);
-        strPay = strPay + '_' + t8;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t8;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 9) {
         strCmb = c9;
         //console.log(strCmb);
-        strPay = strPay + '_' + t9;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t9;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
       if (i === 10) {
         strCmb = c10;
         //console.log(strCmb);
-        strPay = strPay + '_' + t10;
-        strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        if (strCmb.indexOf('10') === -1) {
+          strPay = strPay + '_' + t10;
+          strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
+        }
       }
     } //end of (let i = 1; i < 7; i++).
+    if (strPay === '') {
+      alert('Ошибка! Нет корректных комбинаций.');
+      event.preventDefault();
+      return;
+    }
     //myInfoRef.current.textContent = 'Wait for fetch processing...';
     myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
     setStatePay('4_' + draws + '_' + stake + strPay);
@@ -3965,83 +3990,109 @@ function Tryika() {
 
   function CalcSumTr() {
     let strCmb;
-    let blnDuplicate = false;
-    cmbnum = 0;
+    let cmbprice = 0;
+    let nums = 0;
     console.log('CalcSumTr cmbs:');
     for (let i = 1; i < 11; i++) {
       if (i === 1) {
         strCmb = c1;
         console.log(strCmb);
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, 6);
-          if (! blnDuplicate) {
-            cmbnum = cmbnum + 1;
+        if (strCmb.indexOf('10') === -1) {
+          nums = uniqnums(strCmb);
+          if (t1 === 'S') {
+            cmbprice = cmbprice + 3;
+          }
+          else if (t1 === 'B') {
+            cmbprice = cmbprice + 3;
+          }
+          else if (t1 === 'A') {
+            cmbprice = cmbprice + 6;
+          }
+          else if (t1 === 'Y') {
+            if (nums === 2) cmbprice = cmbprice + 9;
+            else cmbprice = cmbprice + 18;
           }
         }
       }
       else if (i === 2) {
         strCmb = c2;
         console.log(strCmb);
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, 6);
-          if (! blnDuplicate) {
-            cmbnum = cmbnum + 1;
-          }
+        if (strCmb.indexOf('10') === -1) {
+          cmbprice = cmbprice + 1;
         }
       }
       else if (i === 3) {
         strCmb = c3;
         console.log(strCmb);
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, 6);
-          if (! blnDuplicate) {
-            cmbnum = cmbnum + 1;
-          }
+        if (strCmb.indexOf('10') === -1) {
+          cmbprice = cmbprice + 1;
         }
       }
       else if (i === 4) {
         strCmb = c4;
         console.log(strCmb);
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, 6);
-          if (! blnDuplicate) {
-            cmbnum = cmbnum + 1;
-          }
+        if (strCmb.indexOf('10') === -1) {
+          cmbprice = cmbprice + 1;
         }
       }
       else if (i === 5) {
         strCmb = c5;
         console.log(strCmb);
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, 6);
-          if (! blnDuplicate) {
-            cmbnum = cmbnum + 1;
-          }
+        if (strCmb.indexOf('10') === -1) {
+          cmbprice = cmbprice + 1;
         }
       }
       else if (i === 6) {
         strCmb = c6;
         console.log(strCmb);
-        if (strCmb.indexOf('00') === -1) {
-          blnDuplicate = Duplicate(strCmb, 6);
-          if (! blnDuplicate) {
-            cmbnum = cmbnum + 1;
-          }
+        if (strCmb.indexOf('10') === -1) {
+            cmbprice = cmbprice + 1;
+        }
+      }
+      else if (i === 7) {
+        strCmb = c7;
+        console.log(strCmb);
+        if (strCmb.indexOf('10') === -1) {
+            cmbprice = cmbprice + 1;
+        }
+      }
+      else if (i === 8) {
+        strCmb = c8;
+        console.log(strCmb);
+        if (strCmb.indexOf('10') === -1) {
+            cmbprice = cmbprice + 1;
+        }
+      }
+      else if (i === 9) {
+        strCmb = c9;
+        console.log(strCmb);
+        if (strCmb.indexOf('10') === -1) {
+            cmbprice = cmbprice + 1;
+        }
+      }
+      else if (i === 10) {
+        strCmb = c10;
+        console.log(strCmb);
+        if (strCmb.indexOf('10') === -1) {
+            cmbprice = cmbprice + 1;
         }
       }
     } // end of for (let i = 1; i < 7; i++).
-  let tot = 0, ret = '';
-    console.log(drawnum, sysnum, cmbnum);
-    if (system_flag) {
-      tot = 15 * drawnum * sysnum * cmbnum;
-    }
-    else {
-      tot = 15 * drawnum * cmbnum;
-    }
+    let tot = 0, ret = '';
+    console.log(drawnum, stakenum, cmbprice);
+    tot = 3 * drawnum * stakenum * cmbprice;
     ret = 'Стоимость билета: ' + tot.toString();
     myInfoRef2.current.textContent = ret;
     return ret;
   } // end of function CalcSumSL().
+
+  function uniqnums(cmb) {
+    let nums = 1;
+    if (cmb[0] !== cmb[1]) nums = nums + 1;
+    if (cmb[0] !== cmb[2]) nums = nums + 1;
+    if ((nums > 1) && (cmb[1] === cmb[2])) nums = nums - 1;
+    return nums;
+  }
 
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
@@ -4070,16 +4121,16 @@ function Tryika() {
   const [as, setStateAutoS] = useState(false);
   //const [sum, setStateSum] = useState(15);
   */
-  c1 = ['00','00','00'];
-  c2 = ['00','00','00'];
-  c3 = ['00','00','00'];
-  c4 = ['00','00','00'];
-  c5 = ['00','00','00'];
-  c6 = ['00','00','00'];
-  c7 = ['00','00','00'];
-  c8 = ['00','00','00'];
-  c9 = ['00','00','00'];
-  c10 = ['00','00','00'];
+  c1 = ['10','10','10'];
+  c2 = ['10','10','10'];
+  c3 = ['10','10','10'];
+  c4 = ['10','10','10'];
+  c5 = ['10','10','10'];
+  c6 = ['10','10','10'];
+  c7 = ['10','10','10'];
+  c8 = ['10','10','10'];
+  c9 = ['10','10','10'];
+  c10 = ['10','10','10'];
   /*
   Type multiplier is:
   1 for S (straight board), Точний
