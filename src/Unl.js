@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 003
+// Unl.js tr + keno mix-state 004
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -99,8 +99,8 @@ let draws = '1';
 let drawnum = 1;
 let sysnum = 0;
 let cmbnum = 0;
-let stake = '0';
-let stakenum = 0;
+let stake = '1';
+let stakenum = 1;
 
 let myInfoRef11 = React.createRef();
 let myInfoRef12 = React.createRef();
@@ -3775,8 +3775,16 @@ function Tryika() {
      strCmb[2] = strN;
     }
 
+    console.log('TrOnChange strCmb:');
+    console.log(strCmb);
+    console.log('TrOnChange type:');
+    console.log(type);
     if (strCmb.indexOf('10') === -1) {
-      if (cmbPriceCalc(strCmb,type) === 0) {
+      console.log('TrOnChange strCmb:');
+      console.log(strCmb);
+      console.log('TrOnChange type:');
+      console.log(type);
+      if (cmbPriceCalc(strCmb, type) === 0) {
         strN = '10';
         if (event.target.name === strPfx + '1') {
           strCmb[0] = strN;
@@ -3844,138 +3852,73 @@ function Tryika() {
     //console.log(strA);
     //console.log('typeof ' + typeof(strA));
     let strType = '';
-    let strCmb;
-    if (event.target.value === 'Довільний') {
-      strType = 'B'; // Box
+    //let strCmb;
+    console.log(event.target);
+    console.log(event.target.value);
+    if (event.target.value === 'B') { // 'Довільний'
+      strType = 'Довільний'; // Box
     }
-    else if (event.target.value === 'Точний + Довільний') {
-      strType = 'A'; // All.
+    else if (event.target.value === 'A') { // 'Точний + Довільний'
+      strType = 'Точний + Довільний'; // All.
     }
-    else if (event.target.value === 'Система') {
-      strType = 'Y'; // sYstem.
+    else if (event.target.value === 'Y') { // 'Система'
+      strType = 'Система'; // sYstem.
     }
     else {
-      strType = 'S' // Точний (Straight).
+      strType = 'Точний' // Точний (Straight).
     }
     if (event.target.name === 't1') {
-      strCmb = c1;
+      //strCmb = c1;
+      t1 = strType;
+      //console.log(strCmb);
+      //console.log(strType);
+      /*
       if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
+        if (cmbPriceCalc(strCmb, strType) !== 0) {
+          //console.log('price not zero');
           t1 = strType; //  setStateAuto1(bnlAuto);
         }
         else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
+          //console.log('price zero');
         }
       }
+      */
     }
     else if (event.target.name === 't2') {
-      strCmb = c2;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t2 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c2;
+      t2 = strType;
     }
     else if (event.target.name === 't3') {
-      strCmb = c3;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t3 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c3;
+      t3 = strType;
     }
     else if (event.target.name === 't4') {
-      strCmb = c4;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t4 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c4;
+      t4 = strType;
     }
     else if (event.target.name === 't5') {
-      strCmb = c5;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t5 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c5;
+      t5 = strType;
     }
     else if (event.target.name === 't6') {
-      strCmb = c6;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t6 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c6;
+      t6 = strType;
     }
     else if (event.target.name === 't7') {
-      strCmb = c7;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t7 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c7;
+      t7 = strType;
     }
     else if (event.target.name === 't8') {
-      strCmb = c8;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t8 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c8;
+      t8 = strType;
     }
     else if (event.target.name === 't9') {
-      strCmb = c9;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t9 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c9;
+      t9 = strType;
     }
     else if (event.target.name === 't10') {
-      strCmb = c10;
-      if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb,strType) !== 0) {
-          t10 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          event.target.value = 'Точний';
-          strType = 'S' // Точний (Straight).
-        }
-      }
+      //strCmb = c10;
+      t10 = strType;
     }
     myInfoRef2.current.textContent = CalcSumTr();
   } // end of function onChangeType(event)
@@ -3998,7 +3941,7 @@ function Tryika() {
         strCmb = c1;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t1;
+          strPay = strPay + '_' + typeValue(t1);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4006,7 +3949,7 @@ function Tryika() {
         strCmb = c2;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t2;
+          strPay = strPay + '_' + typeValue(t2);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4014,7 +3957,7 @@ function Tryika() {
         strCmb = c3;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t3;
+          strPay = strPay + '_' + typeValue(t3);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4022,7 +3965,7 @@ function Tryika() {
         strCmb = c4;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t4;
+          strPay = strPay + '_' + typeValue(t4);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4030,7 +3973,7 @@ function Tryika() {
         strCmb = c5;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t5;
+          strPay = strPay + '_' + typeValue(t5);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4038,7 +3981,7 @@ function Tryika() {
         strCmb = c6;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t6;
+          strPay = strPay + '_' + typeValue(t6);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4046,7 +3989,7 @@ function Tryika() {
         strCmb = c7;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t7;
+          strPay = strPay + '_' + typeValue(t7);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4054,7 +3997,7 @@ function Tryika() {
         strCmb = c8;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t8;
+          strPay = strPay + '_' + typeValue(t8);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4062,7 +4005,7 @@ function Tryika() {
         strCmb = c9;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t9;
+          strPay = strPay + '_' + typeValue(t9);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4070,7 +4013,7 @@ function Tryika() {
         strCmb = c10;
         //console.log(strCmb);
         if (strCmb.indexOf('10') === -1) {
-          strPay = strPay + '_' + t10;
+          strPay = strPay + '_' + typeValue(t10);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
@@ -4091,6 +4034,23 @@ function Tryika() {
     //GetData('pay'); // if use Fetch directly from html page.
   
   } // end of function handleSubmitPay(event).
+
+  function typeValue(typename) {
+    let strValue;
+    if (typename === 'Довільний') { // 'Довільний'
+      strValue = 'B'; // Box
+    }
+    else if (typename  === 'Точний + Довільний') { // 'Точний + Довільний'
+      strValue = 'A'; // All.
+    }
+    else if (typename  === 'Система') { // 'Система'
+      strValue = 'Y'; // sYstem.
+    }
+    else {
+      strValue = 'S' // Точний (Straight).
+    }
+    return strValue;
+  }
 
   /*
   function numStrValue(strNum, auto) {
@@ -4115,52 +4075,52 @@ function Tryika() {
       if (i === 1) {
         strCmb = c1;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t1);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t1);
       }
       else if (i === 2) {
         strCmb = c2;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t2);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t2);
       }
       else if (i === 3) {
         strCmb = c3;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t3);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t3);
       }
       else if (i === 4) {
         strCmb = c4;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t4);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t4);
       }
       else if (i === 5) {
         strCmb = c5;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t5);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t5);
       }
       else if (i === 6) {
         strCmb = c6;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t6);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t6);
       }
       else if (i === 7) {
         strCmb = c7;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t7);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t7);
       }
       else if (i === 8) {
         strCmb = c8;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t8);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t8);
       }
       else if (i === 9) {
         strCmb = c9;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t9);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t9);
       }
       else if (i === 10) {
         strCmb = c10;
         console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) cmbprice = cmbPriceCalc(strCmb, t10);
+        if (strCmb.indexOf('10') === -1) cmbprice = cmbprice + cmbPriceCalc(strCmb, t10);
       }
     } // end of for (let i = 1; i < 7; i++).
     let tot = 0, ret = '';
@@ -4175,23 +4135,24 @@ function Tryika() {
     let nums = 0;
     let cmbprice = 0;
     nums = uniqnums(cmb);
-    console.log('nums=' + nums);
-    if (typ === 'S') {
+    console.log('cmbPriceCalc nums=' + nums);
+    if (typ === 'Точний') {
       cmbprice = cmbprice + 3;
     }
-    else if (typ === 'B') {
+    else if (typ === 'Довільний') {
       if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 3;
       else cmbprice = 0
     }
-    else if (typ === 'A') {
+    else if (typ === 'Точний + Довільний') {
       if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 6;
       else cmbprice = 0
     }
-    else if (typ === 'Y') {
+    else if (typ === 'Система') {
       if (nums === 2) cmbprice = cmbprice + 9;
       else if (nums === 3) cmbprice = cmbprice + 18;
       else cmbprice = 0
     }
+    console.log('cmbPriceCalc cmbprice=' + cmbprice);
     return cmbprice;
   }
   
@@ -4280,7 +4241,7 @@ function Tryika() {
 
   <h4>Задайте от 1 до 10 комбинаций номеров (от 000 до 999):</h4>
   <div className = "boardSL">
-      <p className="boardLabel">1 комбинация</p>
+      <p className="boardLabel">Комбинация 01</p>
       <input ref={myInfoRef11} type="number" name="n11" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef12} type="number" name="n12" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef13} type="number" name="n13" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4293,7 +4254,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">2 комбинация</p>
+      <p className="boardLabel">Комбинация 02</p>
       <input ref={myInfoRef14} type="number" name="n21" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef15} type="number" name="n22" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef16} type="number" name="n23" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4306,7 +4267,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">3 комбинация</p>
+      <p className="boardLabel">Комбинация 03</p>
       <input ref={myInfoRef21} type="number" name="n31" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef22} type="number" name="n32" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef23} type="number" name="n33" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4319,7 +4280,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">4 комбинация</p>
+      <p className="boardLabel">Комбинация 04</p>
       <input ref={myInfoRef24} type="number" name="n41" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef25} type="number" name="n42" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef26} type="number" name="n43" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4332,7 +4293,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">5 комбинация</p>
+      <p className="boardLabel">Комбинация 05</p>
       <input ref={myInfoRef31} type="number" name="n51" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef32} type="number" name="n52" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef33} type="number" name="n53" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4345,7 +4306,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">6 комбинация</p>
+      <p className="boardLabel">Комбинация 06</p>
       <input ref={myInfoRef34} type="number" name="n61" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef35} type="number" name="n62" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef36} type="number" name="n63" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4358,7 +4319,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">7 комбинация</p>
+      <p className="boardLabel">Комбинация 07</p>
       <input ref={myInfoRef41} type="number" name="n71" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef42} type="number" name="n72" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef43} type="number" name="n73" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4371,7 +4332,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">8 комбинация</p>
+      <p className="boardLabel">Комбинация 08</p>
       <input ref={myInfoRef44} type="number" name="n81" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef45} type="number" name="n82" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef46} type="number" name="n83" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4384,7 +4345,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">9 комбинация</p>
+      <p className="boardLabel">Комбинация 09</p>
       <input ref={myInfoRef51} type="number" name="n91" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef52} type="number" name="n92" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef53} type="number" name="n93" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
@@ -4397,7 +4358,7 @@ function Tryika() {
       </select>
   </div>
   <div className = "boardSL">
-      <p className="boardLabel">10 комбинация</p>
+      <p className="boardLabel">Комбинация 10</p>
       <input ref={myInfoRef54} type="number" name="nA1" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef55} type="number" name="nA2" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
       <input ref={myInfoRef56} type="number" name="nA3" className="numbs" min="0" max="9" step="1" onChange={onChange}></input>
