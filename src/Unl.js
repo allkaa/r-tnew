@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 004
+// Unl.js tr + keno mix-state 005
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -3785,6 +3785,8 @@ function Tryika() {
       console.log('TrOnChange type:');
       console.log(type);
       if (cmbPriceCalc(strCmb, type) === 0) {
+        alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        /*
         strN = '10';
         if (event.target.name === strPfx + '1') {
           strCmb[0] = strN;
@@ -3795,6 +3797,7 @@ function Tryika() {
         else if (event.target.name === strPfx + '3') {
          strCmb[2] = strN;
         }
+        */
       }
     }
 
@@ -3852,7 +3855,7 @@ function Tryika() {
     //console.log(strA);
     //console.log('typeof ' + typeof(strA));
     let strType = '';
-    //let strCmb;
+    let strCmb;
     console.log(event.target);
     console.log(event.target.value);
     if (event.target.value === 'B') { // 'Довільний'
@@ -3868,57 +3871,94 @@ function Tryika() {
       strType = 'Точний' // Точний (Straight).
     }
     if (event.target.name === 't1') {
-      //strCmb = c1;
+      strCmb = c1;
       t1 = strType;
-      //console.log(strCmb);
-      //console.log(strType);
-      /*
       if (strCmb.indexOf('10') === -1) {
-        if (cmbPriceCalc(strCmb, strType) !== 0) {
-          //console.log('price not zero');
-          t1 = strType; //  setStateAuto1(bnlAuto);
-        }
-        else {
-          //console.log('price zero');
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
         }
       }
-      */
     }
     else if (event.target.name === 't2') {
-      //strCmb = c2;
+      strCmb = c2;
       t2 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't3') {
-      //strCmb = c3;
+      strCmb = c3;
       t3 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't4') {
-      //strCmb = c4;
+      strCmb = c4;
       t4 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't5') {
-      //strCmb = c5;
+      strCmb = c5;
       t5 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't6') {
-      //strCmb = c6;
+      strCmb = c6;
       t6 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't7') {
-      //strCmb = c7;
+      strCmb = c7;
       t7 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't8') {
-      //strCmb = c8;
+      strCmb = c8;
       t8 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't9') {
-      //strCmb = c9;
+      strCmb = c9;
       t9 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     else if (event.target.name === 't10') {
-      //strCmb = c10;
+      strCmb = c10;
       t10 = strType;
+      if (strCmb.indexOf('10') === -1) {
+        if (cmbPriceCalc(strCmb, strType) === 0) {
+          alert("Ошибка! Три одинаковых цифрры возможны только для типа Точний, комбинация не будет принята сервером.");
+        }
+      }
     }
     myInfoRef2.current.textContent = CalcSumTr();
   } // end of function onChangeType(event)
@@ -3932,87 +3972,88 @@ function Tryika() {
     //console.log(c5);
     //console.log(c6);
     //console.log(cs);
-    let strCmb;
+    let strCmb, type;
     let strPay = ''; // e.g. will later start as '6_1'
     //console.log(draws);
     //console.log(strPay);
+    //if (cmbPriceCalc(strCmb, type) !== 0) {
     for (let i = 1; i < 11; i++) {
       if (i === 1) {
         strCmb = c1;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t1;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t1);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 2) {
         strCmb = c2;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t2;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t2);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 3) {
         strCmb = c3;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t3;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t3);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 4) {
         strCmb = c4;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t4;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t4);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 5) {
         strCmb = c5;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t5;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t5);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 6) {
         strCmb = c6;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t6;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t6);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 7) {
         strCmb = c7;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t7;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t7);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 8) {
         strCmb = c8;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t8;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t8);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 9) {
         strCmb = c9;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t9;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t9);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
       }
       if (i === 10) {
         strCmb = c10;
-        //console.log(strCmb);
-        if (strCmb.indexOf('10') === -1) {
+        type = t10;
+        if (cmbPriceCalc(strCmb, type) !== 0) {
           strPay = strPay + '_' + typeValue(t10);
           strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2];
         }
@@ -4136,21 +4177,23 @@ function Tryika() {
     let cmbprice = 0;
     nums = uniqnums(cmb);
     console.log('cmbPriceCalc nums=' + nums);
-    if (typ === 'Точний') {
-      cmbprice = cmbprice + 3;
-    }
-    else if (typ === 'Довільний') {
-      if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 3;
-      else cmbprice = 0
-    }
-    else if (typ === 'Точний + Довільний') {
-      if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 6;
-      else cmbprice = 0
-    }
-    else if (typ === 'Система') {
-      if (nums === 2) cmbprice = cmbprice + 9;
-      else if (nums === 3) cmbprice = cmbprice + 18;
-      else cmbprice = 0
+    if (cmb.indexOf('10') === -1) {
+      if (typ === 'Точний') {
+        cmbprice = cmbprice + 3;
+      }
+      else if (typ === 'Довільний') {
+        if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 3;
+        else cmbprice = 0
+      }
+      else if (typ === 'Точний + Довільний') {
+        if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 6;
+        else cmbprice = 0
+      }
+      else if (typ === 'Система') {
+        if (nums === 2) cmbprice = cmbprice + 9;
+        else if (nums === 3) cmbprice = cmbprice + 18;
+        else cmbprice = 0
+      }
     }
     console.log('cmbPriceCalc cmbprice=' + cmbprice);
     return cmbprice;
