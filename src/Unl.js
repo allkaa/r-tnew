@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 005
+// Unl.js tr + keno mix-state 006
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -3612,18 +3612,19 @@ function Tryika() {
 
   function onChangeDraws(event) {
     //console.log(event.target.name);
-    const MaxNum = 6;
+    const MaxNum = 7;
     const MinNum = 1;
     drawnum = Number(draws);
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
-    //console.log(nbrN);
+    console.log(nbrN);
     if (Number.isNaN(nbrN)) {
       //event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
       draws = '1'; // setStateDraws('1');
       drawnum = 1;
+      myInfoRef2.current.textContent = CalcSumTr();
       return;
     }
     if (nbrN < MinNum) {
@@ -3631,13 +3632,15 @@ function Tryika() {
       //alert("Ошибка! Номер меньше " + MinNum);
       drawnum = 1;
       draws = '1'; // setStateDraws('1');
+      myInfoRef2.current.textContent = CalcSumTr();
       return;
     }
-    if (nbrN > MaxNum) {
+    if ((nbrN > MaxNum) && (nbrN !== 14)) {
       //event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
+      alert("Ошибка! Номер некорректный (1...7,14) " + strN);
       drawnum = 1;
       draws = '1'; // setStateDraws('1');
+      myInfoRef2.current.textContent = CalcSumTr();
       return;
     }
     draws = strN; // setStateDraws(strN);
@@ -3647,7 +3650,7 @@ function Tryika() {
 
   function onChangeStake(event) {
     //console.log(event.target.name);
-    const MaxNum = 10;
+    const MaxNum = 2;
     const MinNum = 1;
     stakenum = Number(stake);
     let strN = event.target.value;
@@ -4270,11 +4273,11 @@ function Tryika() {
   <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>
-    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
+    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="7" step="1"
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
     <p className="boardLabel">Ставка</p>
-    <input type="number" name="stake" defaultValue={stake} className="numbs" min="1" max="10" step="1"
+    <input type="number" name="stake" defaultValue={stake} className="numbs" min="1" max="2" step="1"
     onChange={onChangeStake} required></input>
     <p className="boardLabel">Если не задано, устанавливается ставка 1</p>
     {/* <p className="boardLabel">Стоимость билета</p> */}
