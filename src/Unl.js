@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 006
+// Unl.js tr + keno mix-state 007
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -732,39 +732,29 @@ function Keno() {
     //console.log(event.target.name);
     const MaxNum = 14;
     const MinNum = 1;
-    drawnum = Number(draws);
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
-    //console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
+    //console.log('draws: ' + nbrN);
+    if (Number.isNaN(nbrN) || (nbrN < MinNum) || (nbrN > MaxNum)) {
       //event.preventDefault();
-      //alert("Ошибка! Номер не задан корректно.");
-      draws = '1'; // setStateDraws('1');
-      drawnum = 1;
-      return;
+      //console.log("Ошибка! Номер не задан корректно.");
+      draws = '0'; // setStateDraws('1');
+      drawnum = 0;
     }
-    if (nbrN < MinNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      return;
-    }
-    if (nbrN > MaxNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      return;
-    }
-    if (nbrN > 7 && nbrN !== 14) {
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      return;
-    }
-    draws = strN; // setStateDraws(strN);
-    drawnum = Number(strN);
+    else {
+      if ((nbrN <= 7) || (nbrN === MaxNum)) {
+        //console.log('Номер корректный ' + strN);
+        draws = strN; // setStateDraws(strN);
+        drawnum = Number(strN);
+      }
+      else {
+        //event.preventDefault();
+        //console.log("Ошибка! Номер некорректный (1...7,14) " + strN);
+        draws = '0'; // setStateDraws('1');
+        drawnum = 0;
+      }
+    } 
     myInfoRef2.current.textContent = CalcSumKN();
   } // end of function onChangeDraws(event).
 
@@ -772,36 +762,23 @@ function Keno() {
     //console.log(event.target.name);
     const MaxNum = 10;
     const MinNum = 1;
-    stakenum = Number(stake);
+    //stakenum = Number(stake);
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
+    if (Number.isNaN(nbrN) || (nbrN < MinNum) || (nbrN > MaxNum)) {
       //event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
-      stake = '1'; // setStateStake('1');
-      stakenum = 1;
-      return;
+      stake = '0'; // setStateStake('1');
+      stakenum = 0;
+    } 
+    else {
+      stake = strN; // setStateStake(strN);
+      stakenum = Number(strN);
     }
-    if (nbrN < MinNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      stake = '1'; // setStateStake('1');
-      stakenum = 1;
-      return;
-    }
-    if (nbrN > MaxNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
-      stake = '1'; // setStateStake('1');
-      stakenum = 1;
-      return;
-    }
-    stake = strN; // setStateStake(strN);
-    stakenum = Number(strN);
     myInfoRef2.current.textContent = CalcSumKN();
-  } // end of function onChangeDraws(event).
+  } // end of function onChangeStake(event).
 
   function onChangeSystem(event) { // Count of Keno numbers used.
     //setStateSystem('7');
@@ -1286,7 +1263,7 @@ function Keno() {
   <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>
-    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="6" step="1"
+    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="14" step="1"
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
     <p className="boardLabel">Ставка</p>
@@ -1386,34 +1363,20 @@ function SuperLoto() {
     //console.log(event.target.name);
     const MaxNum = 6;
     const MinNum = 1;
-    drawnum = Number(draws);
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
-    //console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
+    //console.log('draws: ' + nbrN);
+    if (Number.isNaN(nbrN) || (nbrN < MinNum) || (nbrN > MaxNum)) {
       //event.preventDefault();
-      //alert("Ошибка! Номер не задан корректно.");
-      draws = '1'; // setStateDraws('1');
-      drawnum = 1;
-      return;
+      //console.log("Ошибка! Номер не задан корректно.");
+      draws = '0'; // setStateDraws('1');
+      drawnum = 0;
     }
-    if (nbrN < MinNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      return;
-    }
-    if (nbrN > MaxNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      return;
-    }
-    draws = strN; // setStateDraws(strN);
-    drawnum = Number(strN);
+    else {
+      draws = strN; // setStateDraws(strN);
+      drawnum = Number(strN);
+    } 
     myInfoRef2.current.textContent = CalcSumSL();
   } // end of function onChangeDraws(event).
 
@@ -2504,34 +2467,20 @@ function Maxima() {
     //console.log(event.target.name);
     const MaxNum = 6;
     const MinNum = 1;
-    drawnum = Number(draws);
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
-    //console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
+    //console.log('draws: ' + nbrN);
+    if (Number.isNaN(nbrN) || (nbrN < MinNum) || (nbrN > MaxNum)) {
       //event.preventDefault();
-      //alert("Ошибка! Номер не задан корректно.");
-      draws = '1'; // setStateDraws('1');
-      drawnum = 1;
-      return;
+      //console.log("Ошибка! Номер не задан корректно.");
+      draws = '0'; // setStateDraws('1');
+      drawnum = 0;
     }
-    if (nbrN < MinNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      return;
-    }
-    if (nbrN > MaxNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      return;
-    }
-    draws = strN; // setStateDraws(strN);
-    drawnum = Number(strN);
+    else {
+      draws = strN; // setStateDraws(strN);
+      drawnum = Number(strN);
+    } 
     myInfoRef2.current.textContent = CalcSumMX();
   } // end of function onChangeDraws(event).
 
@@ -3612,39 +3561,31 @@ function Tryika() {
 
   function onChangeDraws(event) {
     //console.log(event.target.name);
-    const MaxNum = 7;
+    const MaxNum = 14;
     const MinNum = 1;
-    drawnum = Number(draws);
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
-    console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
+    //console.log('draws: ' + nbrN);
+    if (Number.isNaN(nbrN) || (nbrN < MinNum) || (nbrN > MaxNum)) {
       //event.preventDefault();
-      //alert("Ошибка! Номер не задан корректно.");
-      draws = '1'; // setStateDraws('1');
-      drawnum = 1;
-      myInfoRef2.current.textContent = CalcSumTr();
-      return;
+      //console.log("Ошибка! Номер не задан корректно.");
+      draws = '0'; // setStateDraws('1');
+      drawnum = 0;
     }
-    if (nbrN < MinNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      myInfoRef2.current.textContent = CalcSumTr();
-      return;
-    }
-    if ((nbrN > MaxNum) && (nbrN !== 14)) {
-      //event.preventDefault();
-      alert("Ошибка! Номер некорректный (1...7,14) " + strN);
-      drawnum = 1;
-      draws = '1'; // setStateDraws('1');
-      myInfoRef2.current.textContent = CalcSumTr();
-      return;
-    }
-    draws = strN; // setStateDraws(strN);
-    drawnum = Number(strN);
+    else {
+      if ((nbrN <= 7) || (nbrN === MaxNum)) {
+        //console.log('Номер корректный ' + strN);
+        draws = strN; // setStateDraws(strN);
+        drawnum = Number(strN);
+      }
+      else {
+        //event.preventDefault();
+        //console.log("Ошибка! Номер некорректный (1...7,14) " + strN);
+        draws = '0'; // setStateDraws('1');
+        drawnum = 0;
+      }
+    } 
     myInfoRef2.current.textContent = CalcSumTr();
   } // end of function onChangeDraws(event).
 
@@ -3652,36 +3593,23 @@ function Tryika() {
     //console.log(event.target.name);
     const MaxNum = 2;
     const MinNum = 1;
-    stakenum = Number(stake);
+    //stakenum = Number(stake);
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
     //console.log(nbrN);
-    if (Number.isNaN(nbrN)) {
+    if (Number.isNaN(nbrN) || (nbrN < MinNum) || (nbrN > MaxNum)) {
       //event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
-      stake = '1'; // setStateStake('1');
-      stakenum = 1;
-      return;
+      stake = '0'; // setStateStake('1');
+      stakenum = 0;
+    } 
+    else {
+      stake = strN; // setStateStake(strN);
+      stakenum = Number(strN);
     }
-    if (nbrN < MinNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер меньше " + MinNum);
-      stake = '1'; // setStateStake('1');
-      stakenum = 1;
-      return;
-    }
-    if (nbrN > MaxNum) {
-      //event.preventDefault();
-      //alert("Ошибка! Номер больше " + MaxNum);
-      stake = '1'; // setStateStake('1');
-      stakenum = 1;
-      return;
-    }
-    stake = strN; // setStateStake(strN);
-    stakenum = Number(strN);
     myInfoRef2.current.textContent = CalcSumTr();
-  } // end of function onChangeDraws(event).
+  } // end of function onChangeStake(event)
 
   function onChange(event) {
     //console.log(event.target.name);
@@ -4273,7 +4201,7 @@ function Tryika() {
   <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>
-    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="7" step="1"
+    <input type="number" name="draws" defaultValue={draws} className="numbs" min="1" max="14" step="1"
     onChange={onChangeDraws} required></input>
     <p className="boardLabel">Если не задано, устанавливается 1 розыгрыш</p>
     <p className="boardLabel">Ставка</p>
