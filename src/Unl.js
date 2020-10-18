@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 007
+// Unl.js tr + keno mix-state 008
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -2176,6 +2176,7 @@ function SuperLoto() {
           if (! blnDuplicate) {
             cmbnum = 1;
           }
+          //else alert('Ошибка! Дублирование номеров в системной комбинации');
         }
       }
     } // end of if (system_flag) {
@@ -2190,6 +2191,7 @@ function SuperLoto() {
             if (! blnDuplicate) {
               cmbnum = cmbnum + 1;
             }
+            //else alert('Ошибка! Дублирование номеров в комбинации ' + i.toString());
           }
         }
         else if (i === 2) {
