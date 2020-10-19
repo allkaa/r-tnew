@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 009
+// Unl.js tr + keno mix-state 010
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -797,7 +797,7 @@ function Keno() {
     let strN = event.target.value;
     //console.log(strN);
     let nbrN = Number(strN);
-    //console.log(nbrN);
+    console.log('nbrN = ' + nbrN);
     if (Number.isNaN(nbrN)) {
       //event.preventDefault();
       //alert("Ошибка! Номер не задан корректно.");
@@ -842,11 +842,11 @@ function Keno() {
     if (system >= 10) myInfoRefs10.current.value = '';
     if (system >= 11) myInfoRefs11.current.value = '';
     if (system >= 12) myInfoRefs12.current.value = '';
-    system >= 3 ? myInfoRefs3.current.hidden = false : myInfoRefs8.current.hidden = true;
-    system >= 4 ? myInfoRefs4.current.hidden = false : myInfoRefs8.current.hidden = true;
-    system >= 5 ? myInfoRefs5.current.hidden = false : myInfoRefs8.current.hidden = true;
-    system >= 6 ? myInfoRefs6.current.hidden = false : myInfoRefs8.current.hidden = true;
-    system >= 7 ? myInfoRefs7.current.hidden = false : myInfoRefs8.current.hidden = true;
+    system >= 3 ? myInfoRefs3.current.hidden = false : myInfoRefs3.current.hidden = true;
+    system >= 4 ? myInfoRefs4.current.hidden = false : myInfoRefs4.current.hidden = true;
+    system >= 5 ? myInfoRefs5.current.hidden = false : myInfoRefs5.current.hidden = true;
+    system >= 6 ? myInfoRefs6.current.hidden = false : myInfoRefs6.current.hidden = true;
+    system >= 7 ? myInfoRefs7.current.hidden = false : myInfoRefs7.current.hidden = true;
     system >= 8 ? myInfoRefs8.current.hidden = false : myInfoRefs8.current.hidden = true;
     system >= 9 ? myInfoRefs9.current.hidden = false : myInfoRefs9.current.hidden = true;
     system >= 10 ? myInfoRefs10.current.hidden = false : myInfoRefs10.current.hidden = true;
@@ -861,11 +861,11 @@ function Keno() {
     if (system >= 8) myInfoRefk8.current.value = '';
     if (system >= 9) myInfoRefk9.current.value = '';
     if (system >= 10) myInfoRefk10.current.value = '';
-    system >= 3 ? myInfoRefk3.current.hidden = false : myInfoRefk8.current.hidden = true;
-    system >= 4 ? myInfoRefk4.current.hidden = false : myInfoRefk8.current.hidden = true;
-    system >= 5 ? myInfoRefk5.current.hidden = false : myInfoRefk8.current.hidden = true;
-    system >= 6 ? myInfoRefk6.current.hidden = false : myInfoRefk8.current.hidden = true;
-    system >= 7 ? myInfoRefk7.current.hidden = false : myInfoRefk8.current.hidden = true;
+    system >= 3 ? myInfoRefk3.current.hidden = false : myInfoRefk3.current.hidden = true;
+    system >= 4 ? myInfoRefk4.current.hidden = false : myInfoRefk4.current.hidden = true;
+    system >= 5 ? myInfoRefk5.current.hidden = false : myInfoRefk5.current.hidden = true;
+    system >= 6 ? myInfoRefk6.current.hidden = false : myInfoRefk6.current.hidden = true;
+    system >= 7 ? myInfoRefk7.current.hidden = false : myInfoRefk7.current.hidden = true;
     system >= 8 ? myInfoRefk8.current.hidden = false : myInfoRefk8.current.hidden = true;
     system >= 9 ? myInfoRefk9.current.hidden = false : myInfoRefk9.current.hidden = true;
     system >= 10 ? myInfoRefk10.current.hidden = false : myInfoRefk10.current.hidden = true;
