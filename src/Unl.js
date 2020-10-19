@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 008
+// Unl.js tr + keno mix-state 009
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1121,10 +1121,10 @@ function Keno() {
       blnDuplicate = Duplicate(strCmb, sys);
       if (! blnDuplicate) {
         if (as) {
-          strPay = strPay + '_sa';
+          strPay = strPay + '_a';
         }
         else {
-          strPay = strPay + '_sm';
+          strPay = strPay + '_m';
         }
         strCmb.sort();
         //strPay = strPay + '_' + strCmb[0] + '_' + strCmb[1] + '_' + strCmb[2] + '_' + strCmb[3] + '_' + strCmb[4] + '_' + strCmb[5] ;
