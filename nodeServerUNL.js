@@ -1,4 +1,4 @@
-// nodeServerUNL.js 1000
+// nodeServerUNL.js 1001
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -892,9 +892,11 @@ function BuyTicket(ticreq, res2) {
       res2.end();
       //return rawData;
     });
-  }).on('error', (e) => {
+  }).on('error', (e) => { 
     // e.message e.g. "connect ETIMEDOUT 10.8.194.3:9993"
     console.error(`Got error: ${e.message}`);
+    //if (!e.message.includes('self signed certificate')) {
+    //}
     res2.writeHead(200, { 'Content-Type': 'text/html' });
     res2.write('<!DOCTYPE html>');
     res2.write('<html lang="en">');
