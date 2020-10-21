@@ -1,4 +1,4 @@
-// nodeServerUNL.js 1003
+// nodeServerUNL.js 1004
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -790,65 +790,65 @@ function BuyTicket(ticreq, res2) {
           ticinfo = 'XML wrong format:' + errmsg;
           result = -2
         }
-        if (result !== 777) {
-          //res2.writeHead(200, { 'Content-Type': 'text/xml' });
-          //res2.write(rawData);
-          // Content-Type: text/xml; charset=UTF-8
-          //res2.writeHead(200, { 'Content-Type': 'text/plain; charset=UTF-8' });
-          //res2.write('Ticket info: ' + ticinfo);
-         res2.writeHead(200, { 'Content-Type': 'text/html' });
-          res2.write('<!DOCTYPE html>');
-          res2.write('<html lang="en">');
-          res2.write('<head>');
-          res2.write('<meta charset="utf-8" />');
-          res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
-          res2.write('<title>Ticket info</title>');
-          res2.write('<style>');
-          res2.write('#ticinfo {');
-          //res2.write('width: 70%;');
-          res2.write('margin: 3% 3% 3% 3%;');
-          res2.write('background-color: #dfdbdb;');
-          res2.write('border: thick solid black;');
-          res2.write('outline: dashed red;');
-          res2.write('}');
-          res2.write('#ticback {');
-          res2.write('display: block;')
-          res2.write('width: 10%;');
-          res2.write('margin: 1% 3% 1% 3%;');
-          res2.write('padding: 1% 1% 1% 1%;');
-          res2.write('color: white;')
-          res2.write('background-color: blue;');
-          res2.write('border: thin solid black;');
-          res2.write('border-radius: 15%;')
-          res2.write('text-decoration:none;')
-          res2.write('}');
-          res2.write('#tichdr {');
-          res2.write('margin: 1% 3% 1% 3%;');
-          //res2.write('padding: 1% 1% 1% 1%;');
-          res2.write('}');
-          res2.write('#ticket {');
-          res2.write('display: block;')
-          res2.write('margin: 1% 3% 1% 3%;');
-          res2.write('padding: 1% 1% 1% 1%;');
-          res2.write('background-color: white;');
-          res2.write('border: thin solid black;');
-          res2.write('}');
-          //res2.write('');
-          res2.write('</style>');
-          res2.write('</head>');
-          res2.write('<body>');
-          res2.write('<div id="ticinfo">');
-          res2.write('<a id="ticback" href="/">Back</a>');
-          res2.write('<h3 id="tichdr">Ваш билет зарегистрирован: ' + dtVar.toLocaleString() + '</h3>');
-          res2.write('<ul id="ticket">');
-          res2.write(ticinfo);
-          res2.write('</ul>');
-          res2.write('</div>');
-          res2.write('</body>');
-          res2.write('</html>');
-          //res2.write('');
-          res2.end();
-        }
+        //if (result !== 777) { // NB!!! browser will reload page if no reply in 60 sec.
+        //}
+        //res2.writeHead(200, { 'Content-Type': 'text/xml' });
+        //res2.write(rawData);
+        // Content-Type: text/xml; charset=UTF-8
+        //res2.writeHead(200, { 'Content-Type': 'text/plain; charset=UTF-8' });
+        //res2.write('Ticket info: ' + ticinfo);
+        res2.writeHead(200, { 'Content-Type': 'text/html' });
+        res2.write('<!DOCTYPE html>');
+        res2.write('<html lang="en">');
+        res2.write('<head>');
+        res2.write('<meta charset="utf-8" />');
+        res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+        res2.write('<title>Ticket info</title>');
+        res2.write('<style>');
+        res2.write('#ticinfo {');
+        //res2.write('width: 70%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('background-color: #dfdbdb;');
+        res2.write('border: thick solid black;');
+        res2.write('outline: dashed red;');
+        res2.write('}');
+        res2.write('#ticback {');
+        res2.write('display: block;')
+        res2.write('width: 10%;');
+        res2.write('margin: 1% 3% 1% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('color: white;')
+        res2.write('background-color: blue;');
+        res2.write('border: thin solid black;');
+        res2.write('border-radius: 15%;')
+        res2.write('text-decoration:none;')
+        res2.write('}');
+        res2.write('#tichdr {');
+        res2.write('margin: 1% 3% 1% 3%;');
+        //res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('}');
+        res2.write('#ticket {');
+        res2.write('display: block;')
+        res2.write('margin: 1% 3% 1% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('background-color: white;');
+        res2.write('border: thin solid black;');
+        res2.write('}');
+        //res2.write('');
+        res2.write('</style>');
+        res2.write('</head>');
+        res2.write('<body>');
+        res2.write('<div id="ticinfo">');
+        res2.write('<a id="ticback" href="/">Back</a>');
+        res2.write('<h3 id="tichdr">Ваш билет зарегистрирован: ' + dtVar.toLocaleString() + '</h3>');
+        res2.write('<ul id="ticket">');
+        res2.write(ticinfo);
+        res2.write('</ul>');
+        res2.write('</div>');
+        res2.write('</body>');
+        res2.write('</html>');
+        //res2.write('');
+        res2.end();
         return result;
       } catch (e) {
         console.error(e.message);
@@ -904,7 +904,7 @@ function BuyTicket(ticreq, res2) {
       //return rawData;
       return -3;
     });
-  }).on('error', (e) => { 
+  }).on('error', (e) => {  // end of http.get(...) begin http.on('error', ...)
     // e.message e.g. "connect ETIMEDOUT 10.8.194.3:9993"
     console.error(`Got error: ${e.message}`);
     //if (!e.message.includes('self signed certificate')) {
@@ -958,7 +958,8 @@ function BuyTicket(ticreq, res2) {
     res2.end();
     //return e.message;
     return -4;
-  });
+  }); // end of http.on('error', ...) network error timeout, certificate....
+  return -8888;
 } // end of function BuyTicket(ticnum, res2)
 
 function decrEx(strGGuardEnc, strTicEnc) {
