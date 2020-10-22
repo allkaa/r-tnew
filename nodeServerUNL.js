@@ -1,4 +1,4 @@
-// nodeServerUNL.js with reload 1005
+// nodeServerUNL.js with reload 1006
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -61,7 +61,7 @@ const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new a
 let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number='; // + search;
 //const urlpay = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
 const urlpay = 'http://10.8.194.3:38000/'; // project PayTest ver. 3.7
-let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+//let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
 let txn_id = 10000000;
 
 let rawData = '';
@@ -293,9 +293,9 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         //objUrl.search is e.g. "?q=123-12345678-1234567"
         ticreq = objUrl.search.slice(objUrl.search.indexOf('=') + 1);
         rawData = '';
-        let result = -1000;
+        //let result = -1000;
         BuyTicket(ticreq, res); // result = BuyTicket(ticreq, res); // result is not from events!!!
-        console.log('result = ' + result);
+        //console.log('result = ' + result);
       }
       else {
         //res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -707,8 +707,12 @@ function CheckValTicket(ticnum, res2) {
 
 // <==================================== ValTicket =====================================>
 function BuyTicket(ticreq, res2) {
-  console.log(reqStringPay + ticreq);
+  console.log('|' + ticreq + '|');
+  let reqArr = ticreq.split("_");
+  console.log(reqArr);
+  let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
   reqStringPay = urlpay + '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+  console.log('|'+reqStringPay + '|')
   txn_id = txn_id + 1;
   //let result = -999;
   http.get(reqStringPay, (res) => { // reqStringPay + ticreq for manual non-auto.
@@ -735,7 +739,7 @@ function BuyTicket(ticreq, res2) {
     res.on('data', (chunk) => { rawData += chunk; });
     res.on('end', () => {
       try {
-        let dtVar = new Date();
+        //let dtVar = new Date();
         //const parsedData = JSON.parse(rawData);
         //console.log(parsedData);
         console.log(`rawData in client http.on('end', ...) event :`)
