@@ -1,4 +1,4 @@
-// nodeServerUNL.js 1004
+// nodeServerUNL.js with reload 1005
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -294,7 +294,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         ticreq = objUrl.search.slice(objUrl.search.indexOf('=') + 1);
         rawData = '';
         let result = -1000;
-        result = BuyTicket(ticreq, res);
+        BuyTicket(ticreq, res); // result = BuyTicket(ticreq, res); // result is not from events!!!
         console.log('result = ' + result);
       }
       else {
@@ -710,7 +710,7 @@ function BuyTicket(ticreq, res2) {
   console.log(reqStringPay + ticreq);
   reqStringPay = urlpay + '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
   txn_id = txn_id + 1;
-  let result = -999;
+  //let result = -999;
   http.get(reqStringPay, (res) => { // reqStringPay + ticreq for manual non-auto.
     const { statusCode } = res;
     const contentType = res.headers['content-type'];
@@ -727,7 +727,7 @@ function BuyTicket(ticreq, res2) {
       // consume response data to free up memory
       res.resume();
       //return error.message;
-      result = -1;
+      //result = -1;
     }
 
     res.setEncoding('utf8');
@@ -783,12 +783,13 @@ function BuyTicket(ticreq, res2) {
           else {
             ticinfo = 'Server reply with result: ' + reply.response.result[0];
             console.log(ticinfo);
-            result = Number(reply.response.result[0]);
+            if (ticinfo === 'Server reply with result: 777') ticinfo = 'Ожидайте ответа сервера...';
+            //result = Number(reply.response.result[0]);
           }
         }
         else {
           ticinfo = 'XML wrong format:' + errmsg;
-          result = -2
+          //result = -2
         }
         //if (result !== 777) { // NB!!! browser will reload page if no reply in 60 sec.
         //}
@@ -840,16 +841,21 @@ function BuyTicket(ticreq, res2) {
         res2.write('<body>');
         res2.write('<div id="ticinfo">');
         res2.write('<a id="ticback" href="/">Back</a>');
-        res2.write('<h3 id="tichdr">Ваш билет зарегистрирован: ' + dtVar.toLocaleString() + '</h3>');
+        res2.write('<h3 id="tichdr">Запрос на покупку билета.</h3>');
         res2.write('<ul id="ticket">');
         res2.write(ticinfo);
         res2.write('</ul>');
         res2.write('</div>');
+        res2.write('<script>');
+        res2.write("console.log('page body script started');");
+        res2.write("console.log(document.getElementById('ticket').innerHTML);");
+        res2.write("if (document.getElementById('ticket').innerHTML === 'Ожидайте ответа сервера...') document.location.reload();");
+        res2.write('</script>');
         res2.write('</body>');
         res2.write('</html>');
         //res2.write('');
         res2.end();
-        return result;
+        //return result;
       } catch (e) {
         console.error(e.message);
         res2.writeHead(200, { 'Content-Type': 'text/html' });
@@ -899,11 +905,11 @@ function BuyTicket(ticreq, res2) {
         res2.write('</body>');
         res2.write('</html>');
         res2.end();
+        //return -3;
       }
       //res2.end();
       //return rawData;
-      return -3;
-    });
+    }); // end of http.get(...)
   }).on('error', (e) => {  // end of http.get(...) begin http.on('error', ...)
     // e.message e.g. "connect ETIMEDOUT 10.8.194.3:9993"
     console.error(`Got error: ${e.message}`);
@@ -957,9 +963,9 @@ function BuyTicket(ticreq, res2) {
     res2.write('</html>');
     res2.end();
     //return e.message;
-    return -4;
+    //return -4;
   }); // end of http.on('error', ...) network error timeout, certificate....
-  return -8888;
+  //return -8888;
 } // end of function BuyTicket(ticnum, res2)
 
 function decrEx(strGGuardEnc, strTicEnc) {
