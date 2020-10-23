@@ -60,14 +60,14 @@ const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new a
 //let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
 let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number='; // + search;
 //const urlpay = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
-const urlpay = 'http://10.8.194.3:38000/'; // project PayTest ver. 3.7
-//let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+const urlpay = 'http://10.8.194.3:38000/'; // project PayTest ver. 4.0 NoSsl.
 let txn_id = 10000000;
 
 let rawData = '';
 
 const parseString = require('xml2js').parseString;
 const https = require('https');
+//const { StrictMode } = require('react');
 const urlLegacy = require('url'); // Legacy url module.
 //const { URL } = require('url'); // ES6 url module
 // The querystring module provides utilities for parsing and formatting URL query strings.
@@ -706,11 +706,34 @@ function CheckValTicket(ticnum, res2) {
 } // end of function ValTicket(ticnum, res2)
 
 // <==================================== ValTicket =====================================>
-function BuyTicket(ticreq, res2) {
-  console.log('|' + ticreq + '|');
+
+
+// <==================================== BuyTicket =====================================>
+
+function strCmd(ticreq) {
+  // e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+  let strAgent='16';
+  let boardKeno = 10;
+  let boardSl = 15;
+  let boardMx = 10;
+  let boardTr = 3;
   let reqArr = ticreq.split("_");
   console.log(reqArr);
-  let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+  // e.g. (10) ['6', '1', '1', 'a', '10', '19', '27', '34', '49', '50']
+  //           [game, draws, stake, auto/manual, ...]
+  let dtVar = new Date();
+  let strYear = dtVar.getFullYear().toString(); // e.g. '2020'
+  let strMonth = dtVar.getMonth().toString(); // (January gives 0)
+  let strDay = dtVar.getDate().toString(); // day or month e.g. '23'.
+  let strSearch = '?' + strAgent + '&type=2&command=pay&date=';
+
+  return strSearch;
+}
+
+function BuyTicket(ticreq, res2) {
+  console.log('|' + ticreq + '|');
+  let reqStringPay = urlpay + strCmd(ticreq);
+  //let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
   reqStringPay = urlpay + '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
   console.log('|'+reqStringPay + '|')
   txn_id = txn_id + 1;
@@ -1022,3 +1045,5 @@ function decrEx(strGGuardEnc, strTicEnc) {
   
   return strOut;
 } // end of function decrEx(strGGuardEnc, strInEnc).
+
+// <==================================== BuyTicket =====================================>
