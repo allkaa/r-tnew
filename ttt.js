@@ -1,4 +1,4 @@
-'use strict'; // ttt test.
+'use strict'; // ttt test with Keno.
 
 console.log(process.version)
 
@@ -43,14 +43,43 @@ function strCmd(ticreq) {
   if (strDay.length !== 2) strDay = '0' + strDay;
   strSearch = '?agent=' + strAgent + '&type=2&command=pay&date=' + strYear+ strMonth + strDay + '&txn_id=' + txn_id.toString();
   strSearch = strSearch + '&game=' + reqArr[0] + '&num_of_draws=' + reqArr[1];
-  let i, k;
+  let i, j, k, n, b;
   let sum = 0;
   if (reqArr[0] === '2') { // Keno.
     if (reqArr.length < 6) return '';
-  }
+    n = 0;  // num used.
+    for (i = 4; i < reqArr.length; i = i + 1) {
+      if ((reqArr[i] !== 'a') && (reqArr[i] !== 'm')) {
+        n = n + 1;
+      }
+      else break;
+    }
+    // '&num_used=10&stake=2&board1=02_11_15_24_33_44_55_66_77_80&board2a=01_12_16_23_34_45_56_65_78_79&sum=84.00&msisdn=380121234567'
+    strSearch = strSearch + '&num_used=' + n.toString();
+    strSearch = strSearch + '&stake=' + reqArr[2];
+    b = 0;
+    for (i = 3; i < reqArr.length; i = i + (n + 1)) {
+      b = b + 1;
+      if (reqArr[i] === 'a') {
+        strSearch = strSearch + '&board' + b.toString() + 'a=';
+      }
+      else {
+        strSearch = strSearch + '&board' + b.toString() + '=';
+      }
+      for (j = 0 ; j < n; j = j + 1) {
+        strSearch = strSearch + reqArr[i+ 1 +j];
+        if (j !== (n -1)) strSearch = strSearch + '_';
+      } 
+      sum = sum + boardKeno;
+    }
+    sum = sum * Number(reqArr[1]) * Number(reqArr[2]); // number of draws and stake;
+    strSearch = strSearch + '&sum=' + sum.toString() + '.00';
+    strSearch = strSearch + '&msisdn=0'; // very last item.
+    return strSearch;
+  } // end of Keno.
   else if (reqArr[0] === '4') { // Triyka.
     if (reqArr.length < 7) return '';
-  }
+  } // end of Triyka.
   else if (reqArr[0] === '5') { // Maxima.
     if (reqArr.length < 9) return '';
     if ((reqArr[3] === 'sa') || (reqArr[3] === 'sm')) { // system.
@@ -67,12 +96,13 @@ function strCmd(ticreq) {
       }
       for (i = 4; i < reqArr.length; i = i + 1) {
         strSearch = strSearch + reqArr[i];
+        if (i !== (reqArr.length - 1)) strSearch = strSearch + '_';
       }
       sum = (SysCmbMX(k)*boardMx).toString();
     } // end of system.
     else { // not system.
       k = 0;
-      for (i = 3; i < reqArr.length; i = i + 7) {
+      for (i = 3; i < reqArr.length; i = i + 6) {
         k = k + 1;
         if ((reqArr[i] === 'a') || (reqArr[i] === 'sa')) {
           strSearch = strSearch + '&board' + k.toString() + 'a=';
@@ -80,7 +110,8 @@ function strCmd(ticreq) {
         else {
           strSearch = strSearch + '&board' + k.toString() + '=';
         }
-        strSearch = strSearch + reqArr[i+1] + reqArr[i+2] + reqArr[i+3] + reqArr[i+4] + reqArr[i+5] + reqArr[i+6]
+        strSearch = strSearch + reqArr[i+1] + '_' + reqArr[i+2] + '_' + reqArr[i+3] + '_';
+        strSearch = strSearch + reqArr[i+4] + '_' + reqArr[i+5];
         sum = sum + boardMx;
       }
     } // end of not system.
@@ -105,6 +136,7 @@ function strCmd(ticreq) {
       }
       for (i = 4; i < reqArr.length; i = i + 1) {
         strSearch = strSearch + reqArr[i];
+        if (i !== (reqArr.length - 1)) strSearch = strSearch + '_';
       }
       sum = (SysCmbSL(k)*boardSl).toString();
     } // end of system.
@@ -118,7 +150,8 @@ function strCmd(ticreq) {
         else {
           strSearch = strSearch + '&board' + k.toString() + '=';
         }
-        strSearch = strSearch + reqArr[i+1] + reqArr[i+2] + reqArr[i+3] + reqArr[i+4] + reqArr[i+5] + reqArr[i+6]
+        strSearch = strSearch + reqArr[i+1] + '_' + reqArr[i+2] + '_' + reqArr[i+3] + '_';
+        strSearch = strSearch + reqArr[i+4] + '_' + reqArr[i+5] + '_' + reqArr[i+6];
         sum = sum + boardSl;
       }
     } // end of not system.
@@ -133,10 +166,11 @@ let txn_id = 10000000;
 let strVar;
 //let ticreq = '6_2_1_a_10_19_27_34_49_50_m_11_20_28_35_50_51';
 //let ticreq = '6_1_1_sm_01_02_03_04_10_19_27_34_49_50_51_52';
-let ticreq = '6_2_1_sm_10_19_27_34_49_50_51';
+//let ticreq = '6_2_1_sm_10_19_27_34_49_50_51';
 //let ticreq = '5_2_1_a_10_19_27_33_44_m_11_20_28_35_45';
 //let ticreq = '5_1_1_sm_01_02_03_04_10_19_27_34_49_50_51_52';
 //let ticreq = '5_2_1_sm_01_02_03_04_10_19';
+let ticreq = '2_2_3_m_10_19_a_11_80';
 strVar = strCmd(ticreq);
 console.log(strVar);
 
