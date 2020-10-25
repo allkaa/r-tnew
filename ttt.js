@@ -1,6 +1,41 @@
-'use strict'; // ttt test with Keno.
+'use strict'; // ttt test with Triyka.
 
 console.log(process.version)
+
+function cmbPriceCalcType(cmb, typ, boardPrice) {
+  let nums = 0;
+  let cmbprice = 0;
+  nums = uniqnums(cmb);
+  console.log('cmbPriceCalc nums=' + nums);
+  if (cmb.indexOf('10') === -1) {
+    if (typ === 'S') {
+      cmbprice = cmbprice + boardPrice;
+    }
+    else if (typ === 'B') {
+      if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + boardPrice;
+      else cmbprice = 0
+    }
+    else if (typ === 'A') {
+      if ((nums === 2) || (nums === 3)) cmbprice = cmbprice + 2*boardPrice;
+      else cmbprice = 0
+    }
+    else if (typ === 'Y') {
+      if (nums === 2) cmbprice = cmbprice + 3*boardPrice;
+      else if (nums === 3) cmbprice = cmbprice + 6*boardPrice;
+      else cmbprice = 0
+    }
+  }
+  console.log('cmbPriceCalc cmbprice=' + cmbprice);
+  return cmbprice;
+}
+
+function uniqnums(cmb) {
+  let nums = 1;
+  if (cmb[0] !== cmb[1]) nums = nums + 1;
+  if (cmb[0] !== cmb[2]) nums = nums + 1;
+  if ((nums > 1) && (cmb[1] === cmb[2])) nums = nums - 1;
+  return nums;
+}
 
 function SysCmbMX(sys) {
   if (sys === 6) return 6;
@@ -79,6 +114,26 @@ function strCmd(ticreq) {
   } // end of Keno.
   else if (reqArr[0] === '4') { // Triyka.
     if (reqArr.length < 7) return '';
+    // e.g. (7) ['4', '1', '1', 'S', '0', '1', '2'] or type B or A or Y.
+    //           [game, draws, stake, type, ...]
+    n = 3;  // num used.
+    // '&stake=2&board1=123S&board2=112B&board3=123A&board4=023Y&sum=60.00&msisdn=380503332211'
+    strSearch = strSearch + '&stake=' + reqArr[2];
+    b = 0;
+    let strCmb = ['0', '0' , '0']
+    for (i = 3; i < reqArr.length; i = i + (n + 1)) {
+      b = b + 1;
+      strSearch = strSearch + '&board' + b.toString() + '=';
+      strSearch = strSearch + reqArr[i+1] + reqArr[i+2] + reqArr[i+3] + reqArr[i];
+      strCmb[0] = reqArr[i+1];
+      strCmb[1] = reqArr[i+2];
+      strCmb[2] = reqArr[i+3];
+      sum = sum + cmbPriceCalcType(strCmb, reqArr[i], boardTr);
+    }
+    sum = sum * Number(reqArr[1]) * Number(reqArr[2]); // number of draws and stake;
+    strSearch = strSearch + '&sum=' + sum.toString() + '.00';
+    strSearch = strSearch + '&msisdn=0'; // very last item.
+    return strSearch;
   } // end of Triyka.
   else if (reqArr[0] === '5') { // Maxima.
     if (reqArr.length < 9) return '';
@@ -170,7 +225,8 @@ let strVar;
 //let ticreq = '5_2_1_a_10_19_27_33_44_m_11_20_28_35_45';
 //let ticreq = '5_1_1_sm_01_02_03_04_10_19_27_34_49_50_51_52';
 //let ticreq = '5_2_1_sm_01_02_03_04_10_19';
-let ticreq = '2_2_3_m_10_19_a_11_80';
+//let ticreq = '2_2_3_m_10_19_a_11_80';
+let ticreq = '4_2_3_S_0_0_0_B_1_2_2_A_1_2_3_Y_2_2_1';
 strVar = strCmd(ticreq);
 console.log(strVar);
 
