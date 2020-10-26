@@ -6,7 +6,7 @@ function cmbPriceCalcType(cmb, typ, boardPrice) {
   let nums = 0;
   let cmbprice = 0;
   nums = uniqnums(cmb);
-  console.log('cmbPriceCalc nums=' + nums);
+  //console.log('cmbPriceCalc nums=' + nums);
   if (cmb.indexOf('10') === -1) {
     if (typ === 'S') {
       cmbprice = cmbprice + boardPrice;
@@ -25,7 +25,7 @@ function cmbPriceCalcType(cmb, typ, boardPrice) {
       else cmbprice = 0
     }
   }
-  console.log('cmbPriceCalc cmbprice=' + cmbprice);
+  //console.log('cmbPriceCalc cmbprice=' + cmbprice);
   return cmbprice;
 }
 
@@ -226,7 +226,7 @@ let strVar;
 //let ticreq = '5_1_1_sm_01_02_03_04_10_19_27_34_49_50_51_52';
 //let ticreq = '5_2_1_sm_01_02_03_04_10_19';
 //let ticreq = '2_2_3_m_10_19_a_11_80';
-let ticreq = '4_2_3_S_0_0_0_B_1_2_2_A_1_2_3_Y_2_2_1';
+let ticreq = '4_2_3_S_0_0_0_B_1_2_2_A_1_2_3_Y_2_2_1_Y_1_2_3';
 strVar = strCmd(ticreq);
 console.log(strVar);
 
