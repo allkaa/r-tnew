@@ -1,4 +1,4 @@
-// nodeServerUNL.js with reload with cmd 1008
+// nodeServerUNL.js with reload with cmd 1009
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -219,7 +219,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         });
       }
       else {
-        console.log('Non empty contType read file: ./' + dirName + objUrl.pathname);
+        //console.log('Non empty contType read file: ./' + dirName + objUrl.pathname);
         fs.readFile('./' + dirName + objUrl.pathname, (err, data) => { // './' + dirName  + "/path/name.type"
         if (err) {
           res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -989,21 +989,159 @@ function BuyTicket(ticreq, res2) {
           if (reply.response.result[0] === '0') {
             //sum = reply.response.sum[0];
             //console.log('sum =' + sum);
+            let game = '';
+            if (reply.response.ticket[0].game === '2') game = 'Кено';
+            else if (reply.response.ticket[0].game === '4') game = 'Трійка';
+            else if (reply.response.ticket[0].game === '5') game = 'Максима';
+            else if (reply.response.ticket[0].game === '6') game = 'Супер Лото';
+            let type1 = '', type1a = '', type2 = '', type2a = '', type3 = '', type3a = '', type4 = '', type4a = '';
+            let type5 = '', type5a = '', type6 = '', type6a = '', type7 = '', type8 = '', type9 = '', type10 = '';
+            let b1 = '', b1a = '', b2 = '', b2a = '', b3 = '', b3a = '', b4 = '', b4a = '', b5 = '', b5a = '', b6 = '', b6a = '';
+            let b7 = '', b8 = '', b9 = '', b10 = '';
+            if (reply.response.ticket[0].board1 !== undefined) {
+              b1 = reply.response.ticket[0].board1[0];
+              if (game ==='Трійка') { // b1 e.g. '000S'
+                if (b1[3] === 'S') type1 = 'Точний';
+                else if (b1[3] === 'B') type1 = 'Довільний';
+                else if (b1[3] === 'A') type1 = 'Точний + Довільний';
+                else if (b1[3] === 'Y') type1 = 'Система';
+              }
+              b1 = b1.substring(0,2);
+            }
+            if (reply.response.ticket[0].board1a !== undefined) {
+              b1a = reply.response.ticket[0].board1a[0];
+              type1a = 'АВТО'
+            }
+            if (reply.response.ticket[0].board2 !== undefined) {
+              b2 = reply.response.ticket[0].board2[0];
+              if (game ==='Трійка') {
+                if (b2[3] === 'S') type2 = 'Точний';
+                else if (b2[3] === 'B') type2 = 'Довільний';
+                else if (b2[3] === 'A') type2 = 'Точний + Довільний';
+                else if (b2[3] === 'Y') type2 = 'Система';
+              }
+              b2 = b2.substring(0,2);
+            }
+            if (reply.response.ticket[0].board2a !== undefined) {
+              b2a = reply.response.ticket[0].board2a[0];
+              type2a = 'АВТО'
+            }
+            if (reply.response.ticket[0].board3 !== undefined) {
+              b3 = reply.response.ticket[0].board3[0];
+              if (game ==='Трійка') {
+                if (b3[3] === 'S') type3 = 'Точний';
+                else if (b3[3] === 'B') type3 = 'Довільний';
+                else if (b3[3] === 'A') type3 = 'Точний + Довільний';
+                else if (b3[3] === 'Y') type3 = 'Система';
+              }
+              b3 = b3.substring(0,2);
+            }
+            if (reply.response.ticket[0].board3a !== undefined) {
+              b3a = reply.response.ticket[0].board3a[0];
+              type3a = 'АВТО'
+            }
+            if (reply.response.ticket[0].board4 !== undefined) {
+              b4 = reply.response.ticket[0].board4[0];
+              if (game ==='Трійка') {
+                if (b4[3] === 'S') type4 = 'Точний';
+                else if (b4[3] === 'B') type4 = 'Довільний';
+                else if (b4[3] === 'A') type4 = 'Точний + Довільний';
+                else if (b4[3] === 'Y') type4 = 'Система';
+              }
+              b4 = b4.substring(0,2);
+            }
+            if (reply.response.ticket[0].board4a !== undefined) {
+              b4a = reply.response.ticket[0].board4a[0];
+              type4a = 'АВТО'
+            }
+            if (reply.response.ticket[0].board5 !== undefined) {
+              b5 = reply.response.ticket[0].board5[0];
+              if (game ==='Трійка') {
+                if (b5[3] === 'S') type5 = 'Точний';
+                else if (b5[3] === 'B') type5 = 'Довільний';
+                else if (b5[3] === 'A') type5 = 'Точний + Довільний';
+                else if (b5[3] === 'Y') type5 = 'Система';
+              }
+              b5 = b5.substring(0,2);
+            }
+            if (reply.response.ticket[0].board5a !== undefined) {
+              b5a = reply.response.ticket[0].board5a[0];
+              type5a = 'АВТО'
+            }
+            if (reply.response.ticket[0].board6 !== undefined) {
+              b6 = reply.response.ticket[0].board6[0];
+              if (game ==='Трійка') {
+                if (b6[3] === 'S') type6 = 'Точний';
+                else if (b6[3] === 'B') type6 = 'Довільний';
+                else if (b6[3] === 'A') type6 = 'Точний + Довільний';
+                else if (b6[3] === 'Y') type6 = 'Система';
+              }
+              b6 = b6.substring(0,2);
+            }
+            if (reply.response.ticket[0].board6a !== undefined) {
+              b6a = reply.response.ticket[0].board6a[0];
+              type6a = 'АВТО'
+            }
+            if (reply.response.ticket[0].board7 !== undefined) {
+              b7 = reply.response.ticket[0].board7[0];
+              if (game ==='Трійка') {
+                if (b7[3] === 'S') type7 = 'Точний';
+                else if (b7[3] === 'B') type7 = 'Довільний';
+                else if (b7[3] === 'A') type7 = 'Точний + Довільний';
+                else if (b7[3] === 'Y') type7 = 'Система';
+              }
+              b7 = b7.substring(0,2);
+            }
+            if (reply.response.ticket[0].board8 !== undefined) {
+              b8 = reply.response.ticket[0].board8[0];
+              if (game ==='Трійка') {
+                if (b8[3] === 'S') type8 = 'Точний';
+                else if (b8[3] === 'B') type8 = 'Довільний';
+                else if (b8[3] === 'A') type8 = 'Точний + Довільний';
+                else if (b8[3] === 'Y') type8 = 'Система';
+              }
+              b8 = b8.substring(0,2);
+            }
+            if (reply.response.ticket[0].board9 !== undefined) {
+              b9 = reply.response.ticket[0].board9[0];
+              if (game ==='Трійка') {
+                if (b9[3] === 'S') type9 = 'Точний';
+                else if (b9[3] === 'B') type9 = 'Довільний';
+                else if (b9[3] === 'A') type9 = 'Точний + Довільний';
+                else if (b9[3] === 'Y') type9 = 'Система';
+              }
+              b9 = b9.substring(0,2);
+            }
+            if (reply.response.ticket[0].board10 !== undefined) {
+              b10 = reply.response.ticket[0].board10[0];
+              if (game ==='Трійка') {
+                if (b10[3] === 'S') type10 = 'Точний';
+                else if (b10[3] === 'B') type10 = 'Довільний';
+                else if (b10[3] === 'A') type10 = 'Точний + Довільний';
+                else if (b10[3] === 'Y') type10 = 'Система';
+              }
+              b10 = b10.substring(0,2);
+            }
             ticinfo = ticinfo + '<li>Україньска Національна Лотерея</li>';
             ticinfo = ticinfo + '<li>Дата: ' + reply.response.ticket[0].date[0] + '</li>';
             ticinfo = ticinfo + '<li>Час: '  + reply.response.ticket[0].time[0] + '</li>';
-            if (reply.response.ticket[0].board1 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board1[0] + '</li>';
-            if (reply.response.ticket[0].board1a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board1a[0] + '</li>'
-            if (reply.response.ticket[0].board2 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board2[0] + '</li>';
-            if (reply.response.ticket[0].board2a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board2a[0] + '</li>'
-            if (reply.response.ticket[0].board3 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board3[0] + '</li>';
-            if (reply.response.ticket[0].board3a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board3a[0] + '</li>'
-            if (reply.response.ticket[0].board4 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board4[0] + '</li>';
-            if (reply.response.ticket[0].board4a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board4a[0] + '</li>'
-            if (reply.response.ticket[0].board5 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board5[0] + '</li>';
-            if (reply.response.ticket[0].board5a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board5a[0] + '</li>'
-            if (reply.response.ticket[0].board6 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board6[0] + '</li>';
-            if (reply.response.ticket[0].board6a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + reply.response.ticket[0].board6a[0] + '</li>'
+            ticinfo = ticinfo + '<li>Гра: '  + game + '</li>';
+            if (reply.response.ticket[0].board1 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b1 + type1 + '</li>';
+            if (reply.response.ticket[0].board1a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b1a + type1a + '</li>'
+            if (reply.response.ticket[0].board2 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b2 + type2 + '</li>';
+            if (reply.response.ticket[0].board2a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b2a + type2a + '</li>'
+            if (reply.response.ticket[0].board3 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b3 + type3 + '</li>';
+            if (reply.response.ticket[0].board3a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b3a + type3a + '</li>'
+            if (reply.response.ticket[0].board4 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b4 + type4 + '</li>';
+            if (reply.response.ticket[0].board4a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b4a + type4a + '</li>'
+            if (reply.response.ticket[0].board5 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b5 + ' ' + type5 + '</li>';
+            if (reply.response.ticket[0].board5a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b5a + ' ' + type5a + '</li>'
+            if (reply.response.ticket[0].board6 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b6 + ' ' + type6 + '</li>';
+            if (reply.response.ticket[0].board6a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b6a + ' ' + type6a + '</li>'
+            if (reply.response.ticket[0].board7 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b7 + ' ' + type7 + '</li>';
+            if (reply.response.ticket[0].board8 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b8 + ' ' + type8 + '</li>';
+            if (reply.response.ticket[0].board9 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b9 + ' ' + type9 + '</li>';
+            if (reply.response.ticket[0].board10 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b10 + ' ' + type10 + '</li>';
             ticinfo = ticinfo + '<li>Сума: '  + reply.response.ticket[0].sum[0] + '</li>';
             decrInfo = decrEx(reply.response.ticket[0].gguard[0], reply.response.ticket[0].number[0]);
             //console.log(decrInfo);
