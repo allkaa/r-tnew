@@ -1,4 +1,4 @@
-// nodeServerUNL.js with reload with cmd 1010
+// nodeServerUNL with reload with cmd 1011
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -1126,22 +1126,31 @@ function BuyTicket(ticreq, res2) {
             ticinfo = ticinfo + '<li>Дата: ' + reply.response.ticket[0].date[0] + '</li>';
             ticinfo = ticinfo + '<li>Час: '  + reply.response.ticket[0].time[0] + '</li>';
             ticinfo = ticinfo + '<li>Гра: '  + game + '</li>';
-            if (reply.response.ticket[0].board1 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b1 + ' ' + type1 + '</li>';
-            if (reply.response.ticket[0].board1a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b1a + ' ' + type1a + '</li>'
-            if (reply.response.ticket[0].board2 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b2 + ' ' + type2 + '</li>';
-            if (reply.response.ticket[0].board2a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b2a + ' ' + type2a + '</li>'
-            if (reply.response.ticket[0].board3 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b3 + ' ' + type3 + '</li>';
-            if (reply.response.ticket[0].board3a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b3a + ' ' + type3a + '</li>'
-            if (reply.response.ticket[0].board4 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b4 + ' ' + type4 + '</li>';
-            if (reply.response.ticket[0].board4a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b4a + ' ' + type4a + '</li>'
-            if (reply.response.ticket[0].board5 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b5 + ' ' + type5 + '</li>';
-            if (reply.response.ticket[0].board5a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b5a + ' ' + type5a + '</li>'
-            if (reply.response.ticket[0].board6 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b6 + ' ' + type6 + '</li>';
-            if (reply.response.ticket[0].board6a !== undefined)ticinfo = ticinfo + '<li>Комбінация: '  + b6a + ' ' + type6a + '</li>'
-            if (reply.response.ticket[0].board7 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b7 + ' ' + type7 + '</li>';
-            if (reply.response.ticket[0].board8 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b8 + ' ' + type8 + '</li>';
-            if (reply.response.ticket[0].board9 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b9 + ' ' + type9 + '</li>';
-            if (reply.response.ticket[0].board10 !== undefined) ticinfo = ticinfo + '<li>Комбінация: '  + b10 + ' ' + type10 + '</li>';
+            if (reply.response.ticket[0].first_draw !== undefined) {
+              ticinfo = ticinfo + '<li>Розіграш: ' + reply.response.ticket[0].first_draw[0] + '</li>';
+            }
+            else {
+              ticinfo = ticinfo + '<li>Розіграш: ' + reply.response.ticket[0].date[0] + '</li>';
+            }
+            ticinfo = ticinfo + '<li>Комбінації:</li>';
+            ticinfo = ticinfo + '<li>------------------------------------------------------</li>';
+            if (reply.response.ticket[0].board1 !== undefined) ticinfo = ticinfo + '<li>'  + b1 + ' ' + type1 + '</li>';
+            if (reply.response.ticket[0].board1a !== undefined)ticinfo = ticinfo + '<li>'  + b1a + ' ' + type1a + '</li>'
+            if (reply.response.ticket[0].board2 !== undefined) ticinfo = ticinfo + '<li>'  + b2 + ' ' + type2 + '</li>';
+            if (reply.response.ticket[0].board2a !== undefined)ticinfo = ticinfo + '<li>'  + b2a + ' ' + type2a + '</li>'
+            if (reply.response.ticket[0].board3 !== undefined) ticinfo = ticinfo + '<li>'  + b3 + ' ' + type3 + '</li>';
+            if (reply.response.ticket[0].board3a !== undefined)ticinfo = ticinfo + '<li>'  + b3a + ' ' + type3a + '</li>'
+            if (reply.response.ticket[0].board4 !== undefined) ticinfo = ticinfo + '<li>'  + b4 + ' ' + type4 + '</li>';
+            if (reply.response.ticket[0].board4a !== undefined)ticinfo = ticinfo + '<li>'  + b4a + ' ' + type4a + '</li>'
+            if (reply.response.ticket[0].board5 !== undefined) ticinfo = ticinfo + '<li>'  + b5 + ' ' + type5 + '</li>';
+            if (reply.response.ticket[0].board5a !== undefined)ticinfo = ticinfo + '<li>'  + b5a + ' ' + type5a + '</li>'
+            if (reply.response.ticket[0].board6 !== undefined) ticinfo = ticinfo + '<li>'  + b6 + ' ' + type6 + '</li>';
+            if (reply.response.ticket[0].board6a !== undefined)ticinfo = ticinfo + '<li>'  + b6a + ' ' + type6a + '</li>'
+            if (reply.response.ticket[0].board7 !== undefined) ticinfo = ticinfo + '<li>'  + b7 + ' ' + type7 + '</li>';
+            if (reply.response.ticket[0].board8 !== undefined) ticinfo = ticinfo + '<li>'  + b8 + ' ' + type8 + '</li>';
+            if (reply.response.ticket[0].board9 !== undefined) ticinfo = ticinfo + '<li>'  + b9 + ' ' + type9 + '</li>';
+            if (reply.response.ticket[0].board10 !== undefined) ticinfo = ticinfo + '<li>'  + b10 + ' ' + type10 + '</li>';
+            ticinfo = ticinfo + '<li>------------------------------------------------------</li>';
             ticinfo = ticinfo + '<li>Сума: '  + reply.response.ticket[0].sum[0] + '</li>';
             decrInfo = decrEx(reply.response.ticket[0].gguard[0], reply.response.ticket[0].number[0]);
             //console.log(decrInfo);
