@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 010
+// Unl.js tr + keno mix-state 011
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -30,7 +30,8 @@ import { useState, useEffect, useLayoutEffect } from 'react'; // React Hooks use
 // - A <Switch> renders the first child <Route> that matches
 // - A <Redirect> may be used to redirect old URLs to new ones
 // - A <Route path="*"> always matches
-import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
+import logo from './unl_newlogo_small.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
@@ -510,8 +511,8 @@ function NoMatchAside(props) {
 
   return (
     <div>
-      <img id="logoimg" src={logo} alt="logo"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
-      <h1>Ukraine National Lottery</h1>
+      <img id="logoimg" src={logo} alt="logo" /> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
+      <h1>Українська Національна Лотерея</h1>
 
       <header>
         {/*<!-- Even is it's not mandatory, it's common practice to put the main navigation menu within the main header -->*/}

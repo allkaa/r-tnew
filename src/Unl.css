@@ -12,7 +12,7 @@ body {
   width: 98%;
   margin: 1% 1% 1% 1%; /* top+right+bottom+left 0 auto; */
   padding: 0;
-  background-color: #dfdbdb; /* #a9a9a9  will be background-color for all doc if no set in html*/
+  background-color: rgb(252, 252, 239); /* #a9a9a9  will be background-color for all doc if no set in html*/
   border: thin solid black;
   /* outline: dashed red; */
 }
@@ -75,7 +75,7 @@ nav > div {
   padding: 2px;
   /*height: 50px;*/
   /*width: 90%;*/
-  background-color: #ff80ff;
+  background-color: lightskyblue;
   /* display: flex; /* for childs - ul and search form */
 }
 
@@ -225,19 +225,19 @@ article {
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: #ff80ff;
+  background-color: lightskyblue;
 }
 
 #logoimg {
   float: left;
   /* float: right; */
   /* margin-right: 2px; */
-  margin: 0px 5px 0px 0px; /* top-right-bottom-left */
+  margin: 0px 5px 0px 15px; /* top-right-bottom-left */
   /* margin-left: 2px; */
-  width: 75px;
+  width: 150px;
   height: 50px;
   border-radius: 5px;
-  background-color: #dfdbdb;
+  background-color: rgb(252, 252, 239);
   padding: 1em;
 }
 
@@ -259,7 +259,7 @@ article {
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: #ff80ff;
+  background-color: lightskyblue;
 }
 
 aside li {

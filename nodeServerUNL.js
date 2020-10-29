@@ -58,7 +58,8 @@ else {
 const http = require('http');
 const urlval = 'http://10.8.194.3:9994/'; // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 //let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number=225-13818091-1101234';
-let reqString = urlval + '?agent=58&type=2&command=checkval&ticket_number='; // + search;
+let reqStringVal = urlval + '?agent=58&type=2&command=checkval&ticket_number='; // + search;
+
 //const urlpay = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
 const urlpay = 'http://10.8.194.3:38000/'; // project PayTest ver. 4.0 NoSsl.
 let txn_id = 10000000;
@@ -466,8 +467,8 @@ console.log('End Serer main PROGAM path after server.listen(port, hostname, call
 // <==================================== ValTicket =====================================>
 function CheckValTicket(ticnum, res2) {
   // reqString e.g. "http://10.8.194.3:9994/?agent=58&type=2&command=checkval&ticket_number="
-  console.log(reqString + ticnum);
-  http.get(reqString + ticnum, (res) => {
+  console.log(reqStringVal + ticnum);
+  http.get(reqStringVal + ticnum, (res) => {
     const { statusCode } = res;
     const contentType = res.headers['content-type'];
 
