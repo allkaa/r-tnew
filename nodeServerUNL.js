@@ -1,4 +1,4 @@
-// nodeServerUNL with reload with cmd 1011
+// nodeServerUNL reload+cmd 1012
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -1126,11 +1126,14 @@ function BuyTicket(ticreq, res2) {
             ticinfo = ticinfo + '<li>Дата: ' + reply.response.ticket[0].date[0] + '</li>';
             ticinfo = ticinfo + '<li>Час: '  + reply.response.ticket[0].time[0] + '</li>';
             ticinfo = ticinfo + '<li>Гра: '  + game + '</li>';
+            if (reply.response.ticket[0].num_of_draws !== undefined) {
+              ticinfo = ticinfo + '<li>Розіграшей: ' + reply.response.ticket[0].num_of_draws[0] + '</li>';
+            }
             if (reply.response.ticket[0].first_draw !== undefined) {
               ticinfo = ticinfo + '<li>Розіграш: ' + reply.response.ticket[0].first_draw[0] + '</li>';
             }
             else {
-              ticinfo = ticinfo + '<li>Розіграш: ' + reply.response.ticket[0].date[0] + '</li>';
+              ticinfo = ticinfo + '<li>Перший розіграш: ' + reply.response.ticket[0].date[0] + '</li>';
             }
             ticinfo = ticinfo + '<li>Комбінації:</li>';
             ticinfo = ticinfo + '<li>------------------------------------------------------</li>';
@@ -1151,6 +1154,9 @@ function BuyTicket(ticreq, res2) {
             if (reply.response.ticket[0].board9 !== undefined) ticinfo = ticinfo + '<li>'  + b9 + ' ' + type9 + '</li>';
             if (reply.response.ticket[0].board10 !== undefined) ticinfo = ticinfo + '<li>'  + b10 + ' ' + type10 + '</li>';
             ticinfo = ticinfo + '<li>------------------------------------------------------</li>';
+            if (reply.response.ticket[0].stake !== undefined) {
+              ticinfo = ticinfo + '<li>Ставка: ' + reply.response.ticket[0].stake[0] + '</li>';
+            }
             ticinfo = ticinfo + '<li>Сума: '  + reply.response.ticket[0].sum[0] + '</li>';
             decrInfo = decrEx(reply.response.ticket[0].gguard[0], reply.response.ticket[0].number[0]);
             //console.log(decrInfo);
