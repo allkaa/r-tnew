@@ -1,4 +1,4 @@
-// Unl.js results 012
+// Unl.js Keno results 013
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -542,7 +542,7 @@ function NoMatchAside(props) {
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
-          <input type="search" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
+          <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
           {/* <input type="submit" value="Ticket search"/> */}
           <button type="submit">Проверить выигрыш по номеру билета</button>
         </form>
@@ -1217,12 +1217,19 @@ function Keno() {
     ret = 'Стоимость билета: ' + tot.toString();
     myInfoRef2.current.textContent = ret;
     return ret;
-  } // end of function CalcSumSL().
+  } // end of function CalcSumKN().
+
+
+  function handleSubmitKenoResults() {
+    return;
+  }
 
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
 
   const [pay, setStatePay] = useState('');
+  const [drkeno, setStateDrKeno] = useState('');
+
   /*
   const [draws, setStateDraws] = useState(1);
   const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
@@ -1259,6 +1266,12 @@ function Keno() {
   return (
   <div>
   <h3>Кено Лото</h3>
+  <h4>Результаты по номеру розыгрыша (если номер не задан, то последнего)</h4>
+  <form role="search" method="get" action="formAKresults" onSubmit={handleSubmitKenoResults}>
+    <input type="search" name="q"  defaultValue={drkeno} className="drawnum" placeholder="" aria-label="Keno results"></input>
+    <button type="submit">Получить результата</button>
+  </form>
+  <h4>Играть:</h4>
   <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>

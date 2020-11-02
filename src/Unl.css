@@ -124,9 +124,24 @@ input {
   height: 32px;
 }
 
+/* flex: 3; /* proportion 3 to upper level form
 input[type="search"] {
-  /*flex: 3; /* proportion 3 to upper level form */
-  width: 30%;
+  width: 10%;
+}
+*/
+
+.ticket {
+  width: 10.5%;
+}
+
+.drawnum {
+  /* font: 1em sans-serif; */
+  /* Uniform text field size */
+  width: 5%;
+  margin: 2px;
+  padding: 1px;
+  box-sizing: border-box;
+  /* border: 1px solid #999; */
 }
 
 input[type="submit"] {
