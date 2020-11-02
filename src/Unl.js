@@ -1,4 +1,4 @@
-// Unl.js tr + keno mix-state 011
+// Unl.js results 012
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -524,9 +524,6 @@ function NoMatchAside(props) {
             <Link to="/">Домой</Link>
           </li>
           <li>
-            <Link to="/nav-match1">Результаты</Link>
-          </li>
-          <li>
             <Link to="/nav-match2">Кено</Link>
           </li>
           <li>
@@ -561,23 +558,20 @@ function NoMatchAside(props) {
           <Route exact path="/">
             <NavHome />
           </Route>
-          <Route path="/nav-match1">
-            <Results />  {/* NavWillMatch */}
-          </Route>
           <Route path="/nav-match2">
-            <Keno /> {/* NavWillMatch */}
+            <Keno />
           </Route>
           <Route path="/nav-match3">
-            <SuperLoto /> {/* NavWillMatch */}
+            <SuperLoto />
           </Route>
           <Route path="/nav-match4">
-            <Maxima /> {/* NavWillMatch */}
+            <Maxima />
           </Route>
           <Route path="/nav-match5">
-            <Tryika /> {/* NavWillMatch */}
+            <Tryika />
           </Route>
           <Route path="/nav-match6">
-            <Contact /> {/* NavWillMatch */}
+            <Contact />
           </Route>
           <Route path="*">
             <NavNoMatch /> {/*NavHome or NavNoMatch */}
@@ -695,6 +689,7 @@ function Contact() {
   </address>;
 }
 
+/*
 function Results() {
   let location = useLocation();
   console.log('location:');
@@ -709,14 +704,16 @@ function Results() {
     Results! <code>{location.pathname} and {location.search}</code> {reply}
   </p>;
 }
+*/
 
+/*
 function Purchase() {
   function handleSubmitPay(event) {
     myInfoRef.current.textContent = 'Wait for fetch processing...';
-    /* e.g.
-    Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
-    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    */
+    // e.g.
+    //Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
+    //user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    //
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
     //GetData('pay'); // if use Fetch directly from html page.
   } // end of function handleSubmitPay(event)
@@ -726,6 +723,7 @@ function Purchase() {
   <button type="submit">Buy ticket</button>
   </form>
 } // end of function Purchase()
+*/
 
 function Keno() {
 
