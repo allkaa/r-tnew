@@ -1,4 +1,4 @@
-// Unl.js Keno results 013
+// Unl.js Keno results 014
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1228,7 +1228,7 @@ function Keno() {
   // &board1=01_11_15_24_33_52
 
   const [pay, setStatePay] = useState('');
-  const [drkeno, setStateDrKeno] = useState('');
+  //const [drkeno, setStateDrKeno] = useState('');
 
   /*
   const [draws, setStateDraws] = useState(1);
@@ -1268,7 +1268,8 @@ function Keno() {
   <h3>Кено Лото</h3>
   <h4>Результаты по номеру розыгрыша (если номер не задан, то последнего)</h4>
   <form role="search" method="get" action="formAKresults" onSubmit={handleSubmitKenoResults}>
-    <input type="search" name="q"  defaultValue={drkeno} className="drawnum" placeholder="" aria-label="Keno results"></input>
+    <input hidden type="search" name="g"  defaultValue="2" className="drawnum"></input>
+    <input type="search" name="q"  defaultValue="" className="drawnum" placeholder="" aria-label="Keno results"></input>
     <button type="submit">Получить результата</button>
   </form>
   <h4>Играть:</h4>

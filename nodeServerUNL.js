@@ -1,4 +1,4 @@
-// nodeServerUNL reload+cmd 1013
+// nodeServerUNL Keno results 1014
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -298,7 +298,86 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         BuyTicket(ticreq, res); // result = BuyTicket(ticreq, res); // result is not from events!!!
         //console.log('result = ' + result);
       }
+      else if (req.url.indexOf('/formAKresults?') >= 0) {
+        let game = '',  draw = '',  drawnum = -1, begpos, endpos;
+        //objUrl.search is e.g. "?g=2&q="
+        //                        012345
+        begpos = objUrl.search.indexOf('g=');
+        endpos = objUrl.search.indexOf('&q=');
+        if (begpos === -1 || endpos === -1 || (endpos <= begpos + 2)) game = -1;
+        else {
+          game = objUrl.search.substring(begpos+2,endpos);
+          draw = objUrl.search.substring(endpos+3);
+          console.log('game=' + game + ', draw=[' + draw + ']');
+          if (game !== '2' && game !== '4' && game !== '5' && game !== '6') game = -1;
+          else game = Number(game);
+          if (draw === '') drawnum = 0;
+          else {
+            drawnum = Number(draw);
+            if (Number.isNaN(drawnum)) drawnum = -1;
+            else if (!Number.isInteger(drawnum)) drawnum = -1;
+            else if (drawnum < 1)  drawnum = -1;
+          }
+        }
+        console.log('game=' + game + ', drawnum=' + drawnum);
+        if (game !== -1 && drawnum !== -1) {
+          //console.log('game=' + game + ', draw=' + drawnum);
+          //GetResults(game, drawnum);
+        }
+        else {
+          console.log('NB!!! Wrong form parameters url submitted: ' + req.url);
+          //res.writeHead(200, { 'Content-Type': 'text/plain' });
+          //res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
+          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.write('<!DOCTYPE html>');
+          res.write('<html lang="en">');
+          res.write('<head>');
+          res.write('<meta charset="utf-8" />');
+          res.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+          res.write('<title>Unknown Form request submitted by GET</title>');
+          res.write('<style>');
+          res.write('#ticinfo {');
+          //res.write('width: 70%;');
+          res.write('margin: 3% 3% 3% 3%;');
+          res.write('background-color: #dfdbdb;');
+          res.write('border: thick solid black;');
+          res.write('outline: dashed red;');
+          res.write('}');
+          res.write('#ticback {');
+          res.write('display: block;')
+          res.write('width: 10%;');
+          res.write('margin: 3% 3% 3% 3%;');
+          res.write('padding: 1% 1% 1% 1%;');
+          res.write('color: white;')
+          res.write('background-color: blue;');
+          res.write('border: thin solid black;');
+          res.write('border-radius: 15%;')
+          res.write('text-decoration:none;')
+          res.write('}');
+          res.write('#ticket {');
+          res.write('display: block;')
+          res.write('margin: 3% 3% 3% 3%;');
+          res.write('padding: 1% 1% 1% 1%;');
+          res.write('background-color: white;');
+          res.write('border: thin solid black;');
+          res.write('}');
+          res.write('</style>');
+          res.write('</head>');
+          res.write('<body>');
+          res.write('<div id="ticinfo">');
+          res.write('<a id="ticback" href="/">Back</a>');
+          res.write('<h4>Wrong form parameters submitted by GET</h4>');
+          res.write(`GET action URL (form name with search included): ${req.url}`);
+          res.write('</p>');
+          res.write('</div>');
+          res.write('</body>');
+          res.write('</html>');
+          res.end();
+          return res.end();
+        } // end of Wrong form parameters submitted by GET.
+      } // end of else if (req.url.indexOf('/formAKresults?') >= 0)
       else {
+        console.log('NB!!! Unknown form url submitted: ' + req.url);
         //res.writeHead(200, { 'Content-Type': 'text/plain' });
         //res.write(`Form request submitted by GET. Action URL with search: ${req.url}`);
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -347,9 +426,8 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         res.write('</html>');
         res.end();
         return res.end();
-      }
-      //return res.end();
-    }
+      } // end of Unknown form url submitted
+    } // end of objUrl.search !== null, there is ? in GET request.
   } // <==================== End of GET method form submit case ====================================================>
   else { // <==================== Begin of POST method form submit case ============================================>
     // POST method. NB! If req.method === "POST" then ObjUrl.search will be Null always.
