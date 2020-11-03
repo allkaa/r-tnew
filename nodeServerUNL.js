@@ -1,4 +1,4 @@
-// nodeServerUNL Keno results 1014
+// nodeServerUNL Keno results 1015
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -296,7 +296,6 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         rawData = '';
         //let result = -1000;
         BuyTicket(ticreq, res); // result = BuyTicket(ticreq, res); // result is not from events!!!
-        //console.log('result = ' + result);
       }
       else if (req.url.indexOf('/formAKresults?') >= 0) {
         let game = '',  draw = '',  drawnum = -1, begpos, endpos;
@@ -322,7 +321,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         console.log('game=' + game + ', drawnum=' + drawnum);
         if (game !== -1 && drawnum !== -1) {
           //console.log('game=' + game + ', draw=' + drawnum);
-          //GetResults(game, drawnum);
+          GetResults(game, drawnum, res);
         }
         else {
           console.log('NB!!! Wrong form parameters url submitted: ' + req.url);
@@ -541,6 +540,254 @@ server.listen(port, hostname, () => {
 
 dtVar = new Date();
 console.log('End Serer main PROGAM path after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+// <==================================== GetResults =====================================>
+function GetResults(game, drawnum, res2) {
+  // http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results
+  // http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results&draw=1
+  let reqStringGetResults;
+  reqStringGetResults = urlpay + '?agent=16&type=2&command=scheck&game=' + game.toString() + '&draw_results';
+  if (drawnum !== 0) reqStringGetResults = reqStringGetResults + '&draw=' + drawnum.toString();
+  console.log(reqStringGetResults);
+  http.get(reqStringGetResults, (res) => {
+    const { statusCode } = res;
+    const contentType = res.headers['content-type'];
+
+    let error;
+    if (statusCode !== 200) {
+      error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
+    }
+    else if (!/^text\/xml/.test(contentType)) {
+      error = new Error(`Invalid content-type.\n Expected text/xml but received ${contentType}`);
+    }
+    if (error) {
+      console.error(error.message);
+      // consume response data to free up memory
+      res.resume();
+      //return error.message;
+    }
+
+    res.setEncoding('utf8');
+    //let rawData = '';
+    res.on('data', (chunk) => { rawData += chunk; });
+    res.on('end', () => {
+      try {
+        //const parsedData = JSON.parse(rawData);
+        //console.log(parsedData);
+        console.log(`rawData in client http.on('end', ...) event :`)
+        console.log(rawData);
+        let reply;
+        reply = '';
+        let errmsg = '';
+        parseString(rawData, function (err, result) {
+            if (err !== null) {
+              //console.log(err.message);
+              // "Non-whitespace before first tag.\nLine: 0\nColumn: 1\nChar: ?"
+              errmsg = err.message.replace('\n',' ');
+              while (errmsg.indexOf('\n') !== -1) {
+                errmsg = errmsg.replace('\n',' ');
+              }
+              //console.log(errmsg);
+            }
+            else {
+              //console.log(result);
+              reply = result;
+            }
+        });
+        let sum = '';
+        let ticinfo = '';
+        if (reply !== '') {
+          //console.log('reply:');
+          //console.log(reply.response.result[0]);
+          if (reply.response.result[0] === '0') {
+            sum = reply.response.sum[0];
+            //console.log('sum =' + sum);
+            if (sum === '-1.00') {
+              ticinfo = `Большой выигрыш!!!.`
+            }
+            else if (sum === '-2.00') {
+              ticinfo = `Билет уже выплачен.`
+            }
+            else if (sum === '-3.00') {
+              ticinfo = `Билет выплачен с обменным билетом.`
+            }
+            else if (sum === '-4.00') {
+              ticinfo = `Билет аннулирован.`
+            }
+            else if (sum === '0.00') {
+              ticinfo = `Билет не выиграл.`
+            }
+            else {
+              ticinfo = `Ваш виграш ${sum} грн.`
+            }
+            console.log(ticinfo);
+          }
+          else {
+            ticinfo = 'Server reply with result: ' + reply.response.result[0];
+            console.log(ticinfo);
+          }
+        }
+        else {
+          ticinfo = 'XML wrong format:' + errmsg;
+        }
+        //res2.writeHead(200, { 'Content-Type': 'text/xml' });
+        //res2.write(rawData);
+        // Content-Type: text/xml; charset=UTF-8
+        //res2.writeHead(200, { 'Content-Type': 'text/plain; charset=UTF-8' });
+        //res2.write('Ticket info: ' + ticinfo);
+        res2.writeHead(200, { 'Content-Type': 'text/html' });
+        res2.write('<!DOCTYPE html>');
+        res2.write('<html lang="en">');
+        res2.write('<head>');
+        res2.write('<meta charset="utf-8" />');
+        res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+        res2.write('<title>Ticket info</title>');
+        res2.write('<style>');
+        res2.write('#ticinfo {');
+        //res2.write('width: 70%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('background-color: #dfdbdb;');
+        res2.write('border: thick solid black;');
+        res2.write('outline: dashed red;');
+        res2.write('}');
+        res2.write('#ticback {');
+        res2.write('display: block;')
+        res2.write('width: 10%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('color: white;')
+        res2.write('background-color: blue;');
+        res2.write('border: thin solid black;');
+        res2.write('border-radius: 15%;')
+        res2.write('text-decoration:none;')
+        res2.write('}');
+        res2.write('#ticket {');
+        res2.write('display: block;')
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('background-color: white;');
+        res2.write('border: thin solid black;');
+        res2.write('}');
+        //res2.write('');
+        res2.write('</style>');
+        res2.write('</head>');
+        res2.write('<body>');
+        res2.write('<div id="ticinfo">');
+        res2.write('<a id="ticback" href="/">Back</a>');
+        res2.write('<p id="ticket">');
+        res2.write(ticinfo);
+        res2.write('</p>');
+        res2.write('</div>');
+        res2.write('</body>');
+        res2.write('</html>');
+        //res2.write('');
+      } catch (e) {
+        console.error(e.message);
+        res2.writeHead(200, { 'Content-Type': 'text/html' });
+        res2.write('<!DOCTYPE html>');
+        res2.write('<html lang="en">');
+        res2.write('<head>');
+        res2.write('<meta charset="utf-8" />');
+        res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+        res2.write('<title>Ticket info processing error</title>');
+        res2.write('<style>');
+        res2.write('#ticinfo {');
+        //res2.write('width: 70%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('background-color: #dfdbdb;');
+        res2.write('border: thick solid black;');
+        res2.write('outline: dashed red;');
+        res2.write('}');
+        res2.write('#ticback {');
+        res2.write('display: block;')
+        res2.write('width: 10%;');
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('color: white;')
+        res2.write('background-color: blue;');
+        res2.write('border: thin solid black;');
+        res2.write('border-radius: 15%;')
+        res2.write('text-decoration:none;')
+        res2.write('}');
+        res2.write('#ticket {');
+        res2.write('display: block;')
+        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('background-color: white;');
+        res2.write('border: thin solid black;');
+        res2.write('}');
+        //res2.write('');
+        res2.write('</style>');
+        res2.write('</head>');
+        res2.write('<body>');
+        res2.write('<div id="ticinfo">');
+        res2.write('<a id="ticback" href="/">Back</a>');
+        res2.write('<h4>Ticket info processing error</h4>');
+        res2.write('<p id="ticket">');
+        res2.write(e.message);
+        res2.write('</p>');
+        res2.write('</div>');
+        res2.write('</body>');
+        res2.write('</html>');
+      }
+      res2.end();
+      //return rawData;
+    });
+  }).on('error', (e) => {
+    // e.message e.g. "connect ETIMEDOUT 10.8.194.3:9993"
+    console.error(`Got error: ${e.message}`);
+    res2.writeHead(200, { 'Content-Type': 'text/html' });
+    res2.write('<!DOCTYPE html>');
+    res2.write('<html lang="en">');
+    res2.write('<head>');
+    res2.write('<meta charset="utf-8" />');
+    res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
+    res2.write('<title>Ticket info network error</title>');
+    res2.write('<style>');
+    res2.write('#ticinfo {');
+    //res2.write('width: 70%;');
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('background-color: #dfdbdb;');
+    res2.write('border: thick solid black;');
+    res2.write('outline: dashed red;');
+    res2.write('}');
+    res2.write('#ticback {');
+    res2.write('display: block;')
+    res2.write('width: 10%;');
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('padding: 1% 1% 1% 1%;');
+    res2.write('color: white;')
+    res2.write('background-color: blue;');
+    res2.write('border: thin solid black;');
+    res2.write('border-radius: 15%;')
+    res2.write('text-decoration:none;')
+    res2.write('}');
+    res2.write('#ticket {');
+    res2.write('display: block;')
+    res2.write('margin: 3% 3% 3% 3%;');
+    res2.write('padding: 1% 1% 1% 1%;');
+    res2.write('background-color: white;');
+    res2.write('border: thin solid black;');
+    res2.write('}');
+    //res2.write('');
+    res2.write('</style>');
+    res2.write('</head>');
+    res2.write('<body>');
+    res2.write('<div id="ticinfo">');
+    res2.write('<a id="ticback" href="/">Back</a>');
+    res2.write('<h4>Ticket info network error</h4>');
+    res2.write('<p id="ticket">');
+    res2.write(e.message);
+    res2.write('</p>');
+    res2.write('</div>');
+    res2.write('</body>');
+    res2.write('</html>');
+    res2.end();
+    //return e.message;
+  });
+} // end of function GetResults(game, drawnum, res2)
+
+// <==================================== GetResults =====================================>
 
 // <==================================== ValTicket =====================================>
 function CheckValTicket(ticnum, res2) {
