@@ -1,4 +1,4 @@
-// nodeServerUNL Keno results 1016
+// nodeServerUNL Keno results 1017
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -544,6 +544,7 @@ console.log('End Serer main PROGAM path after server.listen(port, hostname, call
 
 // <==================================== GetResults =====================================>
 function GetResults(game, drawnum, res2) {
+  // NB! rawData must be set to '' before calling this function.
   // http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results
   // http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results&draw=1
   let reqStringGetResults;
@@ -599,13 +600,19 @@ function GetResults(game, drawnum, res2) {
           //console.log('reply:');
           //console.log(reply.response.result[0]);
           if (reply.response.result[0] === '0') {
+            reptext = reptext + '<li>Україньска Національна Лотерея</li>';
+            reptext = reptext + '<li>Гра: '  + game + '</li>';
             if (drawnum === 0) {
               if (reply.response.last_draw !== undefined) {
-                reptext = reptext + reply.response.last_draw[0].draw_num[0];
+                reptext = reptext + '<li>Розіграш: ' +  reply.response.last_draw[0].draw_num[0] + '</li>';
+                reptext = reptext + '<li>Дата: ' +  reply.response.last_draw[0].date[0] + '</li>';
+                reptext = reptext + '<li>Номера: ' +  reply.response.last_draw[0].winnig_numbers[0] + '</li>';
               }
             }
             else {
-              reptext = reptext + reply.response.draw_num[0];
+              reptext = reptext + '<li>Розіграш: ' + reply.response.draw_num[0] + '</li>';
+              reptext = reptext + '<li>Дата: ' + reply.response.date[0] + '</li>';
+              reptext = reptext + '<li>Номера: ' + reply.response.winnig_numbers[0] + '</li>';
             }
           }
           else {
@@ -616,18 +623,13 @@ function GetResults(game, drawnum, res2) {
         else {
           reptext = 'XML wrong format:' + errmsg;
         }
-        //res2.writeHead(200, { 'Content-Type': 'text/xml' });
-        //res2.write(rawData);
-        // Content-Type: text/xml; charset=UTF-8
-        //res2.writeHead(200, { 'Content-Type': 'text/plain; charset=UTF-8' });
-        //res2.write('Ticket info: ' + ticinfo);
         res2.writeHead(200, { 'Content-Type': 'text/html' });
         res2.write('<!DOCTYPE html>');
         res2.write('<html lang="en">');
         res2.write('<head>');
         res2.write('<meta charset="utf-8" />');
         res2.write('<meta name="viewport" content="width=device-width, initial-scale=1.0" />');
-        res2.write('<title>Ticket info</title>');
+        res2.write('<title>Draw info</title>');
         res2.write('<style>');
         res2.write('#ticinfo {');
         //res2.write('width: 70%;');
@@ -639,7 +641,7 @@ function GetResults(game, drawnum, res2) {
         res2.write('#ticback {');
         res2.write('display: block;')
         res2.write('width: 10%;');
-        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('margin: 1% 3% 1% 3%;');
         res2.write('padding: 1% 1% 1% 1%;');
         res2.write('color: white;')
         res2.write('background-color: blue;');
@@ -647,9 +649,13 @@ function GetResults(game, drawnum, res2) {
         res2.write('border-radius: 15%;')
         res2.write('text-decoration:none;')
         res2.write('}');
+        res2.write('#tichdr {');
+        res2.write('margin: 1% 3% 1% 3%;');
+        //res2.write('padding: 1% 1% 1% 1%;');
+        res2.write('}');
         res2.write('#ticket {');
         res2.write('display: block;')
-        res2.write('margin: 3% 3% 3% 3%;');
+        res2.write('margin: 1% 3% 1% 3%;');
         res2.write('padding: 1% 1% 1% 1%;');
         res2.write('background-color: white;');
         res2.write('border: thin solid black;');
@@ -660,13 +666,19 @@ function GetResults(game, drawnum, res2) {
         res2.write('<body>');
         res2.write('<div id="ticinfo">');
         res2.write('<a id="ticback" href="/">Back</a>');
-        res2.write('<p id="ticket">');
+        res2.write('<ul id="ticket">');
         res2.write(reptext);
-        res2.write('</p>');
+        res2.write('</ul>');
         res2.write('</div>');
+        //res2.write('<script>');
+        //res2.write("console.log('page body script started');");
+        //res2.write("console.log(document.getElementById('ticket').innerHTML);");
+        //res2.write("if (document.getElementById('ticket').innerHTML === 'Ожидайте ответа сервера...') document.location.reload();");
+        //res2.write('</script>');
         res2.write('</body>');
         res2.write('</html>');
         //res2.write('');
+        res2.end();
       } catch (e) {
         console.error(e.message);
         res2.writeHead(200, { 'Content-Type': 'text/html' });
