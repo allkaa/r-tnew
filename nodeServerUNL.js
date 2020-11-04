@@ -1,4 +1,4 @@
-// nodeServerUNL Keno results 1015
+// nodeServerUNL Keno results 1016
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -321,6 +321,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         console.log('game=' + game + ', drawnum=' + drawnum);
         if (game !== -1 && drawnum !== -1) {
           //console.log('game=' + game + ', draw=' + drawnum);
+          rawData = '';
           GetResults(game, drawnum, res);
         }
         else {
@@ -576,9 +577,9 @@ function GetResults(game, drawnum, res2) {
         //console.log(parsedData);
         console.log(`rawData in client http.on('end', ...) event :`)
         console.log(rawData);
-        let reply;
-        reply = '';
+        let reply = '';
         let errmsg = '';
+        let reptext = '';
         parseString(rawData, function (err, result) {
             if (err !== null) {
               //console.log(err.message);
@@ -594,41 +595,26 @@ function GetResults(game, drawnum, res2) {
               reply = result;
             }
         });
-        let sum = '';
-        let ticinfo = '';
         if (reply !== '') {
           //console.log('reply:');
           //console.log(reply.response.result[0]);
           if (reply.response.result[0] === '0') {
-            sum = reply.response.sum[0];
-            //console.log('sum =' + sum);
-            if (sum === '-1.00') {
-              ticinfo = `Большой выигрыш!!!.`
-            }
-            else if (sum === '-2.00') {
-              ticinfo = `Билет уже выплачен.`
-            }
-            else if (sum === '-3.00') {
-              ticinfo = `Билет выплачен с обменным билетом.`
-            }
-            else if (sum === '-4.00') {
-              ticinfo = `Билет аннулирован.`
-            }
-            else if (sum === '0.00') {
-              ticinfo = `Билет не выиграл.`
+            if (drawnum === 0) {
+              if (reply.response.last_draw !== undefined) {
+                reptext = reptext + reply.response.last_draw[0].draw_num[0];
+              }
             }
             else {
-              ticinfo = `Ваш виграш ${sum} грн.`
+              reptext = reptext + reply.response.draw_num[0];
             }
-            console.log(ticinfo);
           }
           else {
-            ticinfo = 'Server reply with result: ' + reply.response.result[0];
-            console.log(ticinfo);
+            reptext = 'Server reply with result: ' + reply.response.result[0];
           }
+          console.log(reptext);
         }
         else {
-          ticinfo = 'XML wrong format:' + errmsg;
+          reptext = 'XML wrong format:' + errmsg;
         }
         //res2.writeHead(200, { 'Content-Type': 'text/xml' });
         //res2.write(rawData);
@@ -675,7 +661,7 @@ function GetResults(game, drawnum, res2) {
         res2.write('<div id="ticinfo">');
         res2.write('<a id="ticback" href="/">Back</a>');
         res2.write('<p id="ticket">');
-        res2.write(ticinfo);
+        res2.write(reptext);
         res2.write('</p>');
         res2.write('</div>');
         res2.write('</body>');
