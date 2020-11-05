@@ -138,11 +138,24 @@ input[type="search"] {
   /* font: 1em sans-serif; */
   /* Uniform text field size */
   width: 5%;
-  margin: 2px;
+  margin-left: 1rem;
   padding: 1px;
   box-sizing: border-box;
   /* border: 1px solid #999; */
 }
+
+#gameselect {
+  /* font: 1em sans-serif; */
+  /* Uniform text field size */
+  font-size: 1.6rem;
+  width: 12%;
+  height: 32px;
+  margin-left: 1rem;
+  padding: 1px;
+  box-sizing: border-box;
+  /* border: 1px solid #999; */
+}
+
 
 input[type="submit"] {
   /*flex: 1; /* proportion 1 to upper level form */

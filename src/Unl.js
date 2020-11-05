@@ -1,4 +1,4 @@
-// Unl.js Keno results 014
+// Unl.js Keno results 015
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -509,6 +509,11 @@ function NoMatchAside(props) {
     */
   }
 
+  function handleSubmitResults() {
+    return;
+  }
+
+
   return (
     <div>
       <img id="logoimg" src={logo} alt="logo" /> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
@@ -541,6 +546,19 @@ function NoMatchAside(props) {
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
+        {/*<h4>Результаты игры по номеру розыгрыша (если номер не задан, то последнего)</h4>*/}
+        <form role="search" method="get" action="formAKresults" onSubmit={handleSubmitResults}>
+          {/*<input hidden type="search" name="g"  defaultValue="2" className="drawnum"></input>*/}
+          <select name="g" required id="gameselect" >
+            <option value="">--Выберите игру--</option>
+            <option value="2">Кено</option>
+            <option value="4">Трійка</option>
+            <option value="5">Максима</option>
+            <option value="6">Супер Лото</option>
+          </select>
+          <button type="submit">Результаты игры по номеру розыгрыша (если не задан, то последнего)</button>
+          <input type="search" name="q"  defaultValue="" className="drawnum" placeholder="" aria-label="Keno results"></input>
+        </form>
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
           {/* <input type="submit" value="Ticket search"/> */}
@@ -1220,10 +1238,6 @@ function Keno() {
   } // end of function CalcSumKN().
 
 
-  function handleSubmitKenoResults() {
-    return;
-  }
-
   // '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0'
   // &board1=01_11_15_24_33_52
 
@@ -1266,12 +1280,6 @@ function Keno() {
   return (
   <div>
   <h3>Кено Лото</h3>
-  <h4>Результаты по номеру розыгрыша (если номер не задан, то последнего)</h4>
-  <form role="search" method="get" action="formAKresults" onSubmit={handleSubmitKenoResults}>
-    <input hidden type="search" name="g"  defaultValue="2" className="drawnum"></input>
-    <input type="search" name="q"  defaultValue="" className="drawnum" placeholder="" aria-label="Keno results"></input>
-    <button type="submit">Получить результата</button>
-  </form>
   <h4>Играть:</h4>
   <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
   <div>

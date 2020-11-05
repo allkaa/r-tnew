@@ -1,4 +1,4 @@
-// nodeServerUNL Keno results 1018
+// nodeServerUNL Keno results 1019
 'use strict'; // is unnecessary inside of modules.
 // Using special formName  /formAKchk?q=123-12345678-1234567 /formAKval?q=123-12345678-1234567 or /formAKpay?q=xxx
 //file:///home/akaarna/react-tutorial/build/index.html
@@ -321,7 +321,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         console.log('game=' + game + ', drawnum=' + drawnum);
         if (game !== -1 && drawnum !== -1) {
           //console.log('game=' + game + ', draw=' + drawnum);
-          rawData = '';
+          rawData = ''; // NB! must be cleared before calling function.
           GetResults(game, drawnum, res);
         }
         else {
@@ -544,13 +544,13 @@ console.log('End Serer main PROGAM path after server.listen(port, hostname, call
 
 // <==================================== GetResults =====================================>
 function GetResults(game, drawnum, res2) {
-  // NB! rawData must be set to '' before calling this function.
+  // NB! rawData var must be set to '' before calling this function.
   // http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results
   // http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results&draw=1
   let gamename = 'Unknown';
   if (game === 2) gamename = 'Кено';
   else if (game === 4) gamename = 'Трійка';
-  else if (game === 5) gamename = 'ЛОто Максима';
+  else if (game === 5) gamename = 'Лото Максима';
   else if (game === 6) gamename = 'Супер Лото';
   let reqStringGetResults;
   reqStringGetResults = urlpay + '?agent=16&type=2&command=scheck&game=' + game.toString() + '&draw_results';
@@ -606,6 +606,7 @@ function GetResults(game, drawnum, res2) {
           //console.log(reply.response.result[0]);
           if (reply.response.result[0] === '0') {
             reptext = reptext + '<li>Україньска Національна Лотерея</li>';
+            reptext = reptext + '<li>Результаты</li>';
             reptext = reptext + '<li>Гра: '  + gamename + '</li>';
             if (drawnum === 0) {
               if (reply.response.last_draw !== undefined) {
