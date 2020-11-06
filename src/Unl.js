@@ -1,4 +1,4 @@
-// Unl.js Keno results 015
+// Unl.js Results 016
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -509,10 +509,30 @@ function NoMatchAside(props) {
     */
   }
 
-  function handleSubmitResults() {
+  function changeResultsDraw(event) {
+    //console.log(event.target.name);
+    const MaxNum = 100000;
+    const MinNum = 1;
+    let strN = event.target.value;
+    //console.log(strN);
+    let nbrN = Number(strN);
+    //console.log('draws: ' + nbrN);
+    if (Number.isNaN(nbrN)) {
+      event.preventDefault();
+      alert("Ошибка! Номер розыгрыша задан некорректно.");
+      event.target.value = '';
+    }
+    else if ((nbrN < MinNum) || (nbrN > MaxNum)) {
+      event.preventDefault();
+      alert("Ошибка! Номер розыгрыша задан некорректно.");
+      event.target.value = '';
+    }
     return;
   }
 
+  function handleSubmitResults() {
+    return;
+  }
 
   return (
     <div>
@@ -528,6 +548,7 @@ function NoMatchAside(props) {
           <li>
             <Link to="/">Домой</Link>
           </li>
+          {/*<b id="todo">Купить билет:</b>*/}
           <li>
             <Link to="/nav-match2">Кено</Link>
           </li>
@@ -546,7 +567,6 @@ function NoMatchAside(props) {
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
-        {/*<h4>Результаты игры по номеру розыгрыша (если номер не задан, то последнего)</h4>*/}
         <form role="search" method="get" action="formAKresults" onSubmit={handleSubmitResults}>
           {/*<input hidden type="search" name="g"  defaultValue="2" className="drawnum"></input>*/}
           <select name="g" required id="gameselect" >
@@ -556,13 +576,15 @@ function NoMatchAside(props) {
             <option value="5">Максима</option>
             <option value="6">Супер Лото</option>
           </select>
-          <button type="submit">Результаты игры по номеру розыгрыша (если не задан, то последнего)</button>
-          <input type="search" name="q"  defaultValue="" className="drawnum" placeholder="" aria-label="Keno results"></input>
+          <button type="submit">Результаты игры</button>
+          <input type="search" name="q"  defaultValue="" onChange = {changeResultsDraw} className="drawnum" placeholder="" aria-label="Keno results"></input>
+          <b>Результаты игры по номеру розыгрыша (если номер не задан, то последнего)</b>
         </form>
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
-          <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
           {/* <input type="submit" value="Ticket search"/> */}
-          <button type="submit">Проверить выигрыш по номеру билета</button>
+          <button type="submit">Проверить выигрыш</button>
+          <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
+          <b>Проверить выигрыш по номеру билета</b>
         </form>
         {/*<p id="found">{found}</p>*/}
         {(found.length > 0) && <p id="found">{found}</p>}
@@ -603,27 +625,28 @@ function NoMatchAside(props) {
       <main>
         {/*<!-- the aside content can also be nested within the main content -->*/}
         <aside id="leftaside"> {/* role="complementary" is default for aside */}
-          <h4>Float image in aside</h4>
+          <h4>О сайте</h4>
           {/*<img id="logoimg" src="logo.png" alt="logo"/>*/}
           <img id="logoimg2" src={logo2} alt="logo2"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. </p>
+          <p>На этом сайте вы можете купить билеты игр УНЛ, ознакомиться с выигрышными номерами розыгрышей и проверить ваш билет на выигрыш.</p>
         </aside>
         <article>
-          <h4>Article title</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris. Maecenas congue ligula as quam viverra nec consectetur ant hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
+          <h4>Игры Украинской Национальной Лотереи</h4>
+          <p>Супер Лото</p>
+          <p></p>
         </article>
         <aside id="rightaside">
         <Router>
         <div>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Дополнительные игры</Link>
           </li>
           <li>
-            <Link to="/will-match1">Will Match 1</Link>
+            <Link to="/will-match1">Стерлинг онлайн</Link>
           </li>
           <li>
-            <Link to="/will-match2">Will Match 2</Link>
+            <Link to="/will-match2">ВИП лото онлайн</Link>
           </li>
           <li>
             <Link to="will-match3">Will Match 3</Link>
@@ -1279,8 +1302,7 @@ function Keno() {
 
   return (
   <div>
-  <h3>Кено Лото</h3>
-  <h4>Играть:</h4>
+  <h3>Кено Лото играть:</h3>
   <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>
@@ -2333,7 +2355,7 @@ function SuperLoto() {
 
   return (
   <div>
-  <h3>Супер Лото</h3>
+  <h3>Супер Лото играть:</h3>
   <h4>Задайте количество последовательных розыгрышей (от 1 до 6):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>
@@ -3433,7 +3455,7 @@ function Maxima() {
 
   return (
   <div>
-  <h3>Лото Максима</h3>
+  <h3>Лото Максима играть:</h3>
   <h4>Задайте количество последовательных розыгрышей (от 1 до 6):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>
@@ -4220,7 +4242,7 @@ function Tryika() {
 
   return (
   <div>
-  <h3>Лото Трійка</h3>
+  <h3>Лото Трійка играть:</h3>
   <h4>Задайте количество последовательных розыгрышей (от 1 до 7 или 14):</h4>
   <div>
     <p className="boardLabel">Розыгрышей</p>

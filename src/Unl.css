@@ -119,6 +119,11 @@ nav > div > form {
   padding: 1%;
 }
 
+#todo {
+  font-size: 1.6rem;
+  height: 32px;
+}
+
 input {
   font-size: 1.6rem;
   height: 32px;
@@ -132,6 +137,8 @@ input[type="search"] {
 
 .ticket {
   width: 10.5%;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .drawnum {
@@ -139,6 +146,7 @@ input[type="search"] {
   /* Uniform text field size */
   width: 5%;
   margin-left: 1rem;
+  margin-right: 1rem;
   padding: 1px;
   box-sizing: border-box;
   /* border: 1px solid #999; */
@@ -170,9 +178,10 @@ button {
   font-size: 1.6rem;
   height: 32px;
   margin-left: 1rem;
-  background: #333;
+  background: wheat;
+  border-radius: 25%;
   /* border: 0; */
-  color: white;
+  color: black;
 }
 
 .numbs {
