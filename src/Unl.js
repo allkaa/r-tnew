@@ -1,4 +1,4 @@
-// Unl.js Results 017
+// Unl.js Results 018
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -32,11 +32,12 @@ import { useState, useEffect, useLayoutEffect } from 'react'; // React Hooks use
 // - A <Route path="*"> always matches
 //import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logo from './unl_newlogo_small.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoSL from './super_loto.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoKN from './keno.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoMX from './maxima.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;
@@ -631,8 +632,8 @@ function NoMatchAside(props) {
         <aside id="leftaside"> {/* role="complementary" is default for aside */}
           <h4>О сайте</h4>
           {/*<img id="logoimg" src="logo.png" alt="logo"/>*/}
-          <img id="logoimg2" src={logo2} alt="logo2"/> {/* src="logo.png"  logo.png img_5terre.jpg are in public dir */}
-          <p>На этом сайте вы можете купить билеты игр УНЛ, ознакомиться с выигрышными номерами розыгрышей и проверить ваш билет на выигрыш.</p>
+          <img id="logoimg3" src={logoSite} alt="logoSite"/> {/* or src="logo.png"  logo.png in public dir */}
+          <p>На этом сайте вы можете купить билеты игр УНЛ, ознакомиться с выигрышными номерами проведенных розыгрышей, а также проверить ваш билет на выигрыш.</p>
         </aside>
         <article>
           <h4>Игры Украинской Национальной Лотереи</h4>
