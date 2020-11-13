@@ -1,4 +1,4 @@
-// Unl.js home ico 019
+// Unl.js Results 018
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -38,7 +38,6 @@ import logoKN from './keno.svg'; // Tell Webpack this JS file will use this imag
 import logoMX from './maxima.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack this JS file will use this image placed in src dir.
-import home from './home-2-16.ico'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;
@@ -552,7 +551,7 @@ function NoMatchAside(props) {
         <div>
         <ul>
           <li>
-            <a href="/"><img src={home} alt="Home"></img></a> {/* <img src={home} alt="Home"></img> */}
+            <Link to="/">Домой</Link>
           </li>
           {/*<b id="todo">Купить билет:</b>*/}
           <li>
@@ -686,21 +685,9 @@ function NoMatchAside(props) {
           </p>
         </article>
         <aside id="rightaside">
-          <div>
-          <h4>Дополнительные игры</h4>
-          <ul>
-            <li>
-              <a href="/StearlingOnline">Стерлинг онлайн</a>
-            </li>
-            <li>
-              <a href="/VipLotoOnline">ВИП лото онлайн</a>
-            </li>
-          </ul>
-        </div>
-          {/*
-          <Router>
-          <div>
-          <ul>
+        <Router>
+        <div>
+        <ul>
           <li>
             <Link to="/">Дополнительные игры</Link>
           </li>
@@ -716,9 +703,9 @@ function NoMatchAside(props) {
           <li>
             <Link to="/NewServerPage">Link to NewServerPage</Link>
           </li>
-          </ul>
+        </ul>
 
-          <Switch>
+        <Switch>
           <Route exact path="/">
             <AsideHome />
           </Route>
@@ -731,15 +718,14 @@ function NoMatchAside(props) {
           <Route path="/will-match3">
             <AsideWillMatch />
           </Route>
-          </Switch>
-          </div>
-          </Router>
-          */}
+        </Switch>
+        </div>
+        </Router>
         </aside>
       </main>
     </div>
   );
-} // end of function NoMatchAside(props)
+}
 
 export default NoMatchAside;
 
