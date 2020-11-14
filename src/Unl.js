@@ -1,4 +1,4 @@
-// Unl.js home ico 019
+// Unl.js stearling and blitz 020
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -39,6 +39,8 @@ import logoMX from './maxima.svg'; // Tell Webpack this JS file will use this im
 import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack this JS file will use this image placed in src dir.
 import home from './home-2-16.ico'; // Tell Webpack this JS file will use this image placed in src dir.
+import stearling from './SPEED_ICON.0db9af09.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+import vip from './blitz.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;
@@ -634,7 +636,22 @@ function NoMatchAside(props) {
           <h4>О сайте</h4>
           {/*<img id="logoimg" src="logo.png" alt="logo"/>*/}
           <img id="logoimg3" src={logoSite} alt="logoSite"/> {/* or src="logo.png"  logo.png in public dir */}
-          <p>На этом сайте вы можете купить билеты игр УНЛ, ознакомиться с выигрышными номерами проведенных розыгрышей, а также проверить ваш билет на выигрыш.</p>
+          <p>На этом сайте вы можете купить билеты игр УНЛ, ознакомиться с выигрышными номерами проведенных розыгрышей,
+             а также проверить ваш билет на выигрыш.
+          </p>
+          <p>
+            Для получения результатов проведенных розыгрышей необходимо выбрать игру, ввести номер розыгрыша и нажать "Результаты игры".
+            Если номер не задан используется номер последнего розыгрыша.
+          </p>
+          <p>
+            Для проверки билета на выигрыш необходимо ввести номер билета и нажать "Проверить выигрыш".
+            Номер билета вводится в формате 123-12345678-1234567.
+          </p>
+          <p>
+            Для покупки билета необходимо выбрать игру (Кено, Супер Лото, Максима или Тройка) и далее задать количество последовательных
+            розыгрышй, ваши игровые комбинации и ставку (для Кено и Тройка).
+            Возможно задавать комбинации в режиме АВТО, а также использовать системную игру (для Супер Лото и Максима).
+          </p>
         </aside>
         <article>
           <h4>Игры Украинской Национальной Лотереи</h4>
@@ -690,10 +707,10 @@ function NoMatchAside(props) {
           <h4>Дополнительные игры</h4>
           <ul>
             <li>
-              <a href="/StearlingOnline">Стерлинг онлайн</a>
+              <a href="/StearlingOnline"><img id="logoimg4" src={stearling} alt="Stearling"></img>Стерлинг онлайн</a>
             </li>
             <li>
-              <a href="/VipLotoOnline">ВИП лото онлайн</a>
+              <a href="/VipLotoOnline"><img id="logoimg4" src={vip} alt="Vip"></img>Блитц лото онлайн</a>
             </li>
           </ul>
         </div>
