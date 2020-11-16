@@ -284,8 +284,8 @@ article {
   /* margin-right: 2px; */
   margin: 0px 5px 0px 0px; /* top-right-bottom-left */
   /* margin-left: 2px; */
-  width: 75px;
-  height: 50px;
+  width: 12em; /* 75px */
+  height: 3em; /* 50px */
   border-radius: 5px;
   background-color: #dfdbdb;
   padding: 1em;
@@ -311,7 +311,7 @@ article {
   margin: 0px 5px 0px 15px; /* top-right-bottom-left */
   /* margin-left: 2px; */
   width: 10em;
-  height: 4em;
+  height: 5em;
   border-radius: 5px;
   background-color: rgb(252, 252, 239);
   padding: 1em;
