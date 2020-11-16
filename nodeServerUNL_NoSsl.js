@@ -67,7 +67,8 @@ let txn_id = 10000000;
 let rawData = '';
 
 const parseString = require('xml2js').parseString;
-const https = require('https');
+//const https = require('https');
+const https = require('http');
 //const { StrictMode } = require('react');
 const urlLegacy = require('url'); // Legacy url module.
 //const { URL } = require('url'); // ES6 url module
@@ -97,7 +98,7 @@ const port = 8081; // for Linux must be set manually;
 dtVar = new Date();
 console.log('Before https.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
-///*
+/*
 let optSsl;
 if (typeProj === 'build') {
   optSsl = {
@@ -112,11 +113,11 @@ else {
   };
 }
 let options = optSsl;
-//*/
+*/
 
 //const server = http.createServer((req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse> ...}
-const server = https.createServer(options);
-//const server = http.createServer();
+//const server = https.createServer(options);
+const server = https.createServer();
 
 server.on('error', (err) => {
   var dtVar = new Date();
@@ -223,7 +224,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         });
       }
       else {
-        //console.log('Non empty contType read file: ./' + dirName + objUrl.pathname);
+        console.log('Non empty contType read file: ./' + dirName + objUrl.pathname);
         fs.readFile('./' + dirName + objUrl.pathname, (err, data) => { // './' + dirName  + "/path/name.type"
         if (err) {
           res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -539,7 +540,8 @@ console.log('After https.createServer ' + dtVar.getSeconds() + "." + dtVar.getMi
 // or the unspecified IPv4 address (0.0.0.0) otherwise.
 server.listen(port, hostname, () => {
   // Place holders in template literals are indicated by the $ (Dollar sign) and curly braces e.g. (${expression}).
-  console.log(`Server running and listening at https://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
+  //console.log(`Server running and listening at https://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
+  console.log(`Server running and listening at http://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
 });
 
 dtVar = new Date();
