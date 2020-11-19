@@ -17,6 +17,10 @@ body {
   /* outline: dashed red; */
 }
 
+span {
+  font-size: 1rem;
+}
+
 /* || typography */
 h1, h2, h3 {
   font-family: 'Sonsie One', cursive;
