@@ -1,4 +1,4 @@
-// UnlM.js viewport 002
+// UnlM.js viewport 003
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -552,7 +552,7 @@ function NoMatchAside(props) {
   return (
     <div>
       <img id="logoimg" src={logo} alt="logo" /> {/* or use as src="logo.png"  logo.png img_5terre.jpg are in public dir */}
-      <h1>Українська Національна Лотерея</h1>
+      {/* <h1>Українська Національна Лотерея</h1> */}
 
       <header>
         {/*<!-- Even is it's not mandatory, it's common practice to put the main navigation menu within the main header -->*/}
