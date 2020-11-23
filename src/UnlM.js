@@ -1,4 +1,4 @@
-// UnlM.js viewport 001
+// UnlM.js viewport 002
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -31,21 +31,23 @@ import { useState, useEffect, useLayoutEffect } from 'react'; // React Hooks use
 // - A <Redirect> may be used to redirect old URLs to new ones
 // - A <Route path="*"> always matches
 //import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import logo from './unl_newlogo_small.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logo from './unl_newlogo_small.png'; // Tell Webpack this JS file will use this image placed in src dir.
+import logo from './UNL_CAPASITY_HORIZONTAL_BLUE_LARGE.8cafb623.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import home from './home-2-16.ico'; // Tell Webpack this JS file will use this image placed in src dir.
-import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack this JS file will use this image placed in src dir.
-//import logoSL from './super_loto.svg'; // Tell Webpack this JS file will use this image placed in src dir.
-//import logoKN from './keno.svg'; // Tell Webpack this JS file will use this image placed in src dir.
-//import logoMX from './maxima.svg'; // Tell Webpack this JS file will use this image placed in src dir.
-//import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack this JS file will use this image placed in src dir.
+import logoSL from './super_loto.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+import logoKN from './keno.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+import logoMX from './maxima.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+//import stearling from './SPEED_ICON.0db9af09.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import vip from './blitz.svg'; // Tell Webpack this JS file will use this image placed in src dir.
-import logoSL from './super_loto.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import logoKN from './keno.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import logoMX from './maxima.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import logoTR from './loto3.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import stearling from './SPEED_ICON.0db9af09.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import vip from './blitz.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logoSL from './super_loto.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logoKN from './keno.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logoMX from './maxima.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logoTR from './loto3.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import stearling from './SPEED_ICON.0db9af09.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import vip from './blitz.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;

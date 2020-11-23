@@ -193,7 +193,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         contType = 'image/png';
       }
       else if (objUrl.pathname.endsWith('.svg')) {
-        contType = 'image/svg';
+        contType = 'image/svg+xml';
       }
       else if (objUrl.pathname.endsWith('.jpg') || objUrl.pathname.endsWith('.jpeg')) {
         contType = 'image/jpeg';
