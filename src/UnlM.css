@@ -290,8 +290,8 @@ article {
   /* margin-right: 2px; */
   margin: 0px 5px 0px 0px; /* top-right-bottom-left */
   /* margin-left: 2px; */
-  width: 12%; /* 75px */
-  height: 2%; /* 50px */
+  width: 10%; /* 75px */
+  /* height: 2%; /* 50px */
   border-radius: 5px;
   background-color: #dfdbdb;
   padding: 1em;
@@ -303,8 +303,8 @@ article {
   /* margin-right: 2px; */
   margin: 0px 5px 0px 0px; /* top-right-bottom-left */
   /* margin-left: 2px; */
-  /* width: 75px; */
-  height: 7%; /* 50px; */
+  width: 10%;
+  /*height: 7%; /* 50px; */
   border-radius: 5px;
   /* background-color: #dfdbdb; */
   /* padding: 1em; */
