@@ -1,6 +1,5 @@
 /* || General setup */
 
-
 html {
   margin: 0;
   padding: 0;
@@ -8,12 +7,23 @@ html {
   background-color: white;
 }
 
-body {
+/* old desktop body top+right+bottom+left 0 auto;
+#body {
   width: 98%;
-  margin: 1% 1% 1% 1%; /* top+right+bottom+left 0 auto; */
+  margin: 1% 1% 1% 1%;
+  padding: 0;
+  background-color: rgb(252, 252, 239);
+  border: thin solid black;
+  /* outline: dashed red;
+}
+*/
+
+body {
+  width: 100%; /* 98% */
+  /* margin: 1% 1% 1% 1%; /* top+right+bottom+left 0 auto; */
   padding: 0;
   background-color: rgb(252, 252, 239); /* #a9a9a9  will be background-color for all doc if no set in html*/
-  border: thin solid black;
+  /* border: thin solid black;
   /* outline: dashed red; */
 }
 
@@ -21,8 +31,13 @@ span {
   font-size: 1rem;
 }
 
+b {
+  font-weight: normal;
+}
+
 /* || typography */
-h1, h2, h3 {
+h1 {
+  margin: 0% 0% 0% 0%; /* top+right+bottom+left 0 auto; */
   font-family: 'Sonsie One', cursive;
   color: #2a2a2a;
 }
@@ -52,13 +67,22 @@ h4 {
   font-size: 1.8rem;
 }
 
+#hdr4 {
+  margin: 0% 0% 0% 5%; /* top+right+bottom+left 0 auto; */
+  font-size: 1rem;
+}
+
 p, li {
   font-size: 1.6rem;
   line-height: 1.5;
 }
 
-/* || header layout */
+.p {
+  font-size: 1rem;
+  /* line-height: 1.5; */
+}
 
+/* || header layout */
 header {
   margin-bottom: 10px;
 }
@@ -115,6 +139,15 @@ nav > div > ul> li > a {
   color: black;
 }
 
+.nav_div_ul_li_a {
+  display: inline-block;
+  margin: 0% 0% 0% 0%; /* top+right+bottom+left 0 auto; */
+  font-size: 1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+}
+
 nav > div > form {
   /*flex: 1; /* proportion 1 to upper level nav display: flex; */
   /*display: flex; /* to childs - input search and submit */
@@ -145,6 +178,13 @@ input[type="search"] {
   margin-right: 1rem;
 }
 
+.ticketM {
+  font-size: 1rem;
+  width: 35%;
+  margin-left: 1%;
+  /* margin-right: 1rem; */
+}
+
 .drawnum {
   /* font: 1em sans-serif; */
   /* Uniform text field size */
@@ -152,6 +192,18 @@ input[type="search"] {
   margin-left: 1rem;
   margin-right: 1rem;
   padding: 1px;
+  box-sizing: border-box;
+  /* border: 1px solid #999; */
+}
+
+.drawnumM {
+  font-size: 1rem;
+  /* font: 1em sans-serif; */
+  /* Uniform text field size */
+  width: 15%;
+  margin-left: 1%;
+  margin-right: 1%;
+  /*padding: 1px; */
   box-sizing: border-box;
   /* border: 1px solid #999; */
 }
@@ -168,6 +220,17 @@ input[type="search"] {
   /* border: 1px solid #999; */
 }
 
+#gameselectM {
+  /* font: 1em sans-serif; */
+  /* Uniform text field size */
+  font-size: 1rem;
+  width: 30%;
+  /* height: 32px; */
+  margin-left: 1%;
+  /* padding: 1px; */
+  box-sizing: border-box;
+  /* border: 1px solid #999; */
+}
 
 input[type="submit"] {
   /*flex: 1; /* proportion 1 to upper level form */
@@ -184,6 +247,17 @@ button {
   margin-left: 1rem;
   background: wheat;
   border-radius: 25%;
+  /* border: 0; */
+  color: black;
+}
+
+.buttonM {
+  /*flex: 1; /* proportion 1 to upper level form */
+  font-size: 1rem;
+  /* height: 32px; */
+  margin-left: 1%;
+  background: wheat;
+  border-radius: 15%;
   /* border: 0; */
   color: black;
 }
@@ -275,12 +349,26 @@ article {
   /* margin-right: 2px; */
   margin: 0px 5px 0px 15px; /* top-right-bottom-left */
   /* margin-left: 2px; */
-  width: 150px;
-  height: 50px;
+  width: 10%;
+  /* height: 50px; */
   border-radius: 5px;
   background-color: rgb(252, 252, 239);
   padding: 1em;
 }
+
+#logoimgM {
+  /* float: left; */
+  /* float: right; */
+  /* margin-right: 2px; */
+  /* margin: 0px 5% 0px 15%; /* top-right-bottom-left */
+  /* margin-left: 2px; */
+  width: 15%;
+  /* height: 2%; */
+  border-radius: 5px;
+  background-color: rgb(252, 252, 239);
+  /* padding: 1em; */
+}
+
 
 #logoimg2 {
   float: left;

@@ -1,4 +1,5 @@
-// UnlM.js viewport svg 005
+// UnlM.js viewport svg 006
+//import './UnlM.css' // <--------
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -187,7 +188,7 @@ let myInfoRefk10 = React.createRef();
 let myInfoRefka = React.createRef();
 
 function NoMatchAside(props) {
-  console.log('Main props:' + props);
+  console.log('UnlM.js props:' + props);
   console.log(props); // {txn_id: 10000000}
   if (txn_id === 0) {
     txn_id = props.txn_id;
@@ -551,7 +552,7 @@ function NoMatchAside(props) {
 
   return (
     <div>
-      <img id="logoimg" src={logo} alt="logo" /> {/* or use as src="logo.png"  logo.png img_5terre.jpg are in public dir */}
+      <img id="logoimgM" src={logo} alt="logo" /> {/* or use as src="logo.png"  logo.png img_5terre.jpg are in public dir */}
       {/* <h1>Українська Національна Лотерея</h1> */}
 
       <header>
@@ -561,45 +562,45 @@ function NoMatchAside(props) {
         <div>
         <ul>
           <li>
-            <a href="/"><img src={home} alt="Home"></img></a> {/* <img src={home} alt="Home"></img> */}
+            <a className="nav_div_ul_li_a" href="/"><img src={home} alt="Home"></img></a> {/* <img src={home} alt="Home"></img> */}
           </li>
           {/*<b id="todo">Купить билет:</b>*/}
           <li>
-            <Link to="/nav-match2">Кено</Link>
+            <Link className="nav_div_ul_li_a" to="/nav-match2">Кено</Link>
           </li>
           <li>
-            <Link to="/nav-match3">Супер Лото</Link>
+            <Link className="nav_div_ul_li_a" to="/nav-match3">Супер Лото</Link>
           </li>
           <li>
-            <Link to="/nav-match4">Максима</Link>
+            <Link className="nav_div_ul_li_a" to="/nav-match4">Максима</Link>
           </li>
           <li>
-            <Link to="/nav-match5">Тройка</Link>
+            <Link className="nav_div_ul_li_a" to="/nav-match5">Тройка</Link>
           </li>
           <li>
-            <Link to="/nav-match6">О нас</Link>
+            <Link className="nav_div_ul_li_a" to="/nav-match6">О нас</Link>
           </li>
         </ul>
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
         <form role="search" method="get" action="formAKresults" onSubmit={handleSubmitResults}>
           {/*<input hidden type="search" name="g"  defaultValue="2" className="drawnum"></input>*/}
-          <select name="g" required id="gameselect" >
+          <select name="g" required id="gameselectM" >
             <option value="">--Выберите игру--</option>
             <option value="2">Кено</option>
             <option value="4">Трійка</option>
             <option value="5">Максима</option>
             <option value="6">Супер Лото</option>
           </select>
-          <button type="submit">Результаты игры</button>
-          <input type="search" name="q"  defaultValue="" onChange = {changeResultsDraw} className="drawnum" placeholder="" aria-label="Keno results"></input>
-          <p>Номер розыгрыша (если номер не задан, то последнего)</p>
+          <button className="buttonM" type="submit">Результаты игры</button>
+          <input type="search" name="q"  defaultValue="" onChange = {changeResultsDraw} className="drawnumM" placeholder="" aria-label="Keno results"></input>
+          <p className="p">Номер розыгрыша (если номер не задан, то последнего)</p>
         </form>
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           {/* <input type="submit" value="Ticket search"/> */}
-          <button type="submit">Проверить выигрыш</button>
-          <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
-          <p>Проверить выигрыш по номеру билета</p>
+          <button className="buttonM" type="submit">Проверить выигрыш</button>
+          <input type="search" className = "ticketM" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
+          <p className="p">Проверить выигрыш по номеру билета</p>
         </form>
         {/*<p id="found">{found}</p>*/}
         {(found.length > 0) && <p id="found">{found}</p>}
@@ -640,19 +641,19 @@ function NoMatchAside(props) {
       <h4 id="hdr4">Дополнительные игры</h4>
       <ul>
         <li>
-          <a href="/StearlingOnline">Стерлинг онлайн</a>
+          <a className="p" href="/StearlingOnline">Стерлинг онлайн</a>
         </li>
         <li>
-          <a href="/VipLotoOnline">Блитц лото онлайн</a>
+          <a className="p" href="/VipLotoOnline">Блитц лото онлайн</a>
         </li>
       </ul>
 
       <main>
         {/*<!-- the aside content can also be nested within the main content -->*/}
         <article>
-          <h4>Игры Украинской Национальной Лотереи</h4>
+          <h4 id="hdr4">Игры Украинской Национальной Лотереи</h4>
           <img id="logoimg3" src={logoSL} alt="logoSL" /> {/* or use as src="logo.png" where logo.png in public dir */}
-          <p>«Супер Лото» це Ваш унікальний шанс радикально змінити своє життя, витративши всього 15 гривень.
+          <p className="p">«Супер Лото» це Ваш унікальний шанс радикально змінити своє життя, витративши всього 15 гривень.
              Адже «Супер Лото» - це величезний джекпот - сума, якої вистачить для здійснення будь-якої Вашої мрії.
              Саме у «Супер Лото» зафіксований найбільший виграш в історії українських лотерей - 15 200 000 грн!
              Взяти участь у грі дуже просто! Для цього Ви повинні заповнити ігрову картку, закресливши на одному або декількох ігрових полях,
@@ -662,7 +663,7 @@ function NoMatchAside(props) {
                Якщо Ви вгадали 6 номерів - ви зірвали джекпот!
           </p>
           <img id="logoimg2" src={logoKN} alt="logoKN" /> {/* or use as src="logo.png" where logo.png in public dir */}
-          <p>В «Кєно» кожного разу розігруються 20 номерів з 80. Щоб виграти головний приз, Вам достатньо вгадати лише половину номерів,
+          <p className="p">В «Кєно» кожного разу розігруються 20 номерів з 80. Щоб виграти головний приз, Вам достатньо вгадати лише половину номерів,
              що були розіграні! Та, навіть, якщо Ви не вгадали жодного номера, Ви все одно виграли! У випадку,
             якщо Ви поставили на 9 або 10 номерів і не вгадали жодного, то Ви все одно виграли вдвічі більше, ніж поставили.
             Вважається, що слово Кєно має латинське коріння. У первинному вигляді в цій грі було 5 виграшних номерів.
@@ -675,7 +676,7 @@ function NoMatchAside(props) {
             Кожного вечора проводиться розіграш, у якому розігруються 20 номерів з 80. Ви можете обрати від 2 до 10 номерів та збільшити ставку від 2 до 10 разів. «Кєно» — це гра вибору. Якщо серед розіграних номерів є обрані Вами — Ви виграли!
           </p>
           <img id="logoimg3" src={logoMX} alt="logoKN" /> {/* or use as src="logo.png" where logo.png in public dir */}
-          <p>«Лото Максима» — це гра для тих, кому подобається вигравати легко і часто! Максимально прості правила та оптимальні шанси
+          <p className="p">«Лото Максима» — це гра для тих, кому подобається вигравати легко і часто! Максимально прості правила та оптимальні шанси
             на виграш дозволяють отримати максимальне задоволення від гри, і роблять цю лотерею прекрасним доповненням до «Супер Лото» для 
             всіх категорій гравців.
             Взяти участь в грі дуже просто! Для цього Ви повинні заповнити ігрову картку, закресливши на одному або декількох ігрових полях
@@ -686,7 +687,7 @@ function NoMatchAside(props) {
             Джекпот зростає від розіграшу до розіграшу і може сягати великих розмірів, аж поки не буде виграний.
           </p>
           <img id="logoimg3" src={logoTR} alt="logoTR" /> {/* or use as src="logo.png" where logo.png in public dir */}
-          <p>Цікаве про «Лото Трійка» У всьому світі, лотерея, що проводиться за аналогічною формулою, вже стала класичною.
+          <p className="p">Цікаве про «Лото Трійка» У всьому світі, лотерея, що проводиться за аналогічною формулою, вже стала класичною.
             В Україні теж є можливість зіграти в цей різновид лотерей, який дає можливість легко виграти невеликий, 
             але легкопрогнозований приз. Правила лотерєї дуже прості, але і тут є можливість проявити себе досвідченим гравцям.
             Перші згадки про лотереї можна зустріти за часів Римської Імперії.

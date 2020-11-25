@@ -46,7 +46,7 @@ import './StyleSheetsDemo4.css'
 //import './styleHWT.css' // <--------
 //import './styleARIA.css' // <--------
 //import './styleNoMatchAside.css' // <--------
-import './UnlM.css' // <--------
+//import './UnlM.css' // <--------
 
 // application js files will be loaded from src dir
 //import App from './AppInitial'
@@ -106,8 +106,10 @@ import './UnlM.css' // <--------
 //import App from './AppFetchJSON_Hooks'
 //import App from './AppXhrXML_Hooks'
 //import App from './NoMatch404asideFetch'
-import App from './UnlM'
+import App from './Unl';
+import AppM from './UnlM'
 //import App from './ViewPort'
+//import App from './ViewStart'
 
 /*
 // A class component must include render(), and the return statement can only return ONE parent element:
@@ -132,12 +134,27 @@ const element = (
 console.log('index.js created element:');
 console.log(element);
 
-///*
+
+console.log('index.js innerWidth=' + window.innerWidth);
+if (window.innerWidth < 510) {
+  ReactDOM.render(
+    <AppM txn_id={10000000} viewwidth={window.innerWidth}/>,
+    document.getElementById('root')
+  );
+}
+else {
+  ReactDOM.render(
+    <AppM txn_id={10000000} viewwidth={window.innerWidth}/>,
+    document.getElementById('root')
+  );
+}
+
+/*
 ReactDOM.render(
-  <App txn_id={10000000}/>,
+  <App txn_id={10000000} viewwidth={window.innerWidth}/>,
   document.getElementById('root')
 );
-//*/
+*/
 
 /*
 ReactDOM.render(

@@ -1,4 +1,5 @@
 // Unl.js viewport 023
+import './Unl.css' // <--------
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -31,7 +32,8 @@ import { useState, useEffect, useLayoutEffect } from 'react'; // React Hooks use
 // - A <Redirect> may be used to redirect old URLs to new ones
 // - A <Route path="*"> always matches
 //import logo from './logoFancyLetter.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import logo from './unl_newlogo_small.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import logo from './unl_newlogo_small.png'; // Tell Webpack this JS file will use this image placed in src dir.
+import logo from './UNL_CAPASITY_HORIZONTAL_BLUE_LARGE.8cafb623.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import logo2 from './logo.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import home from './home-2-16.ico'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack this JS file will use this image placed in src dir.
@@ -39,6 +41,7 @@ import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack
 //import logoKN from './keno.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import logoMX from './maxima.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+//import stearling from './SPEED_ICON.0db9af09.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import vip from './blitz.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoSL from './super_loto.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoKN from './keno.png'; // Tell Webpack this JS file will use this image placed in src dir.
@@ -185,7 +188,7 @@ let myInfoRefk10 = React.createRef();
 let myInfoRefka = React.createRef();
 
 function NoMatchAside(props) {
-  console.log('Main props:' + props);
+  console.log('Unl.js props:' + props);
   console.log(props); // {txn_id: 10000000}
   if (txn_id === 0) {
     txn_id = props.txn_id;
@@ -549,7 +552,7 @@ function NoMatchAside(props) {
 
   return (
     <div>
-      <img id="logoimg" src={logo} alt="logo" /> {/* or use as src="logo.png"  logo.png img_5terre.jpg are in public dir */}
+      <img id="logoimg" src={logo} alt="logo" /> {/* or use as src="logo.png"  logo.png in public dir */}
       <h1>Українська Національна Лотерея</h1>
 
       <header>
