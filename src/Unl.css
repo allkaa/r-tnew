@@ -67,6 +67,11 @@ h4 {
   font-size: 1.8rem;
 }
 
+.h4 {
+  margin: 0% 0% 0% 1%; /* top+right+bottom+left 0 auto; */
+  font-size: 1rem;
+}
+
 #hdr4 {
   margin: 0% 0% 0% 5%; /* top+right+bottom+left 0 auto; */
   font-size: 1rem;
@@ -87,9 +92,12 @@ header {
   margin-bottom: 10px;
 }
 
-article, aside, footer {
-  background-color: white;
-  padding: 1%;
+.header {
+  margin: 0% 0% 0% 0%; /* top+right+bottom+left 0 auto; */
+}
+
+.ul {
+  margin: 0% 0% 1% 0%; /* top+right+bottom+left 0 auto; */
 }
 
 nav {
@@ -234,7 +242,7 @@ input[type="search"] {
 
 input[type="submit"] {
   /*flex: 1; /* proportion 1 to upper level form */
-  margin-left: 1rem;
+  margin-left: 1%;
   background: #333;
   border: 0;
   color: white;
@@ -255,7 +263,8 @@ button {
   /*flex: 1; /* proportion 1 to upper level form */
   font-size: 1rem;
   /* height: 32px; */
-  margin-left: 1%;
+  /* margin-left: 1%; */
+  margin: 0% 0% 1% 1%; /* top+right+bottom+left 0 auto; */
   background: wheat;
   border-radius: 15%;
   /* border: 0; */
@@ -284,7 +293,37 @@ button {
   border:  1px solid #999;
 }
 
+.numbsM {
+  /* font: 1em sans-serif; */
+  /* Uniform text field size */
+  width: 8%;
+  margin: 1%;
+  /*padding: 1px; */
+  box-sizing: border-box;
+  /* border: 1px solid #999; */
+}
+
+.numbsM:invalid {
+  border: 2px solid red;
+}
+
+.numbsM:invalid:required {
+  background-image: linear-gradient(to right, pink, lightgreen);
+}      
+
+.numbsM:valid {
+  border:  1px solid #999;
+}
+
+
 .boardLabel {
+  display: inline;
+  margin-left: 1rem; /* top+right+bottom+left 0 auto; */
+  margin-right: 1rem; /* top+right+bottom+left 0 auto; */
+}
+
+.boardLabelM {
+  font-size: 1rem;
   display: inline;
   margin-left: 1rem; /* top+right+bottom+left 0 auto; */
   margin-right: 1rem; /* top+right+bottom+left 0 auto; */
@@ -332,7 +371,14 @@ main {
 
 article {
   flex: 3; /* article proportion 3 to upper level main */
-  margin-bottom: 10px;
+  margin: 1% 0% 1% 0%; /* top+right+bottom+left 0 auto; */
+  /* margin-bottom: 10px; */
+  padding: 1%;
+}
+
+article, aside, footer {
+  background-color: white;
+  /* padding: 1%; */
 }
 
 #leftaside {
