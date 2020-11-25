@@ -144,7 +144,7 @@ if (window.innerWidth < 510) {
 }
 else {
   ReactDOM.render(
-    <AppM txn_id={10000000} viewwidth={window.innerWidth}/>,
+    <App txn_id={10000000} viewwidth={window.innerWidth}/>,
     document.getElementById('root')
   );
 }
