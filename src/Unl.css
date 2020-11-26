@@ -1,4 +1,4 @@
-/* || General setup */
+/* Unl.css 101 */
 
 html {
   margin: 0;
@@ -131,7 +131,7 @@ nav > div >  ul > li {
 }
 
 .nav_div_ul_li {
-  padding: 1%;
+  padding: 2%;
   display: inline;
   text-align: center;
   /*flex: 1; /* proportion 1 (all equals) */
