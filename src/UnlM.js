@@ -1,4 +1,4 @@
-// UnlM.js viewport svg 010
+// UnlM.js 011
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1336,11 +1336,11 @@ function Keno() {
     <p className="boardLabelM">Розыгрышей</p>
     <input type="number" name="draws" defaultValue={draws} className="numbsM" min="1" max="14" step="1"
     onChange={onChangeDraws} required></input>
-    <p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>
+    {/*<p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>*/}
     <p className="boardLabelM">Ставка</p>
     <input type="number" name="stake" defaultValue={stake} className="numbsM" min="1" max="10" step="1"
     onChange={onChangeStake} required></input>
-    <p className="boardLabelM">Если не задано, устанавливается ставка 1</p>
+    {/*<p className="boardLabelM">Если не задано, устанавливается ставка 1</p>*/}
     {/* <p className="boardLabelM">Стоимость билета</p> */}
     <p name="sum" className="boardLabelM" ref={myInfoRef2}></p>
   </div>
@@ -2389,7 +2389,7 @@ function SuperLoto() {
     <p className="boardLabelM">Розыгрышей</p>
     <input type="number" name="draws" defaultValue={draws} className="numbsM" min="1" max="6" step="1"
     onChange={onChangeDraws} required></input>
-    <p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>
+    {/*<p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>*/}
     {/* <p className="boardLabelM">Стоимость билета</p> */}
     <p name="sum" className="boardLabelM" ref={myInfoRef2}></p>
   </div>
@@ -3489,7 +3489,7 @@ function Maxima() {
     <p className="boardLabelM">Розыгрышей</p>
     <input type="number" name="draws" defaultValue={draws} className="numbsM" min="1" max="6" step="1"
     onChange={onChangeDraws} required></input>
-    <p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>
+    {/*<p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>*/}
     {/* <p className="boardLabelM">Стоимость билета</p> */}
     <p name="sum" className="boardLabelM" ref={myInfoRef2}></p>
   </div>
@@ -4276,11 +4276,11 @@ function Tryika() {
     <p className="boardLabelM">Розыгрышей</p>
     <input type="number" name="draws" defaultValue={draws} className="numbsM" min="1" max="14" step="1"
     onChange={onChangeDraws} required></input>
-    <p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>
+    {/*<p className="boardLabelM">Если не задано, устанавливается 1 розыгрыш</p>*/}
     <p className="boardLabelM">Ставка</p>
     <input type="number" name="stake" defaultValue={stake} className="numbsM" min="1" max="2" step="1"
     onChange={onChangeStake} required></input>
-    <p className="boardLabelM">Если не задано, устанавливается ставка 1</p>
+    {/*<p className="boardLabelM">Если не задано, устанавливается ставка 1</p>*/}
     {/* <p className="boardLabelM">Стоимость билета</p> */}
     <p name="sum" className="boardLabelM" ref={myInfoRef2}></p>
   </div>
