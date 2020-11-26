@@ -1,4 +1,4 @@
-// Unl.js viewport 023
+// Unl.js viewport 024
 import './Unl.css' // <--------
 import React from "react";
 import {
@@ -41,14 +41,14 @@ import logoSite from './photo5283283956105588195-1-348x215.jpg'; // Tell Webpack
 //import logoKN from './keno.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import logoMX from './maxima.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 //import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this image placed in src dir.
-//import stearling from './SPEED_ICON.0db9af09.svg'; // Tell Webpack this JS file will use this image placed in src dir.
-//import vip from './blitz.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+import stearling from './SPEED_ICON.0db9af09.svg'; // Tell Webpack this JS file will use this image placed in src dir.
+import vip from './blitz.svg'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoSL from './super_loto.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoKN from './keno.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoMX from './maxima.png'; // Tell Webpack this JS file will use this image placed in src dir.
 import logoTR from './loto3.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import stearling from './SPEED_ICON.0db9af09.png'; // Tell Webpack this JS file will use this image placed in src dir.
-import vip from './blitz.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import stearling from './SPEED_ICON.0db9af09.png'; // Tell Webpack this JS file will use this image placed in src dir.
+//import vip from './blitz.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
 let txn_id = 0;
@@ -713,14 +713,12 @@ function NoMatchAside(props) {
         <aside id="rightaside">
           <div>
           <h4>Дополнительные игры</h4>
-          <ul>
-            <li>
+          <div>
               <a href="/StearlingOnline"><img id="logoimg4" src={stearling} alt="Stearling"></img>Стерлинг онлайн</a>
-            </li>
-            <li>
+          </div>
+          <div>
               <a href="/VipLotoOnline"><img id="logoimg4" src={vip} alt="Vip"></img>Блитц лото онлайн</a>
-            </li>
-          </ul>
+          </div>
         </div>
           {/*
           <Router>
