@@ -1,4 +1,4 @@
-// UnlM.js viewport svg 008
+// UnlM.js viewport svg 009
 //import './UnlM.css' // <--------
 import React from "react";
 import {
@@ -561,23 +561,23 @@ function NoMatchAside(props) {
         <Router>
         <div>
         <ul>
-          <li>
+          <li className="nav_div_ul_li">
             <a className="nav_div_ul_li_a" href="/"><img src={home} alt="Home"></img></a> {/* <img src={home} alt="Home"></img> */}
           </li>
           {/*<b id="todo">Купить билет:</b>*/}
-          <li>
+          <li className="nav_div_ul_li">
             <Link className="nav_div_ul_li_a" to="/nav-match2">Кено</Link>
           </li>
-          <li>
+          <li className="nav_div_ul_li">
             <Link className="nav_div_ul_li_a" to="/nav-match3">Супер Лото</Link>
           </li>
-          <li>
+          <li className="nav_div_ul_li">
             <Link className="nav_div_ul_li_a" to="/nav-match4">Максима</Link>
           </li>
-          <li>
+          <li className="nav_div_ul_li">
             <Link className="nav_div_ul_li_a" to="/nav-match5">Тройка</Link>
           </li>
-          <li>
+          <li className="nav_div_ul_li">
             <Link className="nav_div_ul_li_a" to="/nav-match6">О нас</Link>
           </li>
         </ul>

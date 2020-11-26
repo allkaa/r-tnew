@@ -130,6 +130,13 @@ nav > div >  ul > li {
   /*flex: 1; /* proportion 1 (all equals) */
 }
 
+.nav_div_ul_li {
+  padding: 1%;
+  display: inline;
+  text-align: center;
+  /*flex: 1; /* proportion 1 (all equals) */
+}
+
 nav > div> .special {
   margin: 0;
   padding: 1%;

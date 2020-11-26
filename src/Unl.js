@@ -1,5 +1,4 @@
 // Unl.js viewport 025
-import './Unl.css' // <--------
 import React from "react";
 import {
   BrowserRouter as Router,
