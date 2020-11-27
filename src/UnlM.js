@@ -300,7 +300,7 @@ function NoMatchAside(props) {
       */
       console.log('===============> fetch begin');
       //console.log('myInfoRef.current.textContent: ' + myInfoRef.current.textContent);
-      myInfoRef.current.textContent = 'Wait for fetch processing...';
+      myInfoRef.current.textContent = 'Ожидайте информацию билета ...'; // Wait for fetch processing...
       //console.log('myInfoRef.current.textContent: ' + myInfoRef.current.textContent);
       //errorMessage.textContent = '';
       //hdrWarn.textContent = 'Wait for fetch processing...';
@@ -471,7 +471,7 @@ function NoMatchAside(props) {
     //console.log(event.target.value);
     */
     console.log(`search string: ${search}`);
-    myInfoRef.current.textContent = 'Wait for fetch processing...';
+    myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
     /* e.g.
     Form request submitted by POST. Action URL is /formAK with search as body: 
