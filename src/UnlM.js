@@ -1,4 +1,4 @@
-// UnlM.js 011
+// UnlM.js 012
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -1349,6 +1349,7 @@ function Keno() {
       <p className="boardLabelM">Количество номеров в комбинации от 2 до 10</p>
       <input type="number" name="system" defaultValue={system} className="numbsM" min="2" max="10" step="1"
       onChange={onChangeSystem} required></input>
+      <h4 className="h4">Задайте от 1 до 2 комбинаций номеров (от 1 до 80):</h4>
       <div className = "boardSL">
         <p className="boardLabelM">1 комбинация</p>
         <input ref={myInfoRefs1} type="number" name="ns1" className="numbsM" min="1" max="80" step="1" onChange={onChangeS}></input>
@@ -2394,7 +2395,7 @@ function SuperLoto() {
     <p name="sum" className="boardLabelM" ref={myInfoRef2}></p>
   </div>
   {!system_flag && <div>
-  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
+  <h4 className="h4">Задайте от 1 до 6 комбинаций номеров (от 1 до 52):</h4>
   <div className = "boardSL">
       <p className="boardLabelM">1 комбинация</p>
       <input ref={myInfoRef11} type="number" name="n11" className="numbsM" min="1" max="52" step="1" onChange={onChange}></input>
@@ -3494,7 +3495,7 @@ function Maxima() {
     <p name="sum" className="boardLabelM" ref={myInfoRef2}></p>
   </div>
   {!system_flag && <div>
-  <h4>Задайте от 1 до 6 комбинаций номеров (от 1 до 45):</h4>
+  <h4 className="h4">Задайте от 1 до 6 комбинаций номеров (от 1 до 45):</h4>
   <div className = "boardSL">
       <p className="boardLabelM">1 комбинация</p>
       <input ref={myInfoRef11} type="number" name="n11" className="numbsM" min="1" max="45" step="1" onChange={onChange}></input>
@@ -4284,9 +4285,7 @@ function Tryika() {
     {/* <p className="boardLabelM">Стоимость билета</p> */}
     <p name="sum" className="boardLabelM" ref={myInfoRef2}></p>
   </div>
-
-
-  <h4>Задайте от 1 до 10 комбинаций номеров (от 000 до 999):</h4>
+  <h4 className="h4">Задайте от 1 до 10 комбинаций номеров (от 000 до 999):</h4>
   <div className = "boardSL">
       <p className="boardLabelM">Комбинация 01</p>
       <input ref={myInfoRef11} type="number" name="n11" className="numbsM" min="0" max="9" step="1" onChange={onChange}></input>
