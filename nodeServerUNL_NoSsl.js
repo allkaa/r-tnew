@@ -1262,7 +1262,7 @@ function strCmd(ticreq) {
 } // end of function strCmd(ticreq).
 
 function BuyTicket(ticreq, res2) {
-  console.log('|' + ticreq + '|');
+  console.log('ticreq=|' + ticreq + '|');
   let reqStringPay = urlpay + strCmd(ticreq);
   //let reqStringPay; //= urlpay + '?agent=65&type=2&command=pay&date=20200808&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
   //reqStringPay = urlpay + '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
