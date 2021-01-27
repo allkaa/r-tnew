@@ -18,14 +18,14 @@ Can be started as parent in build subdir:
 
 */
 
-let typeProj =  ''; // 'build';
-let dirName = 'build'; // React build dir as root dir.
+//let typeProj =  ''; // 'build';
+const dirName = 'build'; // React build dir as root dir.
 //let dirName = ''; // root dir.
 //let methodType = 'get'; // 'post' or 'get' for secure server.
 //let formNameIni = 'submitFormAK-Ini';
 //let formName = 'submitFormAK';
 //let dirName = 'arch'; // root dir
-let formNameIni = 'index.html';
+const formNameIni = 'index.html';
 //let formNameIni = 'indexForm.html';
 
 const fs = require('fs');
