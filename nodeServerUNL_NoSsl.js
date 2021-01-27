@@ -1115,7 +1115,8 @@ function strCmd(ticreq) {
   if (reqArr.length < 3) return '';
   let dtVar = new Date();
   let strYear = dtVar.getFullYear().toString(); // e.g. '2020'
-  let strMonth = dtVar.getMonth().toString(); // (January gives 0)
+  let numMonth = dtVar.getMonth() + 1;  // (January gives 0)
+  let strMonth = numMonth.toString();
   let strDay = dtVar.getDate().toString(); // day or month e.g. '23'.
   if (strMonth.length !== 2) strMonth = '0' + strMonth;
   if (strDay.length !== 2) strDay = '0' + strDay;
