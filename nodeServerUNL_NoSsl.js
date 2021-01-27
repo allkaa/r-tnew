@@ -295,8 +295,8 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       //console.log(objUrl.search); // "?q=ticreq"
       else if (req.url.indexOf('/formAKpay?') >= 0) {
         let ticreq = '';
-        //objUrl.search is e.g. "?q=123-12345678-1234567"
-        ticreq = objUrl.search.slice(objUrl.search.indexOf('=') + 1);
+        //objUrl.search is e.g. "?q=5_1_1_a_16_27_31_34_43"
+        ticreq = objUrl.search.slice(objUrl.search.indexOf('=') + 1); // "5_1_1_a_16_27_31_34_43"
         rawData = '';
         //let result = -1000;
         BuyTicket(ticreq, res); // result = BuyTicket(ticreq, res); // result is not from events!!!
