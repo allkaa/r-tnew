@@ -14,7 +14,7 @@
       {
           "type": "node",
           "request":"launch",
-          "name": "Launch File",
+          "name": "Launch Node File",
           "program": "${file}",
           "cwd":"${workspaceFolder}",
       },
@@ -22,13 +22,15 @@
           "type": "go",
           "request":"launch",
           "name": "Launch GoLang File",
-          "program": "${file}",
-          "cwd":"${workspaceFolder}",
+          "mode": "auto",
+          "program": "${fileDirname}",
+          "env": {},
+          "args": []
       },
       {
         "type": "node",
         "request":"launch",
-        "name": "Launch --experimental-modules File",
+        "name": "Launch Node --experimental-modules File",
         "program": "${file}",
         "cwd":"${workspaceFolder}",
         "runtimeArgs": ["--experimental-modules"],
