@@ -262,7 +262,7 @@ func strCmd(ticreq string) string {
 	//var boardMx int = 10
 	//var boardTr int = 3
 	// ticreq e.g. "6_1_1_a_10_19_27_34_49_50"
-	var reqArr []string = strings.Split(ticreq, "-") //ticreq.split("_")
+	var reqArr []string = strings.Split(ticreq, "_") //ticreq.split("_")
 	fmt.Printf("%q\n", reqArr)
 	// e.g. (10) ["6" "1" "1" "a" "10" "19" "27" "34" "49" "50"]
 	//           [game, draws, stake, auto/manual, ...]
