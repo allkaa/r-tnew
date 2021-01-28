@@ -250,6 +250,7 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12_34_51"
 	var reqStringPay string = urlpay + strCmd(strSearch)
 	txnid = txnid + 1
+	fmt.Println(txnid)
 	return "Form formAKpay called with params " + reqStringPay
 }
 
@@ -263,7 +264,6 @@ func strCmd(ticreq string) string {
 	// ticreq e.g. "6_1_1_a_10_19_27_34_49_50"
 	var reqArr []string = strings.Split(ticreq, "-") //ticreq.split("_")
 	fmt.Printf("%q\n", reqArr)
-	fmt.Println(txnid)
 	// e.g. (10) ["6" "1" "1" "a" "10" "19" "27" "34" "49" "50"]
 	//           [game, draws, stake, auto/manual, ...]
 	var strSearch string = ""
