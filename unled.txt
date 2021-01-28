@@ -1,0 +1,499 @@
+// unled.c : Defines the entry point for the console application.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//#include <iostream>
+//#include "stdafx.h"
+//#include <stdio.h>
+//using namespace std; // to work with string.
+//#include <string>
+//#include <ctype.h>
+
+int strlenM(char *strIn);
+char *Test(char strIn[]);
+char *Decrypt(char strEncrypted[]);
+char *DoDecrypt(char strEncrypted[], int blnOdd);
+char *TGuard(char strDecryptedGGuard[], char strDecryptedTicket[]);
+
+// ./unld 785391 132-55516848-4260932
+//015079 132 - 01079742 - 1780861
+
+// ./ unld 775388 051 - 52749309 - 5226022
+//012969 051 - 02831601 - 0108302
+
+int main(int argc, char* argv[])
+{
+
+	/* int intRet; */
+	/* char strRet[21]; /* 123-12345678-1234567 4+9+7=20 plus '\0' gives 21 */
+	char *strVar;
+	int i, intLen, intVar, intError; // , intRet; // NB!!! intRet for hold output on test only!!!!!!
+	//char *strGGuardEncrypted, *strTicNumEncrypted;
+	char strGGuardDecrypted[7]; /* 6 + '\0' */
+	char strTicNumDecrypted[21]; /* 20 + '\0' */
+	//char strTGuard[9]; /* 8 + '\0' */
+	//char *strTest, *strDecr; // for backward test only.
+
+	//printf( "\nCommand-line arguments:\n" );
+	//for( i = 0; i < argc; i = i + 1 ) printf( "  argv[%d]   %s\n", i, argv[i] );
+	//goto TestPoint;
+
+	if (argc != 3) {
+		printf("ERROR1");
+		goto ExitMain;
+	}
+
+	intLen = strlenM(argv[1]);
+
+	if (!(intLen == 6)) {
+		printf("ERROR2");
+		goto ExitMain;
+	}
+
+	intError = 0; /* 0 is False, 1(non zero) is True */
+	for (i = 0; i < intLen; i = i + 1) {
+		intVar = argv[1][i] - '0';
+		if ((intVar > 9) || (intVar < 0)) { /* if any non 0,...9 */
+			intError = 1;
+			break;
+		}
+	}
+	if (intError) {
+		printf("ERROR2");
+		goto ExitMain;
+	}
+
+	strVar = Decrypt(argv[1]);
+	intLen = strlenM(strVar);
+	if (intLen == 0) {
+		printf("ERROR2");
+		goto ExitMain;
+	}
+
+	for (i = 0; i <= intLen; i = i + 1) strGGuardDecrypted[i] = strVar[i]; /* save output */
+
+	intLen = strlenM(argv[2]);
+
+	if (!(intLen == 20)) {
+		printf("ERROR3");
+		goto ExitMain;
+	}
+
+	intError = 0; /* 0 is False, 1(non zero) is True */
+	for (i = 0; i < intLen; i = i + 1) {
+		if ((i == 3) || (i == 12)) {
+			if (argv[2][i] != '-') {
+				intError = 1;
+				break;
+			}
+		}
+		else {
+			intVar = argv[2][i] - '0';
+			if ((intVar > 9) || (intVar < 0)) { /* if any non 0,...9 */
+				intError = 1;
+				break;
+			}
+		}
+	}  /* for loop */
+	if (intError) {
+		printf("ERROR3");
+		goto ExitMain;
+	}
+
+	strVar = Decrypt(argv[2]);
+	intLen = strlenM(strVar);
+	if (intLen == 0) {
+		printf("ERROR3");
+		goto ExitMain;
+	}
+	for (i = 0; i <= intLen; i = i + 1) strTicNumDecrypted[i] = strVar[i]; /* save output */
+
+
+	printf("%s %s", strGGuardDecrypted, strTicNumDecrypted);
+
+	goto ExitMain;
+
+
+	// -------- Test point. ----------------------------------------
+	/*
+TestPoint:
+	strGGuardEncrypted = "123456";
+	strTicNumEncrypted = "123-12345678-1234567";
+	printf("Variable Char *strGGuardEncrypted>%s\n", strGGuardEncrypted);
+	printf("Variable Char *strTicNumEncrypted>%s\n", strTicNumEncrypted);
+
+
+	strVar = Decrypt(strGGuardEncrypted);
+	intLen = strlenM(strVar);
+	for (i = 0; i <= intLen; i = i + 1) strGGuardDecrypted[i] = strVar[i];
+
+	strVar = Decrypt(strTicNumEncrypted);
+	intLen = strlenM(strVar);
+	for (i = 0; i <= intLen; i = i + 1) strTicNumDecrypted[i] = strVar[i];
+
+	printf("Variable Char *strGGuardDecrypted>%s\n", strGGuardDecrypted);
+	printf("Variable Char *strTicNumDecrypted>%s\n", strTicNumDecrypted);
+
+	strVar = TGuard(strGGuardDecrypted, strTicNumDecrypted);
+	intLen = strlenM(strVar);
+	for (i = 0; i <= intLen; i = i + 1) strTGuard[i] = strVar[i];
+	printf("TGuard>%s len %i\n", strTGuard, strlenM(strTGuard));
+
+	goto ExitMain; // test exit
+
+	// test backwarding string.
+	strDecr = "";
+	strTest = "123-12345678-1234567";
+	printf("Variable Char *Source>%s\n", strTest);
+	strDecr = Test(strTest);
+	printf("Variable Char *Decr>%s len %i\n", strDecr, strlenM(strDecr));
+
+	goto ExitMain; // test exit
+*/
+
+ExitMain:
+	//intRet = getchar();
+	return 0;
+}
+
+/* strlenM function to count sting length without last '\0' */
+int strlenM(char *strIn)
+{
+	int i;
+
+	i = 0;
+	do {
+		if (strIn[i] == '\0') break;
+		i = i + 1;
+	} while (strIn[i] != '\0');
+	return i;
+}
+
+char *TGuard(char strGGuard[], char strTicNum[])
+{
+	static char strRetTGuard[9]; /* must be static for successful return */
+	int i, intLen, intError, intVar, blnOdd;
+	char strVar[21];
+	/* char strReturn[9]; /* max 8+1 */
+	char *strDecr;
+
+	for (i = 0; i < 9; i = i + 1) strRetTGuard[i] = '\0';
+	/* Get strlenM - count of chars in strVar[], last '\0' NOT included, */
+	/* but strVar[strlenM(strVar)] is '\0' - end of string sign.*/
+	intLen = strlenM(strGGuard);
+	if (intLen == 0) goto ErrorExit;
+
+	if (intLen == 6) { /* gguard decrypted 6 digits 123456 */
+		intError = 0; /* 0 is False, 1(non zero) is True */
+		for (i = 0; i < intLen; i = i + 1) {
+			intVar = strGGuard[i] - '0';
+			if ((intVar > 9) || (intVar < 0)) { /* if any non 0,...9 */
+				intError = 1;
+				break;
+			}
+		}
+	}
+	else goto ErrorExit;
+	if (intError) goto ErrorExit;
+
+	intLen = strlenM(strTicNum);
+	if (intLen == 0) goto ErrorExit;
+
+	if (intLen == 20) { /* Ticket number decrypted 20 digits 123-12345678-1234567  */
+		intError = 0; /* 0 is False, 1(non zero) is True */
+		for (i = 0; i < intLen; i = i + 1) {
+			if ((i == 3) || (i == 12)) {
+				if (strTicNum[i] != '-') {
+					intError = 1;
+					break;
+				}
+			}
+			else {
+				intVar = strTicNum[i] - '0';
+				if ((intVar > 9) || (intVar < 0)) { /* if any non 0,...9 */
+					intError = 1;
+					break;
+				}
+			}
+		}  /* for loop */
+	} /* if len==20 */
+	else goto ErrorExit;
+	if (intError) goto ErrorExit;
+
+	/* Create initial TGuard */
+	for (i = 0; i < 4; i = i + 1) strVar[i] = strGGuard[i + 2];   /* Last four digits Gguard as first four */
+	strVar[4] = strTicNum[2]; /* Last digit DayNum as fifth */
+	strVar[5] = strTicNum[11]; /* Last digit ExtNum as sixth */
+	for (i = 0; i < 2; i = i + 1) strVar[i + 6] = strTicNum[i + 18]; /* Last two CheckDig as seventh and eigth */
+	strVar[8] = '\0'; /* end-of-string */
+
+					  /* decrypt initial */
+	blnOdd = 0;  /*0 is False, 1(not zero) is True */
+	strDecr = DoDecrypt(strVar, blnOdd);
+	intLen = strlenM(strDecr);
+	if (intLen != 8) goto ErrorExit;
+	for (i = 0; i < 8; i = i + 1) strRetTGuard[i] = strDecr[i];
+	strRetTGuard[8] = '\0'; /* end-of-string */
+
+							/*
+							strVar = Mid$(strGGuard, 3, 4) ' Last four from Gguard as first four.
+							strVar = strVar & Mid(strTicNum, 3, 1)  ' Last of DayNum as fifth.
+							strVar = strVar & Mid$(strTicNum, 12, 1) ' Last of ExtNum as sixth.
+							strVar = strVar & Mid$(strTicNum, 19, 2) ' Last two of CheckDig as seventh and eigth.
+							strRetTGuard = DoDecrypt(strVar, False)
+							TGuard = strRetTGuard
+							*/
+
+	return strRetTGuard;
+
+ErrorExit:
+	strRetTGuard[0] = '\0'; /* empty string as wrong. */
+	return strRetTGuard;
+
+}
+
+char *Decrypt(char strVar[])
+{
+	static char strRetDecrypt[21]; /* must be static for successful return */
+	int i, j, intLen, intVar, intError, intLenD;
+	/* char strReturn[9]; /* max 8 plus '\0' = 9 */
+	int blnOdd; /* 1(not zero) is True, 0 is False */
+	char *strDecr;
+	char strJulian[3], strExtNum[9], strChkNum[8], strExtNumD[8], strChkNumD[7];
+
+	for (i = 0; i < 21; i = i + 1) strRetDecrypt[i] = '\0';
+	/* Get strlenM - count of chars in strVar[], last '\0' NOT included, */
+	/* but strVar[strlenM(strVar)] is '\0' - end of string sign.*/
+	intLen = strlenM(strVar);
+	if (intLen == 0) goto ErrorExit;
+
+	if (intLen == 6) { /* gguard decrypt 6 digits 123456 */
+		intError = 0; /* 0 is False, 1(non zero) is True */
+		for (i = 0; i < intLen; i = i + 1) {
+			intVar = strVar[i] - '0';
+			if ((intVar > 9) || (intVar < 0)) { /* if any non 0,...9 */
+				intError = 1;
+				break;
+			}
+		}
+		if (intError)	goto ErrorExit;
+		/* begin of gguard decrypt */
+		blnOdd = 0;  /* 1(not zero) is True, 0 is False */
+		strDecr = DoDecrypt(strVar, blnOdd);
+		intLenD = strlenM(strDecr);
+		if (intLenD == 0) goto ErrorExit;
+		for (i = 0; i < intLenD; i = i + 1) strRetDecrypt[i] = strDecr[i];
+		strRetDecrypt[i] = '\0';
+		/* end of gguard decrypt */
+	}
+	else if (intLen == 20) { /* ticket info 20 chars */
+		/* 123-12345678-1234567 */
+		/* 01234567890123456789 */
+		intError = 0; /* 0 is False, 1(non zero) is True */
+		for (i = 0; i < intLen; i = i + 1) {
+			if ((i == 3) || (i == 12)) {
+				if (strVar[i] != '-') {
+					intError = 1;
+					break;
+				}
+			}
+			else {
+				intVar = strVar[i] - '0';
+				if ((intVar > 9) || (intVar < 0)) { /* if any non 0,...9 */
+					intError = 1;
+					break;
+				}
+			}
+		}  /* for loop */
+		if (intError)	goto ErrorExit;
+		j = 0;
+		for (i = 0; i < 3; i = i + 1) {
+			intVar = strVar[i] - '0';
+			strJulian[j] = strVar[i];
+			j = j + 1;
+			if (i == 2) blnOdd = intVar % 2; /* blnOdd = 0 (false) if intVar is even, = 1 (true) otherwise */
+		}
+		/* begin of ticket decrypt */
+		j = 0;
+		for (i = 4; i < 12; i = i + 1) {
+			strExtNum[j] = strVar[i];
+			j = j + 1;
+		}
+		strExtNum[j] = '\0';
+		strDecr = DoDecrypt(strExtNum, blnOdd);
+		intLenD = strlenM(strDecr);
+		if (intLenD == 0) goto ErrorExit;
+		for (i = 0; i < intLenD; i = i + 1) strExtNumD[i] = strDecr[i];
+		j = 0;
+		for (i = 13; i < intLen; i = i + 1) {
+			strChkNum[j] = strVar[i];
+			j = j + 1;
+		}
+		strChkNum[j] = '\0';
+		strDecr = DoDecrypt(strChkNum, blnOdd);
+		intLenD = strlenM(strDecr);
+		if (intLenD == 0) goto ErrorExit;
+		for (i = 0; i < intLenD; i = i + 1) strChkNumD[i] = strDecr[i];
+		j = 0;
+		for (i = 0; i < 3; i = i + 1) {
+			strRetDecrypt[j] = strJulian[i];
+			j = j + 1;
+		}
+		strRetDecrypt[j] = '-';
+		j = j + 1;
+		for (i = 0; i < 8; i = i + 1) {
+			strRetDecrypt[j] = strExtNumD[i];
+			j = j + 1;
+		}
+		strRetDecrypt[j] = '-';
+		j = j + 1;
+		for (i = 0; i < 7; i = i + 1) {
+			strRetDecrypt[j] = strChkNumD[i];
+			j = j + 1;
+		}
+		strRetDecrypt[j] = '\0';
+		/* end of ticket decrypt */
+	}
+	else { /* non gguard or ticket case */
+		strRetDecrypt[0] = '\0'; /* empty string as wrong. */
+		return strRetDecrypt;
+	}
+
+	return strRetDecrypt;
+
+ErrorExit:
+	strRetDecrypt[0] = '\0'; /* empty string as wrong. */
+	return strRetDecrypt;
+
+}
+
+char *DoDecrypt(char strVar[], int blnOdd)
+{
+	static char strRetDoDecrypt[9]; /* must be static for successful return */
+	int i, intLen, intError;
+	int intArr[8]; /* 0,...,7 indexes */
+	int intArrDecr[8]; /* 0,...,7 indexes */
+	int intTemp[8]; /* 0,...,7 indexes */
+	int intOdd[8][2]; /* 0,...,7  and 0,1 indexes */
+	int intEven[8][2]; /* 0,...,7 and 0,1 indexes */
+	int intMatrix[8][2]; /* 0,...,7 and 0,1 indexes */
+
+	for (i = 0; i < 9; i = i + 1) strRetDoDecrypt[i] = '\0';
+	intLen = strlenM(strVar); /* count of chars in strVar[], last '\0' NOT included */
+	if ((intLen == 0) || (intLen < 6) || (intLen > 8)) {
+		strRetDoDecrypt[0] = '\0'; /* empty string */
+		return strRetDoDecrypt;
+	}
+
+	for (i = 0; i < 8; i = i + 1) intArr[i] = 0;
+	intError = 0; /* 0 is False, 1(non zero) is True */
+	for (i = 0; i < intLen; i = i + 1) {
+		intArr[i] = strVar[i] - '0';
+		if (intArr[i] > 9) {
+			intError = 1;
+			break;
+		}
+	}
+	if (intError) {
+		strRetDoDecrypt[0] = '\0'; /* empty string */
+		return strRetDoDecrypt;
+	}
+	for (i = 0; i < 8; i = i + 1) intArrDecr[i] = 0;
+	for (i = 0; i < 8; i = i + 1) intTemp[i] = 0;
+
+	if (intLen == 6) {
+		intOdd[0][0] = 5; intOdd[0][1] = 4;
+		intOdd[1][0] = 2; intOdd[1][1] = 0;
+		intOdd[2][0] = 4; intOdd[2][1] = 3;
+		intOdd[3][0] = 6; intOdd[3][1] = 2;
+		intOdd[4][0] = 8; intOdd[4][1] = 5;
+		intOdd[5][0] = 1; intOdd[5][1] = 1;
+		intEven[0][0] = 8; intEven[0][1] = 5;
+		intEven[1][0] = 1; intEven[1][1] = 4;
+		intEven[2][0] = 5; intEven[2][1] = 0;
+		intEven[3][0] = 2; intEven[3][1] = 1;
+		intEven[4][0] = 9; intEven[4][1] = 3;
+		intEven[5][0] = 6; intEven[5][1] = 2;
+	}
+	else if (intLen == 7) {
+		intOdd[0][0] = 5; intOdd[0][1] = 5;
+		intOdd[1][0] = 2; intOdd[1][1] = 0;
+		intOdd[2][0] = 4; intOdd[2][1] = 3;
+		intOdd[3][0] = 6; intOdd[3][1] = 2;
+		intOdd[4][0] = 8; intOdd[4][1] = 6;
+		intOdd[5][0] = 1; intOdd[5][1] = 1;
+		intOdd[6][0] = 9; intOdd[6][1] = 4;
+		intEven[0][0] = 8; intEven[0][1] = 5;
+		intEven[1][0] = 1; intEven[1][1] = 6;
+		intEven[2][0] = 5; intEven[2][1] = 0;
+		intEven[3][0] = 2; intEven[3][1] = 4;
+		intEven[4][0] = 9; intEven[4][1] = 3;
+		intEven[5][0] = 6; intEven[5][1] = 1;
+		intEven[6][0] = 4; intEven[6][1] = 2;
+	}
+	else {
+		intOdd[0][0] = 5; intOdd[0][1] = 6;
+		intOdd[1][0] = 2; intOdd[1][1] = 0;
+		intOdd[2][0] = 4; intOdd[2][1] = 3;
+		intOdd[3][0] = 6; intOdd[3][1] = 2;
+		intOdd[4][0] = 8; intOdd[4][1] = 7;
+		intOdd[5][0] = 1; intOdd[5][1] = 1;
+		intOdd[6][0] = 9; intOdd[6][1] = 4;
+		intOdd[7][0] = 3; intOdd[7][1] = 5;
+		intEven[0][0] = 8; intEven[0][1] = 5;
+		intEven[1][0] = 1; intEven[1][1] = 6;
+		intEven[2][0] = 5; intEven[2][1] = 0;
+		intEven[3][0] = 2; intEven[3][1] = 4;
+		intEven[4][0] = 9; intEven[4][1] = 3;
+		intEven[5][0] = 6; intEven[5][1] = 7;
+		intEven[6][0] = 4; intEven[6][1] = 2;
+		intEven[7][0] = 7; intEven[7][1] = 1;
+	}
+
+	/* if blnOdd is 1(non zero) then True, if 0 then False */
+	if (blnOdd) for (i = 0; i < 8; i = i + 1) {
+		intMatrix[i][0] = intOdd[i][0];
+		intMatrix[i][1] = intOdd[i][1];
+	}
+	else for (i = 0; i < 8; i = i + 1) {
+		intMatrix[i][0] = intEven[i][0];
+		intMatrix[i][1] = intEven[i][1];
+	}
+
+	/* intLen is count of chars in input string char strVar[], last '\0' NOT included */
+	for (i = 0; i < intLen; i = i + 1) {
+		intTemp[i] = intArr[i] - intMatrix[i][0];
+		if (intTemp[i] < 0)
+			intTemp[i] = intTemp[i] + 10;
+		intArrDecr[intMatrix[i][1]] = intTemp[i];
+	}
+
+	for (i = 0; i < intLen; i = i + 1) {
+		strRetDoDecrypt[i] = intArrDecr[i] + '0';
+	}
+	strRetDoDecrypt[i] = '\0';
+
+	return strRetDoDecrypt;
+}
+
+char *Test(char strIn[]) /* backwarding string */
+{
+	static char strOutM[21]; /* indexes 0,..,20 */
+	int i, j, intLen;
+
+	for (i = 0; i < 21; i = i + 1) strOutM[i] = '\0';
+	intLen = strlenM(strIn);
+	i = 0;
+	j = intLen - 1;
+	do
+	{
+		if (strIn[i] == '\0') break;
+		strOutM[j] = strIn[i];
+		i = i + 1;
+		j = j - 1;
+	} while (i > 0);
+	strOutM[i] = strIn[i]; /* copy very last end-of-sting mark */
+
+	return strOutM; /* only global, parameter or local_static variable can be used for return string */
+}
