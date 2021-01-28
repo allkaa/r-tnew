@@ -131,6 +131,8 @@ const dir = string("./build")
 // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 const urlval = "http://10.8.194.3:9994/"
 const reqStringVal = urlval + "?agent=58&type=2&command=checkval&ticket_number=" // + search;
+const urlpay = "http://10.8.194.3:38000/"                                        // project PayTest ver. 4.0 NoSsl.
+var txnid int = 10000000
 
 func handlerReq(w http.ResponseWriter, r *http.Request) {
 	//dir := "./build"
@@ -246,7 +248,27 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 }
 
 func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12_34_51"
-	return "Form formAKpay called with params " + strSearch
+	var reqStringPay string = urlpay + strCmd(strSearch)
+	txnid = txnid + 1
+	return "Form formAKpay called with params " + reqStringPay
+}
+
+func strCmd(ticreq string) string {
+	// e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
+	//var strAgent string = "16"
+	//var boardKeno int = 10
+	//var boardSl int = 15
+	//var boardMx int = 10
+	//var boardTr int = 3
+	// ticreq e.g. "6_1_1_a_10_19_27_34_49_50"
+	var reqArr []string = strings.Split(ticreq, "-") //ticreq.split("_")
+	fmt.Printf("%q\n", reqArr)
+	fmt.Println(txnid)
+	// e.g. (10) ["6" "1" "1" "a" "10" "19" "27" "34" "49" "50"]
+	//           [game, draws, stake, auto/manual, ...]
+	var strSearch string = ""
+	strSearch = ticreq
+	return strSearch
 }
 
 func getResults(game string, drawnum string) string {
