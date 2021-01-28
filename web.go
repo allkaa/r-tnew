@@ -122,6 +122,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 	"unsafe"
 )
 
@@ -267,6 +268,24 @@ func strCmd(ticreq string) string {
 	// e.g. (10) ["6" "1" "1" "a" "10" "19" "27" "34" "49" "50"]
 	//           [game, draws, stake, auto/manual, ...]
 	var strSearch string = ""
+	if len(reqArr) < 3 {
+		return ""
+	}
+	//let dtVar = new Date();
+	var dtVar time.Time = time.Now()
+	year, month, day := dtVar.Date()
+	var strYear string = strconv.Itoa(year)        // e.g. "2021"
+	var strMonth string = strconv.Itoa(int(month)) // e.g. "1" or "12"
+	var strDay string = strconv.Itoa(day)          // e.g. "1" or "31"
+	fmt.Println(strYear, strMonth, strDay)
+	if len(strMonth) == 1 {
+		strMonth = "0" + strMonth
+	}
+	if len(strDay) == 1 {
+		strMonth = "0" + strDay
+	}
+	fmt.Println(strYear, strMonth, strDay)
+	// <==================== temp return ==========================>
 	strSearch = ticreq
 	return strSearch
 }
