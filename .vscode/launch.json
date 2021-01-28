@@ -19,6 +19,13 @@
           "cwd":"${workspaceFolder}",
       },
       {
+          "type": "go",
+          "request":"launch",
+          "name": "Launch GoLang File",
+          "program": "${file}",
+          "cwd":"${workspaceFolder}",
+      },
+      {
         "type": "node",
         "request":"launch",
         "name": "Launch --experimental-modules File",
