@@ -339,7 +339,7 @@ func strCmd(ticreq string) string {
 		if len(reqArr) < 7 {
 			return ""
 		}
-		// e.g. (7) ['4', '1', '1', 'S', '0', '1', '2'] or type B or A or Y.
+		// e.g. ["4" "1" "1" "S" "1" "1" "1" "B" "1" "2" "2" "A" "1" "2" "3" "Y" "0" "1" "3"] or type B or A or Y.
 		//           [game, draws, stake, type, ...]
 		n = 3 // num used.
 		// '&stake=2&board1=123S&board2=112B&board3=123A&board4=023Y&sum=60.00&msisdn=380503332211'
@@ -355,6 +355,13 @@ func strCmd(ticreq string) string {
 			strCmb[2] = reqArr[i+3]
 			sum = sum + cmbPriceCalcType(strCmb, reqArr[i], boardTr)
 		}
+		//draws, stake
+		draws, _ = strconv.Atoi(reqArr[1]) // number of draws, _ is used to ignore err return value.
+		stake, _ = strconv.Atoi(reqArr[2]) // stake, _ is used to ignore err return value.
+		sum = sum * draws * stake          // // number of draws and stake.
+		strSearch = strSearch + "&sum=" + strconv.Itoa(sum) + ".00"
+		strSearch = strSearch + "&msisdn=0" // very last item.
+		fmt.Println(strSearch)
 		return strSearch // end of Triyka.
 	} else if reqArr[0] == "5" { // Maxima.
 		return strSearch // // end of Maxima.
@@ -370,24 +377,29 @@ func cmbPriceCalcType(cmb [3]string, typ string, boardPrice int) int {
 	var nums int = 0
 	var cmbprice int = 0
 	nums = uniqnums(cmb)
-  if (cmb.indexOf('10') === -1) {
-    if (typ == 'S') {
-      cmbprice = cmbprice + boardPrice;
-    }
-    else if (typ == 'B') {
-      if ((nums == 2) || (nums == 3)) cmbprice = cmbprice + boardPrice;
-      else cmbprice = 0
-    }
-    else if (typ == 'A') {
-      if ((nums == 2) || (nums == 3)) cmbprice = cmbprice + 2*boardPrice;
-      else cmbprice = 0
-    }
-    else if (typ == 'Y') {
-      if (nums == 2) cmbprice = cmbprice + 3*boardPrice;
-      else if (nums == 3) cmbprice = cmbprice + 6*boardPrice;
-      else cmbprice = 0
-    }
-  }
+	if typ == "S" {
+		cmbprice = cmbprice + boardPrice
+	} else if typ == "B" {
+		if (nums == 2) || (nums == 3) {
+			cmbprice = cmbprice + boardPrice
+		} else {
+			cmbprice = 0
+		}
+	} else if typ == "A" {
+		if (nums == 2) || (nums == 3) {
+			cmbprice = cmbprice + 2*boardPrice
+		} else {
+			cmbprice = 0
+		}
+	} else if typ == "Y" {
+		if nums == 2 {
+			cmbprice = cmbprice + 3*boardPrice
+		} else if nums == 3 {
+			cmbprice = cmbprice + 6*boardPrice
+		} else {
+			cmbprice = 0
+		}
+	}
 	return cmbprice
 }
 
