@@ -259,9 +259,9 @@ func strCmd(ticreq string) string {
 	// e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
 	var strAgent string = "16"
 	var boardKeno int = 10
+	var boardTr int = 3
 	//var boardSl int = 15
 	//var boardMx int = 10
-	//var boardTr int = 3
 	// ticreq e.g. "6_1_1_a_10_19_27_34_49_50"
 	var reqArr []string = strings.Split(ticreq, "_") //ticreq.split("_")
 	fmt.Printf("%q\n", reqArr)
@@ -334,11 +334,75 @@ func strCmd(ticreq string) string {
 		strSearch = strSearch + "&sum=" + strconv.Itoa(sum) + ".00"
 		strSearch = strSearch + "&msisdn=0" // very last item.
 		fmt.Println(strSearch)
-		return strSearch
-	} // end of Keno.
-	// <==================== temp return ==========================>
-	strSearch = ticreq
-	return strSearch
+		return strSearch // end of Keno.
+	} else if reqArr[0] == "4" { // Triyka.
+		if len(reqArr) < 7 {
+			return ""
+		}
+		// e.g. (7) ['4', '1', '1', 'S', '0', '1', '2'] or type B or A or Y.
+		//           [game, draws, stake, type, ...]
+		n = 3 // num used.
+		// '&stake=2&board1=123S&board2=112B&board3=123A&board4=023Y&sum=60.00&msisdn=380503332211'
+		strSearch = strSearch + "&stake=" + reqArr[2]
+		b = 0
+		var strCmb = [3]string{"0", "0", "0"} // array literal form used.
+		for i = 3; i < len(reqArr); i = i + (n + 1) {
+			b = b + 1
+			strSearch = strSearch + "&board" + strconv.Itoa(b) + "="
+			strSearch = strSearch + reqArr[i+1] + reqArr[i+2] + reqArr[i+3] + reqArr[i]
+			strCmb[0] = reqArr[i+1]
+			strCmb[1] = reqArr[i+2]
+			strCmb[2] = reqArr[i+3]
+			sum = sum + cmbPriceCalcType(strCmb, reqArr[i], boardTr)
+		}
+		return strSearch // end of Triyka.
+	} else if reqArr[0] == "5" { // Maxima.
+		return strSearch // // end of Maxima.
+	} else if reqArr[0] == "6" { // Super Loto.
+		return strSearch // end of Super Loto.
+	} else {
+		return ""
+	}
+}
+
+// cmb, typ, boardPrice
+func cmbPriceCalcType(cmb [3]string, typ string, boardPrice int) int {
+	var nums int = 0
+	var cmbprice int = 0
+	nums = uniqnums(cmb)
+  if (cmb.indexOf('10') === -1) {
+    if (typ == 'S') {
+      cmbprice = cmbprice + boardPrice;
+    }
+    else if (typ == 'B') {
+      if ((nums == 2) || (nums == 3)) cmbprice = cmbprice + boardPrice;
+      else cmbprice = 0
+    }
+    else if (typ == 'A') {
+      if ((nums == 2) || (nums == 3)) cmbprice = cmbprice + 2*boardPrice;
+      else cmbprice = 0
+    }
+    else if (typ == 'Y') {
+      if (nums == 2) cmbprice = cmbprice + 3*boardPrice;
+      else if (nums == 3) cmbprice = cmbprice + 6*boardPrice;
+      else cmbprice = 0
+    }
+  }
+	return cmbprice
+}
+
+func uniqnums(cmb [3]string) int {
+	var nums int = 1
+	if cmb[0] != cmb[1] {
+		nums = nums + 1
+	}
+	if cmb[0] != cmb[2] {
+		nums = nums + 1
+	}
+	if (nums > 1) && (cmb[1] == cmb[2]) {
+		nums = nums - 1
+	}
+	return nums
 }
 
 func getResults(game string, drawnum string) string {
