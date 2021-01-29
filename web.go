@@ -257,7 +257,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 
 func strCmd(ticreq string) string {
 	// e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
-	//var strAgent string = "16"
+	var strAgent string = "16"
 	//var boardKeno int = 10
 	//var boardSl int = 15
 	//var boardMx int = 10
@@ -277,14 +277,36 @@ func strCmd(ticreq string) string {
 	var strYear string = strconv.Itoa(year)        // e.g. "2021"
 	var strMonth string = strconv.Itoa(int(month)) // e.g. "1" or "12"
 	var strDay string = strconv.Itoa(day)          // e.g. "1" or "31"
-	fmt.Println(strYear, strMonth, strDay)
+	//fmt.Println(strYear, strMonth, strDay)
 	if len(strMonth) == 1 {
 		strMonth = "0" + strMonth
 	}
 	if len(strDay) == 1 {
 		strMonth = "0" + strDay
 	}
-	fmt.Println(strYear, strMonth, strDay)
+	//fmt.Println(strYear, strMonth, strDay)
+	strSearch = "?agent=" + strAgent + "&type=2&command=pay&date=" + strYear + strMonth + strDay + "&txn_id=" + strconv.Itoa(txnid)
+	strSearch = strSearch + "&game=" + reqArr[0] + "&num_of_draws=" + reqArr[1]
+	//fmt.Println(strSearch)
+	var i, j, k, n, b int
+	var sum int = 0
+	if reqArr[0] == "2" { // Keno.
+		if len(reqArr) < 6 {
+			return ""
+		}
+		n = 0 // num used.
+		for i = 4; i < len(reqArr); i = i + 1 {
+			if (reqArr[i] != "a") && (reqArr[i] != "m") {
+				n = n + 1
+			} else {
+				break
+			}
+		}
+		// '&num_used=10&stake=2&board1=02_11_15_24_33_44_55_66_77_80&board2a=01_12_16_23_34_45_56_65_78_79&sum=84.00&msisdn=380121234567'
+		strSearch = strSearch + "&num_used=" + strconv.Itoa(n)
+		strSearch = strSearch + "&stake=" + reqArr[2]
+		fmt.Println(strSearch)
+	} // end of Keno.
 	// <==================== temp return ==========================>
 	strSearch = ticreq
 	return strSearch
@@ -420,7 +442,7 @@ func decrNum(strEnc string) string {
 	} else {
 		blnOdd = true
 	}
-	intVar, err = strconv.Atoi(strEnc[4:12])
+	_, err = strconv.Atoi(strEnc[4:12]) // Use _ to ignore returning value.
 	if err != nil {
 		return ""
 	}
@@ -437,7 +459,7 @@ func decrNum(strEnc string) string {
 		return ""
 	}
 	strTic = strTic + strDec + "-"
-	intVar, err = strconv.Atoi(strEnc[13:])
+	_, err = strconv.Atoi(strEnc[13:]) // Use _ to ignore returning value.
 	if err != nil {
 		return ""
 	}
@@ -471,11 +493,11 @@ func decrGG(strEnc string) string {
 	if len(strEnc) != 6 {
 		return ""
 	}
-	intVar, err := strconv.Atoi(strEnc[0:])
+	_, err := strconv.Atoi(strEnc[0:]) // Use _ to ignore returning value.
 	if err != nil {
 		return ""
 	}
-	intVar = intVar + 0 // artificially use intVar for successful compilation.
+	//intVar = intVar + 0 // artificially use intVar for successful compilation.
 	csEnc := C.CString(strEnc[0:])
 	strDec = C.GoString(C.doDecrypt(csEnc, 0)) // non needed and can not be freed later.
 	C.free(unsafe.Pointer(csEnc))
