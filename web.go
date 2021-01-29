@@ -258,7 +258,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 func strCmd(ticreq string) string {
 	// e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
 	var strAgent string = "16"
-	//var boardKeno int = 10
+	var boardKeno int = 10
 	//var boardSl int = 15
 	//var boardMx int = 10
 	//var boardTr int = 3
@@ -288,16 +288,20 @@ func strCmd(ticreq string) string {
 	strSearch = "?agent=" + strAgent + "&type=2&command=pay&date=" + strYear + strMonth + strDay + "&txn_id=" + strconv.Itoa(txnid)
 	strSearch = strSearch + "&game=" + reqArr[0] + "&num_of_draws=" + reqArr[1]
 	//fmt.Println(strSearch)
-	var i, j, k, n, b int
+	var i, j, n, b int
+	var draws, stake int
+	//var err error
+	//var k int;
 	var sum int = 0
 	if reqArr[0] == "2" { // Keno.
 		if len(reqArr) < 6 {
 			return ""
 		}
+		// ["2" "1" "1" "a" "03" "13" "15" "25" "35" "36" "38" "57" "59" "78" "a" "09" "10" "22" "29" "49" "50" "56" "62" "63" "71"]
 		n = 0 // num used.
 		for i = 4; i < len(reqArr); i = i + 1 {
 			if (reqArr[i] != "a") && (reqArr[i] != "m") {
-				n = n + 1
+				n = n + 1 // num used.
 			} else {
 				break
 			}
@@ -305,7 +309,32 @@ func strCmd(ticreq string) string {
 		// '&num_used=10&stake=2&board1=02_11_15_24_33_44_55_66_77_80&board2a=01_12_16_23_34_45_56_65_78_79&sum=84.00&msisdn=380121234567'
 		strSearch = strSearch + "&num_used=" + strconv.Itoa(n)
 		strSearch = strSearch + "&stake=" + reqArr[2]
+		//fmt.Println(strSearch)
+		// ["2" "1" "1" "a" "03" "13" "15" "25" "35" "36" "38" "57" "59" "78" "a" "09" "10" "22" "29" "49" "50" "56" "62" "63" "71"]
+		b = 0 // board number.
+		for i = 3; i < len(reqArr); i = i + (n + 1) {
+			b = b + 1 // board number.
+			if reqArr[i] == "a" {
+				strSearch = strSearch + "&board" + strconv.Itoa(b) + "a="
+			} else {
+				strSearch = strSearch + "&board" + strconv.Itoa(b) + "="
+			}
+			for j = 0; j < n; j = j + 1 {
+				strSearch = strSearch + reqArr[i+1+j] // get number of board field.
+				if j != (n - 1) {
+					strSearch = strSearch + "_"
+				}
+			}
+			sum = sum + boardKeno
+		}
+		//draws, stake
+		draws, _ = strconv.Atoi(reqArr[1]) // number of draws, _ is used to ignore err return value.
+		stake, _ = strconv.Atoi(reqArr[2]) // stake, _ is used to ignore err return value.
+		sum = sum * draws * stake
+		strSearch = strSearch + "&sum=" + strconv.Itoa(sum) + ".00"
+		strSearch = strSearch + "&msisdn=0" // very last item.
 		fmt.Println(strSearch)
+		return strSearch
 	} // end of Keno.
 	// <==================== temp return ==========================>
 	strSearch = ticreq
