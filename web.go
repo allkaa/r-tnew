@@ -255,7 +255,8 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 	var bytRep []byte
 	var err error
 	var strXML string = ""
-	//var errMsg string = "Unknown error"
+	var errMsg string = ""
+	var sum string = ""
 	res, err := http.Get(reqStringPay)
 	if err != nil {
 		//log.Fatal(err)
@@ -280,11 +281,39 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 					sum = strXML[pos1+5 : pos2]
 				}
 			*/
+			var pos1 int = -1
+			var pos2 int = -1
+			var result string = ""
+			//<result>0</result>
+			//01234567890
+			pos1 = strings.Index(strXML, "<result>")
+			pos2 = strings.Index(strXML, "</result>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+				errMsg = "Wrong server response XML format"
+				goto ExitBuyTicket
+			}
+			result = strXML[pos1+8 : pos2]
+			if result != "0" {
+				errMsg = "Server response error code = " + result
+				goto ExitBuyTicket
+			}
+			//<sum>3.00</sum>
+			//0123456789
+			pos1 = strings.Index(strXML, "<sum>")
+			pos2 = strings.Index(strXML, "</sum>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+				errMsg = "Server response wrong sum format"
+				goto ExitBuyTicket
+			}
+			sum = strXML[pos1+5 : pos2]
 		}
 	}
 	//return "Form formAKpay called with params " + reqStringPay
+ExitBuyTicket:
 	if err != nil {
-		strXML = err.Error()
+		return err.Error()
+	} else if errMsg != "" {
+		return errMsg
 	}
 	return strXML
 }
