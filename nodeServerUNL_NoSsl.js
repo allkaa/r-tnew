@@ -1197,7 +1197,7 @@ function strCmd(ticreq) {
         strSearch = strSearch + reqArr[i];
         if (i !== (reqArr.length - 1)) strSearch = strSearch + '_';
       }
-      sum = (SysCmbMX(k)*boardMx).toString();
+      sum = SysCmbMX(k) * boardMx;
     } // end of system.
     else { // not system.
       k = 0;
@@ -1237,7 +1237,7 @@ function strCmd(ticreq) {
         strSearch = strSearch + reqArr[i];
         if (i !== (reqArr.length - 1)) strSearch = strSearch + '_';
       }
-      sum = (SysCmbSL(k)*boardSl).toString();
+      sum = SysCmbSL(k)*boardSl;
     } // end of system.
     else { // not system.
       k = 0;

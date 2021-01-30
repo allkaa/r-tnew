@@ -259,9 +259,9 @@ func strCmd(ticreq string) string {
 	// e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
 	var strAgent string = "16"
 	var boardKeno int = 10
+	var boardMx int = 10
+	var boardSl int = 15
 	var boardTr int = 3
-	//var boardSl int = 15
-	//var boardMx int = 10
 	// ticreq e.g. "6_1_1_a_10_19_27_34_49_50"
 	var reqArr []string = strings.Split(ticreq, "_") //ticreq.split("_")
 	fmt.Printf("%q\n", reqArr)
@@ -291,7 +291,7 @@ func strCmd(ticreq string) string {
 	var i, j, n, b int
 	var draws, stake int
 	//var err error
-	//var k int;
+	var k int
 	var sum int = 0
 	if reqArr[0] == "2" { // Keno.
 		if len(reqArr) < 6 {
@@ -364,9 +364,89 @@ func strCmd(ticreq string) string {
 		fmt.Println(strSearch)
 		return strSearch // end of Triyka.
 	} else if reqArr[0] == "5" { // Maxima.
-		return strSearch // // end of Maxima.
+		if len(reqArr) < 9 {
+			return ""
+		}
+		if (reqArr[3] == "sa") || (reqArr[3] == "sm") { // system.
+			k = 0 // system number.
+			for i = 4; i < len(reqArr); i = i + 1 {
+				k = k + 1
+			}
+			strSearch = strSearch + "&system=" + strconv.Itoa(k)
+			if reqArr[3] == "sa" {
+				strSearch = strSearch + "&board1a="
+			} else {
+				strSearch = strSearch + "&board1="
+			}
+			for i = 4; i < len(reqArr); i = i + 1 {
+				strSearch = strSearch + reqArr[i]
+				if i != (len(reqArr) - 1) {
+					strSearch = strSearch + "_"
+				}
+			}
+			sum = sysCmbMX(k) * boardMx
+			// end of system case.
+		} else { // not system case
+			k = 0
+			for i = 3; i < len(reqArr); i = i + 6 {
+				k = k + 1
+				if reqArr[i] == "a" {
+					strSearch = strSearch + "&board" + strconv.Itoa(k) + "a="
+				} else {
+					strSearch = strSearch + "&board" + strconv.Itoa(k) + "="
+				}
+				strSearch = strSearch + reqArr[i+1] + "_" + reqArr[i+2] + "_" + reqArr[i+3] + "_"
+				strSearch = strSearch + reqArr[i+4] + "_" + reqArr[i+5]
+				sum = sum + boardMx
+			}
+		} // end of not system.
+		draws, _ = strconv.Atoi(reqArr[1]) // number of draws, _ is used to ignore err return value.
+		sum = sum * draws
+		strSearch = strSearch + "&sum=" + strconv.Itoa(sum) + ".00"
+		strSearch = strSearch + "&msisdn=0" // very last item.
+		return strSearch                    // // end of Maxima.
 	} else if reqArr[0] == "6" { // Super Loto.
-		return strSearch // end of Super Loto.
+		if len(reqArr) < 10 {
+			return ""
+		}
+		if (reqArr[3] == "sa") || (reqArr[3] == "sm") { // system.
+			k = 0 // system number.
+			for i = 4; i < len(reqArr); i = i + 1 {
+				k = k + 1
+			}
+			strSearch = strSearch + "&system=" + strconv.Itoa(k)
+			if reqArr[3] == "sa" {
+				strSearch = strSearch + "&board1a="
+			} else {
+				strSearch = strSearch + "&board1="
+			}
+			for i = 4; i < len(reqArr); i = i + 1 {
+				strSearch = strSearch + reqArr[i]
+				if i != (len(reqArr) - 1) {
+					strSearch = strSearch + "_"
+				}
+			}
+			sum = sysCmbSL(k) * boardMx
+			// end of system case.
+		} else { // not system case
+			k = 0
+			for i = 3; i < len(reqArr); i = i + 7 {
+				k = k + 1
+				if reqArr[i] == "a" {
+					strSearch = strSearch + "&board" + strconv.Itoa(k) + "a="
+				} else {
+					strSearch = strSearch + "&board" + strconv.Itoa(k) + "="
+				}
+				strSearch = strSearch + reqArr[i+1] + "_" + reqArr[i+2] + "_" + reqArr[i+3] + "_"
+				strSearch = strSearch + reqArr[i+4] + "_" + reqArr[i+5] + "_" + reqArr[i+6]
+				sum = sum + boardSl
+			}
+		} // end of not system.
+		draws, _ = strconv.Atoi(reqArr[1]) // number of draws, _ is used to ignore err return value.
+		sum = sum * draws
+		strSearch = strSearch + "&sum=" + strconv.Itoa(sum) + ".00"
+		strSearch = strSearch + "&msisdn=0" // very last item.
+		return strSearch                    // end of Super Loto.
 	} else {
 		return ""
 	}
@@ -415,6 +495,40 @@ func uniqnums(cmb [3]string) int {
 		nums = nums - 1
 	}
 	return nums
+}
+
+func sysCmbMX(sys int) int {
+	if sys == 6 {
+		return 6
+	} else if sys == 7 {
+		return 21
+	} else if sys == 8 {
+		return 56
+	} else if sys == 9 {
+		return 126
+	} else if sys == 10 {
+		return 252
+	} else if sys == 11 {
+		return 462
+	} else { // sys == 12
+		return 792
+	}
+}
+
+func sysCmbSL(sys int) int {
+	if sys == 7 {
+		return 7
+	} else if sys == 8 {
+		return 28
+	} else if sys == 9 {
+		return 84
+	} else if sys == 10 {
+		return 210
+	} else if sys == 11 {
+		return 462
+	} else { // sys == 12
+		return 924
+	}
 }
 
 func getResults(game string, drawnum string) string {
