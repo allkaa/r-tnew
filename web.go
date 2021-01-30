@@ -251,7 +251,7 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12_34_51"
 	var reqStringPay string = urlpay + strCmd(strSearch)
 	txnid = txnid + 1
-	//fmt.Println(txnid)
+	fmt.Println(reqStringPay)
 	var bytRep []byte
 	var err error
 	var strXML string = ""
@@ -460,7 +460,7 @@ func strCmd(ticreq string) string {
 					strSearch = strSearch + "_"
 				}
 			}
-			sum = sysCmbSL(k) * boardMx
+			sum = sysCmbSL(k) * boardSl
 			// end of system case.
 		} else { // not system case
 			k = 0
