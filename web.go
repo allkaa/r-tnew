@@ -251,7 +251,34 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12_34_51"
 	var reqStringPay string = urlpay + strCmd(strSearch)
 	txnid = txnid + 1
-	fmt.Println(txnid)
+	//fmt.Println(txnid)
+	var bytRep []byte
+	var err error
+	//var errMsg string = "Unknown error"
+	res, err := http.Get(reqStringPay)
+	if err != nil {
+		//log.Fatal(err)
+		//return sum
+		//errMsg = "Connection failed"
+	} else {
+		bytRep, err = ioutil.ReadAll(res.Body)
+		res.Body.Close()
+		if err != nil {
+			//log.Fatal(err)
+			//return sum
+			//errMsg = "XML reply reading failed"
+		} else {
+			strXML := string(bytRep)
+			fmt.Printf("%s\n", strXML)
+			var pos1 int = -1
+			var pos2 int = -1
+			pos1 = strings.Index(strXML, "<sum>")
+			pos2 = strings.Index(strXML, "</sum>")
+			if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
+				sum = strXML[pos1+5 : pos2]
+			}
+		}
+	}
 	return "Form formAKpay called with params " + reqStringPay
 }
 
