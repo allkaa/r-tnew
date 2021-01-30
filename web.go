@@ -254,6 +254,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 	//fmt.Println(txnid)
 	var bytRep []byte
 	var err error
+	var strXML string = ""
 	//var errMsg string = "Unknown error"
 	res, err := http.Get(reqStringPay)
 	if err != nil {
@@ -268,18 +269,24 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 			//return sum
 			//errMsg = "XML reply reading failed"
 		} else {
-			strXML := string(bytRep)
+			strXML = string(bytRep)
 			fmt.Printf("%s\n", strXML)
-			var pos1 int = -1
-			var pos2 int = -1
-			pos1 = strings.Index(strXML, "<sum>")
-			pos2 = strings.Index(strXML, "</sum>")
-			if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
-				sum = strXML[pos1+5 : pos2]
-			}
+			/*
+				var pos1 int = -1
+				var pos2 int = -1
+				pos1 = strings.Index(strXML, "<sum>")
+				pos2 = strings.Index(strXML, "</sum>")
+				if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
+					sum = strXML[pos1+5 : pos2]
+				}
+			*/
 		}
 	}
-	return "Form formAKpay called with params " + reqStringPay
+	//return "Form formAKpay called with params " + reqStringPay
+	if err != nil {
+		strXML = err.Error()
+	}
+	return strXML
 }
 
 func strCmd(ticreq string) string {
