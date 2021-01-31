@@ -258,19 +258,19 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 	var errMsg string = ""
 	var strPage string = ""
 	var result string = ""
-	var txn_id string = ""
+	var txnID string = ""
 	var game string = ""
 	var date string = ""
 	var time string = ""
 	var agent string = ""
-	var num_of_draws string = ""
-	var board string = ""
+	var numOfDraws string = ""
+	var board = [10]string{"", "", "", "", "", "", "", "", "", ""}
 	var sum string = ""
 	var number string = ""
 	var gguard string = ""
-	var first_draw string = ""
+	var firstDraw string = ""
 	var system string = ""
-	var num_used string = ""
+	var numUsed string = ""
 	var stake string = ""
 	res, err := http.Get(reqStringPay)
 	if err != nil {
@@ -319,7 +319,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				errMsg = "Server response wrong txn_id format"
 				goto ExitBuyTicket
 			}
-			txn_id = strXML[pos1+8 : pos2]
+			txnID = strXML[pos1+8 : pos2]
 			//<game>6</game>
 			//0123456789
 			pos1 = strings.Index(strXML, "<game>")
@@ -364,7 +364,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				errMsg = "Server response wrong num_of_draws format"
 				goto ExitBuyTicket
 			}
-			num_of_draws = strXML[pos1+14 : pos2]
+			numOfDraws = strXML[pos1+14 : pos2]
 			//<sum>3.00</sum>
 			//0123456789
 			pos1 = strings.Index(strXML, "<sum>")
@@ -401,7 +401,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 					errMsg = "Server response wrong first_draw format"
 					goto ExitBuyTicket
 				}
-				first_draw = strXML[pos1+12 : pos2]
+				firstDraw = strXML[pos1+12 : pos2]
 				//<system>7</system>
 				//0123456789
 				pos1 = strings.Index(strXML, "<system>")
@@ -430,13 +430,57 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 					errMsg = "Server response wrong num_used format"
 					goto ExitBuyTicket
 				}
-				num_used = strXML[pos1+10 : pos2]
+				numUsed = strXML[pos1+10 : pos2]
 			}
-			board = "01_80"
-			strPage = txn_id + " " + game + " " + date + " " + time + " " + agent + " " + num_of_draws + " " + board + " "
-			strPage = strPage + sum + " " + number + " " + gguard + " " + "first_draw=|" + first_draw + "| "
-			strPage = strPage + "system=|" + system + "| " + "num_used=|" + num_used + "| " + "stake=|" + stake + "|"
-			//=====================================================
+			//board = "01_80" // for test only.
+			//================== boards processing ===================================
+			//<board1a>01 02 03 04 05 06 07 08 09 10 11 12</board1a>
+			//<board1>01 02 03 04 05 06 07 08 09 10 11 12</board1>
+			//<board1>123S</board1>
+			//<board1a>15 18</board1a>
+			//<board1>15 18</board1>
+			//<board1>123S</board1>
+			//0123456789012
+			if strings.Index(strXML, "<<board1") == -1 {
+				errMsg = "Server response no boards info"
+				goto ExitBuyTicket
+			}
+			var maxBords int = 6
+			if game == "2" {
+				maxBords = 2
+			} else if game == "4" {
+				maxBords = 10
+			}
+			var i int
+			var strBoardBeg string = ""
+			var strBoardEnd string = ""
+			for i = 1; i <= maxBords; i = i + 1 {
+				strBoardBeg = "<board" + strconv.Itoa(i) + ">"
+				strBoardEnd = "</board" + strconv.Itoa(i) + ">"
+				pos1 = strings.Index(strXML, strBoardBeg)
+				pos2 = strings.Index(strXML, strBoardEnd)
+				if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+len(strBoardBeg)+2) {
+					board[i-1] = strXML[pos1+len(strBoardBeg) : pos2]
+				} else {
+					break
+				}
+			}
+			//================== end of boards processing ==================================
+			strPage = txnID + " " + game + " " + date + " " + time + " " + agent + " " + numOfDraws + " "
+			for i = 0; i < len(board); i = i + 1 {
+				if board[i] != "" {
+					if i == 1 {
+						strPage = strPage + board[0]
+					} else {
+						strPage = strPage + " + " + board[0]
+					}
+				} else {
+					break
+				}
+			}
+			strPage = strPage + board[0] + " "
+			strPage = strPage + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
+			strPage = strPage + "system=|" + system + "| " + "num_used=|" + numUsed + "| " + "stake=|" + stake + "|"
 		} // end of connection body processing.
 	} // end of connection data processing.
 	//return "Form formAKpay called with params " + reqStringPay
