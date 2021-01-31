@@ -256,7 +256,22 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 	var err error
 	var strXML string = ""
 	var errMsg string = ""
+	var strPage string = ""
+	var result string = ""
+	var txn_id string = ""
+	var game string = ""
+	var date string = ""
+	var time string = ""
+	var agent string = ""
+	var num_of_draws string = ""
+	var board string = ""
 	var sum string = ""
+	var number string = ""
+	var gguard string = ""
+	var first_draw string = ""
+	var system string = ""
+	var num_used string = ""
+	var stake string = ""
 	res, err := http.Get(reqStringPay)
 	if err != nil {
 		//log.Fatal(err)
@@ -283,7 +298,6 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 			*/
 			var pos1 int = -1
 			var pos2 int = -1
-			var result string = ""
 			//<result>0</result>
 			//01234567890
 			pos1 = strings.Index(strXML, "<result>")
@@ -297,6 +311,60 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				errMsg = "Server response error code = " + result
 				goto ExitBuyTicket
 			}
+			//<txn_id>1</txn_id>
+			//0123456789
+			pos1 = strings.Index(strXML, "<txn_id>")
+			pos2 = strings.Index(strXML, "</txn_id>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+				errMsg = "Server response wrong txn_id format"
+				goto ExitBuyTicket
+			}
+			txn_id = strXML[pos1+8 : pos2]
+			//<game>6</game>
+			//0123456789
+			pos1 = strings.Index(strXML, "<game>")
+			pos2 = strings.Index(strXML, "</game>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+7)) {
+				errMsg = "Server response wrong game format"
+				goto ExitBuyTicket
+			}
+			game = strXML[pos1+6 : pos2]
+			//<date>25.10.18</date>
+			//012345678901234
+			pos1 = strings.Index(strXML, "<date>")
+			pos2 = strings.Index(strXML, "</date>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+14)) {
+				errMsg = "Server response wrong date format"
+				goto ExitBuyTicket
+			}
+			date = strXML[pos1+6 : pos2]
+			//<time>13:12:58</time>
+			//012345678901234
+			pos1 = strings.Index(strXML, "<time>")
+			pos2 = strings.Index(strXML, "</time>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+14)) {
+				errMsg = "Server response wrong time format"
+				goto ExitBuyTicket
+			}
+			time = strXML[pos1+6 : pos2]
+			//<agent>02501267</agent>
+			//0123456789012345
+			pos1 = strings.Index(strXML, "<agent>")
+			pos2 = strings.Index(strXML, "</agent>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+15)) {
+				errMsg = "Server response wrong agent format"
+				goto ExitBuyTicket
+			}
+			agent = strXML[pos1+7 : pos2]
+			//<num_of_draws>1</num_of_draws>
+			//0123456789012345
+			pos1 = strings.Index(strXML, "<num_of_draws>")
+			pos2 = strings.Index(strXML, "</num_of_draws>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+15)) {
+				errMsg = "Server response wrong num_of_draws format"
+				goto ExitBuyTicket
+			}
+			num_of_draws = strXML[pos1+14 : pos2]
 			//<sum>3.00</sum>
 			//0123456789
 			pos1 = strings.Index(strXML, "<sum>")
@@ -306,8 +374,71 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				goto ExitBuyTicket
 			}
 			sum = strXML[pos1+5 : pos2]
-		}
-	}
+			//<number>298-75699630-0976316</number>
+			//01234567890123456789012345678
+			pos1 = strings.Index(strXML, "<number>")
+			pos2 = strings.Index(strXML, "</number>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+28)) {
+				errMsg = "Server response wrong number format"
+				goto ExitBuyTicket
+			}
+			number = strXML[pos1+8 : pos2]
+			//<gguard>425377</gguard>
+			//012345678901234
+			pos1 = strings.Index(strXML, "<gguard>")
+			pos2 = strings.Index(strXML, "</gguard>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+14)) {
+				errMsg = "Server response wrong gguard format"
+				goto ExitBuyTicket
+			}
+			gguard = strXML[pos1+8 : pos2]
+			if game == "5" || game == "6" {
+				//<first_draw>27.10.18</first_draw> <first_draw>05.06.11 - 14.06.11</first_draw>
+				//012345678901234567890
+				pos1 = strings.Index(strXML, "<first_draw>")
+				pos2 = strings.Index(strXML, "</first_draw>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+20)) {
+					errMsg = "Server response wrong first_draw format"
+					goto ExitBuyTicket
+				}
+				first_draw = strXML[pos1+12 : pos2]
+				//<system>7</system>
+				//0123456789
+				pos1 = strings.Index(strXML, "<system>")
+				pos2 = strings.Index(strXML, "</system>")
+				if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
+					system = strXML[pos1+8 : pos2]
+				}
+			}
+			if game == "2" || game == "4" {
+				//<stake>1</stake>
+				//012345678
+				pos1 = strings.Index(strXML, "<stake>")
+				pos2 = strings.Index(strXML, "</stake>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+8)) {
+					errMsg = "Server response wrong stake format"
+					goto ExitBuyTicket
+				}
+				stake = strXML[pos1+7 : pos2]
+			}
+			if game == "2" {
+				//<num_used>2</num_used>
+				//012345678901
+				pos1 = strings.Index(strXML, "<num_used>")
+				pos2 = strings.Index(strXML, "</num_used>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+11)) {
+					errMsg = "Server response wrong num_used format"
+					goto ExitBuyTicket
+				}
+				num_used = strXML[pos1+10 : pos2]
+			}
+			board = "01_80"
+			strPage = txn_id + " " + game + " " + date + " " + time + " " + agent + " " + num_of_draws + " " + board + " "
+			strPage = strPage + sum + " " + number + " " + gguard + " " + "first_draw=|" + first_draw + "| "
+			strPage = strPage + "system=|" + system + "| " + "num_used=|" + num_used + "| " + "stake=|" + stake + "|"
+			//=====================================================
+		} // end of connection body processing.
+	} // end of connection data processing.
 	//return "Form formAKpay called with params " + reqStringPay
 ExitBuyTicket:
 	if err != nil {
@@ -315,7 +446,7 @@ ExitBuyTicket:
 	} else if errMsg != "" {
 		return errMsg
 	}
-	return strXML
+	return strPage
 }
 
 func strCmd(ticreq string) string {
