@@ -544,13 +544,13 @@ ExitBuyTicket:
 		if game == "4" {
 			// e.g. 012S or 112B or 765A or 123Y
 			if board[i][3:] == "S" {
-				ticinfo = ticinfo + "<li>" + board[i] + " Точний" + "</li>"
+				ticinfo = ticinfo + "<li>" + board[i][0:3] + " Точний" + "</li>"
 			} else if board[i][3:] == "B" {
-				ticinfo = ticinfo + "<li>" + board[i] + " Довільний" + "</li>"
+				ticinfo = ticinfo + "<li>" + board[i][0:3] + " Довільний" + "</li>"
 			} else if board[i][3:] == "A" {
-				ticinfo = ticinfo + "<li>" + board[i] + " Точний + Довільний" + "</li>"
+				ticinfo = ticinfo + "<li>" + board[i][0:3] + " Точний + Довільний" + "</li>"
 			} else {
-				ticinfo = ticinfo + "<li>" + board[i] + " Система" + "</li>"
+				ticinfo = ticinfo + "<li>" + board[i][0:3] + " Система" + "</li>"
 			}
 		} else {
 			ticinfo = ticinfo + "<li>" + board[i] + " " + bType[i] + "</li>"
