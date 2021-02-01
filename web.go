@@ -441,7 +441,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 			//<board1>15 18</board1>
 			//<board1>123S</board1>
 			//0123456789012
-			if strings.Index(strXML, "<<board1") == -1 {
+			if strings.Index(strXML, "<board1") == -1 {
 				errMsg = "Server response no boards info"
 				goto ExitBuyTicket
 			}
