@@ -257,6 +257,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 	var strXML string = ""
 	var errMsg string = ""
 	var strPage string = ""
+	var ticinfo string = ""
 	var result string = ""
 	var txnID string = ""
 	var game string = ""
@@ -265,6 +266,8 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 	var agent string = ""
 	var numOfDraws string = ""
 	var board = [10]string{"", "", "", "", "", "", "", "", "", ""}
+	var bType = [10]string{"", "", "", "", "", "", "", "", "", ""}
+	var i int
 	var sum string = ""
 	var number string = ""
 	var gguard string = ""
@@ -308,7 +311,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 			}
 			result = strXML[pos1+8 : pos2]
 			if result != "0" {
-				errMsg = "Server response error code = " + result
+				errMsg = "Server reply with result: " + result
 				goto ExitBuyTicket
 			}
 			//<txn_id>1</txn_id>
@@ -451,7 +454,6 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 			} else if game == "4" {
 				maxBords = 10
 			}
-			var i int
 			var strBoardBeg string = ""
 			var strBoardEnd string = ""
 			for i = 1; i <= maxBords; i = i + 1 {
@@ -464,6 +466,9 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 					strBoardEnd = "</board" + strconv.Itoa(i) + "a>"
 					pos1 = strings.Index(strXML, strBoardBeg)
 					pos2 = strings.Index(strXML, strBoardEnd)
+					if (pos1 != -1) && (pos2 != -1) {
+						bType[i-1] = "АВТО"
+					}
 				}
 				if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+len(strBoardBeg)+2) {
 					board[i-1] = strXML[pos1+len(strBoardBeg) : pos2]
@@ -472,29 +477,137 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				}
 			}
 			//================== end of boards processing ==================================
-			strPage = txnID + " " + game + " " + date + " " + time + " " + agent + " " + numOfDraws + " "
-			for i = 0; i < len(board); i = i + 1 {
-				if board[i] != "" {
-					if i == 0 {
-						strPage = strPage + board[i]
+			/*
+				strPage = txnID + " " + game + " " + date + " " + time + " " + agent + " " + numOfDraws + " "
+				for i = 0; i < len(board); i = i + 1 {
+					if board[i] != "" {
+						if i == 0 {
+							strPage = strPage + board[i]
+						} else {
+							strPage = strPage + "_" + board[i]
+						}
 					} else {
-						strPage = strPage + "_" + board[i]
+						break
 					}
-				} else {
-					break
 				}
-			}
-			strPage = strPage + " " + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
-			strPage = strPage + "system=|" + system + "| " + "num_used=|" + numUsed + "| " + "stake=|" + stake + "|"
+				strPage = strPage + " " + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
+				strPage = strPage + "system=|" + system + "| " + "num_used=|" + numUsed + "| " + "stake=|" + stake + "|"
+			*/
 		} // end of connection body processing.
 	} // end of connection data processing.
 	//return "Form formAKpay called with params " + reqStringPay
 ExitBuyTicket:
 	if err != nil {
-		return err.Error()
-	} else if errMsg != "" {
-		return errMsg
+		errMsg = err.Error()
 	}
+	if errMsg != "" {
+		if errMsg == "Server reply with result: 777" {
+			ticinfo = "Ожидайте ответа сервера..."
+		} else {
+			ticinfo = errMsg
+		}
+		goto buyTicketPage
+	}
+	agent = agent + ""
+	system = system + ""
+	numUsed = numUsed + ""
+	ticinfo = ticinfo + "<li>Україньска Національна Лотерея</li>"
+	ticinfo = ticinfo + "<li>Дата: " + date + "</li>"
+	ticinfo = ticinfo + "<li>Час: " + time + "</li>"
+	ticinfo = ticinfo + "<li>Гра: " + game + "</li>"
+	if numOfDraws != "" {
+		ticinfo = ticinfo + "<li>Розіграшей: " + numOfDraws + "</li>"
+	}
+	if firstDraw != "" {
+		ticinfo = ticinfo + "<li>Розіграш: " + firstDraw + "</li>"
+	} else {
+		ticinfo = ticinfo + "<li>Перший розіграш: " + date + "</li>"
+	}
+	ticinfo = ticinfo + "<li>Комбінації:</li>"
+	ticinfo = ticinfo + "<li>------------------------------------------------------</li>"
+	for i = 0; i < len(board); i = i + 1 {
+		if board[i] == "" {
+			break
+		}
+		if game == "4" {
+			// e.g. 012S or 112B or 765A or 123Y
+			if board[i][3:] == "S" {
+				ticinfo = ticinfo + "<li>" + board[i] + " Точний" + "</li>"
+			} else if board[i][3:] == "B" {
+				ticinfo = ticinfo + "<li>" + board[i] + " Довільний" + "</li>"
+			} else if board[i][3:] == "A" {
+				ticinfo = ticinfo + "<li>" + board[i] + " Точний + Довільний" + "</li>"
+			} else {
+				ticinfo = ticinfo + "<li>" + board[i] + " Система" + "</li>"
+			}
+		} else {
+			ticinfo = ticinfo + "<li>" + board[i] + " " + bType[i] + "</li>"
+		}
+	}
+	ticinfo = ticinfo + "<li>------------------------------------------------------</li>"
+	if stake != "" {
+		ticinfo = ticinfo + "<li>Ставка: " + stake + "</li>"
+	}
+	ticinfo = ticinfo + "<li>Сума: " + sum + "</li>"
+	ticinfo = ticinfo + "<li>Білет: " + decrGG(gguard) + " " + decrNum(number) + "</li>"
+	ticinfo = ticinfo + "<li>txn_id: " + txnID + "</li>"
+	// Create strPage:
+buyTicketPage:
+	strPage = "<!DOCTYPE html>"
+	strPage = strPage + "<html lang=\"en\">"
+	strPage = strPage + "<head>"
+	strPage = strPage + "<meta charset=\"utf-8\" />"
+	strPage = strPage + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />"
+	strPage = strPage + "<title>Ticket info</title>"
+	strPage = strPage + "<style>"
+	strPage = strPage + "#ticinfo {"
+	//strPage = strPage + "width: 70%;"
+	strPage = strPage + "margin: 3% 3% 3% 3%;"
+	strPage = strPage + "background-color: #dfdbdb;"
+	strPage = strPage + "border: thick solid black;"
+	strPage = strPage + "outline: dashed red;"
+	strPage = strPage + "}"
+	strPage = strPage + "#ticback {"
+	strPage = strPage + "display: block;"
+	strPage = strPage + "width: 10%;"
+	strPage = strPage + "margin: 1% 3% 1% 3%;"
+	strPage = strPage + "padding: 1% 1% 1% 1%;"
+	strPage = strPage + "color: white;"
+	strPage = strPage + "background-color: blue;"
+	strPage = strPage + "border: thin solid black;"
+	strPage = strPage + "border-radius: 15%;"
+	strPage = strPage + "text-decoration:none;"
+	strPage = strPage + "}"
+	strPage = strPage + "#tichdr {"
+	strPage = strPage + "margin: 1% 3% 1% 3%;"
+	//strPage = strPage + "padding: 1% 1% 1% 1%;"
+	strPage = strPage + "}"
+	strPage = strPage + "#ticket {"
+	strPage = strPage + "display: block;"
+	strPage = strPage + "margin: 1% 3% 1% 3%;"
+	strPage = strPage + "padding: 1% 1% 1% 1%;"
+	strPage = strPage + "background-color: white;"
+	strPage = strPage + "border: thin solid black;"
+	strPage = strPage + "}"
+	//strPage = strPage + ""
+	strPage = strPage + "</style>"
+	strPage = strPage + "</head>"
+	strPage = strPage + "<body>"
+	strPage = strPage + "<div id=\"ticinfo\">"
+	strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
+	strPage = strPage + "<h3 id=\"tichdr\">Запрос на покупку билета.</h3>"
+	strPage = strPage + "<ul id=\"ticket\">"
+	strPage = strPage + ticinfo
+	strPage = strPage + "</ul>"
+	strPage = strPage + "</div>"
+	strPage = strPage + "<script>"
+	strPage = strPage + "console.log('page body script started');"
+	strPage = strPage + "console.log(document.getElementById('ticket').innerHTML);"
+	strPage = strPage + "if (document.getElementById('ticket').innerHTML === 'Ожидайте ответа сервера...') document.location.reload();"
+	strPage = strPage + "</script>"
+	strPage = strPage + "</body>"
+	strPage = strPage + "</html>"
+	//fmt.Println(strPage)
 	return strPage
 }
 
