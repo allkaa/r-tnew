@@ -475,7 +475,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 			strPage = txnID + " " + game + " " + date + " " + time + " " + agent + " " + numOfDraws + " "
 			for i = 0; i < len(board); i = i + 1 {
 				if board[i] != "" {
-					if i == 1 {
+					if i == 0 {
 						strPage = strPage + board[i]
 					} else {
 						strPage = strPage + "_" + board[i]
@@ -484,7 +484,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 					break
 				}
 			}
-			strPage = strPage + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
+			strPage = strPage + " " + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
 			strPage = strPage + "system=|" + system + "| " + "num_used=|" + numUsed + "| " + "stake=|" + stake + "|"
 		} // end of connection body processing.
 	} // end of connection data processing.
