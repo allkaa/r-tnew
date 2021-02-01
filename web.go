@@ -470,15 +470,14 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 			for i = 0; i < len(board); i = i + 1 {
 				if board[i] != "" {
 					if i == 1 {
-						strPage = strPage + board[0]
+						strPage = strPage + board[i]
 					} else {
-						strPage = strPage + " + " + board[0]
+						strPage = strPage + "_" + board[i]
 					}
 				} else {
 					break
 				}
 			}
-			strPage = strPage + board[0] + " "
 			strPage = strPage + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
 			strPage = strPage + "system=|" + system + "| " + "num_used=|" + numUsed + "| " + "stake=|" + stake + "|"
 		} // end of connection body processing.
@@ -520,7 +519,7 @@ func strCmd(ticreq string) string {
 		strMonth = "0" + strMonth
 	}
 	if len(strDay) == 1 {
-		strMonth = "0" + strDay
+		strDay = "0" + strDay
 	}
 	//fmt.Println(strYear, strMonth, strDay)
 	strSearch = "?agent=" + strAgent + "&type=2&command=pay&date=" + strYear + strMonth + strDay + "&txn_id=" + strconv.Itoa(txnid)
