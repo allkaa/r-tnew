@@ -459,6 +459,12 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				strBoardEnd = "</board" + strconv.Itoa(i) + ">"
 				pos1 = strings.Index(strXML, strBoardBeg)
 				pos2 = strings.Index(strXML, strBoardEnd)
+				if pos1 == -1 {
+					strBoardBeg = "<board" + strconv.Itoa(i) + "a>"
+					strBoardEnd = "</board" + strconv.Itoa(i) + "a>"
+					pos1 = strings.Index(strXML, strBoardBeg)
+					pos2 = strings.Index(strXML, strBoardEnd)
+				}
 				if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+len(strBoardBeg)+2) {
 					board[i-1] = strXML[pos1+len(strBoardBeg) : pos2]
 				} else {
