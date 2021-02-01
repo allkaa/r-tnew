@@ -261,6 +261,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 	var result string = ""
 	var txnID string = ""
 	var game string = ""
+	var gameName string = ""
 	var date string = ""
 	var time string = ""
 	var agent string = ""
@@ -514,7 +515,18 @@ ExitBuyTicket:
 	ticinfo = ticinfo + "<li>Україньска Національна Лотерея</li>"
 	ticinfo = ticinfo + "<li>Дата: " + date + "</li>"
 	ticinfo = ticinfo + "<li>Час: " + time + "</li>"
-	ticinfo = ticinfo + "<li>Гра: " + game + "</li>"
+	if game == "2" {
+		gameName = "Кено"
+	} else if game == "4" {
+		gameName = "Трійка"
+	} else if game == "5" {
+		gameName = "Максима"
+	} else if game == "6" {
+		gameName = "Супер Лото"
+	} else {
+		gameName = "Неведома"
+	}
+	ticinfo = ticinfo + "<li>Гра: " + gameName + "</li>"
 	if numOfDraws != "" {
 		ticinfo = ticinfo + "<li>Розіграшей: " + numOfDraws + "</li>"
 	}
