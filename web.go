@@ -220,12 +220,14 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 					w.Header().Set("Content-Type", "text/html")
 					fmt.Fprintf(w, "%s", strPage)
 				} else if strings.Index(r.RequestURI, "/formAKresults?") != -1 {
-					pos1 = strings.Index(r.RequestURI, "/formAKresults?q=")
+					// e.g. formAKresults?g=2&q= or formAKresults?g=2&q=1001
+					pos1 = strings.Index(r.RequestURI, "/formAKresults?g=")
 					strSearch = r.RequestURI[pos1+17:]
-					fmt.Fprintf(w, "Form formAKresults called with params %s", strSearch)
-					//strPage = getResults(game, drawnum)
-					//w.Header().Set("Content-Type", "text/html")
-					//fmt.Fprintf(w, "%s", strPage)
+					// e.g. 2&q= or 2&q=1001
+					//fmt.Fprintf(w, "Form formAKresults called with params %s", strSearch)
+					strPage = getResults(strSearch)
+					w.Header().Set("Content-Type", "text/html")
+					fmt.Fprintf(w, "%s", strPage)
 				} else {
 					fmt.Fprintf(w, "NB!!! Unknown form called with URI: %s", r.RequestURI)
 				}
@@ -899,8 +901,67 @@ func sysCmbSL(sys int) int {
 	}
 }
 
-func getResults(game string, drawnum string) string {
-	return ""
+func getResults(strSearch string) string {
+	// http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results
+	// http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results&draw=1
+	// e.g. 2&q= or 2&q=1001
+	var strPage string = ""
+	var reptext string = "results are ..."
+	// Create Page:
+	strPage = strPage + "<!DOCTYPE html>"
+	strPage = strPage + "<html lang=\"en\">"
+	strPage = strPage + "<head>"
+	strPage = strPage + "<meta charset=\"utf-8\"/>"
+	strPage = strPage + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>"
+	strPage = strPage + "<title>Draw info</title>"
+	strPage = strPage + "<style>"
+	strPage = strPage + "#ticinfo {"
+	//strPage = strPage + "width: 70%;"
+	strPage = strPage + "margin: 3% 3% 3% 3%;"
+	strPage = strPage + "background-color: #dfdbdb;"
+	strPage = strPage + "border: thick solid black;"
+	strPage = strPage + "outline: dashed red;"
+	strPage = strPage + "}"
+	strPage = strPage + "#ticback {"
+	strPage = strPage + "display: block;"
+	strPage = strPage + "width: 10%;"
+	strPage = strPage + "margin: 1% 3% 1% 3%;"
+	strPage = strPage + "padding: 1% 1% 1% 1%;"
+	strPage = strPage + "color: white;"
+	strPage = strPage + "background-color: blue;"
+	strPage = strPage + "border: thin solid black;"
+	strPage = strPage + "border-radius: 15%;"
+	strPage = strPage + "text-decoration:none;"
+	strPage = strPage + "}"
+	strPage = strPage + "#tichdr {"
+	strPage = strPage + "margin: 1% 3% 1% 3%;"
+	//strPage = strPage + "padding: 1% 1% 1% 1%;"
+	strPage = strPage + "}"
+	strPage = strPage + "#ticket {"
+	strPage = strPage + "display: block;"
+	strPage = strPage + "margin: 1% 3% 1% 3%;"
+	strPage = strPage + "padding: 1% 1% 1% 1%;"
+	strPage = strPage + "background-color: white;"
+	strPage = strPage + "border: thin solid black;"
+	strPage = strPage + "}"
+	//strPage = strPage + ""
+	strPage = strPage + "</style>"
+	strPage = strPage + "</head>"
+	strPage = strPage + "<body>"
+	strPage = strPage + "<div id=\"ticinfo\">"
+	strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
+	strPage = strPage + "<ul id=\"ticket\">"
+	strPage = strPage + reptext
+	strPage = strPage + "</ul>"
+	strPage = strPage + "</div>"
+	//strPage = strPage + "<script>"
+	//strPage = strPage + "console.log("page body script started"");
+	//strPage = strPage + "console.log(document.getElementById("ticket").innerHTML);");
+	//strPage = strPage + "if (document.getElementById("ticket").innerHTML === "Ожидайте ответа сервера...") document.location.reload();");
+	//strPage = strPage + "</script>"
+	strPage = strPage + "</body>"
+	strPage = strPage + "</html>"
+	return strPage
 }
 
 func checkValTicket(strTicnum string) string {
