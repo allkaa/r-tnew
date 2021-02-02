@@ -288,9 +288,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 		res.Body.Close()
 		if err != nil {
 			//log.Fatal(err)
-			//return sum
-			//errMsg = "XML reply reading failed"
-		} else {
+		} else { // begin response body processing.
 			strXML = string(bytRep)
 			fmt.Printf("%s\n", strXML)
 			/*
@@ -496,7 +494,7 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				strPage = strPage + " " + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
 				strPage = strPage + "system=|" + system + "| " + "num_used=|" + numUsed + "| " + "stake=|" + stake + "|"
 			*/
-		} // end of connection body processing.
+		} // end of response body processing.
 	} // end of connection data processing.
 	//return "Form formAKpay called with params " + reqStringPay
 ExitBuyTicket:
@@ -904,10 +902,78 @@ func sysCmbSL(sys int) int {
 func getResults(strSearch string) string {
 	// http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results
 	// http://10.8.194.3:38000/?agent=16&type=2&command=scheck&game=5&draw_results&draw=1
-	// e.g. 2&q= or 2&q=1001
 	var strPage string = ""
-	var reptext string = "results are ..."
+	var reptext string = "Wrong results request format"
+	var game string = ""
+	var draw string = ""
+	var reqStringResults string = ""
+	var bytRep []byte
+	var err error
+	var res *http.Response
+	var errMsg string = ""
+	var strXML string = ""
+	var result string = ""
+	var pos1 int = -1
+	var pos2 int = -1
+	// strSearch e.g. 2&q= or 2&q=1001
+	pos1 = 0
+	pos2 = strings.Index(strSearch, "&q=")
+	if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+1) {
+		game = strSearch[pos1:pos2]
+	} else {
+		goto getResultsCreatePage
+	}
+	pos1 = strings.Index(strSearch, "&q=")
+	if pos1 != -1 {
+		draw = strSearch[pos1:]
+	} else {
+		goto getResultsCreatePage
+	}
+	reqStringResults = urlpay
+	if draw == "" {
+		reqStringResults = reqStringResults + "?agent=16&type=2&command=scheck&game=" + game + "&draw_results"
+	} else {
+		reqStringResults = reqStringResults + "?agent=16&type=2&command=scheck&game=" + game + "&draw_results&draw=" + draw
+	}
+	res, err = http.Get(reqStringResults)
+	if err != nil {
+		//log.Fatal(err)
+		//return sum
+		//errMsg = "Connection failed"
+	} else {
+		bytRep, err = ioutil.ReadAll(res.Body)
+		res.Body.Close()
+		if err != nil {
+			//log.Fatal(err)
+		} else { // begin response body processing.
+			//
+			var pos1 int = -1
+			var pos2 int = -1
+			//<result>0</result>
+			//01234567890
+			pos1 = strings.Index(strXML, "<result>")
+			pos2 = strings.Index(strXML, "</result>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+				errMsg = "Wrong server response XML format"
+				goto ExitGetResults
+			}
+			result = strXML[pos1+8 : pos2]
+			if result != "0" {
+				errMsg = "Server reply with result: " + result
+				goto ExitGetResults
+			}
+		} // end of response body processing.
+	} // end of connection processing.
+ExitGetResults:
+	if err != nil {
+		errMsg = err.Error()
+	}
+	if errMsg != "" {
+		reptext = errMsg
+		goto getResultsCreatePage
+	}
 	// Create Page:
+getResultsCreatePage:
 	strPage = strPage + "<!DOCTYPE html>"
 	strPage = strPage + "<html lang=\"en\">"
 	strPage = strPage + "<head>"
