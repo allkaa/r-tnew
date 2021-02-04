@@ -905,7 +905,11 @@ func getResults(strSearch string) string {
 	var strPage string = ""
 	var reptext string = "Wrong results request format"
 	var game string = ""
+	var gamename string = ""
 	var draw string = ""
+	var drawnum = [2]string{"", ""}
+	var date = [2]string{"", ""}
+	var winnignumbers = [2]string{"", ""}
 	var reqStringResults string = ""
 	var bytRep []byte
 	var err error
@@ -946,7 +950,7 @@ func getResults(strSearch string) string {
 		if err != nil {
 			//log.Fatal(err)
 		} else { // begin response body processing.
-			//
+			strXML = string(bytRep)
 			var pos1 int = -1
 			var pos2 int = -1
 			//<result>0</result>
@@ -962,6 +966,85 @@ func getResults(strSearch string) string {
 				errMsg = "Server reply with result: " + result
 				goto ExitGetResults
 			}
+			//<game>2</game>
+			//01234567
+			pos1 = strings.Index(strXML, "<game>")
+			pos2 = strings.Index(strXML, "</game>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+7)) {
+				errMsg = "Wrong server response game format"
+				goto ExitGetResults
+			}
+			game = strXML[pos1+6 : pos2]
+			if game == "2" {
+				gamename = "Кено"
+			} else if game == "4" {
+				gamename = "Трійка"
+			} else if game == "5" {
+				gamename = "Лото Максима"
+			} else if game == "6" {
+				gamename = "Супер Лото"
+			}
+			//<draw_num>1</draw_num>
+			//012345678901
+			pos1 = strings.Index(strXML, "<draw_num>")
+			pos2 = strings.Index(strXML, "</draw_num>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+11)) {
+				errMsg = "Wrong server response draw_num format"
+				goto ExitGetResults
+			}
+			drawnum[0] = strXML[pos1+10 : pos2]
+			//<date>24.10.18</date>
+			//012345678901234
+			pos1 = strings.Index(strXML, "<date>")
+			pos2 = strings.Index(strXML, "</date>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+11)) {
+				errMsg = "Wrong server response date format"
+				goto ExitGetResults
+			}
+			date[0] = strXML[pos1+6 : pos2]
+			//<winnig_numbers>123</winnig_numbers>
+			//01234567890123456789
+			pos1 = strings.Index(strXML, "<winnig_numbers>")
+			pos2 = strings.Index(strXML, "</winnig_numbers>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+19)) {
+				errMsg = "Wrong server response winnig_numbers format"
+				goto ExitGetResults
+			}
+			winnignumbers[0] = strXML[pos1+16 : pos2]
+			// Previous draw info if any.
+			//<previous_draw>
+			//0123456789
+			pos1 = strings.Index(strXML, "<previous_draw>")
+			if pos1 == -1 {
+				goto ExitGetResults
+			}
+			//<draw_num>1</draw_num>
+			//012345678901
+			pos1 = strings.LastIndex(strXML, "<draw_num>")
+			pos2 = strings.LastIndex(strXML, "</draw_num>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+11)) {
+				errMsg = "Wrong server response previous draw_num format"
+				goto ExitGetResults
+			}
+			drawnum[1] = strXML[pos1+10 : pos2]
+			//<date>24.10.18</date>
+			//012345678901234
+			pos1 = strings.LastIndex(strXML, "<date>")
+			pos2 = strings.LastIndex(strXML, "</date>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+11)) {
+				errMsg = "Wrong server response previous date format"
+				goto ExitGetResults
+			}
+			date[1] = strXML[pos1+6 : pos2]
+			//<winnig_numbers>123</winnig_numbers>
+			//01234567890123456789
+			pos1 = strings.LastIndex(strXML, "<winnig_numbers>")
+			pos2 = strings.LastIndex(strXML, "</winnig_numbers>")
+			if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+19)) {
+				errMsg = "Wrong server response previous winnig_numbers format"
+				goto ExitGetResults
+			}
+			winnignumbers[1] = strXML[pos1+16 : pos2]
 		} // end of response body processing.
 	} // end of connection processing.
 ExitGetResults:
@@ -971,6 +1054,17 @@ ExitGetResults:
 	if errMsg != "" {
 		reptext = errMsg
 		goto getResultsCreatePage
+	}
+	reptext = reptext + "<li>Україньска Національна Лотерея</li>"
+	reptext = reptext + "<li>Результаты</li>"
+	reptext = reptext + "<li>Гра: " + gamename + "</li>"
+	reptext = reptext + "<li>Розіграш: " + drawnum[0] + "</li>"
+	reptext = reptext + "<li>Дата: " + date[0] + "</li>"
+	reptext = reptext + "<li>Номера: " + winnignumbers[0] + "</li>"
+	if drawnum[1] != "" {
+		reptext = reptext + "<li>Розіграш: " + drawnum[1] + "</li>"
+		reptext = reptext + "<li>Дата: " + date[1] + "</li>"
+		reptext = reptext + "<li>Номера: " + winnignumbers[1] + "</li>"
 	}
 	// Create Page:
 getResultsCreatePage:
