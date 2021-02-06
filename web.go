@@ -126,7 +126,7 @@ import (
 	"unsafe"
 )
 
-const pageNameIni = string("index.html") // string("index.html") or string("indexForm.html")
+const pageNameIni = string("indexForm.html") // string("index.html") or string("indexForm.html")
 const dir = string("./build")
 
 // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
@@ -240,10 +240,71 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		body, err := ioutil.ReadAll(r.Body) // body will be []uint8 with e.g. (length: 20, cap: 512) err will be <nil>
 		// e.g. [103 97 109 101 61 75 78 38 110 49 61 49 38 110 50 61 50 38 113 61] <nil>
-		fmt.Println(body, err)
-		strBody := string(body) // e.g. "game=KN&n1=1&n2=2&q=" or e.g. "game=SL&n1=&n2=2&q=qwerty"
-		fmt.Println(strBody)
-		fmt.Fprintf(w, "Unimplemeted POST method")
+		//fmt.Println(body, err)
+		var strPage string = ""
+		if err == nil {
+			strBody := string(body) // e.g. "game=KN&n1=1&n2=2&q=" or e.g. "game=SL&n1=&n2=2&q=qwerty"
+			//fmt.Println(strBody)
+			//fmt.Fprintf(w, "Unimplemeted POST method")
+			strPage = "<!DOCTYPE html>"
+			strPage = strPage + "<html lang=\"en\">"
+			strPage = strPage + "<head>"
+			strPage = strPage + "<meta charset=\"utf-8\" />"
+			strPage = strPage + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />"
+			strPage = strPage + "<title>Ticket info</title>"
+			strPage = strPage + "<style>"
+			strPage = strPage + "#ticinfo {"
+			//strPage = strPage + "width: 70%;"
+			strPage = strPage + "margin: 3% 3% 3% 3%;"
+			strPage = strPage + "background-color: #dfdbdb;"
+			strPage = strPage + "border: thick solid black;"
+			strPage = strPage + "outline: dashed red;"
+			strPage = strPage + "}"
+			strPage = strPage + "#ticback {"
+			strPage = strPage + "display: block;"
+			strPage = strPage + "width: 10%;"
+			strPage = strPage + "margin: 1% 3% 1% 3%;"
+			strPage = strPage + "padding: 1% 1% 1% 1%;"
+			strPage = strPage + "color: white;"
+			strPage = strPage + "background-color: blue;"
+			strPage = strPage + "border: thin solid black;"
+			strPage = strPage + "border-radius: 15%;"
+			strPage = strPage + "text-decoration:none;"
+			strPage = strPage + "}"
+			strPage = strPage + "#tichdr {"
+			strPage = strPage + "margin: 1% 3% 1% 3%;"
+			//strPage = strPage + "padding: 1% 1% 1% 1%;"
+			strPage = strPage + "}"
+			strPage = strPage + "#ticket {"
+			strPage = strPage + "display: block;"
+			strPage = strPage + "margin: 1% 3% 1% 3%;"
+			strPage = strPage + "padding: 1% 1% 1% 1%;"
+			strPage = strPage + "background-color: white;"
+			strPage = strPage + "border: thin solid black;"
+			strPage = strPage + "}"
+			//strPage = strPage + ""
+			strPage = strPage + "</style>"
+			strPage = strPage + "</head>"
+			strPage = strPage + "<body>"
+			strPage = strPage + "<div id=\"ticinfo\">"
+			strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
+			strPage = strPage + "<h3 id=\"tichdr\">POST method called with body:</h3>"
+			strPage = strPage + "<ul id=\"ticket\">"
+			strPage = strPage + strBody
+			strPage = strPage + "</ul>"
+			strPage = strPage + "</div>"
+			strPage = strPage + "<script>"
+			strPage = strPage + "console.log('page body script started');"
+			strPage = strPage + "console.log(document.getElementById('ticket').innerHTML);"
+			strPage = strPage + "if (document.getElementById('ticket').innerHTML === 'Ожидайте ответа сервера...') document.location.reload();"
+			strPage = strPage + "</script>"
+			strPage = strPage + "</body>"
+			strPage = strPage + "</html>"
+		} else {
+			strPage = err.Error()
+		}
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprintf(w, "%s", strPage)
 	} else {
 		fmt.Fprintf(w, "Unimplemeted method: %s", r.Method)
 	}
