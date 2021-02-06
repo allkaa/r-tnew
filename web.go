@@ -929,10 +929,11 @@ func getResults(strSearch string) string {
 	}
 	pos1 = strings.Index(strSearch, "&q=")
 	if pos1 != -1 {
-		draw = strSearch[pos1:]
+		draw = strSearch[pos1+3:]
 	} else {
 		goto getResultsCreatePage
 	}
+	reptext = ""
 	reqStringResults = urlpay
 	if draw == "" {
 		reqStringResults = reqStringResults + "?agent=16&type=2&command=scheck&game=" + game + "&draw_results"
