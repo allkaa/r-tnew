@@ -126,7 +126,7 @@ import (
 	"unsafe"
 )
 
-const pageNameIni = string("indexForm.html") // string("index.html") or string("indexForm.html")
+const pageNameIni = string("index.html") // string("index.html") or string("indexForm.html")
 const dir = string("./build")
 
 // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
