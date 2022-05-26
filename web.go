@@ -161,34 +161,39 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 				filename = dir + r.URL.Path
 				//ttt := r.URL.Path[1:] // get "" or "script.js" or "external-link-52.png" or "favicon.ico"
 				//fmt.Println(ttt)
-				filecontent, err := ioutil.ReadFile(filename)
-				if err == nil {
-					if strings.LastIndex(filename, ".svg") != -1 {
-						// w.Header().Set("Content-Type", "text/plain; charset=utf-8") // normal header
-						w.Header().Set("Content-Type", "image/svg+xml")
-					} else if strings.LastIndex(filename, ".css") != -1 {
-						w.Header().Set("Content-Type", "text/css")
-					} else if strings.LastIndex(filename, ".js") != -1 {
-						w.Header().Set("Content-Type", "application/javascript")
-					} else if strings.LastIndex(filename, ".json") != -1 {
-						w.Header().Set("Content-Type", "application/json")
-					} else if strings.LastIndex(filename, ".map") != -1 {
-						w.Header().Set("Content-Type", "application/map")
-					} else if strings.LastIndex(filename, ".ico") != -1 {
-						w.Header().Set("Content-Type", "image/bmp")
-					} else if strings.LastIndex(filename, ".png") != -1 {
-						w.Header().Set("Content-Type", "image/png")
-					} else if strings.LastIndex(filename, ".jpg") != -1 || strings.LastIndex(filename, ".jpeg") != -1 {
-						w.Header().Set("Content-Type", "image/jpeg")
-					} else if strings.LastIndex(filename, ".html") != -1 {
-						w.Header().Set("Content-Type", "text/html")
+				// Static files processing thru http.ServeFile
+				http.ServeFile(w, r, filename)
+				/*
+					filecontent, err := ioutil.ReadFile(filename)
+					if err == nil {
+						if strings.LastIndex(filename, ".svg") != -1 {
+							// w.Header().Set("Content-Type", "text/plain; charset=utf-8") // normal header
+							w.Header().Set("Content-Type", "image/svg+xml")
+						} else if strings.LastIndex(filename, ".css") != -1 {
+							w.Header().Set("Content-Type", "text/css")
+						} else if strings.LastIndex(filename, ".js") != -1 {
+							w.Header().Set("Content-Type", "application/javascript")
+						} else if strings.LastIndex(filename, ".json") != -1 {
+							w.Header().Set("Content-Type", "application/json")
+						} else if strings.LastIndex(filename, ".map") != -1 {
+							w.Header().Set("Content-Type", "application/map")
+						} else if strings.LastIndex(filename, ".ico") != -1 {
+							w.Header().Set("Content-Type", "image/bmp")
+						} else if strings.LastIndex(filename, ".png") != -1 {
+							w.Header().Set("Content-Type", "image/png")
+						} else if strings.LastIndex(filename, ".jpg") != -1 || strings.LastIndex(filename, ".jpeg") != -1 {
+							w.Header().Set("Content-Type", "image/jpeg")
+						} else if strings.LastIndex(filename, ".html") != -1 {
+							w.Header().Set("Content-Type", "text/html")
+						} else {
+							w.Header().Set("Content-Type", "application/octet-stream")
+						}
+						fmt.Fprintf(w, "%s", filecontent)
 					} else {
-						w.Header().Set("Content-Type", "application/octet-stream")
+						fmt.Fprintf(w, "File not found %s", filename)
 					}
-					fmt.Fprintf(w, "%s", filecontent)
-				} else {
-					fmt.Fprintf(w, "File not found %s", filename)
-				}
+				*/
+				// End of Static files processing.
 			} else { // r.URL.Path != r.RequestURI
 				// form method="get" r.Method: "GET" r.URL.Path e.g. /formAKpay" r.RequestURI e.g. "/formAKpay?game=KN&n1=2&n2=1&q=15"
 				//fmt.Fprintf(w, "Form called %s", r.RequestURI)
