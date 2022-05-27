@@ -8,7 +8,7 @@ Password for 'https://allkaa@github.com': h...3!
   delete spoiled package-lock.json
   C:\react\react-tutorial>npm install      <--- to recreate package-lock.json
 
-2. Create new remote empty repository r-tnew on github.com as https://github.com/allkaa/r-tnew
+2. Create new remote empty repository e.g. r-tnew on github.com as https://github.com/allkaa/r-tnew
  C:\react\react-tutorial>git remote add origin https://github.com/allkaa/r-tnew.git
  C:\react\react-tutorial>git push -u origin master
  Counting objects: 1951, done.
