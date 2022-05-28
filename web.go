@@ -165,6 +165,7 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 				// Static files processing thru http.ServeFile
 				http.ServeFile(w, r, filename)
 				/*
+					// Static files processing manually.
 					filecontent, err := ioutil.ReadFile(filename)
 					if err == nil {
 						if strings.LastIndex(filename, ".svg") != -1 {
