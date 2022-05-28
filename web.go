@@ -119,6 +119,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
@@ -1287,6 +1288,10 @@ func checkValTicket(strTicnum string) string {
 }
 
 func main() {
+	// time.Now().UnixNano(), which yields a constantly-changing number.
+	rand.Seed(time.Now().UnixNano())
+	txnid = txnid + rand.Intn(100000)
+	fmt.Println("Server starts with txnid=", txnid)
 	fmt.Println("ListenAndServe http://localhost:8080/")
 	http.HandleFunc("/", handlerReq)
 	log.Fatal(http.ListenAndServe(":8080", nil))
