@@ -1236,7 +1236,8 @@ func checkValTicket(strTicnum string) string {
 	} else if sum == "-999" {
 		ticinfo = "Ошибка при обработке запроса - " + err.Error()
 	} else {
-		ticinfo = "Ваш виграш ${sum} грн."
+		//ticinfo = "Ваш виграш ${sum} грн."
+		ticinfo = "Ваш виграш " + sum + " грн."
 	}
 	//fmt.Fprintf(w, "Form formAKchk called with ticket number %s reply as %s", strTicnum, ticinfo)
 	var strPage string = ""
