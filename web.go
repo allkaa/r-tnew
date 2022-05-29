@@ -128,7 +128,7 @@ import (
 )
 
 const pageNameIni = string("index.html") // string("index.html") or string("indexForm.html")
-const dir = string("./build")
+const dir = string("./build")            // string("./build") or string("./build_Test")
 
 // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 const urlval = "http://10.8.194.3:9994/"
