@@ -242,6 +242,8 @@ function NoMatchAside(props) {
     }
   }
   */
+
+  /*
   function GetData(command) {
     //const url = 'http://unl.woks:9994/'; // project WinTicsCheckNoSslTEST
     const urlpay = 'http://10.8.194.3:10064/'; // project UnlCashExTEST ver. 3.8
@@ -292,12 +294,12 @@ function NoMatchAside(props) {
       }
       console.log('reqString: ' +reqString);
       let crucialNetErr = true; // NB! Initially set crucial Net Error for request.
-      /* Fetch with init object containing any custom settings that you want to apply to the request:
-      let myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/xml');
-      fetch('http://10.8.194.3:42001/?testDebian', {method: 'GET', headers: myHeaders, mode: 'cors'}).then(function(response) {
-      mode: The mode you want to use for the request are cors, no-cors, same-origin, or navigate. The default is cors.
-      */
+      // Fetch with init object containing any custom settings that you want to apply to the request:
+      //let myHeaders = new Headers();
+      //myHeaders.append('Content-Type', 'application/xml');
+      //fetch('http://10.8.194.3:42001/?testDebian', {method: 'GET', headers: myHeaders, mode: 'cors'}).then(function(response) {
+      //mode: The mode you want to use for the request are cors, no-cors, same-origin, or navigate. The default is cors.
+      //
       console.log('===============> fetch begin');
       //console.log('myInfoRef.current.textContent: ' + myInfoRef.current.textContent);
       myInfoRef.current.textContent = 'Ожидайте информацию билета ...'; // Wait for fetch processing...
@@ -316,10 +318,10 @@ function NoMatchAside(props) {
             //console.log(response.text())
             return response.text() // or use return response.json() for JSON data.
           }
-          /*
-            response.status 404
-            response.statusText: "Not Found"
-          */
+          //
+          //  response.status 404
+          //  response.statusText: "Not Found"
+          //
          throw new Error(`${response.status} - ${response.statusText}`) // will be catche by final .catch().
          //throw new Error('Network response was not ok.') // will be catche by final .catch().
         })
@@ -410,13 +412,14 @@ function NoMatchAside(props) {
           //dataXML = txtErr;
         }
       })
-      /* NB! The fetch() promise will reject with a TypeError only when a crucial network error is encountered or 
-          CORS is misconfigured on the server side, although this usually means permission issues or similar.
-      */
+      // NB! The fetch() promise will reject with a TypeError only when a crucial network error is encountered or 
+      //    CORS is misconfigured on the server side, although this usually means permission issues or similar.
+      //
     } // end of function FetchExecutor(props, search) 
   } // end functio GetData().
   //[search, searchStarts, found]
   //[search, FetchExecutor, found] 
+  */
   
   function handleChangeSearch(event) {
     console.log('========> handleChangeSearch event <==========')
@@ -490,39 +493,41 @@ function NoMatchAside(props) {
     */
   }
 
+  /*
   function buyTicket(event) {
     console.log('=====================================> buyTicket onClick <============================================')
     //console.log('event:');
     console.log(event);
     console.log('event.target: ' + event.target);
     console.log(event.target);
-    /* following are undefined or empty in form case:
+    // following are undefined or empty in form case:
     //console.log('event.target.name: ' + event.target.name);
     //console.log(event.target.name);
     //console.log('event.target.type: ' + event.target.type)
     //console.log(event.target.type)
     //console.log('event.target.value: ' + event.target.value);
     //console.log(event.target.value);
-    */
+    //
     //console.log(`search string: ${search}`);
     setStateSearch('');
     event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
-    /* e.g.
-    Form request submitted by POST. Action URL is /formAK with search as body: 
-    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    */
+    // e.g.
+    //Form request submitted by POST. Action URL is /formAK with search as body: 
+    //user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    //
     GetData('pay');
     //console.log('searchDone after GetDate()' + searchDone);
     //console.log('found after GetDate(pay)' + found);
-    /*
-    if (search.length > 0) {
-      //setStateSearchStarts(true);
-    }
-    else {
-      setStateSearchStarts(false);
-    }
-    */
+    //
+    //if (search.length > 0) {
+    //  //setStateSearchStarts(true);
+    //}
+    //else {
+    //  setStateSearchStarts(false);
+    //}
+    //
   }
+  */
 
   function changeResultsDraw(event) {
     //console.log(event.target.name);
