@@ -53,28 +53,6 @@ import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this ima
 let txn_id = 0;
 let myInfoRef = React.createRef(); // waiting for ....
 let myInfoRef2 = React.createRef(); // ticket price:
-
-  /*
-  const [draws, setStateDraws] = useState(1);
-  const [c1, setStateC1] = useState(['00','00','00','00','00','00']);
-  const [c2, setStateC2] = useState(['00','00','00','00','00','00']);
-  const [c3, setStateC3] = useState(['00','00','00','00','00','00']);
-  const [c4, setStateC4] = useState(['00','00','00','00','00','00']);
-  const [c5, setStateC5] = useState(['00','00','00','00','00','00']);
-  const [c6, setStateC6] = useState(['00','00','00','00','00','00']);
-  const [a1, setStateAuto1] = useState(false);
-  const [a2, setStateAuto2] = useState(false);
-  const [a3, setStateAuto3] = useState(false);
-  const [a4, setStateAuto4] = useState(false);
-  const [a5, setStateAuto5] = useState(false);
-  const [a6, setStateAuto6] = useState(false);
-  const [system_flag, setStateSystemFlag] = useState(false); <==== must be used for rendering.
-  const [system, setStateSystem] = useState(7);
-  //const [cs, setStateCS] = useState(['00','00','00','00','00','00','00','00','00','00','00','00']);
-  const [cs, setStateCS] = useState([]);
-  const [as, setStateAutoS] = useState(false);
-  */
-
 let c1 = [];
 let c2 = [];
 let c3 = [];
