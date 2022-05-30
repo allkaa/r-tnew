@@ -244,6 +244,43 @@ function NoMatchAside(props) {
   }
   */
 
+  // ======================== Unused staff for testing only. ===============================================================
+  /*
+  function buyTicket(event) {
+    console.log('=====================================> buyTicket onClick <============================================')
+    //console.log('event:');
+    console.log(event);
+    console.log('event.target: ' + event.target);
+    console.log(event.target);
+    // following are undefined or empty in form case:
+    //console.log('event.target.name: ' + event.target.name);
+    //console.log(event.target.name);
+    //console.log('event.target.type: ' + event.target.type)
+    //console.log(event.target.type)
+    //console.log('event.target.value: ' + event.target.value);
+    //console.log(event.target.value);
+    //
+    //console.log(`search string: ${search}`);
+    setStateSearch('');
+    event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
+    // e.g.
+    //Form request submitted by POST. Action URL is /formAK with search as body: 
+    //user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    //
+    GetData('pay');
+    //console.log('searchDone after GetDate()' + searchDone);
+    //console.log('found after GetDate(pay)' + found);
+    //
+    //if (search.length > 0) {
+    //  //setStateSearchStarts(true);
+    //}
+    //else {
+    //  setStateSearchStarts(false);
+    //}
+    //
+  }
+  */
+
   /*
   function GetData(command) {
     //const url = 'http://unl.woks:9994/'; // project WinTicsCheckNoSslTEST
@@ -493,42 +530,6 @@ function NoMatchAside(props) {
     }
     */
   }
-
-  /*
-  function buyTicket(event) {
-    console.log('=====================================> buyTicket onClick <============================================')
-    //console.log('event:');
-    console.log(event);
-    console.log('event.target: ' + event.target);
-    console.log(event.target);
-    // following are undefined or empty in form case:
-    //console.log('event.target.name: ' + event.target.name);
-    //console.log(event.target.name);
-    //console.log('event.target.type: ' + event.target.type)
-    //console.log(event.target.type)
-    //console.log('event.target.value: ' + event.target.value);
-    //console.log(event.target.value);
-    //
-    //console.log(`search string: ${search}`);
-    setStateSearch('');
-    event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
-    // e.g.
-    //Form request submitted by POST. Action URL is /formAK with search as body: 
-    //user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    //
-    GetData('pay');
-    //console.log('searchDone after GetDate()' + searchDone);
-    //console.log('found after GetDate(pay)' + found);
-    //
-    //if (search.length > 0) {
-    //  //setStateSearchStarts(true);
-    //}
-    //else {
-    //  setStateSearchStarts(false);
-    //}
-    //
-  }
-  */
 
   function changeResultsDraw(event) {
     //console.log(event.target.name);
