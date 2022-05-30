@@ -124,28 +124,29 @@ class App extends Component {
   }
 }
 */
-console.log('index.js document.domain:');
-console.log(document.domain);
+//console.log('index.js document.domain:');
+//console.log(document.domain);
 
-const element = (
-  <h1 className="greeting">
-    Hello, world!
-  </h1>
-);
-console.log('index.js created element:');
-console.log(element);
-
+//const element = (
+//  <h1 className="greeting">
+//    Hello, world!
+//  </h1>
+//);
+//console.log('index.js created element:');
+//console.log(element);
 
 console.log('index.js innerWidth=' + window.innerWidth);
 if (window.innerWidth < 510) {
   ReactDOM.render(
-    <AppM txn_id={10000000} viewwidth={window.innerWidth}/>,
+    //<AppM txn_id={10000000} viewwidth={window.innerWidth}/>,
+    <AppM txn_id={10000000}/>,
     document.getElementById('root')
   );
 }
 else {
   ReactDOM.render(
-    <App txn_id={10000000} viewwidth={window.innerWidth}/>,
+    //<App txn_id={10000000} viewwidth={window.innerWidth}/>,
+    <App txn_id={10000000}/>,
     document.getElementById('root')
   );
 }
