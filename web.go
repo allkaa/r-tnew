@@ -241,7 +241,7 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 			}
 		} // End of r.URL.Path != "/" processing
 		// End of processing GET method.
-		// Processing POST method for testing only.
+		// Processing POST method for testing in ./build_Test dir only.
 	} else if r.Method == "POST" {
 		// after form method="post" r.Method: "POST" r.URL.Path "/formAKpay" r.RequestURI "/formAKpay" r.Body []uint8 with e.g. (length: 20, cap: 512)
 		defer r.Body.Close()
