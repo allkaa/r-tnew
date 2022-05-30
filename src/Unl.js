@@ -186,6 +186,7 @@ let myInfoRefk9 = React.createRef();
 let myInfoRefk10 = React.createRef();
 let myInfoRefka = React.createRef();
 
+// Main function dispite of strange name :-)
 function NoMatchAside(props) {
   console.log('Unl.js props:' + props);
   console.log(props); // {txn_id: 10000000}
@@ -766,7 +767,7 @@ function NoMatchAside(props) {
       </main>
     </div>
   );
-} // end of function NoMatchAside(props)
+} // end of main function NoMatchAside(props)
 
 export default NoMatchAside;
 
