@@ -211,12 +211,17 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 				var strTicnum string = ""
 				var strPage string = ""
 				var pos1 int = -1
+				var pos2 int = -1
+				var val string = ""
 				if strings.Index(r.RequestURI, "/formAKchk?") != -1 {
-					//r.RequestURI e.g. "/formAKchk?q=123-12345678-1234567"
+					//r.RequestURI e.g. "/formAKchk?q=123-12345678-1234567" - old format
+					//r.RequestURI e.g.  /formAKchk?q=123-12345678-1234567&v=Y
+					pos2 = strings.Index(r.RequestURI, "&v=")
+					val = r.RequestURI[pos2+3:]
 					pos1 = strings.Index(r.RequestURI, "/formAKchk?q=")
-					strTicnum = r.RequestURI[pos1+13:]
-					//fmt.Fprintf(w, "Form formAKchk called with ticket number %s", strTicnum)
-					strPage = checkValTicket(strTicnum)
+					strTicnum = r.RequestURI[pos1+13 : pos2]
+					fmt.Printf("Form formAKchk called with ticket number %s %s\n", strTicnum, val)
+					strPage = checkValTicket(strTicnum, val)
 					w.Header().Set("Content-Type", "text/html")
 					fmt.Fprintf(w, "%s", strPage)
 				} else if strings.Index(r.RequestURI, "/formAKpay?") != -1 {
@@ -1193,100 +1198,151 @@ getResultsCreatePage:
 	return strPage
 }
 
-func checkValTicket(strTicnum string) string {
-	var sum string = "-999" // initial as error.
-	var bytRep []byte
-	var err error
+func checkValTicket(strTicnum string, val string) string {
+	//var err error
 	//var errMsg string = "Unknown error"
-	res, err := http.Get(reqStringVal + strTicnum)
-	if err != nil {
-		//log.Fatal(err)
-		//return sum
-		//errMsg = "Connection failed"
-	} else {
-		bytRep, err = ioutil.ReadAll(res.Body)
-		res.Body.Close()
+	if val == "N" {
+		var sum string = "-999" // initial as error.
+		var bytRep []byte
+		res, err := http.Get(reqStringVal + strTicnum)
 		if err != nil {
 			//log.Fatal(err)
 			//return sum
-			//errMsg = "XML reply reading failed"
+			//errMsg = "Connection failed"
 		} else {
-			strXML := string(bytRep)
-			fmt.Printf("%s\n", strXML)
-			var pos1 int = -1
-			var pos2 int = -1
-			pos1 = strings.Index(strXML, "<sum>")
-			pos2 = strings.Index(strXML, "</sum>")
-			if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
-				sum = strXML[pos1+5 : pos2]
+			bytRep, err = ioutil.ReadAll(res.Body)
+			res.Body.Close()
+			if err != nil {
+				//log.Fatal(err)
+				//return sum
+				//errMsg = "XML reply reading failed"
+			} else {
+				strXML := string(bytRep)
+				fmt.Printf("%s\n", strXML)
+				var pos1 int = -1
+				var pos2 int = -1
+				pos1 = strings.Index(strXML, "<sum>")
+				pos2 = strings.Index(strXML, "</sum>")
+				if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
+					sum = strXML[pos1+5 : pos2]
+				}
 			}
 		}
+		var ticinfo string = ""
+		if sum == "-1.00" {
+			ticinfo = "Большой выигрыш!!!."
+		} else if sum == "-2.00" {
+			ticinfo = "Билет уже выплачен."
+		} else if sum == "-3.00" {
+			ticinfo = "Билет выплачен с обменным билетом."
+		} else if sum == "-4.00" {
+			ticinfo = "Билет аннулирован."
+		} else if sum == "0.00" {
+			ticinfo = "Билет не выиграл."
+		} else if sum == "-999" {
+			ticinfo = "Ошибка при обработке запроса - " + err.Error()
+		} else {
+			//ticinfo = "Ваш виграш ${sum} грн."
+			ticinfo = "Ваш виграш " + sum + " грн."
+		}
+		//fmt.Fprintf(w, "Form formAKchk called with ticket number %s reply as %s", strTicnum, ticinfo)
+		var strPage string = ""
+		strPage = strPage + "<!DOCTYPE html>"
+		strPage = strPage + "<html lang=\"en\">"
+		strPage = strPage + "<head>"
+		strPage = strPage + "<meta charset=\"utf-8\" />"
+		strPage = strPage + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />"
+		strPage = strPage + "<title>Ticket info</title>"
+		strPage = strPage + "<style>"
+		strPage = strPage + "#ticinfo {"
+		//strPage = strPage + "width: 70%;"
+		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "background-color: #dfdbdb;"
+		strPage = strPage + "border: thick solid black;"
+		strPage = strPage + "outline: dashed red;"
+		strPage = strPage + "}"
+		strPage = strPage + "#ticback {"
+		strPage = strPage + "display: block;"
+		strPage = strPage + "width: 10%;"
+		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "padding: 1% 1% 1% 1%;"
+		strPage = strPage + "color: white;"
+		strPage = strPage + "background-color: blue;"
+		strPage = strPage + "border: thin solid black;"
+		strPage = strPage + "border-radius: 15%;"
+		strPage = strPage + "text-decoration:none;"
+		strPage = strPage + "}"
+		strPage = strPage + "#ticket {"
+		strPage = strPage + "display: block;"
+		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "padding: 1% 1% 1% 1%;"
+		strPage = strPage + "background-color: white;"
+		strPage = strPage + "border: thin solid black;"
+		strPage = strPage + "}"
+		//strPage = strPage + ""
+		strPage = strPage + "</style>"
+		strPage = strPage + "</head>"
+		strPage = strPage + "<body>"
+		strPage = strPage + "<div id=\"ticinfo\">"
+		strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
+		strPage = strPage + "<p id=\"ticket\">"
+		strPage = strPage + ticinfo
+		strPage = strPage + "</p>"
+		strPage = strPage + "</div>"
+		strPage = strPage + "</body>"
+		strPage = strPage + "</html>"
+		//strPage = strPage + ""
+		return strPage
+	} else { // if val == "Y"
+		var ticinfo string = "Выплата пока не реализована."
+		var strPage string = ""
+		strPage = strPage + "<!DOCTYPE html>"
+		strPage = strPage + "<html lang=\"en\">"
+		strPage = strPage + "<head>"
+		strPage = strPage + "<meta charset=\"utf-8\" />"
+		strPage = strPage + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />"
+		strPage = strPage + "<title>Ticket info</title>"
+		strPage = strPage + "<style>"
+		strPage = strPage + "#ticinfo {"
+		//strPage = strPage + "width: 70%;"
+		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "background-color: #dfdbdb;"
+		strPage = strPage + "border: thick solid black;"
+		strPage = strPage + "outline: dashed red;"
+		strPage = strPage + "}"
+		strPage = strPage + "#ticback {"
+		strPage = strPage + "display: block;"
+		strPage = strPage + "width: 10%;"
+		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "padding: 1% 1% 1% 1%;"
+		strPage = strPage + "color: white;"
+		strPage = strPage + "background-color: blue;"
+		strPage = strPage + "border: thin solid black;"
+		strPage = strPage + "border-radius: 15%;"
+		strPage = strPage + "text-decoration:none;"
+		strPage = strPage + "}"
+		strPage = strPage + "#ticket {"
+		strPage = strPage + "display: block;"
+		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "padding: 1% 1% 1% 1%;"
+		strPage = strPage + "background-color: white;"
+		strPage = strPage + "border: thin solid black;"
+		strPage = strPage + "}"
+		//strPage = strPage + ""
+		strPage = strPage + "</style>"
+		strPage = strPage + "</head>"
+		strPage = strPage + "<body>"
+		strPage = strPage + "<div id=\"ticinfo\">"
+		strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
+		strPage = strPage + "<p id=\"ticket\">"
+		strPage = strPage + ticinfo
+		strPage = strPage + "</p>"
+		strPage = strPage + "</div>"
+		strPage = strPage + "</body>"
+		strPage = strPage + "</html>"
+		//strPage = strPage + ""
+		return strPage
 	}
-	var ticinfo string = ""
-	if sum == "-1.00" {
-		ticinfo = "Большой выигрыш!!!."
-	} else if sum == "-2.00" {
-		ticinfo = "Билет уже выплачен."
-	} else if sum == "-3.00" {
-		ticinfo = "Билет выплачен с обменным билетом."
-	} else if sum == "-4.00" {
-		ticinfo = "Билет аннулирован."
-	} else if sum == "0.00" {
-		ticinfo = "Билет не выиграл."
-	} else if sum == "-999" {
-		ticinfo = "Ошибка при обработке запроса - " + err.Error()
-	} else {
-		//ticinfo = "Ваш виграш ${sum} грн."
-		ticinfo = "Ваш виграш " + sum + " грн."
-	}
-	//fmt.Fprintf(w, "Form formAKchk called with ticket number %s reply as %s", strTicnum, ticinfo)
-	var strPage string = ""
-	strPage = strPage + "<!DOCTYPE html>"
-	strPage = strPage + "<html lang=\"en\">"
-	strPage = strPage + "<head>"
-	strPage = strPage + "<meta charset=\"utf-8\" />"
-	strPage = strPage + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />"
-	strPage = strPage + "<title>Ticket info</title>"
-	strPage = strPage + "<style>"
-	strPage = strPage + "#ticinfo {"
-	//strPage = strPage + "width: 70%;"
-	strPage = strPage + "margin: 3% 3% 3% 3%;"
-	strPage = strPage + "background-color: #dfdbdb;"
-	strPage = strPage + "border: thick solid black;"
-	strPage = strPage + "outline: dashed red;"
-	strPage = strPage + "}"
-	strPage = strPage + "#ticback {"
-	strPage = strPage + "display: block;"
-	strPage = strPage + "width: 10%;"
-	strPage = strPage + "margin: 3% 3% 3% 3%;"
-	strPage = strPage + "padding: 1% 1% 1% 1%;"
-	strPage = strPage + "color: white;"
-	strPage = strPage + "background-color: blue;"
-	strPage = strPage + "border: thin solid black;"
-	strPage = strPage + "border-radius: 15%;"
-	strPage = strPage + "text-decoration:none;"
-	strPage = strPage + "}"
-	strPage = strPage + "#ticket {"
-	strPage = strPage + "display: block;"
-	strPage = strPage + "margin: 3% 3% 3% 3%;"
-	strPage = strPage + "padding: 1% 1% 1% 1%;"
-	strPage = strPage + "background-color: white;"
-	strPage = strPage + "border: thin solid black;"
-	strPage = strPage + "}"
-	//strPage = strPage + ""
-	strPage = strPage + "</style>"
-	strPage = strPage + "</head>"
-	strPage = strPage + "<body>"
-	strPage = strPage + "<div id=\"ticinfo\">"
-	strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
-	strPage = strPage + "<p id=\"ticket\">"
-	strPage = strPage + ticinfo
-	strPage = strPage + "</p>"
-	strPage = strPage + "</div>"
-	strPage = strPage + "</body>"
-	strPage = strPage + "</html>"
-	//strPage = strPage + ""
-	return strPage
 }
 
 func main() {

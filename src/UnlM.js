@@ -53,6 +53,7 @@ import logoTR from './loto3.svg'; // Tell Webpack this JS file will use this ima
 let txn_id = 0;
 let myInfoRef = React.createRef(); // waiting for ....
 let myInfoRef2 = React.createRef(); // ticket price:
+let myInfoRef3 = React.createRef(); // validation
 let c1 = [];
 let c2 = [];
 let c3 = [];
@@ -223,20 +224,29 @@ function NoMatchAside(props) {
     console.log(event);
     console.log('event.target: ' + event.target);
     console.log(event.target);
+    /* following are undefined or empty in form case:
     console.log('event.target.name: ' + event.target.name);
     console.log(event.target.name);
-    /* following are undefined or empty in form case:
     //console.log('event.target.type: ' + event.target.type)
     //console.log(event.target.type)
     //console.log('event.target.value: ' + event.target.value);
     //console.log(event.target.value);
     */
+    console.log('validate: ' + myInfoRef3.current.value);
     if (search === "") {
       event.preventDefault();
       alert("Ошибка! Номер билета не задан.");
       return
     }
     console.log(`search string: ${search}`);
+    if (myInfoRef3.current.value === 'N') {
+      myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
+    } else { // myInfoRef3.current.value = 'Y'
+      myInfoRef.current.textContent = 'Ожидайте купленный билет ...';
+      //myInfoRef3.current.value = 'N'
+      //event.preventDefault();
+      //return
+    }
     myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
     /* e.g.
@@ -331,6 +341,11 @@ function NoMatchAside(props) {
           {/* <input type="submit" value="Ticket search"/> */}
           <button className="buttonM" type="submit">Проверить выигрыш</button>
           <input type="search" className = "ticketM" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
+          <p className="boardLabel">Выплатить выигрыш</p>
+          <select name="val" ref={myInfoRef3}>
+            <option value='N'>Нет</option>
+            <option value='Y'>Да</option>
+          </select>
           {/*<button className="buttonM" name="validation" type="submit">Проверить выигрыш</button>*/}
           {/*<p className="p">Проверить выигрыш по номеру билета</p>*/}
         </form>
