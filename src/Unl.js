@@ -231,6 +231,11 @@ function NoMatchAside(props) {
     //console.log('event.target.value: ' + event.target.value);
     //console.log(event.target.value);
     */
+    if (search === "") {
+      event.preventDefault();
+      alert("Ошибка! Номер билета не задан.");
+      return
+    }
     console.log(`search string: ${search}`);
     myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
