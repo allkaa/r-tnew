@@ -223,9 +223,9 @@ function NoMatchAside(props) {
     console.log(event);
     console.log('event.target: ' + event.target);
     console.log(event.target);
+    console.log('event.target.name: ' + event.target.name);
+    console.log(event.target.name);
     /* following are undefined or empty in form case:
-    //console.log('event.target.name: ' + event.target.name);
-    //console.log(event.target.name);
     //console.log('event.target.type: ' + event.target.type)
     //console.log(event.target.type)
     //console.log('event.target.value: ' + event.target.value);
@@ -324,9 +324,9 @@ function NoMatchAside(props) {
         </form>
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           {/* <input type="submit" value="Ticket search"/> */}
-          <button type="submit">Проверить выигрыш</button>
+          <button name="checkval" type="submit">Проверить выигрыш</button>
           <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
-          <button type="submit">Выплатить выигрыш</button>
+          <button name="validate" type="submit">Выплатить выигрыш</button>
           {/*<b>Проверить выигрыш по номеру билета</b>*/}
         </form>
         {/*<p id="found">{found}</p>*/}
