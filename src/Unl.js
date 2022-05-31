@@ -326,7 +326,8 @@ function NoMatchAside(props) {
           {/* <input type="submit" value="Ticket search"/> */}
           <button type="submit">Проверить выигрыш</button>
           <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
-          <b>Проверить выигрыш по номеру билета</b>
+          <button type="submit">Выплатить выигрыш</button>
+          {/*<b>Проверить выигрыш по номеру билета</b>*/}
         </form>
         {/*<p id="found">{found}</p>*/}
         {(found.length > 0) && <p id="found">{found}</p>}
