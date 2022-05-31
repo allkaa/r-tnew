@@ -238,6 +238,18 @@ function NoMatchAside(props) {
       alert("Ошибка! Номер билета не задан.");
       return
     }
+    if (search.length !== 20 || search.at(3) !== "-" || search.at(12) !== "-") {
+      event.preventDefault();
+      alert("Ошибка! Номер билета задан некорректно.");
+      return
+    }
+    // 123-12345678-1234567
+    // 01234567890123456789
+    if (Number.isNaN(search.substring(0,3)) || Number.isNaN(search.substring(4,12)) || Number.isNaN(search.substring(13)) ) {
+      event.preventDefault();
+      alert("Ошибка! Номер билета задан некорректно.");
+      return
+    }
     console.log(`search string: ${search}`);
     if (myInfoRef3.current.value === 'N') {
       myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
