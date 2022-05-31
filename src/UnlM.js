@@ -324,9 +324,9 @@ function NoMatchAside(props) {
         </form>
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           {/* <input type="submit" value="Ticket search"/> */}
-          <button className="buttonM" name="checkval" type="submit">Проверить выигрыш</button>
+          <button className="buttonM" type="submit">Проверить выигрыш</button>
           <input type="search" className = "ticketM" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
-          <button className="buttonM" name="validation" type="submit">Проверить выигрыш</button>
+          {/*<button className="buttonM" name="validation" type="submit">Проверить выигрыш</button>*/}
           {/*<p className="p">Проверить выигрыш по номеру билета</p>*/}
         </form>
         {/*<p id="found">{found}</p>*/}
