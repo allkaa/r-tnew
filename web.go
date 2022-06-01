@@ -132,8 +132,10 @@ const dir = string("./build")            // string("./build") or string("./build
 
 // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
 const urlval = "http://10.8.194.3:9994/"
-const reqStringVal = urlval + "?agent=58&type=2&command=checkval&ticket_number=" // + search;
-const urlpay = "http://10.8.194.3:38000/"                                        // project PayTest ver. 4.0 NoSsl.
+const reqStringCheckVal = urlval + "?agent=58&type=2&command=checkval&ticket_number=" // + search;
+const urlpay = "http://10.8.194.3:38000/"                                             // project PayTest ver. 4.0 NoSsl.
+const strAgent string = "16"
+
 var txnid int = 10000000
 
 func handlerReq(w http.ResponseWriter, r *http.Request) {
@@ -698,7 +700,6 @@ buyTicketPage:
 
 func strCmd(ticreq string) string {
 	// e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
-	var strAgent string = "16"
 	var boardKeno int = 10
 	var boardMx int = 10
 	var boardSl int = 15
@@ -1204,7 +1205,7 @@ func checkValTicket(strTicnum string, val string) string {
 	if val == "N" {
 		var sum string = "-999" // initial as error.
 		var bytRep []byte
-		res, err := http.Get(reqStringVal + strTicnum)
+		res, err := http.Get(reqStringCheckVal + strTicnum)
 		if err != nil {
 			//log.Fatal(err)
 			//return sum
@@ -1294,8 +1295,111 @@ func checkValTicket(strTicnum string, val string) string {
 		//strPage = strPage + ""
 		return strPage
 	} else { // if val == "Y"
-		var ticinfo string = "Выплата пока не реализована."
+		txnid = txnid + 1
+		var strSearch string = ""
+		var dtVar time.Time = time.Now()
+		year, month, day := dtVar.Date()
+		var strYear string = strconv.Itoa(year)        // e.g. "2021"
+		var strMonth string = strconv.Itoa(int(month)) // e.g. "1" or "12"
+		var strDay string = strconv.Itoa(day)          // e.g. "1" or "31"
+		//fmt.Println(strYear, strMonth, strDay)
+		if len(strMonth) == 1 {
+			strMonth = "0" + strMonth
+		}
+		if len(strDay) == 1 {
+			strDay = "0" + strDay
+		}
+		//fmt.Println(strYear, strMonth, strDay)
+		// http://unl.works:38000/?agent=16&type=2&command=validation&date=20220601&txn_id=101&ticket_number=007-13725021-1736928&msisdn=0
+		strSearch = "?agent=" + strAgent + "&type=2&command=validation&date=" + strYear + strMonth + strDay + "&txn_id=" + strconv.Itoa(txnid)
+		strSearch = strSearch + "&ticket_number=" + strTicnum + "&msisdn=0"
+		var reqStringVal string = urlpay + strSearch
+		fmt.Println(reqStringVal)
+		var bytRep []byte
+		var err error
+		var strXML string = ""
+		var errMsg string = ""
+		var result string = ""
+		/*
+			var txnID string = ""
+			var game string = ""
+			var gameName string = ""
+			var date string = ""
+			var time string = ""
+			var agent string = ""
+			var numOfDraws string = ""
+			var board = [10]string{"", "", "", "", "", "", "", "", "", ""}
+			var bType = [10]string{"", "", "", "", "", "", "", "", "", ""}
+			var i int
+			var sum string = ""
+			var number string = ""
+			var gguard string = ""
+			var firstDraw string = ""
+			var system string = ""
+			var numUsed string = ""
+			var stake string = ""
+		*/
 		var strPage string = ""
+		var ticinfo string = ""
+		res, err := http.Get(reqStringVal)
+		if err != nil {
+			// err.Error() msg will be used later.
+			//log.Fatal(err)
+			//return sum
+			//errMsg = "Connection failed"
+		} else { // begin readAll(res.Body)
+			bytRep, err = ioutil.ReadAll(res.Body)
+			res.Body.Close()
+			if err != nil {
+				// err.Error() msg will be used later.
+				//log.Fatal(err)
+			} else { // begin response body processing.
+				strXML = string(bytRep)
+				fmt.Printf("%s\n", strXML)
+				var pos1 int = -1
+				var pos2 int = -1
+				//<result>0</result>
+				//01234567890
+				pos1 = strings.Index(strXML, "<result>")
+				pos2 = strings.Index(strXML, "</result>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+					errMsg = "Wrong server response XML format"
+					goto ExitValTicket
+				}
+				result = strXML[pos1+8 : pos2] // get result string numerical code.
+				if result != "0" {
+					if result == "900" {
+						errMsg = "Билет не выиграл."
+					} else if result == "901" {
+						errMsg = "Большой выигрыш!!!."
+					} else if result == "902" {
+						errMsg = "Билет уже выплачен."
+					} else if result == "903" {
+						errMsg = "Билет выплачен с ошибкой в обменном билете."
+					} else {
+						errMsg = "Server reply with result: " + result
+					}
+					goto ExitValTicket
+				}
+				ticinfo = strXML // for test only
+			} // end of response body processing.
+		} // end readAll(res.Body)
+	ExitValTicket:
+		//ticinfo = "Выплата пока не реализована."
+		if err != nil {
+			errMsg = err.Error()
+		}
+		if errMsg != "" {
+			if errMsg == "Server reply with result: 777" {
+				ticinfo = "Ожидайте ответа сервера..."
+			} else {
+				ticinfo = errMsg
+			}
+			goto valTicketPage
+		}
+		// Create strPage:
+	valTicketPage:
+		//ticinfo = "Выплата пока не реализована."
 		strPage = strPage + "<!DOCTYPE html>"
 		strPage = strPage + "<html lang=\"en\">"
 		strPage = strPage + "<head>"
@@ -1338,6 +1442,11 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + ticinfo
 		strPage = strPage + "</p>"
 		strPage = strPage + "</div>"
+		strPage = strPage + "<script>"
+		strPage = strPage + "console.log('page body script started');"
+		strPage = strPage + "console.log(document.getElementById('ticket').innerHTML);"
+		strPage = strPage + "if (document.getElementById('ticket').innerHTML === 'Ожидайте ответа сервера...') document.location.reload();"
+		strPage = strPage + "</script>"
 		strPage = strPage + "</body>"
 		strPage = strPage + "</html>"
 		//strPage = strPage + ""
