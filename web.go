@@ -551,26 +551,9 @@ func buyTicket(strSearch string) string { // strSearch e.g. "6_1_1_a_04_05_09_12
 				} else {
 					break
 				}
-			}
-			//================== end of boards processing ==================================
-			/*
-				strPage = txnID + " " + game + " " + date + " " + time + " " + agent + " " + numOfDraws + " "
-				for i = 0; i < len(board); i = i + 1 {
-					if board[i] != "" {
-						if i == 0 {
-							strPage = strPage + board[i]
-						} else {
-							strPage = strPage + "_" + board[i]
-						}
-					} else {
-						break
-					}
-				}
-				strPage = strPage + " " + sum + " " + number + " " + gguard + " " + "firstDraw=|" + firstDraw + "| "
-				strPage = strPage + "system=|" + system + "| " + "num_used=|" + numUsed + "| " + "stake=|" + stake + "|"
-			*/
+			} // end of boards processing.
 		} // end of response body processing.
-	} // end of connection data processing.
+	} // end of readAll(res.Body).
 	//return "Form formAKpay called with params " + reqStringPay
 ExitBuyTicket:
 	if err != nil {
@@ -584,9 +567,7 @@ ExitBuyTicket:
 		}
 		goto buyTicketPage
 	}
-	agent = agent + ""
-	system = system + ""
-	numUsed = numUsed + ""
+	fmt.Sprint(agent, system, numUsed)
 	ticinfo = ticinfo + "<li>Україньска Національна Лотерея</li>"
 	ticinfo = ticinfo + "<li>Дата: " + date + "</li>"
 	ticinfo = ticinfo + "<li>Час: " + time + "</li>"
@@ -682,7 +663,7 @@ buyTicketPage:
 	strPage = strPage + "<body>"
 	strPage = strPage + "<div id=\"ticinfo\">"
 	strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
-	strPage = strPage + "<h3 id=\"tichdr\">Запрос на покупку билета.</h3>"
+	strPage = strPage + "<h3 id=\"tichdr\">Запрос на покупку билета</h3>"
 	strPage = strPage + "<ul id=\"ticket\">"
 	strPage = strPage + ticinfo
 	strPage = strPage + "</ul>"
@@ -696,7 +677,7 @@ buyTicketPage:
 	strPage = strPage + "</html>"
 	//fmt.Println(strPage)
 	return strPage
-}
+} // end of buyTicket
 
 func strCmd(ticreq string) string {
 	// e.g. '?agent=16&type=2&command=pay&date=20201020&txn_id=' + txn_id + '&game=6&num_of_draws=1&num_of_boards=1&sum=15.00&msisdn=0';
@@ -1294,7 +1275,7 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + "</html>"
 		//strPage = strPage + ""
 		return strPage
-	} else { // if val == "Y"
+	} else { // if val == "Y" begin of validation case
 		txnid = txnid + 1
 		var strSearch string = ""
 		var dtVar time.Time = time.Now()
@@ -1320,27 +1301,34 @@ func checkValTicket(strTicnum string, val string) string {
 		var strXML string = ""
 		var errMsg string = ""
 		var result string = ""
-		/*
-			var txnID string = ""
-			var game string = ""
-			var gameName string = ""
-			var date string = ""
-			var time string = ""
-			var agent string = ""
-			var numOfDraws string = ""
-			var board = [10]string{"", "", "", "", "", "", "", "", "", ""}
-			var bType = [10]string{"", "", "", "", "", "", "", "", "", ""}
-			var i int
-			var sum string = ""
-			var number string = ""
-			var gguard string = ""
-			var firstDraw string = ""
-			var system string = ""
-			var numUsed string = ""
-			var stake string = ""
-		*/
-		var strPage string = ""
+		var txnID string = ""
+		var wingame string = ""
+		var game string = ""
+		var gameName string = ""
+		var date string = ""
+		var time string = ""
+		var agent string = ""
+		var numOfDraws string = ""
+		var board = [10]string{"", "", "", "", "", "", "", "", "", ""}
+		var bType = [10]string{"", "", "", "", "", "", "", "", "", ""}
+		var i int
+		var sum string = ""
+		var number string = ""
+		var gguard string = ""
+		var firstDraw string = ""
+		var system string = ""
+		var numUsed string = ""
+		var stake string = ""
+		var paid string = ""
+		var tax string = ""
+		var war_tax string = ""
+		var exchange bool = false
+		var sumex string = ""
+		var numberex string = ""
+		var pos1 int = -1
+		var pos2 int = -1
 		var ticinfo string = ""
+		var strPage string = ""
 		res, err := http.Get(reqStringVal)
 		if err != nil {
 			// err.Error() msg will be used later.
@@ -1356,8 +1344,6 @@ func checkValTicket(strTicnum string, val string) string {
 			} else { // begin response body processing.
 				strXML = string(bytRep)
 				fmt.Printf("%s\n", strXML)
-				var pos1 int = -1
-				var pos2 int = -1
 				//<result>0</result>
 				//01234567890
 				pos1 = strings.Index(strXML, "<result>")
@@ -1381,9 +1367,236 @@ func checkValTicket(strTicnum string, val string) string {
 					}
 					goto ExitValTicket
 				}
-				ticinfo = strXML // for test only
+				//ticinfo = strXML // for test only
+				//<txn_id>1</txn_id>
+				//0123456789
+				pos1 = strings.Index(strXML, "<txn_id>")
+				pos2 = strings.Index(strXML, "</txn_id>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+					errMsg = "Server response wrong txn_id format"
+					goto ExitValTicket
+				}
+				txnID = strXML[pos1+8 : pos2]
+				//<game>6</game>
+				//0123456789
+				pos1 = strings.Index(strXML, "<win_game>")
+				pos2 = strings.Index(strXML, "</win_game>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+7)) {
+					errMsg = "Server response wrong win game format"
+					goto ExitValTicket
+				}
+				wingame = strXML[pos1+10 : pos2]
+				//<number>298-75699630-0976316</number>
+				//01234567890123456789012345678
+				pos1 = strings.Index(strXML, "<number>")
+				pos2 = strings.Index(strXML, "</number>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+28)) {
+					errMsg = "Server response wrong number format"
+					goto ExitValTicket
+				}
+				number = strXML[pos1+8 : pos2]
+				//<sum>3.00</sum>
+				//0123456789
+				pos1 = strings.Index(strXML, "<sum>")
+				pos2 = strings.Index(strXML, "</sum>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+					errMsg = "Server response wrong sum format"
+					goto ExitValTicket
+				}
+				sum = strXML[pos1+5 : pos2]
+				//<paid>3.00</paid>
+				//0123456789
+				pos1 = strings.Index(strXML, "<paid>")
+				pos2 = strings.Index(strXML, "</paid>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+10)) {
+					errMsg = "Server response wrong paid format"
+					goto ExitValTicket
+				}
+				paid = strXML[pos1+6 : pos2]
+				// <tax>5.76</tax>
+				// 01234
+				pos1 = strings.Index(strXML, "<tax>")
+				pos2 = strings.Index(strXML, "</tax>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+					errMsg = "Server response wrong tax format"
+					goto ExitValTicket
+				}
+				tax = strXML[pos1+5 : pos2]
+				// <war_tax>0.48</war_tax>
+				// 0123456789012
+				pos1 = strings.Index(strXML, "<war_tax>")
+				pos2 = strings.Index(strXML, "</war_tax>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+13)) {
+					errMsg = "Server response wrong tax format"
+					goto ExitValTicket
+				}
+				war_tax = strXML[pos1+9 : pos2]
+				// <exchange_ticket>
+				// 01234567890123456
+				pos1 = strings.Index(strXML, "<exchange_ticket>")
+				pos2 = strings.Index(strXML, "</exchange_ticket>")
+				if pos1 != -1 { // exchange ticket exists
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+17)) {
+						errMsg = "Server response wrong exchange ticket format"
+						goto ExitValTicket
+					}
+					exchange = true
+					//<game>6</game>
+					//0123456789
+					pos1 = strings.Index(strXML, "<game>")
+					pos2 = strings.Index(strXML, "</game>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+7)) {
+						errMsg = "Server response wrong exchange game format"
+						goto ExitValTicket
+					}
+					game = strXML[pos1+6 : pos2]
+					//<date>25.10.18</date>
+					//012345678901234
+					pos1 = strings.Index(strXML, "<date>")
+					pos2 = strings.Index(strXML, "</date>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+14)) {
+						errMsg = "Server response wrong exchange date format"
+						goto ExitValTicket
+					}
+					date = strXML[pos1+6 : pos2]
+					//<time>13:12:58</time>
+					//012345678901234
+					pos1 = strings.Index(strXML, "<time>")
+					pos2 = strings.Index(strXML, "</time>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+14)) {
+						errMsg = "Server response wrong exchange time format"
+						goto ExitValTicket
+					}
+					time = strXML[pos1+6 : pos2]
+					//<agent>02501267</agent>
+					//0123456789012345
+					pos1 = strings.Index(strXML, "<agent>")
+					pos2 = strings.Index(strXML, "</agent>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+15)) {
+						errMsg = "Server response wrong exchange agent format"
+						goto ExitValTicket
+					}
+					agent = strXML[pos1+7 : pos2]
+					//<num_of_draws>1</num_of_draws>
+					//0123456789012345
+					pos1 = strings.Index(strXML, "<num_of_draws>")
+					pos2 = strings.Index(strXML, "</num_of_draws>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+15)) {
+						errMsg = "Server response wrong exchange num_of_draws format"
+						goto ExitValTicket
+					}
+					numOfDraws = strXML[pos1+14 : pos2]
+					//<gguard>425377</gguard>
+					//012345678901234
+					pos1 = strings.Index(strXML, "<gguard>")
+					pos2 = strings.Index(strXML, "</gguard>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+14)) {
+						errMsg = "Server response wrong exchange gguard format"
+						goto ExitValTicket
+					}
+					gguard = strXML[pos1+8 : pos2]
+					//<sum>3.00</sum>
+					//0123456789
+					pos1 = strings.LastIndex(strXML, "<sum>")
+					pos2 = strings.LastIndex(strXML, "</sum>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+						errMsg = "Server response wrong exchange sum format"
+						goto ExitValTicket
+					}
+					sumex = strXML[pos1+5 : pos2]
+					//<number>298-75699630-0976316</number>
+					//01234567890123456789012345678
+					pos1 = strings.LastIndex(strXML, "<number>")
+					pos2 = strings.LastIndex(strXML, "</number>")
+					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+28)) {
+						errMsg = "Server response wrong exchange number format"
+						goto ExitValTicket
+					}
+					numberex = strXML[pos1+8 : pos2]
+					if game == "5" || game == "6" {
+						//<first_draw>27.10.18</first_draw> <first_draw>05.06.11 - 14.06.11</first_draw>
+						//012345678901234567890
+						pos1 = strings.Index(strXML, "<first_draw>")
+						pos2 = strings.Index(strXML, "</first_draw>")
+						if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+20)) {
+							errMsg = "Server response wrong exchange first_draw format"
+							goto ExitValTicket
+						}
+						firstDraw = strXML[pos1+12 : pos2]
+						//<system>7</system>
+						//0123456789
+						pos1 = strings.Index(strXML, "<system>")
+						pos2 = strings.Index(strXML, "</system>")
+						if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
+							system = strXML[pos1+8 : pos2]
+						}
+					}
+					if game == "2" || game == "4" {
+						//<stake>1</stake>
+						//012345678
+						pos1 = strings.Index(strXML, "<stake>")
+						pos2 = strings.Index(strXML, "</stake>")
+						if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+8)) {
+							errMsg = "Server response wrong exchange stake format"
+							goto ExitValTicket
+						}
+						stake = strXML[pos1+7 : pos2]
+					}
+					if game == "2" {
+						//<num_used>2</num_used>
+						//012345678901
+						pos1 = strings.Index(strXML, "<num_used>")
+						pos2 = strings.Index(strXML, "</num_used>")
+						if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+11)) {
+							errMsg = "Server response wrong exchange num_used format"
+							goto ExitValTicket
+						}
+						numUsed = strXML[pos1+10 : pos2]
+					}
+					//board = "01_80" // for test only.
+					//================== boards processing ===================================
+					//<board1a>01 02 03 04 05 06 07 08 09 10 11 12</board1a>
+					//<board1>01 02 03 04 05 06 07 08 09 10 11 12</board1>
+					//<board1>123S</board1>
+					//<board1a>15 18</board1a>
+					//<board1>15 18</board1>
+					//<board1>123S</board1>
+					//0123456789012
+					if strings.Index(strXML, "<board1") == -1 {
+						errMsg = "Server response no boards info"
+						goto ExitValTicket
+					}
+					var maxBords int = 6
+					if game == "2" {
+						maxBords = 2
+					} else if game == "4" {
+						maxBords = 10
+					}
+					var strBoardBeg string = ""
+					var strBoardEnd string = ""
+					for i = 1; i <= maxBords; i = i + 1 { // begin of boards processing
+						strBoardBeg = "<board" + strconv.Itoa(i) + ">"
+						strBoardEnd = "</board" + strconv.Itoa(i) + ">"
+						pos1 = strings.Index(strXML, strBoardBeg)
+						pos2 = strings.Index(strXML, strBoardEnd)
+						if pos1 == -1 {
+							strBoardBeg = "<board" + strconv.Itoa(i) + "a>"
+							strBoardEnd = "</board" + strconv.Itoa(i) + "a>"
+							pos1 = strings.Index(strXML, strBoardBeg)
+							pos2 = strings.Index(strXML, strBoardEnd)
+							if (pos1 != -1) && (pos2 != -1) {
+								bType[i-1] = "АВТО"
+							}
+						}
+						if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+len(strBoardBeg)+2) {
+							board[i-1] = strXML[pos1+len(strBoardBeg) : pos2]
+						} else {
+							break
+						}
+					} // end of boards processing.
+				} // end of // exchange ticket exists.
 			} // end of response body processing.
-		} // end readAll(res.Body)
+		} // end readAll(res.Body).
 	ExitValTicket:
 		//ticinfo = "Выплата пока не реализована."
 		if err != nil {
@@ -1397,10 +1610,71 @@ func checkValTicket(strTicnum string, val string) string {
 			}
 			goto valTicketPage
 		}
+		ticinfo = ""
+		ticinfo = ticinfo + "<li>Україньска Національна Лотерея</li>"
+		if wingame == "2" {
+			gameName = "Кено"
+		} else if game == "4" {
+			gameName = "Трійка"
+		} else if game == "5" {
+			gameName = "Максима"
+		} else if game == "6" {
+			gameName = "Супер Лото"
+		} else {
+			gameName = "Неведома"
+		}
+		ticinfo = ticinfo + "<li>Білет: " + number + "</li>"
+		ticinfo = ticinfo + "<li>Гра: " + gameName + "</li>"
+		ticinfo = ticinfo + "<li>Сума виграша: " + sum + "</li>"
+		ticinfo = ticinfo + "<li>К выплате: " + paid + "</li>"
+		ticinfo = ticinfo + "<li>Налог: " + tax + "</li>"
+		ticinfo = ticinfo + "<li>Военный налог: " + war_tax + "</li>"
+		fmt.Sprint(agent, system, numUsed)
+		if exchange {
+			ticinfo = ticinfo + "<li>Обменный билет</li>"
+			ticinfo = ticinfo + "<li>Дата: " + date + "</li>"
+			ticinfo = ticinfo + "<li>Час: " + time + "</li>"
+			if numOfDraws != "" {
+				ticinfo = ticinfo + "<li>Розіграшей: " + numOfDraws + "</li>"
+			}
+			if firstDraw != "" {
+				ticinfo = ticinfo + "<li>Розіграш: " + firstDraw + "</li>"
+			} else {
+				ticinfo = ticinfo + "<li>Перший розіграш: " + date + "</li>"
+			}
+			ticinfo = ticinfo + "<li>Комбінації:</li>"
+			ticinfo = ticinfo + "<li>------------------------------------------------------</li>"
+			for i = 0; i < len(board); i = i + 1 {
+				if board[i] == "" {
+					break
+				}
+				if game == "4" {
+					// e.g. 012S or 112B or 765A or 123Y
+					if board[i][3:] == "S" {
+						ticinfo = ticinfo + "<li>" + board[i][0:3] + " Точний" + "</li>"
+					} else if board[i][3:] == "B" {
+						ticinfo = ticinfo + "<li>" + board[i][0:3] + " Довільний" + "</li>"
+					} else if board[i][3:] == "A" {
+						ticinfo = ticinfo + "<li>" + board[i][0:3] + " Точний + Довільний" + "</li>"
+					} else {
+						ticinfo = ticinfo + "<li>" + board[i][0:3] + " Система" + "</li>"
+					}
+				} else {
+					ticinfo = ticinfo + "<li>" + board[i] + " " + bType[i] + "</li>"
+				}
+			}
+			ticinfo = ticinfo + "<li>------------------------------------------------------</li>"
+			if stake != "" {
+				ticinfo = ticinfo + "<li>Ставка: " + stake + "</li>"
+			}
+			ticinfo = ticinfo + "<li>Сума: " + sumex + "</li>"
+			ticinfo = ticinfo + "<li>Білет: " + decrGG(gguard) + " " + decrNum(numberex) + "</li>"
+			ticinfo = ticinfo + "<li>txn_id: " + txnID + "</li>"
+		} // end of ticinfo exchange case.
 		// Create strPage:
 	valTicketPage:
 		//ticinfo = "Выплата пока не реализована."
-		strPage = strPage + "<!DOCTYPE html>"
+		strPage = "<!DOCTYPE html>"
 		strPage = strPage + "<html lang=\"en\">"
 		strPage = strPage + "<head>"
 		strPage = strPage + "<meta charset=\"utf-8\" />"
@@ -1417,7 +1691,7 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + "#ticback {"
 		strPage = strPage + "display: block;"
 		strPage = strPage + "width: 10%;"
-		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "margin: 1% 3% 1% 3%;"
 		strPage = strPage + "padding: 1% 1% 1% 1%;"
 		strPage = strPage + "color: white;"
 		strPage = strPage + "background-color: blue;"
@@ -1425,9 +1699,13 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + "border-radius: 15%;"
 		strPage = strPage + "text-decoration:none;"
 		strPage = strPage + "}"
+		strPage = strPage + "#tichdr {"
+		strPage = strPage + "margin: 1% 3% 1% 3%;"
+		//strPage = strPage + "padding: 1% 1% 1% 1%;"
+		strPage = strPage + "}"
 		strPage = strPage + "#ticket {"
 		strPage = strPage + "display: block;"
-		strPage = strPage + "margin: 3% 3% 3% 3%;"
+		strPage = strPage + "margin: 1% 3% 1% 3%;"
 		strPage = strPage + "padding: 1% 1% 1% 1%;"
 		strPage = strPage + "background-color: white;"
 		strPage = strPage + "border: thin solid black;"
@@ -1438,9 +1716,10 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + "<body>"
 		strPage = strPage + "<div id=\"ticinfo\">"
 		strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
-		strPage = strPage + "<p id=\"ticket\">"
+		strPage = strPage + "<h3 id=\"tichdr\">Выплата билета</h3>"
+		strPage = strPage + "<ul id=\"ticket\">"
 		strPage = strPage + ticinfo
-		strPage = strPage + "</p>"
+		strPage = strPage + "</ul>"
 		strPage = strPage + "</div>"
 		strPage = strPage + "<script>"
 		strPage = strPage + "console.log('page body script started');"
@@ -1451,8 +1730,8 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + "</html>"
 		//strPage = strPage + ""
 		return strPage
-	}
-}
+	} // end of validation case.
+} // end of checkValTicket
 
 func main() {
 	// time.Now().UnixNano(), which yields a constantly-changing number.
