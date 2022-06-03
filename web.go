@@ -567,7 +567,7 @@ ExitBuyTicket:
 		}
 		goto buyTicketPage
 	}
-	fmt.Sprint(agent, system, numUsed)
+	_ = fmt.Sprint(agent, system, numUsed) // to avoid unused warning.
 	ticinfo = ticinfo + "<li>Україньска Національна Лотерея</li>"
 	ticinfo = ticinfo + "<li>Дата: " + date + "</li>"
 	ticinfo = ticinfo + "<li>Час: " + time + "</li>"
@@ -1361,12 +1361,14 @@ func checkValTicket(strTicnum string, val string) string {
 					} else if result == "902" {
 						errMsg = "Билет уже выплачен."
 					} else if result == "903" {
-						errMsg = "Билет выплачен с ошибкой в обменном билете."
+						//errMsg = "Билет выплачен с ошибкой в обменном билете." // NB! resut will be used later.
+						goto ContWinTicProc
 					} else {
 						errMsg = "Server reply with result: " + result
 					}
 					goto ExitValTicket
 				}
+			ContWinTicProc:
 				//ticinfo = strXML // for test only
 				//<txn_id>1</txn_id>
 				//0123456789
@@ -1435,7 +1437,7 @@ func checkValTicket(strTicnum string, val string) string {
 				// 01234567890123456
 				pos1 = strings.Index(strXML, "<exchange_ticket>")
 				pos2 = strings.Index(strXML, "</exchange_ticket>")
-				if pos1 != -1 { // exchange ticket exists
+				if (pos1 != -1) && !(result == "903") { // exchange ticket exists
 					if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+17)) {
 						errMsg = "Server response wrong exchange ticket format"
 						goto ExitValTicket
@@ -1594,7 +1596,7 @@ func checkValTicket(strTicnum string, val string) string {
 							break
 						}
 					} // end of boards processing.
-				} // end of // exchange ticket exists.
+				} // end of exchange ticket exists.
 			} // end of response body processing.
 		} // end readAll(res.Body).
 	ExitValTicket:
@@ -1629,8 +1631,8 @@ func checkValTicket(strTicnum string, val string) string {
 		ticinfo = ticinfo + "<li>К выплате: " + paid + "</li>"
 		ticinfo = ticinfo + "<li>Налог: " + tax + "</li>"
 		ticinfo = ticinfo + "<li>Военный налог: " + war_tax + "</li>"
-		fmt.Sprint(agent, system, numUsed)
-		if exchange {
+		_ = fmt.Sprint(agent, system, numUsed) // to avoid unused warnings.
+		if exchange && !(result == "903") {    // ticinfo exchange case
 			ticinfo = ticinfo + "<li>Обменный билет</li>"
 			ticinfo = ticinfo + "<li>Дата: " + date + "</li>"
 			ticinfo = ticinfo + "<li>Час: " + time + "</li>"
