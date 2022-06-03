@@ -134,19 +134,39 @@ class App extends Component {
 //);
 //console.log('index.js created element:');
 //console.log(element);
+console.log(document.URL);
+let strTic = document.URL; // http://localhost:3000/?t=123-12345678-1234111
+console.log("0strTic=" + strTic);
+const strArr = strTic.split('/');
+strTic = strArr[strArr.length-1];
+console.log("1strTic=" + strTic);
+if (strTic.substring(0,3) === "?t=") {
+  strTic = strTic.substring(3);
+  console.log("2strTic=" + strTic);
+  if (strTic.length === 20 && strTic.at(3) === "-" && strTic.at(12) === "-") {
+    console.log("3strTic=" + strTic);
+    // 123-12345678-1234567
+    // 01234567890123456789
+    if (!(Number.isNaN(strTic.substring(0,3)) && Number.isNaN(strTic.substring(4,12)) && Number.isNaN(strTic.substring(13)))) {
+      console.log("4strTic=" + strTic);
+    }
+  }
+} else {
+  strTic = "";
+}
 
 console.log('index.js innerWidth=' + window.innerWidth);
 if (window.innerWidth < 510) {
   ReactDOM.render(
     //<AppM txn_id={10000000} viewwidth={window.innerWidth}/>,
-    <AppM txn_id={10000000}/>,
+    <AppM txn_id={10000000} searchIni={strTic}/>,
     document.getElementById('root')
   );
 }
 else {
   ReactDOM.render(
     //<App txn_id={10000000} viewwidth={window.innerWidth}/>,
-    <App txn_id={10000000}/>,
+    <App txn_id={10000000} searchIni={strTic}/>,
     document.getElementById('root')
   );
 }

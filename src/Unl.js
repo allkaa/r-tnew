@@ -50,10 +50,13 @@ import logoTR from './loto3.png'; // Tell Webpack this JS file will use this ima
 //import vip from './blitz.png'; // Tell Webpack this JS file will use this image placed in src dir.
 
 // NB! "Global" vars work in Hooks!!!
+let location;
 let txn_id = 0;
 let myInfoRef = React.createRef(); // waiting for ....
 let myInfoRef2 = React.createRef(); // ticket price:
 let myInfoRef3 = React.createRef(); // validation
+let myInfoRefTN = React.createRef(); // ticket number
+
 let c1 = [];
 let c2 = [];
 let c3 = [];
@@ -164,6 +167,7 @@ let myInfoRefk8 = React.createRef();
 let myInfoRefk9 = React.createRef();
 let myInfoRefk10 = React.createRef();
 let myInfoRefka = React.createRef();
+let searchIni = ""
 
 // Main function dispite of strange name :-)
 function NoMatchAside(props) {
@@ -172,13 +176,24 @@ function NoMatchAside(props) {
   if (txn_id === 0) {
     txn_id = props.txn_id;
   }
+  searchIni = props.searchIni;
   // NB! Use only state hooks for consts needed for rendering tags!!!
-  const [search, setStateSearch] = useState('');
+  const [search, setStateSearch] = useState(searchIni);
   //const [searchStarts, setStateSearchStarts] = useState(false); // not needed!
   const [dataXML, setStateDataXML] = useState(''); // error messages if any.
   const [found, setStateFound] = useState('');
   //const [searchDone, setStateSearchDone] = useState(false); // not needed!
   //let myInfoRef = React.createRef();
+
+  function NavHome() {
+    //let dt = new Date();
+    //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+    //return <h3>Nav Home {reply}</h3>;
+    location = useLocation();
+    console.log('NavHome location.search:');
+    console.log(location.search); // ?t=123-12345678-1234567
+    return null;
+  }
 
   function handleChangeSearch(event) {
     console.log('========> handleChangeSearch event <==========')
@@ -351,7 +366,7 @@ function NoMatchAside(props) {
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           {/* <input type="submit" value="Ticket search"/> */}
           <button type="submit">Проверить выигрыш</button>
-          <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
+          <input type="search" ref={myInfoRefTN} className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
           <p className="boardLabel">Выплатить выигрыш</p>
           <select name="v" ref={myInfoRef3}>
             <option value='N'>Нет</option>
@@ -540,13 +555,6 @@ function NavWillMatch() {
     </p>;
 }
 */
-
-function NavHome() {
-  //let dt = new Date();
-  //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-  //return <h3>Nav Home {reply}</h3>;
-  return null;
-}
 
 function NavNoMatch() {
   let location = useLocation();
