@@ -1631,6 +1631,7 @@ func checkValTicket(strTicnum string, val string) string {
 		ticinfo = ticinfo + "<li>К выплате: " + paid + "</li>"
 		ticinfo = ticinfo + "<li>Налог: " + tax + "</li>"
 		ticinfo = ticinfo + "<li>Военный налог: " + war_tax + "</li>"
+		ticinfo = ticinfo + "<li>txn_id: " + txnID + "</li>"
 		_ = fmt.Sprint(agent, system, numUsed) // to avoid unused warnings.
 		if exchange && !(result == "903") {    // ticinfo exchange case
 			ticinfo = ticinfo + "<li>Обменный билет</li>"
@@ -1671,7 +1672,6 @@ func checkValTicket(strTicnum string, val string) string {
 			}
 			ticinfo = ticinfo + "<li>Сума: " + sumex + "</li>"
 			ticinfo = ticinfo + "<li>Білет: " + decrGG(gguard) + " " + decrNum(numberex) + "</li>"
-			ticinfo = ticinfo + "<li>txn_id: " + txnID + "</li>"
 		} // end of ticinfo exchange case.
 		// Create strPage:
 	valTicketPage:
