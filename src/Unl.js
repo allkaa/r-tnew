@@ -5,8 +5,7 @@ import {
   Route,
   Link,
   Switch,
-  useLocation,
-  useHistory
+  useLocation
 } from "react-router-dom";
 import { useState } from 'react'; // React Hooks used.
 /*
@@ -55,7 +54,6 @@ let txn_id = 0;
 let myInfoRef = React.createRef(); // waiting for ....
 let myInfoRef2 = React.createRef(); // ticket price:
 let myInfoRef3 = React.createRef(); // validation
-let myInfoRefTN = React.createRef(); // ticket number
 
 let c1 = [];
 let c2 = [];
@@ -366,7 +364,7 @@ function NoMatchAside(props) {
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
           {/* <input type="submit" value="Ticket search"/> */}
           <button type="submit">Проверить выигрыш</button>
-          <input type="search" ref={myInfoRefTN} className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
+          <input type="search" className = "ticket" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
           <p className="boardLabel">Выплатить выигрыш</p>
           <select name="v" ref={myInfoRef3}>
             <option value='N'>Нет</option>
@@ -4254,6 +4252,7 @@ function Tryika() {
 }
 
 //==================================================================================================================
+/*
 function AsideHome() {
   //let dt = new Date();
   //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
@@ -4275,7 +4274,7 @@ function AsideWillMatch() {
     Aside Matched! <code>{location.pathname}</code> {reply}
     </p>;
 }
-
+*/
   // NB! vars values will no kept and on next render will be reset to initial:
   //let found = '';
   //let dataXML = '';

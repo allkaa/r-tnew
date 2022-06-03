@@ -1266,7 +1266,7 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + "</head>"
 		strPage = strPage + "<body>"
 		strPage = strPage + "<div id=\"ticinfo\">"
-		strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
+		strPage = strPage + "<a id=\"ticback\" href=\"/?t=" + strTicnum + "\">Back</a>"
 		strPage = strPage + "<p id=\"ticket\">"
 		strPage = strPage + ticinfo
 		strPage = strPage + "</p>"
@@ -1717,7 +1717,7 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + "</head>"
 		strPage = strPage + "<body>"
 		strPage = strPage + "<div id=\"ticinfo\">"
-		strPage = strPage + "<a id=\"ticback\" href=\"/\">Back</a>"
+		strPage = strPage + "<a id=\"ticback\" href=\"/?t=" + strTicnum + "\">Back</a>"
 		strPage = strPage + "<h3 id=\"tichdr\">Выплата билета</h3>"
 		strPage = strPage + "<ul id=\"ticket\">"
 		strPage = strPage + ticinfo
