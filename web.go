@@ -234,10 +234,10 @@ func handlerReq(w http.ResponseWriter, r *http.Request) {
 					w.Header().Set("Content-Type", "text/html")
 					fmt.Fprintf(w, "%s", strPage)
 				} else if strings.Index(r.RequestURI, "/formAKresults?") != -1 {
-					// e.g. formAKresults?g=2&q= or formAKresults?g=2&q=1001
+					// e.g. formAKresults?g=2&d= or formAKresults?g=2&d=1001
 					pos1 = strings.Index(r.RequestURI, "/formAKresults?g=")
 					strSearch = r.RequestURI[pos1+17:]
-					// e.g. 2&q= or 2&q=1001
+					// e.g. 2&d= or 2&d=1001
 					//fmt.Fprintf(w, "Form formAKresults called with params %s", strSearch)
 					strPage = getResults(strSearch)
 					w.Header().Set("Content-Type", "text/html")
@@ -974,15 +974,15 @@ func getResults(strSearch string) string {
 	var result string = ""
 	var pos1 int = -1
 	var pos2 int = -1
-	// strSearch e.g. 2&q= or 2&q=1001
+	// strSearch e.g. 2&d= or 2&d=1001
 	pos1 = 0
-	pos2 = strings.Index(strSearch, "&q=")
+	pos2 = strings.Index(strSearch, "&d=")
 	if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+1) {
 		game = strSearch[pos1:pos2]
 	} else {
 		goto getResultsCreatePage
 	}
-	pos1 = strings.Index(strSearch, "&q=")
+	pos1 = strings.Index(strSearch, "&d=")
 	if pos1 != -1 {
 		draw = strSearch[pos1+3:]
 	} else {

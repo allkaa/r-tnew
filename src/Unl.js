@@ -1,4 +1,4 @@
-// Unl.js viewport 026
+// Unl.js viewport
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -167,8 +167,8 @@ let myInfoRefk10 = React.createRef();
 let myInfoRefka = React.createRef();
 let searchIni = ""
 
-// Main function dispite of strange name :-)
-function NoMatchAside(props) {
+// Main function
+function MainProg(props) {
   console.log('Unl.js props:' + props);
   console.log(props); // {txn_id: 10000000}
   if (txn_id === 0) {
@@ -177,22 +177,10 @@ function NoMatchAside(props) {
   searchIni = props.searchIni;
   // NB! Use only state hooks for consts needed for rendering tags!!!
   const [search, setStateSearch] = useState(searchIni);
-  //const [searchStarts, setStateSearchStarts] = useState(false); // not needed!
   const [dataXML, setStateDataXML] = useState(''); // error messages if any.
   const [found, setStateFound] = useState('');
-  //const [searchDone, setStateSearchDone] = useState(false); // not needed!
-  //let myInfoRef = React.createRef();
 
-  function NavHome() {
-    //let dt = new Date();
-    //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-    //return <h3>Nav Home {reply}</h3>;
-    location = useLocation();
-    console.log('NavHome location.search:');
-    console.log(location.search); // ?t=123-12345678-1234567
-    return null;
-  }
-
+  // <========== Main menu area search fields and buttons.
   function handleChangeSearch(event) {
     console.log('========> handleChangeSearch event <==========')
     let strSearch = '';
@@ -229,7 +217,7 @@ function NoMatchAside(props) {
       //searchDone = false;
      }
      //console.log('OLD FOUND INFO: ' + found);
-    }
+  } // end of handleChangeSearch.
 
   function handleSubmitVal(event) {
     console.log('=====================================> Form handleSubmitVal <============================================')
@@ -268,27 +256,8 @@ function NoMatchAside(props) {
       myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
     } else { // myInfoRef3.current.value = 'Y'
       myInfoRef.current.textContent = 'Ожидайте купленный билет ...';
-      //myInfoRef3.current.value = 'N'
-      //event.preventDefault();
-      //return
     }
-    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL //formAK
-    /* e.g.
-    Form request submitted by POST. Action URL is /formAK with search as body: 
-    user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    */
-    //GetData('val');
-    //console.log('searchDone after GetDate()' + searchDone);
-    //console.log('found after GetDate(val)' + found);
-    /*
-    if (search.length > 0) {
-      //setStateSearchStarts(true);
-    }
-    else {
-      setStateSearchStarts(false);
-    }
-    */
-  }
+  } // end of handleSubmitVal.
 
   function changeResultsDraw(event) {
     //console.log(event.target.name);
@@ -349,7 +318,7 @@ function NoMatchAside(props) {
         {/*<!-- A Search form is another commmong non-linear way to navigate through a website. -->*/}
         {/*<!-- creates GET requst {e.g. for search "123" as http://localhost:3000/nav-match3?q=123 -->*/}
         <form role="search" method="get" action="formAKresults" onSubmit={handleSubmitResults}>
-          {/*<input hidden type="search" name="g"  defaultValue="2" className="drawnum"></input>*/}
+          {/* request e.g. /formAKresults?g=6&d=1 or /formAKresults?g=2&d= */}
           <select name="g" required id="gameselect" >
             <option value="">--Выберите игру--</option>
             <option value="2">Кено</option>
@@ -358,7 +327,7 @@ function NoMatchAside(props) {
             <option value="6">Супер Лото</option>
           </select>
           <button type="submit">Результаты игры</button>
-          <input type="search" name="q"  defaultValue="" onChange = {changeResultsDraw} className="drawnum" placeholder="" aria-label="Keno results"></input>
+          <input type="number" name="d"  defaultValue="" onChange = {changeResultsDraw} className="drawnum" placeholder="" aria-label="Keno results"></input>
           <b>Результаты игры по номеру розыгрыша (если номер не задан, то последнего)</b>
         </form>
         <form role="search" method="get" action="formAKchk" onSubmit={handleSubmitVal}>
@@ -491,68 +460,24 @@ function NoMatchAside(props) {
               <a href="/VipLotoOnline"><img id="logoimg4" src={vip} alt="Vip"></img>Блитц лото онлайн</a>
           </div>
         </div>
-          {/*
-          <Router>
-          <div>
-          <ul>
-          <li>
-            <Link to="/">Дополнительные игры</Link>
-          </li>
-          <li>
-            <Link to="/will-match1">Стерлинг онлайн</Link>
-          </li>
-          <li>
-            <Link to="/will-match2">ВИП лото онлайн</Link>
-          </li>
-          <li>
-            <Link to="will-match3">Will Match 3</Link>
-          </li>
-          <li>
-            <Link to="/NewServerPage">Link to NewServerPage</Link>
-          </li>
-          </ul>
-
-          <Switch>
-          <Route exact path="/">
-            <AsideHome />
-          </Route>
-          <Route path="/will-match1">
-            <AsideWillMatch />
-          </Route>
-          <Route path="/will-match2">
-            <AsideWillMatch />
-          </Route>
-          <Route path="/will-match3">
-            <AsideWillMatch />
-          </Route>
-          </Switch>
-          </div>
-          </Router>
-          */}
         </aside>
       </main>
     </div>
   );
-} // end of main function NoMatchAside(props)
+} // end of main function MainProg(props)
 
-export default NoMatchAside;
+export default MainProg;
 
-/*
-function NavWillMatch() {
-  let location = useLocation();
-  console.log('location:');
-  console.log(location);
-  let history = useHistory();
-  console.log('history:');
-  console.log(history.location.pathname);
-  console.log(history);
-  let dt = new Date();
-  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-  return <p className = "special">
-    Nav Matched! <code>{location.pathname} and {location.search}</code> {reply}
-    </p>;
+// <========== Main menu bar links.
+function NavHome() {
+  //let dt = new Date();
+  //let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  //return <h3>Nav Home {reply}</h3>;
+  location = useLocation();
+  console.log('NavHome location.search:');
+  console.log(location.search); // ?t=123-12345678-1234567
+  return null;
 }
-*/
 
 function NavNoMatch() {
   let location = useLocation();
@@ -582,42 +507,6 @@ function Contact() {
     @unl_ua_bot
   </address>;
 }
-
-/*
-function Results() {
-  let location = useLocation();
-  console.log('location:');
-  console.log(location);
-  let history = useHistory();
-  console.log('history:');
-  console.log(history.location.pathname);
-  console.log(history);
-  let dt = new Date();
-  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
-  return <p className = "special">
-    Results! <code>{location.pathname} and {location.search}</code> {reply}
-  </p>;
-}
-*/
-
-/*
-function Purchase() {
-  function handleSubmitPay(event) {
-    myInfoRef.current.textContent = 'Wait for fetch processing...';
-    // e.g.
-    //Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
-    //user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
-    //
-    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
-    //GetData('pay'); // if use Fetch directly from html page.
-  } // end of function handleSubmitPay(event)
-
-  return <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitPay}>
-  <input type="search" name="q"  value={'auto'} placeholder="123" aria-label="Buy ticket"></input>
-  <button type="submit">Buy ticket</button>
-  </form>
-} // end of function Purchase()
-*/
 
 function Keno() {
 
@@ -1041,7 +930,7 @@ function Keno() {
       }
       else alert('Ошибка! Дублирование номера во второй комбинации');
     }
-  //console.log(strPay);
+    //console.log(strPay);
     if (blnDuplicate) {
       //alert('Ошибка! Есть некорректные комбинации.');
       event.preventDefault();
@@ -1062,7 +951,7 @@ function Keno() {
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
     //GetData('pay'); // if use Fetch directly from html page.
   
-  } // end of function handleSubmitPay(event).
+  } // end of function handleSubmitKeno.
 
   /*
   function numStrValue(strNum, auto) {
@@ -2040,7 +1929,7 @@ function SuperLoto() {
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
     //GetData('pay'); // if use Fetch directly from html page.
   
-  } // end of function handleSubmitPay(event).
+  } // end of function handleSubmitSuperLoto.
 
   /*
   function numStrValue(strNum, auto) {
@@ -3141,7 +3030,7 @@ function Maxima() {
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
     //GetData('pay'); // if use Fetch directly from html page.
   
-  } // end of function handleSubmitPay(event).
+  } // end of function handleSubmitMaxima.
 
   /*
   function numStrValue(strNum, auto) {
@@ -3903,7 +3792,7 @@ function Tryika() {
     //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
     //GetData('pay'); // if use Fetch directly from html page.
   
-  } // end of function handleSubmitPay(event).
+  } // end of function handleSubmitTriyka.
 
   function typeValue(typename) {
     let strValue;
@@ -4252,6 +4141,43 @@ function Tryika() {
 }
 
 //==================================================================================================================
+
+/*
+function Results() {
+  let location = useLocation();
+  console.log('location:');
+  console.log(location);
+  let history = useHistory();
+  console.log('history:');
+  console.log(history.location.pathname);
+  console.log(history);
+  let dt = new Date();
+  let reply = dt.toLocaleTimeString('uk'); // 'en-US'
+  return <p className = "special">
+    Results! <code>{location.pathname} and {location.search}</code> {reply}
+  </p>;
+}
+*/
+
+/*
+function Purchase() {
+  function handleSubmitPay(event) {
+    myInfoRef.current.textContent = 'Wait for fetch processing...';
+    // e.g.
+    //Form request submitted by GET. Action URL is /formAKpay?q=xxx... with or for POST search as body e.g.: 
+    //user_name=ALEX1+RAVEN&user_essay=Please1+write+an+essay+about+your+favorite+DOM+element.&fruits=Lime&fruits=Coconut&carrots=option1&meal=option1
+    //
+    //event.preventDefault(); // NB! Use it to prevent sending standard POST/GET request to server with URL /formAKpay?q=xxxxx.....
+    //GetData('pay'); // if use Fetch directly from html page.
+  } // end of function handleSubmitPay(event)
+
+  return <form role="search" method="get" action="formAKpay" onSubmit={handleSubmitPay}>
+  <input type="search" name="q"  value={'auto'} placeholder="123" aria-label="Buy ticket"></input>
+  <button type="submit">Buy ticket</button>
+  </form>
+} // end of function Purchase()
+*/
+
 /*
 function AsideHome() {
   //let dt = new Date();
