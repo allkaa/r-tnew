@@ -131,6 +131,7 @@ const pageNameIni = string("index.html") // string("index.html") or string("inde
 const dir = string("./build")            // string("./build") or string("./build_Test")
 
 // project WinTicsCheckNoSslTEST new at 'http://10.8.194.3:9994/'
+//const urlval = "https://unl.works:9999/" // for test with real data.
 const urlval = "http://10.8.194.3:9994/"
 const reqStringCheckVal = urlval + "?agent=58&type=2&command=checkval&ticket_number=" // + search;
 const urlpay = "http://10.8.194.3:38000/"                                             // project PayTest ver. 4.0 NoSsl.
@@ -1184,6 +1185,8 @@ func checkValTicket(strTicnum string, val string) string {
 	//var err error
 	//var errMsg string = "Unknown error"
 	if val == "N" {
+		var errMsg string = ""
+		var result string = ""
 		var sum string = "-999" // initial as error.
 		var bytRep []byte
 		res, err := http.Get(reqStringCheckVal + strTicnum)
@@ -1203,6 +1206,19 @@ func checkValTicket(strTicnum string, val string) string {
 				fmt.Printf("%s\n", strXML)
 				var pos1 int = -1
 				var pos2 int = -1
+				//<result>0</result>
+				//01234567890
+				pos1 = strings.Index(strXML, "<result>")
+				pos2 = strings.Index(strXML, "</result>")
+				if !((pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9)) {
+					errMsg = "Wrong server response XML format"
+					goto ExitValChkTicket
+				}
+				result = strXML[pos1+8 : pos2] // get result string numerical code.
+				if result != "0" {
+					errMsg = "Server reply with result: " + result
+					goto ExitValChkTicket
+				}
 				pos1 = strings.Index(strXML, "<sum>")
 				pos2 = strings.Index(strXML, "</sum>")
 				if (pos1 != -1) && (pos2 != -1) && (pos2 >= pos1+9) {
@@ -1210,7 +1226,20 @@ func checkValTicket(strTicnum string, val string) string {
 				}
 			}
 		}
+	ExitValChkTicket:
+		//ticinfo = "Выплата пока не реализована."
 		var ticinfo string = ""
+		if err != nil {
+			errMsg = err.Error()
+		}
+		if errMsg != "" {
+			if errMsg == "Server reply with result: 777" {
+				ticinfo = "Ожидайте ответа сервера..."
+			} else {
+				ticinfo = errMsg
+			}
+			goto valChkTicketPage
+		}
 		if sum == "-1.00" {
 			ticinfo = "Большой выигрыш!!!."
 		} else if sum == "-2.00" {
@@ -1228,6 +1257,7 @@ func checkValTicket(strTicnum string, val string) string {
 			ticinfo = "Ваш виграш " + sum + " грн."
 		}
 		//fmt.Fprintf(w, "Form formAKchk called with ticket number %s reply as %s", strTicnum, ticinfo)
+	valChkTicketPage:
 		var strPage string = ""
 		strPage = strPage + "<!DOCTYPE html>"
 		strPage = strPage + "<html lang=\"en\">"
@@ -1271,6 +1301,11 @@ func checkValTicket(strTicnum string, val string) string {
 		strPage = strPage + ticinfo
 		strPage = strPage + "</p>"
 		strPage = strPage + "</div>"
+		strPage = strPage + "<script>"
+		strPage = strPage + "console.log('page body script started');"
+		strPage = strPage + "console.log(document.getElementById('ticket').innerHTML);"
+		strPage = strPage + "if (document.getElementById('ticket').innerHTML === 'Ожидайте ответа сервера...') document.location.reload();"
+		strPage = strPage + "</script>"
 		strPage = strPage + "</body>"
 		strPage = strPage + "</html>"
 		//strPage = strPage + ""
