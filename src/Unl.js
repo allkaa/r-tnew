@@ -177,8 +177,8 @@ function MainProg(props) {
   searchIni = props.searchIni;
   // NB! Use only state hooks for consts needed for rendering tags!!!
   const [search, setStateSearch] = useState(searchIni);
-  const [dataXML, setStateDataXML] = useState(''); // error messages if any.
-  const [found, setStateFound] = useState('');
+  const [dataXML, setStateDataXML] = useState(''); // error messages if any not used now, used formerly with FetchExecutor.
+  const [found, setStateFound] = useState(''); // not used now, used formerly with FetchExecutor.
 
   // <========== Main menu area search fields and buttons.
   function handleChangeSearch(event) {
