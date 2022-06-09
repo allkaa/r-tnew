@@ -177,8 +177,8 @@ function MainProg(props) {
   searchIni = props.searchIni;
   // NB! Use only state hooks for consts needed for rendering tags!!!
   const [search, setStateSearch] = useState(searchIni);
-  const [dataXML, setStateDataXML] = useState(''); // error messages if any.
-  const [found, setStateFound] = useState('');
+  //const [dataXML, setStateDataXML] = useState(''); // error messages if any not used now, used formerly with FetchExecutor..
+  //const [found, setStateFound] = useState(''); // not used now, used formerly with FetchExecutor.
 
   // <========== Main menu area search fields and buttons.
   function handleChangeSearch(event) {
@@ -199,8 +199,8 @@ function MainProg(props) {
     strSearch = event.target.value.toUpperCase();
     if (strSearch !== oldSearch) {
       console.log('strSearch vs oldSearch: [' + strSearch + '] [' + oldSearch + ']')
-      setStateFound('');
-      setStateDataXML('');
+      //setStateFound('');
+      //setStateDataXML('');
       //setStateSearchDone(false);
       //found = '';
       //dataXML = '';
@@ -209,8 +209,8 @@ function MainProg(props) {
     setStateSearch(strSearch);
     console.log('strSearch: ' + strSearch);
     if (strSearch === '') {
-      setStateFound('');
-      setStateDataXML('');
+      //setStateFound('');
+      //setStateDataXML('');
       //setStateSearchDone(false);
       //found = '';
       //dataXML = '';
@@ -255,9 +255,8 @@ function MainProg(props) {
     if (myInfoRef3.current.value === 'N') {
       myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
     } else { // myInfoRef3.current.value = 'Y'
-      myInfoRef.current.textContent = 'Ожидайте купленный билет ...';
+      myInfoRef.current.textContent = 'Ожидайте выплату выигрыша ...';
     }
-    myInfoRef.current.textContent = 'Ожидайте информацию билета ...';
   } // end of handleSubmitVal.
 
   function changeResultsDraw(event) {
@@ -335,7 +334,7 @@ function MainProg(props) {
           {/* <input type="submit" value="Ticket search"/> */}
           <button className="buttonM" type="submit">Проверить выигрыш</button>
           <input type="search" className = "ticketM" name="q"  value={search} onChange={handleChangeSearch} placeholder="123-12345678-1234567" aria-label="Search ticket status"></input>
-          <p className="boardLabel">Выплатить выигрыш</p>
+          <p className="boardLabelM">Выплатить выигрыш</p>
           <select name="v" ref={myInfoRef3}>
             <option value='N'>Нет</option>
             <option value='Y'>Да</option>
@@ -344,12 +343,12 @@ function MainProg(props) {
           {/*<p className="p">Проверить выигрыш по номеру билета</p>*/}
         </form>
         {/*<p id="found">{found}</p>*/}
-        {(found.length > 0) && <p id="found">{found}</p>}
+        {/*{(found.length > 0) && <p id="found">{found}</p>}*/}
         {/* searchDone && <p id="found">{found}</p>*/}
-        <p id="dataXML">{dataXML}</p> {/* net errors if any */}
+        {/*<p id="dataXML">{dataXML}</p> {/* net errors if any */}
         {/* dataXML && <p id="dataXML">{dataXML}</p>*/}
         {/* <button onClick={buyTicket} >Buy Ticket</button> */}
-        <p ref={myInfoRef}></p> {/* wait for fetch msg */}
+        <p className="p" ref={myInfoRef}></p> {/* wait for fetch msg */}
 
         <Switch>
           <Route exact path="/">
