@@ -1,3 +1,3 @@
-module github.com/allkaa/react-tutorial
+module github.com/allkaa/r-tnew
 
 go 1.18
