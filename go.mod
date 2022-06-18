@@ -1,3 +1,3 @@
-module web
+module github.com/allkaa/react-tutorial
 
-go 1.15
+go 1.18
