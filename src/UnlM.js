@@ -441,8 +441,8 @@ function MainFuncComponent(props) {
         </article>
       </main>
     </div>
-  );
-} // end of main function MainFuncComponent(props)
+  ); // end of main function component return
+} // end of main function component MainFuncComponent(props)
 
 export default MainFuncComponent;
 
