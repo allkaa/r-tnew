@@ -167,8 +167,8 @@ let myInfoRefk10 = React.createRef();
 let myInfoRefka = React.createRef();
 let searchIni = ""
 
-// Main function
-function MainProg(props) {
+// Main function component
+function MainFuncComponent(props) {
   console.log('UnlM.js props:' + props);
   console.log(props); // {txn_id: 10000000}
   if (txn_id === 0) {
@@ -442,9 +442,9 @@ function MainProg(props) {
       </main>
     </div>
   );
-} // end of main function MainProg(props)
+} // end of main function MainFuncComponent(props)
 
-export default MainProg;
+export default MainFuncComponent;
 
 // <========== Main menu bar links.
 function NavHome() {
