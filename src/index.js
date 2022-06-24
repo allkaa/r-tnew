@@ -155,21 +155,30 @@ if (strTic.substring(0,3) === "?t=") {
   strTic = "";
 }
 
-console.log('index.js innerWidth=' + window.innerWidth);
+//console.log('index.js innerWidth=' + window.innerWidth);
+//const root = ReactDOM.createRoot(document.getElementById('root')); // modern style.
+//var element;  // modern style.
 if (window.innerWidth < 510) {
+  // old style.
   ReactDOM.render(
     //<AppM txn_id={10000000} viewwidth={window.innerWidth}/>,
     <AppM txn_id={10000000} searchIni={strTic}/>,
     document.getElementById('root')
   );
+  // old style.
+  //element = <AppM txn_id={10000000} searchIni={strTic}/>; // modern style.
 }
 else {
+  // old style.
   ReactDOM.render(
     //<App txn_id={10000000} viewwidth={window.innerWidth}/>,
     <App txn_id={10000000} searchIni={strTic}/>,
     document.getElementById('root')
   );
+  // old style.
+  //element = <App txn_id={10000000} searchIni={strTic}/>; // modern style.
 }
+//root.render(element); // modern style. 
 
 /*
 ReactDOM.render(
